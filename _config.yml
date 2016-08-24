@@ -69,8 +69,14 @@ theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
+#deploy:
+#  type:
+
 deploy:
-  type:
+  type: git
+  repository: https://github.com/weizhimiao/weizhimiao.github.io.git
+  branch: master
+
 
 #博客头像
 avatar: https://avatars3.githubusercontent.com/u/11239812?v=3&u=aede3c90c7e5cbc2d029e3f0988d9e1503b59943&s=140
@@ -80,7 +86,7 @@ duoshuo_shortname: weizhimiao
 baidu_analytics: e4b7d6d381ddeae9bb9afe7349625074
 
 #阅读次数统计
-leancloud_visitors: 
+leancloud_visitors:
   enable: true
   app_id: VL4PVIHFgBTavO1d38DtBqOF-gzGzoHsz
   app_key: 25PBfJEywRHzhdNyIqVj0VDc
@@ -92,7 +98,7 @@ swiftype_key: 5esyb9coehH1NCtAqKqX
 jiathis: true
 
 #feed
-feed: 
+feed:
   type: atom
   path: atom.xml
   limit: 20

@@ -299,6 +299,498 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/23/Apache性能监控/" itemprop="url">
+                  Apache性能监控
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-23T16:10:00+08:00" content="2016-08-23">
+              2016-08-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Apache/" itemprop="url" rel="index">
+                    <span itemprop="name">Apache</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/23/Apache性能监控/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/23/Apache性能监控/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>谈到服务器性能监控，目前市面上有很多成熟的关于性能监控的产品可供我们使用。比如 <a href="http://www.oneapm.com/ci/feature.html" target="_blank" rel="external">Cloud Insight</a><br>。但通过 Apache本身提供的监控模块或者通过一些简单的bash命令也能实现简单的监控。</p>
+<h2 id="Linux下通过Server-status来监控Apache"><a href="#Linux下通过Server-status来监控Apache" class="headerlink" title="Linux下通过Server-status来监控Apache"></a>Linux下通过Server-status来监控Apache</h2><ol>
+<li>加载 mod_status.so 模块<blockquote>
+<p>mod_status, Apache状态管理模块</p>
+</blockquote>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#在httpd.conf中加入下面这句或将其前面注释去掉</div><div class="line">LoadModule status_module modules/server_status.so</div></pre></td></tr></table></figure>
+<ol>
+<li><p>修改配置文件</p>
+<ul>
+<li><p>方式一：直接在 httpd.conf 底部添加以下配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;location /c-server-status&gt;</div><div class="line">    setHandle Server-status</div><div class="line">    Order Deny,Allow</div><div class="line">    Deny from nothing</div><div class="line">    Allow from all</div><div class="line">&lt;/location&gt;</div><div class="line">ExtendedStatus on</div></pre></td></tr></table></figure>
+</li>
+<li><p>方式二：添加到子配置文件中<br>在 httpd.conf 中找到 <code>Include conf/extra/httpd-info.conf</code>,去掉<code>#</code>,<br>在 httpd-info.conf 文件中加入 方式一 中的内容。</p>
+</li>
+</ul>
+<p><strong>Tips：</strong></p>
+<ul>
+<li><code>&lt;location /c-server-status&gt;</code>: 这个名字可以任意取，最好不要让别人猜到。</li>
+<li><code>ExtendedStatus on</code>: 启用扩展状态。该设置仅能用于全局设置，不能在特定的虚拟主机中打开或者关闭。并且，启用该扩展会使服务器运行效率降低。</li>
+</ul>
+</li>
+<li><p>重启Apache</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/apache2/bin/httpd -k start|restart|stop</div></pre></td></tr></table></figure>
+</li>
+<li><p>访问页面</p>
+<p><a href="http://your-domain/c-server-status" target="_blank" rel="external">http://your-domain/c-server-status</a></p>
+<p><a href="http://your-domain/c-server-status?refresh=5" target="_blank" rel="external">http://your-domain/c-server-status?refresh=5</a></p>
+<p><a href="http://www.apache.org/server-status" target="_blank" rel="external">官网示例</a></p>
+</li>
+<li><p>监控参数</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>参数描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total Accesses</td>
+<td>服务器自启动来接收到的请求连接数</td>
+</tr>
+<tr>
+<td>Total kBytes</td>
+<td>传输的总数据量，单位是KB</td>
+</tr>
+<tr>
+<td>CPULoad</td>
+<td>NCPU负荷</td>
+</tr>
+<tr>
+<td>Uptime</td>
+<td>运行时间，单位秒</td>
+</tr>
+<tr>
+<td>ReqPerSec</td>
+<td>每秒请求数</td>
+</tr>
+<tr>
+<td>BytesPerSec</td>
+<td>每秒传输数据量，单位B/s</td>
+</tr>
+<tr>
+<td>BytesPerReq</td>
+<td>平均每个请求的数据传输量（事实上就是BytesPerSec/BytesPerSec）</td>
+</tr>
+<tr>
+<td>BusyWorkers</td>
+<td>在跑的进程数</td>
+</tr>
+<tr>
+<td>IdleWorkers</td>
+<td>空闲的进程数</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Linux下通过命令来实现监控"><a href="#Linux下通过命令来实现监控" class="headerlink" title="Linux下通过命令来实现监控"></a>Linux下通过命令来实现监控</h2><ol>
+<li>ps 查看httpd进程数<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ps -ef | grep httpd | wc -l</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>当连接数多了，他就会生出更多进程来处理请求。当然这结果包含 grep httpd 的进程输出，所以一般来说实际进程数比输出结果少1</p>
+<ol>
+<li>用netstat来查看当前连接数<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$netstat -ant | grep &quot;:80&quot; | wc -l</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>连接数目并不等于httpd线程数目，当然连接数目越多，httpd进程数就有可能数会增多。上面的返回结果数目，有可能包括多种连接状态，比如 LISTEN、ESTABLISHED、TIME_WAIT等等，可以加入状态关键字进一步过滤，得到想要的结果。</p>
+<ol>
+<li><p>实时检测httpd连接数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#watch -n 1 -d &quot;pgrep httpd|wc -l&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>计算httpd进程占用内在的平均数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#ps aux|grep -v grep|awk &apos;/httpd/&#123;sum+=$6&#125;; END&#123;print sum/n&#125;&apos;</div></pre></td></tr></table></figure>
+</li>
+<li><p>查看Apache的并发请求数及期TCP连接状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#netstat -n | awk &apos;/^tcp/&#123;++S[$NF]&#125;END&#123;for(a in S) print a, S[a]&#125;&apos;</div><div class="line">返回结果示例：</div><div class="line">LAST_ACK 5</div><div class="line">SYN_RECV 30       #表示正在等待处理的请求数；</div><div class="line">ESTABLISHED 1597  #表示正常数据传输状态；</div><div class="line">FIN_WAIT1 51</div><div class="line">FIN_WAIT2 504</div><div class="line">TIME_WAIT 1057    #表示处理完毕,等待超时结束的请求数</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>常见的连接状态</p>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CLOSED</td>
+<td>无连接是活动的或正在进行</td>
+</tr>
+<tr>
+<td>LISTEN</td>
+<td>服务器在等待进入呼叫</td>
+</tr>
+<tr>
+<td>SYN_RECV</td>
+<td>一个连接请求已经到达,等待确认</td>
+</tr>
+<tr>
+<td>SYN_SENT</td>
+<td>应用已经开始,打开一个连接</td>
+</tr>
+<tr>
+<td>ESTABLISHED</td>
+<td>正常数据传输状态</td>
+</tr>
+<tr>
+<td>FIN_WAIT1</td>
+<td>应用说它已经完成</td>
+</tr>
+<tr>
+<td>FIN_WAIT2</td>
+<td>另一边已同意释放</td>
+</tr>
+<tr>
+<td>ITMED_WAIT</td>
+<td>等待所有分组死掉</td>
+</tr>
+<tr>
+<td>CLOSING</td>
+<td>两边同时尝试关闭</td>
+</tr>
+<tr>
+<td>TIME_WAIT</td>
+<td>另一边已初始化一个释放</td>
+</tr>
+<tr>
+<td>LAST_ACK</td>
+<td>等待所有分组死掉</td>
+</tr>
+</tbody>
+</table>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/08/22/Apache多处理模块整理/" itemprop="url">
+                  Apache 并行处理模块小结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-22T22:36:00+08:00" content="2016-08-22">
+              2016-08-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Apache/" itemprop="url" rel="index">
+                    <span itemprop="name">Apache</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/22/Apache多处理模块整理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/22/Apache多处理模块整理/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Apache 2.X  支持插入式并行处理模块，称为多路处理模块 MPM，（Multi-Processing Modules）它是一个用于选择和处理网络端口的绑定，接收请求并指派子进程处理来自客户端的请求的一个Apache模块。和其他Apache模块相比，它最大的区别是，在任何时间， 必须有一个，而且只有一个 MPM 加载到服务器中。</p>
+<blockquote>
+<p>原理就是增加服务器服务进程或线程数量，是服务器可同时处理更多用户请求。</p>
+</blockquote>
+<h2 id="如何为Apache选择并安装一个合适的MPM模块"><a href="#如何为Apache选择并安装一个合适的MPM模块" class="headerlink" title="如何为Apache选择并安装一个合适的MPM模块"></a>如何为Apache选择并安装一个合适的MPM模块</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>MPM 必须在编译前夕，配置时指定，然后编译到服务器程序中。</p>
+<p>即在执行 configure 时，使用参数 –with-mpm=NAME 来指定一个希望安装的MPM模块。NAME 是指定的 MPM 名称。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">./configure --prefix=/usr/local/apache2 --with-mpm=worker</div><div class="line">make &amp; make install</div></pre></td></tr></table></figure></p>
+<p>或者也可以编译为支持指定的几种或者全部MPM，之后通过修改配置来更换具体使用哪种MPM。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">--enable-mpms-shared=&apos;prefork worker&apos;</div><div class="line">--enable-mpms-shared=all</div></pre></td></tr></table></figure></p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">./configure --prefix=/usr/local/apache2 --enable-mpms-shared=all</div><div class="line">···</div></pre></td></tr></table></figure></p>
+<p>安装成功之后，会在modules文件夹下，自动编译出我们指定的MPM的so模块，在httpd.conf中修改Apache的多处理模式MPM可以切换不同MPM模块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#LoadModule mpm_prefork_module modules/mod_mpm_prefork.so</div><div class="line">LoadModule mpm_worker_module modules/mod_mpm_worker.so</div><div class="line">#LoadModule mpm_event_module modules/mod_mpm_event.so</div></pre></td></tr></table></figure></p>
+<h3 id="如何查看当前使用的是哪种MPM模块"><a href="#如何查看当前使用的是哪种MPM模块" class="headerlink" title="如何查看当前使用的是哪种MPM模块"></a>如何查看当前使用的是哪种MPM模块</h3><ol>
+<li><p>使用 ./httpd -l 来确定选择的 MPM。 此命令会列出编译到服务器程序中的所有模块，包括 MPM。例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ httpd -l</div><div class="line">Compiled in modules:</div><div class="line">  core.c</div><div class="line">  mod_so.c</div><div class="line">  http_core.c</div><div class="line">  prefork.c</div></pre></td></tr></table></figure>
+<p>如上显示，我们呢当前安装的是以prefork方式工作的MPM模块。</p>
+</li>
+<li><p>使用./httpd -V 来确定当前使用的MPM模块。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">$ httpd -V</div><div class="line">Server version: Apache/2.4.18 (Unix)</div><div class="line">Server built:   Feb 20 2016 20:03:19</div><div class="line">Server&apos;s Module Magic Number: 20120211:52</div><div class="line">Server loaded:  APR 1.4.8, APR-UTIL 1.5.2</div><div class="line">Compiled using: APR 1.4.8, APR-UTIL 1.5.2</div><div class="line">Architecture:   64-bit</div><div class="line">Server MPM:     prefork</div><div class="line">  threaded:     no</div><div class="line">    forked:     yes (variable process count)</div><div class="line">Server compiled with....</div><div class="line"> -D APR_HAS_SENDFILE</div><div class="line"> -D APR_HAS_MMAP</div><div class="line"> -D APR_HAVE_IPV6 (IPv4-mapped addresses enabled)</div><div class="line"> -D APR_USE_FLOCK_SERIALIZE</div><div class="line"> -D APR_USE_PTHREAD_SERIALIZE</div><div class="line"> -D SINGLE_LISTEN_UNSERIALIZED_ACCEPT</div><div class="line"> -D APR_HAS_OTHER_CHILD</div><div class="line"> -D AP_HAVE_RELIABLE_PIPED_LOGS</div><div class="line"> -D DYNAMIC_MODULE_LIMIT=256</div><div class="line"> -D HTTPD_ROOT=&quot;/usr&quot;</div><div class="line"> -D SUEXEC_BIN=&quot;/usr/bin/suexec&quot;</div><div class="line"> -D DEFAULT_PIDLOG=&quot;/private/var/run/httpd.pid&quot;</div><div class="line"> -D DEFAULT_SCOREBOARD=&quot;logs/apache_runtime_status&quot;</div><div class="line"> -D DEFAULT_ERRORLOG=&quot;logs/error_log&quot;</div><div class="line"> -D AP_TYPES_CONFIG_FILE=&quot;/private/etc/apache2/mime.types&quot;</div><div class="line"> -D SERVER_CONFIG_FILE=&quot;/private/etc/apache2/httpd.conf&quot;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="常见的几种MPM模块以及它们之间的区别"><a href="#常见的几种MPM模块以及它们之间的区别" class="headerlink" title="常见的几种MPM模块以及它们之间的区别"></a>常见的几种MPM模块以及它们之间的区别</h2><p>如果我们在编译的时候没有明确选择使用哪种MPM模块，那么Apache将会根据不同的系统选择不同的MPM模块进行编译安装。</p>
+<table>
+<thead>
+<tr>
+<th>系统</th>
+<th>默认MPM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BeOS</td>
+<td>beos</td>
+</tr>
+<tr>
+<td>Netware</td>
+<td>mpm_netware</td>
+</tr>
+<tr>
+<td>OS/2</td>
+<td>mpmt_os2</td>
+</tr>
+<tr>
+<td>Unix</td>
+<td>prefork</td>
+</tr>
+<tr>
+<td>Windows</td>
+<td>mpm_winnt</td>
+</tr>
+</tbody>
+</table>
+<p>对于类UNIX系统，根据不同的场景需要我们可以选择使用不同的MPM模块。</p>
+<ul>
+<li>prefork</li>
+<li>worker</li>
+<li>event</li>
+</ul>
+<h3 id="prefork-MPM"><a href="#prefork-MPM" class="headerlink" title="prefork MPM"></a>prefork MPM</h3><blockquote>
+<p>非线程型的、预派生的MPM</p>
+</blockquote>
+<p><strong>原理：</strong> 启动之初，就预先fork一些子进程，然后等待请求进来。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># prefork MPM</div><div class="line"># StartServers: number of server processes to start</div><div class="line"># MinSpareServers: minimum number of server processes which are kept spare</div><div class="line"># MaxSpareServers: maximum number of server processes which are kept spare</div><div class="line"># MaxRequestWorkers: maximum number of server processes allowed to start</div><div class="line"># MaxConnectionsPerChild: maximum number of connections a server process serves</div><div class="line">#                         before terminating</div><div class="line">&lt;IfModule mpm_prefork_module&gt;</div><div class="line">    StartServers             1  #推荐 小=默认，中=20~50，大=50~100</div><div class="line">    MinSpareServers          1  #推荐 与 StartServers 保持一致</div><div class="line">    MaxSpareServers         10  #推荐 小=20，中=30~80，大=80~120</div><div class="line">    MaxRequestWorkers      250  #推荐 小=500，中=500~1500，大=1500~3000</div><div class="line">    MaxConnectionsPerChild   0  #推荐 小=10000，中或大10000~50000</div><div class="line">    #ServerLimit           250  #推荐 与 MaxRequestWorkers 保持一致，当MaxRequestWorkers 值超过256，则需要增加该值配置</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure></p>
+<p>启动时建立<code>StartServers</code>个子进程，然后按每秒创建指数级个进程数，直到达到<code>MinSpareServers</code>个进程（最多增到每秒32个）。如果空闲进程大于<code>MaxSpareServers</code>，则检查kill掉一些空闲进程。</p>
+<p><code>MaxRequestWorkers</code>指定Apache最多可以同时同时处理的请求数，即进程数，当请求数多余这个值之后，多余的请求就会进入请求队列等待处理（默认不能大于256）。但可以通过设定ServerLimit来增大限制数，serverlimit最大为20000。apache2.3.1之前的版本该参数叫 MaxClients 。当我们的服务器资源很多，但访问却很慢时，我们就可以试一下增大该值，来提高服务器的请求处理能力。<br><code>MaxConnectionsPerChild</code>每个子进程可处理的请求数。处理完之后子进程就会自动销毁。<code>0</code>表示无限，永不销毁。</p>
+<ul>
+<li>优点：成熟稳定，兼容所有新老模块。同时，不需要担心线程安全的问题。</li>
+<li>缺点：相对于线程，进程相对占用更多的系统资源，消耗更多的内存。所以不擅长处理高并发请求。</li>
+</ul>
+<h3 id="worker-MPM"><a href="#worker-MPM" class="headerlink" title="worker MPM"></a>worker MPM</h3><blockquote>
+<p>支持混合的多线程、多进程的MPM。相比于prefork，worker采用了多进程和多线程混合模式，所以在使用中它占据更少的内存，在高并发情况下表现更优秀。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># worker MPM</div><div class="line"># StartServers: initial number of server processes to start</div><div class="line"># MinSpareThreads: minimum number of worker threads which are kept spare</div><div class="line"># MaxSpareThreads: maximum number of worker threads which are kept spare</div><div class="line"># ThreadsPerChild: constant umber of worker threads in each server process</div><div class="line"># MaxRequestWorkers: maximum number of worker threads</div><div class="line"># MaxConnectionsPerChild: maximum number of connections a server process serves</div><div class="line">#                         before terminating</div><div class="line">&lt;IfModule mpm_worker_module&gt;</div><div class="line">    StartServers             3  #推荐 小=默认，中=3~5，大=5~10</div><div class="line">    MinSpareThreads         75  #推荐 小=默认，中=50~100，大=100~200</div><div class="line">    MaxSpareThreads        250  #推荐 小=默认，中=80~160，大=200~400</div><div class="line">    ThreadsPerChild         25  #推荐 小=默认，中=50~100，大=100~200</div><div class="line">    MaxRequestWorkers      400  #推荐 小=500，中=500~1500，大=1500~3000</div><div class="line">    MaxConnectionsPerChild   0  #推荐 小=10000，中或大=10000~50000</div><div class="line">    #ServerLimit           250  #推荐 当 MaxRequestWorkers/ThreadsPerChild 大于16时，则需要增加该值配置。并且该值必须大于等于MaxRequestWorkers/ThreadsPerChild 的值</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure>
+<p><code>ThreadsPerChild</code> 每个进程包含线程数<br><code>MaxSpareThreads</code> 定义最大空闲线程数，超过则清理</p>
+<ul>
+<li>优点：占用更少系统资源，高并发情况下表现更优秀。</li>
+<li>缺点：必须考虑线程安全的问题。</li>
+</ul>
+<h3 id="event-MPM"><a href="#event-MPM" class="headerlink" title="event MPM"></a>event MPM</h3><blockquote>
+<p>worker方式的升级版，也采用多进程和多线程混合模式，并且解决了在 <code>keep-alive</code> 情况下，长期被占用的线程的资源浪费问题。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># event MPM</div><div class="line"># StartServers: initial number of server processes to start</div><div class="line"># MinSpareThreads: minimum number of worker threads which are kept spare</div><div class="line"># MaxSpareThreads: maximum number of worker threads which are kept spare</div><div class="line"># ThreadsPerChild: constant number of worker threads in each server process</div><div class="line"># MaxRequestWorkers: maximum number of worker threads</div><div class="line"># MaxConnectionsPerChild: maximum number of connections a server process serves</div><div class="line">#                         before terminating</div><div class="line">&lt;IfModule mpm_event_module&gt;</div><div class="line">    StartServers             3</div><div class="line">    MinSpareThreads         75</div><div class="line">    MaxSpareThreads        250</div><div class="line">    ThreadsPerChild         25</div><div class="line">    MaxRequestWorkers      400</div><div class="line">    MaxConnectionsPerChild   0</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>优点：更好的高并发请求处理能力。</li>
+<li>缺点：兼容性问题可能不是很好（最新的官方自带的模块，已经全部支持event MPM了），需要Linux系统（Linux 2.6+）对EPoll的支持，才能启用</li>
+</ul>
+<p><strong>Tips：</strong></p>
+<ul>
+<li><strong><em>空闲子进程：</em></strong> 即没有正在处理请求的子进程。</li>
+<li><strong><em>请求等待队列：</em></strong> 任何超过 MaxClients 或 MaxRequestWorkers 限制的请求都将进入到等待队列，直到收到 ListenBacklog 指令限制的最大值为止（默认 ListenBacklog 511）</li>
+<li><strong><em>ServerLimit：</em></strong> 该值表示Apache允许创建的最大进程数。值得注意的是 Apache在编译的时候会有一个硬限制 ServerLimit 20000 ，你不能超过该值。该值如果设置过高，将会有过多的内存被分配，可能会导致Apache 无法启动或者不稳定的情况。</li>
+</ul>
+<h2 id="简单测试对比"><a href="#简单测试对比" class="headerlink" title="简单测试对比"></a>简单测试对比</h2><p>对上面三种模式，我们做简单的测试进行对比。</p>
+<h3 id="静态页面"><a href="#静态页面" class="headerlink" title="静态页面"></a>静态页面</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./ab -k -c 200 -n 200000 192.168.1.234/index.html</div></pre></td></tr></table></figure>
+<p>结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">prefork：9556QPS</div><div class="line">worker ：11038QPS</div><div class="line">event ：10224QPS</div></pre></td></tr></table></figure></p>
+<h3 id="PHP页面"><a href="#PHP页面" class="headerlink" title="PHP页面"></a>PHP页面</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./ab -k -c 200 -n 200000 192.168.1.234/index.php  #echo &quot;hello world&quot;;</div></pre></td></tr></table></figure>
+<p>结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">prefork：6094QPS</div><div class="line">worker ：7411QPS</div><div class="line">event ：7089QPS</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/12/hexo常用命令/" itemprop="url">
                   hexo常用命令
                 </a>
@@ -820,7 +1312,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">5</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -837,7 +1329,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
