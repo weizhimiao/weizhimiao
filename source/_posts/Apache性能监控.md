@@ -5,16 +5,19 @@ categories:
   - Apache
 author: zhimiao
 date: 2016-08-23 16:10:00
+update: 2016-08-24 10:00:00
 ---
 谈到服务器性能监控，目前市面上有很多成熟的关于性能监控的产品可供我们使用。比如 [Cloud Insight](http://www.oneapm.com/ci/feature.html)
 。但通过 Apache本身提供的监控模块或者通过一些简单的bash命令也能实现简单的监控。
+
+<!-- more -->
 
 ## Linux下通过Server-status来监控Apache
 
 1. 加载 mod_status.so 模块
 > mod_status, Apache状态管理模块
 
-```
+    ```
 #在httpd.conf中加入下面这句或将其前面注释去掉
 LoadModule status_module modules/server_status.so
 ```
@@ -52,6 +55,7 @@ ExtendedStatus on
   [官网示例](http://www.apache.org/server-status)
 
 5. 监控参数
+
 
 参数名称|	参数描述
 -------|---------

@@ -8,6 +8,11 @@ categories:
 - Web
 ---
 谈到web性能优化，一般我们可以把它分为两个部分来讲，页面加载（Page Speed）和页面渲染（Page Performance）。
+
+
+<!-- more -->
+
+
 # 页面加载
 
 ## 加快服务器脚本的计算速度
