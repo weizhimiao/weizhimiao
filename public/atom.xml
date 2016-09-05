@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://weizhimiao.github.io/"/>
-  <updated>2016-09-02T02:25:59.000Z</updated>
+  <updated>2016-09-05T11:44:28.000Z</updated>
   <id>https://weizhimiao.github.io/</id>
   
   <author>
@@ -14,6 +14,201 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>.htaccess 文件功能及配置介绍</title>
+    <link href="https://weizhimiao.github.io/2016/09/05/htaccess%20%E6%96%87%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%8F%8A%E9%85%8D%E7%BD%AE%E6%95%B4%E7%90%86/"/>
+    <id>https://weizhimiao.github.io/2016/09/05/htaccess 文件功能及配置整理/</id>
+    <published>2016-09-05T02:00:00.000Z</published>
+    <updated>2016-09-05T11:44:28.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>URL重定向是<code>.htaccess</code> 的重头戏，它可以将长地址转为短地址、将动态地址转为静态地址、重定向丢失的页面、防止盗链、实现自动语言转换等等。</p>
+<p><strong>难点：</strong> 正则表达式的运用和理解。</p>
+<a id="more"></a>
+<h2 id="准备-mod-rewrite"><a href="#准备-mod-rewrite" class="headerlink" title="准备 mod_rewrite"></a>准备 mod_rewrite</h2><p>要实现上述功能，首先得装上mod_rewrite 模块，并确保启用了该模块。</p>
+<p>一般我们会这样设置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;IfModule mod_rewrite.c&gt;</div><div class="line">  Options +FollowSymlinks</div><div class="line">  RewriteEngine on</div><div class="line">  ...</div><div class="line"></div><div class="line">&lt;IfModule&gt;</div></pre></td></tr></table></figure></p>
+<p><strong><em>Tips:</em></strong></p>
+<ul>
+<li>FollowSymlinks:必须启用，这是rewrite引擎的安全要求。</li>
+<li>RewriteEngine：用于启用rewrite引擎。</li>
+</ul>
+<h2 id="URL重写及重定向"><a href="#URL重写及重定向" class="headerlink" title="URL重写及重定向"></a>URL重写及重定向</h2><p>利用<code>.htaccess</code> 文件可以实现对URL的重写（rewrite）与重定向（redirect）</p>
+<ol>
+<li>将<code>.html</code> 映射到<code>.php</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Options +FollowSymlinks</div><div class="line">RewriteEngine on</div><div class="line">RewriteRule ^(.*)\.html$ $1.php [NC]</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong><em>注</em></strong></p>
+<ul>
+<li>必须保证服务器上有对应的<code>.php</code> 文件，否则会报 404</li>
+<li>浏览器和搜索引擎可同事用<code>.html</code> 和<code>.php</code> 访问到网页。</li>
+<li>[NC] 表示不区分大小写</li>
+</ul>
+<ol>
+<li>临时重定向（R=302）与永久重定向（R=301）<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteBase /</div><div class="line">RewriteRule ^(.*)\.html $1.php [R,NC,L]</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong><em>注</em></strong></p>
+<ul>
+<li><p>RewriteBase 定义了重写基准目录。</p>
+<blockquote>
+<p>例如，如虚拟机站点设在 /var/www目录下，删除这行这行将会导致重定向到 <a href="http://your-domain/var/www/1.php" target="_blank" rel="external">http://your-domain/var/www/1.php</a>. 显然这不是我们想要的。如果RewriteBase /base/，那么将会重定向到<a href="http://your-domain/base/1.php" target="_blank" rel="external">http://your-domain/base/1.php</a>.</p>
+</blockquote>
+</li>
+<li><p>对于重写基准目录，我们还可以将 <code>$1.php</code> 变成 <code>/$1.php</code> 实现直接变换，这是就可以将 <code>RewriteBase</code> 省略。</p>
+</li>
+<li><p>字母<code>L</code>，表示如果能匹配到本条规则，则本条规则是最后一条（Last），忽略之后的规则。</p>
+<p>永久重定向（R=301）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteRule ^(.*)$ http://newdomain/$1 [R=301,NC,L]</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<ol>
+<li><p>为什么要用重定向</p>
+<ol>
+<li>通过重定向，浏览器知道页面位置发生变化，从而会改变地址栏到新的地址。</li>
+<li>通过重定向，搜索引擎能够发现位置发生变化，从而进行更新。</li>
+<li>R=302，R=301都是亲搜索引擎的，是SEO的一个重要手段。</li>
+<li><strong>URL重写用于将页面映射到本站的另一页面，而重写到另一个域名下，则安重定向处理。</strong></li>
+</ol>
+</li>
+<li><p>长短地址处理   </p>
+<blockquote>
+<p>利用URL重写，方便实现长短地址转换。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteRule ^grab /public/files/download/download.php</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>若访问 <a href="http://your-domain/grab?file=my.zip" target="_blank" rel="external">http://your-domain/grab?file=my.zip</a>, 则页面会实际执行该页面 <a href="http://your-domain/public/files/download/download.php?file=my.zip" target="_blank" rel="external">http://your-domain/public/files/download/download.php?file=my.zip</a></p>
+<ol>
+<li>去掉WWW<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(.*)$</div><div class="line">RewriteRule (.*) http://www\.%1/$1 [R=301,L]</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong><em>注:</em></strong></p>
+<ul>
+<li>RewriteCond 定义了规则的生效条件。即，一个RewriteRule规则之前可以有一个或者多个RewriteCond指令。</li>
+<li>语法：RewriteCond TestString CondPattern [flags]</li>
+</ul>
+<ol>
+<li><p>加上www</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(.*)$</div><div class="line">RewriteRule (.*) http://www\.%1/$1 [R=301,L]</div></pre></td></tr></table></figure>
+</li>
+<li><p>支持多域名访问</p>
+<blockquote>
+<p>如果有些主机不支持多域名，那么<code>.htaccess</code> 或许也可以解决。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#one.com</div><div class="line">RewriteCond %&#123;HTTP_HOST&#125; one.com</div><div class="line">RewriteCond %&#123;REQUEST_URI&#125; !^/one</div><div class="line">RewriteRule ^(.*)$ /one/$1 [L]</div><div class="line">#two.com</div><div class="line">RewriteCond %&#123;HTTP_HOST&#125; two.com</div><div class="line">RewriteCond %&#123;REQUEST_URI&#125; !^/two</div><div class="line">RewriteRule ^(.*)$ /two/$1 [L]</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="改写查询字符串-QUERY-STRING"><a href="#改写查询字符串-QUERY-STRING" class="headerlink" title="改写查询字符串 QUERY_STRING"></a>改写查询字符串 QUERY_STRING</h2><p>所谓查询字符串，就是值URL问号之后的部分。</p>
+<ol>
+<li>利用QSA转换 QUERY_STRING<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteRule /page/(.+) /page.php?page=$1 [QSA]</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong><em>注：</em></strong></p>
+<ol>
+<li>将会把 <code>/page/123?one=two</code> 映射到 <code>/page.php?page=123&amp;one=two</code>.</li>
+<li>如果没有[QAS] 标志，则会映射到<code>page.php?page=123</code>.</li>
+<li><p>如果没有用到小括号正则表达式，就不需要 QSA</p>
+<blockquote>
+<p>例，将 <code>/simple/flat/link</code> =&gt; server-side.php?first-var=flat&amp;second-var=link</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteRule ^/simple/([^/]+)/([^/]+)/? /server-side.php?first-var=$1&amp;second-var=$2 [QSA]</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>利用RewriteCond 改写 QUERY_STRING</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RewriteEngine On</div><div class="line">RewriteCond %&#123;QUERY_STRING&#125; foo=(.*)</div><div class="line">RewriteRule ^grab(.*) /page.php?bar=%1</div></pre></td></tr></table></figure>
+<ul>
+<li>该规则将访问请求<a href="http://mysite/grab?foo=bar转换为http://mysite/page.php?bar=bar" target="_blank" rel="external">http://mysite/grab?foo=bar转换为http://mysite/page.php?bar=bar</a></li>
+<li>RewriteCond用于捕获查询字符串（QUERY_STRING）中变量foo的值，并存储在%1中</li>
+<li>QUERY_STRING是Apache定义的“变量=值”向量（数组）</li>
+</ul>
+</li>
+<li><p>RewriteCond与QSA双剑齐发</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RewriteEngine On</div><div class="line">RewriteCond %&#123;QUERY_STRING&#125; foo=(.+)</div><div class="line">RewriteRule ^grab/(.*) /%1/index.php?file=$1 [QSA]</div></pre></td></tr></table></figure>
+<ul>
+<li>会把/grab/foobar.zip?level=5&amp;foo=bar 映射到 /bar/index.php?file=foobar.zip&amp;level=5&amp;foo=bar</li>
+<li>转换后根目录是bar目录</li>
+<li>foobar.zip?level=5中的“问号”变成了foobar.zip&amp;level=5中的“与”符号</li>
+</ul>
+</li>
+<li><p>剥离查询字符串</p>
+<blockquote>
+<p>只需在要开始剥离的链接后面加个“问号”，并且不要启用QSA标志，就可剥离查询字符串</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">RewriteEngine On</div><div class="line"># Whatever QS is</div><div class="line">RewriteCond %&#123;QUERY_STRING&#125; .</div><div class="line"># I don&apos;t want it with Question mark</div><div class="line">RewriteRule foo.php(.*) /foo.php? [L]</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h2><ol>
+<li><p>文件访问控制</p>
+<blockquote>
+<p>利用Order、Files及FilesMatch命令实现的访问控制可以满足大部分要求，但是当用户被拒绝时，他们看到的是硕大的“403 Forbidden”，如果你不想伤害用户的感情，就需要显示一些别的东西，通过Rewrite就可以实现这个特性：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">RewriteEngine On</div><div class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !^(.+)\.css$</div><div class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !^(.+)\.js$</div><div class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !special.zip$</div><div class="line">RewriteRule ^(.+)$ /chat/ [NC]</div></pre></td></tr></table></figure>
+<ul>
+<li>该规则将仅允许用户请求.css, .js类型的文件，还有special.zip文件</li>
+<li>RewriteRule 后面指定了限制规则：映射到/char/目录下处理</li>
+<li>RewriteCond 后面的“感叹号”(!)起到了“否定”作用，它表明，对不满足后面正则表达式者应用RewriteRule规则，也就是对当前类型的文件将不应用规则</li>
+<li>RewriteCond 之间是以逻辑“与”连接的，也就是只有当三个条件都不满足时才执行RewriteRule</li>
+<li>该规则也会限制访问.htm, .jpg等格式</li>
+<li>该规则不可以放在虚拟站点根目录（/）下，否则会死循环</li>
+<li>如果是二级目录，如/test/，那么传入RewriteCond的参数是以/test/开始的，因此从(.+)获得的文件名也含有/test/，读者必须对此多加小心</li>
+<li>要想仅获得文件名，可以将(.+)替换成([^/]+)，并且去掉符号^，如下所示：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">RewriteEngine On</div><div class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !([^/]+)\.css$</div><div class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !([^/]+)\.js$</div><div class="line">RewriteRule ^(.+)$ /chat/ [NC]</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>用.htaccess阻止User-agent</p>
+<blockquote>
+<p>User-agent用于浏览器向服务器“自报家门”，更确切的说是所有HTTP客户端都得用User-agent向服务器“自报家门”，以便服务器对不同的客户端作出不同响应。比如，某站点可能需要对浏览器、搜索引擎crawl还有各类下载工具作出不同的响应。服务器就是通过所谓的User-agent进行区分的。<br>如果你的服务器提供某些资源的下载，那么你就必须多加小心诸如“迅雷”等下载软件，因为它们可能把你网站资源吸干，并且影响你的正常访客访问。</p>
+</blockquote>
+<p>为此，我们可以利用Rewrite限制某些UA的访问：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteCond %&#123;HTTP_USER_AGENT&#125; 2.0.50727 [NC]</div><div class="line">RewriteRule . abuse.txt [L]</div></pre></td></tr></table></figure>
+<ul>
+<li>该规则限制“迅雷”客户端下载资源，并将下载文件重置到abuse.txt</li>
+<li>HTTP_USER_AGENT是Apache的内置变量</li>
+<li>2.0.50727是迅雷User-agent的特征字符串</li>
+<li>RewriteRule后面的“点”表示“任意URI”，也就是不管请求的是什么，都输出abuse.txt</li>
+</ul>
+<p>通常，我们不会仅限制一个UA。利用[OR]即可实现对多个UA作出统一处理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteCond %&#123;HTTP_USER_AGENT&#125; 2.0.50727 [NC,OR]</div><div class="line">RewriteCond %&#123;HTTP_USER_AGENT&#125; ^BlackWidow [NC,OR]</div><div class="line"># etc..</div><div class="line">RewriteCond %&#123;HTTP_USER_AGENT&#125; ^Net\ Vampire [NC]</div><div class="line">RewriteRule . abuse.txt [L]</div></pre></td></tr></table></figure>
+</li>
+<li><p>用.htaccess阻止盗链(hot-linking)</p>
+<blockquote>
+<p>盗链，特别是图片，是非常可耻的！哪怕将图片复制到自己服务器上，也比盗用他人的图片链接来得光彩！</p>
+</blockquote>
+<p>.htaccess的Rewrite功能可以提供非常简单、有效的方法阻止这种可耻行为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">RewriteEngine On</div><div class="line">RewriteCond %&#123;HTTP_REFERER&#125; !^$</div><div class="line">RewriteCond %&#123;HTTP_REFERER&#125; !^http://(www\.)?lesca\.me/ [NC]</div><div class="line">RewriteCond %&#123;REQUEST_URI&#125; !hotlink\.png [NC]</div><div class="line">RewriteRule .*\.(gif|jpg|png)$ /hotlink.png [NC]</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>简单解释一下该规则的功能：</p>
+<ul>
+<li>除本站以外其他网站都不得引用本站图片，具体可以理解为</li>
+<li>如果引用站点为“空”或者是“本站”，或者，所引用对象是“hotlink.png”，那么就允许访问</li>
+<li>再次提醒，RewriteCond之间默认的逻辑连接词是逻辑“与”</li>
+<li>这里的难点是理解逻辑转换，即德·摩根定律</li>
+</ul>
+<h2 id="htaccess-缺点"><a href="#htaccess-缺点" class="headerlink" title="htaccess 缺点"></a>htaccess 缺点</h2><p>说了这么多<code>.htaccess</code> 可以实现这么多的功能，那么它有没有什么缺点呢?</p>
+<p>答案是，当然有。由于开启了<code>.htaccess</code> 文件，当我们访问了一个地址对应到服务器端某个目录之后<code>Apache</code> 会遍历并解析每层目录下的<code>.htaccess</code> 文件，所有对服务器性能会有一定的影响。</p>
+<p>但是具体影响有多大，要不要使用还需要看具体的环境。或者需要进行前后对比在进行选择。</p>
+<h2 id="htaccess-生成工具"><a href="#htaccess-生成工具" class="headerlink" title="htaccess 生成工具"></a>htaccess 生成工具</h2><p>说了这么多，貌似真正配置起来还是非常麻烦。不用着急目前网上有非常多<code>htaccess</code> 在线生成工具，可大大方便我们进行完成各种配置。</p>
+<p>如：<a href="http://htaccess.uuz.cc/" target="_blank" rel="external">smarty .htaccess :http://htaccess.uuz.cc/</a></p>
+<p><a href="http://lesca.me/archives/htaccess-rewrite.html" target="_blank" rel="external">转自:Lesca技术宅</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;URL重定向是&lt;code&gt;.htaccess&lt;/code&gt; 的重头戏，它可以将长地址转为短地址、将动态地址转为静态地址、重定向丢失的页面、防止盗链、实现自动语言转换等等。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;难点：&lt;/strong&gt; 正则表达式的运用和理解。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Apache" scheme="https://weizhimiao.github.io/categories/Apache/"/>
+    
+    
+      <category term="Apache" scheme="https://weizhimiao.github.io/tags/Apache/"/>
+    
+      <category term=".htaccess" scheme="https://weizhimiao.github.io/tags/htaccess/"/>
+    
+  </entry>
   
   <entry>
     <title>Apache分层与模块化体系结构小结</title>
@@ -781,9 +976,9 @@
       <category term="Apache" scheme="https://weizhimiao.github.io/categories/Apache/"/>
     
     
-      <category term="Web服务器" scheme="https://weizhimiao.github.io/tags/Web%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
-    
       <category term="Apache" scheme="https://weizhimiao.github.io/tags/Apache/"/>
+    
+      <category term="Web服务器" scheme="https://weizhimiao.github.io/tags/Web%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
     
   </entry>
   
