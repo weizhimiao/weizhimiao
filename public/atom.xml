@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://weizhimiao.github.io/"/>
-  <updated>2016-09-05T11:44:28.000Z</updated>
+  <updated>2016-09-06T15:17:20.000Z</updated>
   <id>https://weizhimiao.github.io/</id>
   
   <author>
@@ -14,6 +14,116 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Apache 虚拟主机配置</title>
+    <link href="https://weizhimiao.github.io/2016/09/05/Apache%20%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E9%85%8D%E7%BD%AE/"/>
+    <id>https://weizhimiao.github.io/2016/09/05/Apache 虚拟主机配置/</id>
+    <published>2016-09-05T14:10:00.000Z</published>
+    <updated>2016-09-06T15:17:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>虚拟主机指的是在单一机器上运行多个网站。</p>
+<ul>
+<li>常见的共有三种不同的配置方式。<ul>
+<li>基于域名</li>
+<li>基于端口（需要增加相对应的 <code>Listen</code> 指令）</li>
+<li>基于IP</li>
+</ul>
+</li>
+<li>动态虚拟主机配置。</li>
+</ul>
+<a id="more"></a>
+<h2 id="常规配置方式"><a href="#常规配置方式" class="headerlink" title="常规配置方式"></a>常规配置方式</h2><h3 id="在httpd-conf-文件中启用-httpd-vhost-conf-配置文件"><a href="#在httpd-conf-文件中启用-httpd-vhost-conf-配置文件" class="headerlink" title="在httpd.conf 文件中启用 httpd-vhost.conf 配置文件"></a>在<code>httpd.conf</code> 文件中启用 <code>httpd-vhost.conf</code> 配置文件</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># Virtual hosts</div><div class="line">Include conf/extra/httpd-vhosts.conf</div></pre></td></tr></table></figure>
+<h3 id="配置-httpd-vhosts-conf"><a href="#配置-httpd-vhosts-conf" class="headerlink" title="配置 httpd-vhosts.conf"></a>配置 <code>httpd-vhosts.conf</code></h3><ol>
+<li>基于域名配置<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;VirtualHost *:80&gt;</div><div class="line">    ServerName domain1.com</div><div class="line">    DocumentRoot  "D:\data\domain1.com"</div><div class="line">    &lt;Directory /&gt;</div><div class="line">        Options +Indexes +FollowSymLinks +ExecCGI</div><div class="line">        AllowOverride All</div><div class="line">        Order allow,deny</div><div class="line">        Allow from all</div><div class="line">        Require all granted</div><div class="line">    &lt;/Directory&gt;</div><div class="line">    DirectoryIndex index.php index.html</div><div class="line">&lt;/VirtualHost&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>注：( <code>Require all granted</code> )</strong></p>
+<blockquote>
+<p>Apache 2.4 及以上版本访问控制与2.2有所变换，所以在2.4+的版本需要在目录下添加 <code>Require all granted</code> 否则会出现访问不到的情况。<br><a href="http://httpd.apache.org/docs/2.4/upgrading.html" target="_blank" rel="external">更多详情，点击查看</a></p>
+</blockquote>
+<ol>
+<li><p>基于端口配置</p>
+<ul>
+<li><p>基于端口的配置需要先在 <code>httpd.conf</code> 中添加相应端口的 <code>Listen</code> 指令。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#httpd.conf</div><div class="line">Listen 81</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>httpd-vhosts.conf</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;VirtualHost *:81&gt;</div><div class="line">    #ServerName 10.235.65.14:81</div><div class="line">    DocumentRoot  "D:\data\domain3.com"</div><div class="line">    &lt;Directory /&gt;</div><div class="line">        Options +Indexes +FollowSymLinks +ExecCGI</div><div class="line">        AllowOverride All</div><div class="line">        Order allow,deny</div><div class="line">        Allow from all</div><div class="line">        Require all granted</div><div class="line">    &lt;/Directory&gt;</div><div class="line">    DirectoryIndex index.php index.html</div><div class="line">&lt;/VirtualHost&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>基于IP地址配置</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;VirtualHost *:80&gt;</div><div class="line">    ServerName 10.235.65.14</div><div class="line">    DocumentRoot  "D:\data\domain2.com"</div><div class="line">    &lt;Directory /&gt;</div><div class="line">        Options +Indexes +FollowSymLinks +ExecCGI</div><div class="line">        AllowOverride All</div><div class="line">        Order allow,deny</div><div class="line">        Allow from all</div><div class="line">        Require all granted</div><div class="line">    &lt;/Directory&gt;</div><div class="line">    DirectoryIndex index.php index.html</div><div class="line">&lt;/VirtualHost&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>配置完成之后，需要重启 Apache 配置才会生效。在浏览器中输入相应的域名，IP或者端口进行查看，能正常输出我们分别设置的内容，则说明我们配置成功。</p>
+<h2 id="动态虚拟主机配置"><a href="#动态虚拟主机配置" class="headerlink" title="动态虚拟主机配置"></a>动态虚拟主机配置</h2><p>上面谈到的虚拟主机配置方式，每次配置完成之后都必须重启 Apache 才能生效。并且当我们要配置多个虚拟主机时就需要增加多个 <code>&lt;VirtualHost &gt;···&lt;/VirtualHost&gt;</code> ,显得繁琐。那么有没有一种更好，更有效的方式来进行配置呢？</p>
+<p><code>mod_vhost_alias</code> 模块为我们提供了一种动态配置虚拟主机的方式。我们只需设置一个目录，将不同的站点资源按照一定的规则放到该目录下即可。并且不用修改配置文件，且不用重新启动Apache服务器。</p>
+<p>动态配置优缺点：</p>
+<ul>
+<li>优点：<ul>
+<li>配置文件更小，意味着Apache启动会更快，并且占用内存更少。正重要的是，更小的配置结构更易于维护，我们人为配置出错的机会更小。</li>
+<li>添加新的虚拟主机，我们只需要根据相应的规则在指定的，目录下面创建文件即可。不需要重新配置和启动Apache。</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>无法针对每个虚拟主机设置不同的日志文件。如果我们有很多的虚拟主机这确实是一个非常糟糕的事情。我们可以选择将日志记录到一个管道或者FIFO，在另一端再将日志文件按照不同的虚拟主机进行分割。比如 <a href="http://httpd.apache.org/docs/current/programs/split-logfile.html" target="_blank" rel="external"><code>aplit-logfile</code></a> 工具。</li>
+</ul>
+</li>
+</ul>
+<h3 id="配置方法"><a href="#配置方法" class="headerlink" title="配置方法"></a>配置方法</h3><ul>
+<li><p>准备</p>
+<ul>
+<li>在 <code>httpd.conf</code> 中开启 <code>mod_vhost_alias.so</code> 模块,并添加一个新的子配置文件 <code>httpd-vhost-alias.conf</code> 方便我们配置。<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#开启 mod_vhost_alias.so 模块</div><div class="line">LoadModule vhost_alias_module libexec/apache2/mod_vhost_alias.so</div><div class="line">#去掉 LoadModule 前面的注释</div><div class="line">···</div><div class="line">#添加子配置文件</div><div class="line">#Include /private/etc/apache2/extra/httpd-vhost-alias.conf</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>配置</p>
+<ul>
+<li>打开子配置文件 <code>httpd-vhost-alias.conf</code> ，添加以下配置。<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">UseCanonicalName Off</div><div class="line">VirtualDocumentRoot /data1/www/%0</div><div class="line">&lt;Directory "/data1/www/"&gt;</div><div class="line">  Options None</div><div class="line">  AllowOverride None</div><div class="line">  Order allow,deny</div><div class="line">  Allow from all</div><div class="line">&lt;/Directory&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>保存，并重启 Apache 。</p>
+</li>
+<li><p>测试</p>
+<ul>
+<li>分别绑定不同的域名到服务器，并在 <code>/data1/www/</code> 目录下按照不同域名新建目录，将个站点的资源分别放进相应的目录。<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">127.0.0.1 domain1.com</div><div class="line">127.0.0.1 domain2.com</div><div class="line">127.0.0.1 domain3.com</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/data1/www/domain1.com/index.html   <span class="comment">#this is domain1.com test text</span></div><div class="line">/data1/www/domain2.com/index.html   <span class="comment">#this is domain2.com test text</span></div></pre></td></tr></table></figure>
+<ul>
+<li>浏览器分别访问 <code>domain1.com</code> 和 <code>domain2.com</code> ，查看是否是否能够正确显示出相应内容。</li>
+<li>在 <code>/data1/www/</code> 目录下继续添加 <code>/data1/www/domain3.com/index.html</code> ,然后继续用浏览器访问 <code>domain3.com</code> ，查看是否能将 <code>/data1/www/domain3.com/index.html</code> 的内容输出。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><a href="http://httpd.apache.org/docs/current/vhosts/mass.html" target="_blank" rel="external">更多配置参数及方法，请查看</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;虚拟主机指的是在单一机器上运行多个网站。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;常见的共有三种不同的配置方式。&lt;ul&gt;
+&lt;li&gt;基于域名&lt;/li&gt;
+&lt;li&gt;基于端口（需要增加相对应的 &lt;code&gt;Listen&lt;/code&gt; 指令）&lt;/li&gt;
+&lt;li&gt;基于IP&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;动态虚拟主机配置。&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="Apache" scheme="https://weizhimiao.github.io/categories/Apache/"/>
+    
+    
+      <category term="Apache虚拟主机" scheme="https://weizhimiao.github.io/tags/Apache%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA/"/>
+    
+  </entry>
   
   <entry>
     <title>.htaccess 文件功能及配置介绍</title>
