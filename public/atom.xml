@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://weizhimiao.github.io/"/>
-  <updated>2016-09-06T15:17:20.000Z</updated>
+  <updated>2016-09-08T05:28:54.000Z</updated>
   <id>https://weizhimiao.github.io/</id>
   
   <author>
@@ -14,6 +14,203 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Apache中PHP支持模式小结</title>
+    <link href="https://weizhimiao.github.io/2016/09/07/Apache%20%E4%B8%ADPHP%E6%94%AF%E6%8C%81%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://weizhimiao.github.io/2016/09/07/Apache 中PHP支持模式/</id>
+    <published>2016-09-07T12:10:00.000Z</published>
+    <updated>2016-09-08T05:28:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Apache通过不同的方式，能够实现对PHP支持。常见的几种支持方式有：</p>
+<ul>
+<li>模块支持（handler模式）</li>
+<li>CGI模块</li>
+<li>FastCGI模式，用Apache内置进程管理器</li>
+<li>FastCGI模式，用php-fpm进程管理器</li>
+</ul>
+<a id="more"></a>
+<h2 id="Apache安装、PHP安装、mod-fastcgi模块安装"><a href="#Apache安装、PHP安装、mod-fastcgi模块安装" class="headerlink" title="Apache安装、PHP安装、mod_fastcgi模块安装"></a>Apache安装、PHP安装、mod_fastcgi模块安装</h2><h3 id="Apache-安装"><a href="#Apache-安装" class="headerlink" title="Apache 安装"></a>Apache 安装</h3><p>略过···</p>
+<h3 id="PHP-安装"><a href="#PHP-安装" class="headerlink" title="PHP 安装"></a>PHP 安装</h3><p>示例：安装PHP5.6</p>
+<ol>
+<li><p>下载、解压</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@iZ23a3ua2stZ ~]<span class="comment">#wget http://cn2.php.net/distributions/php-5.6.25.tar.gz</span></div><div class="line">[root@iZ23a3ua2stZ ~]<span class="comment">#tar -zxvf php-5.6.25.tar.gz</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>./configure</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@iZ23a3ua2stZ ~]<span class="comment">#cd php-5.6.25</span></div><div class="line">[root@iZ23a3ua2stZ php-5.6.25]<span class="comment">#./configure --with-apxs2=/usr/local/apache2/bin/apxs --with-mysql --enable-fpm --prefix=/usr/local/php5.6</span></div></pre></td></tr></table></figure>
+<p><code>--enable-fpm</code> 用来来激活对 FPM 的支持</p>
+<p><code>--with-apxs2</code> 该参数作用是把php的解释模块编译成so 文件，并自动添加到 Apache的modules中，并自动在 <code>httpd.conf</code> 中加入对应的加载指令<code>LoadModule php5_module modules/libphp5.so</code></p>
+<blockquote>
+<p><strong>报错1：</strong> 在运行 <code>./configure</code> 时可能会报以下这样的错误。提示我们 运行不了 <code>apxs</code> 这个工具。</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Sorry, I cannot run apxs.  Possible reasons follow:</div><div class="line">1 Perl is not installed</div><div class="line">2 apxs was not found. Try to pass the path using --with-apxs2=/path/to/apxs</div><div class="line">3 Apache was not built using --enable-so (the apxs usage page is displayed)</div><div class="line">The output of /usr/<span class="built_in">local</span>/apache2/bin/apxs follows:</div><div class="line">./configure: /usr/<span class="built_in">local</span>/apache2/bin/apxs: /replace/with/path/to/perl/interpreter: bad interpreter: No such file or directory</div><div class="line">configure: error: Aborting</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>之前我们在Apache模块化体系的小结中介绍过 <code>apxs</code> 实际是一个 perl 脚本。上面报错中 <code>/replace/with/path/to/perl/interpreter</code> 提示我们找不到这个文件，<br>这行实际是 perl 脚本的声明，我们需要将它改成我们服务器perl脚本的地址。</p>
+</blockquote>
+  <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@iZ23a3ua2stZ php-5.6.25]<span class="comment"># which perl</span></div><div class="line">/usr/bin/perl</div><div class="line">[root@iZ23a3ua2stZ php-5.6.25]<span class="comment"># vi /usr/local/apache2/bin/apxs</span></div><div class="line"><span class="comment">#将第一行 `#!/replace/with/path/to/perl/interpreter` 改成 `#!/usr/bin/perl`</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>报错2：</strong> configure: error: xml2-config not found. Please check your libxml2 installation.<br>提示我们缺少 <code>libxml2</code>。安装 <code>libxml2</code>.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@iZ23a3ua2stZ php-5.6.25]<span class="comment">#yum install libxml2</span></div><div class="line">[root@iZ23a3ua2stZ php-5.6.25]<span class="comment">#yum install libxml2-devel -y</span></div></pre></td></tr></table></figure></p>
+</blockquote>
+<p>  <code>./configure</code> 成功会有如下显示。</p>
+  <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">+--------------------------------------------------------------------+</div><div class="line">| License:                                                           |</div><div class="line">| This software is subject to the PHP License, available <span class="keyword">in</span> this     |</div><div class="line">| distribution <span class="keyword">in</span> the file LICENSE.  By continuing this installation |</div><div class="line">| process, you are bound by the terms of this license agreement.     |</div><div class="line">| If you <span class="keyword">do</span> not agree with the terms of this license, you must abort |</div><div class="line">| the installation process at this point.                            |</div><div class="line">+--------------------------------------------------------------------+</div><div class="line">Thank you <span class="keyword">for</span> using PHP.</div><div class="line">config.status: creating php5.spec</div><div class="line">config.status: creating main/build-defs.h</div><div class="line">config.status: creating scripts/phpize</div><div class="line">config.status: creating scripts/man1/phpize.1</div><div class="line">config.status: creating scripts/php-config</div><div class="line">config.status: creating scripts/man1/php-config.1</div><div class="line">config.status: creating sapi/cli/php.1</div><div class="line">config.status: creating sapi/fpm/php-fpm.conf</div><div class="line">config.status: creating sapi/fpm/init.d.php-fpm</div><div class="line">config.status: creating sapi/fpm/php-fpm.service</div><div class="line">config.status: creating sapi/fpm/php-fpm.8</div><div class="line">config.status: creating sapi/fpm/status.html</div><div class="line">config.status: creating sapi/cgi/php-cgi.1</div><div class="line">config.status: creating ext/phar/phar.1</div><div class="line">config.status: creating ext/phar/phar.phar.1</div><div class="line">config.status: creating main/php_config.h</div></pre></td></tr></table></figure>
+<ol>
+<li>编译<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@iZ23a3ua2stZ php-5.6.25]<span class="comment">#make &amp;&amp; make install</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>成功安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">Build complete.</div><div class="line">Don&apos;t forget to run &apos;make test&apos;.</div><div class="line">Installing PHP SAPI module:       apache2handler</div><div class="line">/usr/local/apache2/build/instdso.sh SH_LIBTOOL=&apos;/usr/local/apache2/build/libtool&apos; libphp5.la /usr/local/apache2/modules</div><div class="line">/usr/local/apache2/build/libtool --mode=install install libphp5.la /usr/local/apache2/modules/</div><div class="line">libtool: install: install .libs/libphp5.so /usr/local/apache2/modules/libphp5.so</div><div class="line">libtool: install: install .libs/libphp5.lai /usr/local/apache2/modules/libphp5.la</div><div class="line">libtool: install: warning: remember to run `libtool --finish /root/php-5.6.25/libs&apos;</div><div class="line">chmod 755 /usr/local/apache2/modules/libphp5.so</div><div class="line">[activating module `php5&apos; in /usr/local/apache2/conf/httpd.conf]</div><div class="line">Installing shared extensions:     /usr/local/php5.6/lib/php/extensions/no-debug-zts-20131226/</div><div class="line">Installing PHP CLI binary:        /usr/local/php5.6/bin/</div><div class="line">Installing PHP CLI man page:      /usr/local/php5.6/php/man/man1/</div><div class="line">Installing PHP FPM binary:        /usr/local/php5.6/sbin/</div><div class="line">Installing PHP FPM config:        /usr/local/php5.6/etc/</div><div class="line">Installing PHP FPM man page:      /usr/local/php5.6/php/man/man8/</div><div class="line">Installing PHP FPM status page:   /usr/local/php5.6/php/php/fpm/</div><div class="line">Installing PHP CGI binary:        /usr/local/php5.6/bin/</div><div class="line">Installing PHP CGI man page:      /usr/local/php5.6/php/man/man1/</div><div class="line">Installing build environment:     /usr/local/php5.6/lib/php/build/</div><div class="line">Installing header files:           /usr/local/php5.6/include/php/</div><div class="line">Installing helper programs:       /usr/local/php5.6/bin/</div><div class="line">  program: phpize</div><div class="line">  program: php-config</div><div class="line">Installing man pages:             /usr/local/php5.6/php/man/man1/</div><div class="line">  page: phpize.1</div><div class="line">  page: php-config.1</div><div class="line">Installing PEAR environment:      /usr/local/php5.6/lib/php/</div><div class="line">[PEAR] Archive_Tar    - installed: 1.4.0</div><div class="line">[PEAR] Console_Getopt - installed: 1.4.1</div><div class="line">[PEAR] Structures_Graph- installed: 1.1.1</div><div class="line">[PEAR] XML_Util       - installed: 1.3.0</div><div class="line">[PEAR] PEAR           - installed: 1.10.1</div><div class="line">Wrote PEAR system config file at: /usr/local/php5.6/etc/pear.conf</div><div class="line">You may want to add: /usr/local/php5.6/lib/php to your php.ini include_path</div><div class="line">/root/php-5.6.25/build/shtool install -c ext/phar/phar.phar /usr/local/php5.6/bin</div><div class="line">ln -s -f phar.phar /usr/local/php5.6/bin/phar</div><div class="line">Installing PDO headers:           /usr/local/php5.6/include/php/ext/pdo/</div></pre></td></tr></table></figure></p>
+<ol>
+<li>设置配置文件<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cp php.ini-development /usr/local/php5.6/lib/php.ini</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="mod-fastcgi-模块安装"><a href="#mod-fastcgi-模块安装" class="headerlink" title="mod_fastcgi 模块安装"></a>mod_fastcgi 模块安装</h3><ol>
+<li><p>下载、解压<br><a href="http://n.sinaimg.cn/games/3ece443e/20160907/mod_fastcgi-2.4.6.tar.gz" target="_blank" rel="external">mod_fastcgi-2.4.6.tar.gz</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@iZ23a3ua2stZ ~]#wget http://n.sinaimg.cn/games/3ece443e/20160907/mod_fastcgi-2.4.6.tar.gz</div><div class="line">[root@iZ23a3ua2stZ ~]#tar -zxvf mod_fastcgi-2.4.6.tar.gz</div><div class="line">cd mod_fastcgi-2.4.6</div></pre></td></tr></table></figure>
+</li>
+<li><p>编译、安装</p>
+<ul>
+<li>查看安装说明<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">[root@iZ23a3ua2stZ ~]#cd mod_fastcgi-2.4.6</div><div class="line">[root@iZ23a3ua2stZ mod_fastcgi-2.4.6]#</div><div class="line">#查看 安装说明文件 (Apache 1.x请查看 INSTALL 文件)</div><div class="line">[root@iZ23a3ua2stZ mod_fastcgi-2.4.6]#vi INSTALL.AP2  </div><div class="line">···</div><div class="line">$ cd &lt;mod_fastcgi_dir&gt;</div><div class="line">$ cp Makefile.AP2 Makefile</div><div class="line">$ make</div><div class="line">$ make install</div><div class="line">If your Apache2 installation isn&apos;t in /usr/local/apache2, then</div><div class="line">set the top_dir variable when running make (or edit the</div><div class="line">Makefile), e.g.</div><div class="line">  $ make top_dir=/opt/httpd/2.0.40</div><div class="line">Add an entry to httpd.conf like this:</div><div class="line">  LoadModule fastcgi_module modules/mod_fastcgi.so</div><div class="line">···</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<p>虽然说明文件里描述的很清楚，但我们按照里面的步骤进行编译时，会产生报错。于是找了一大圈问题，发现在 <code>apache2.4</code> 下安装 <code>mod_fastcgi 2.4.6</code> 编译时汇报错，需要打个补丁。</p>
+<ol>
+<li><p>打补丁<br><a href="http://n.sinaimg.cn/games/3ece443e/20160907/byte-compile-against-apache24.diff" target="_blank" rel="external">补丁下载地址</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@iZ23a3ua2stZ mod_fastcgi-2.4.6]<span class="comment">#wget http://n.sinaimg.cn/games/3ece443e/20160907/byte-compile-against-apache24.diff</span></div><div class="line">[root@iZ23a3ua2stZ mod_fastcgi-2.4.6]<span class="comment">#patch -p1 &lt; byte-compile-against-apache24.diff</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>继续编译、安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@iZ23a3ua2stZ mod_fastcgi-2.4.6]#make</div><div class="line">[root@iZ23a3ua2stZ mod_fastcgi-2.4.6]#make install</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>然后查看<code>/usr/local/apache2/modules/</code> 下是否已经编译成功 <code>mod_fastcgi.so</code>，<br>并在 <code>httpd.conf</code> 中添加 <code>LoadModule fastcgi_module modules/mod_fastcgi.so</code> 指令。</p>
+<h2 id="各种模式配置"><a href="#各种模式配置" class="headerlink" title="各种模式配置"></a>各种模式配置</h2><h3 id="模块模式（最简单）"><a href="#模块模式（最简单）" class="headerlink" title="模块模式（最简单）"></a>模块模式（最简单）</h3><ul>
+<li><p>在 <code>httpd.conf</code> 中添加或者开启</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LoadModule php5_module modules/libphp5.so</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后在 <code>httpd.conf</code> 中找到 <code>&lt;IfModule mime_module&gt;</code> 配置段，在其中添加</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">AddType application/x-httpd-php .php</div><div class="line">AddType application/x-httpd-php-source .phps</div></pre></td></tr></table></figure>
+</li>
+<li><p>重启 Apache ,在站点目录下添加 <code>index.php</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    phpinfo();</div><div class="line"> <span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>通过浏览器访问该文件，能够正确输出，则说明配置成功。</p>
+<blockquote>
+<p>这时 <code>phpinfo();</code> 输出的 <code>Server API</code> 应该为 <code>Apache 2.0 Handler</code>.</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="CGI模式"><a href="#CGI模式" class="headerlink" title="CGI模式"></a>CGI模式</h3><ul>
+<li>在 <code>httpd.conf</code> 中添加或者开启<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">LoadModule cgid_module modules/mod_cgid.so</div><div class="line">LoadModule actions_module modules/mod_actions.so</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p><code>mod_cgid</code> ,CGI 处理模块。在某些Unix操作系统上，在多线程服务器fork一个进程是一个代价非常大的操作，因为新进程将会复制父进程所有的线程。为了避免每次CGI调用都进行这样代价大的操作。mod_cgid 采用外部守护进程来负责分派子进程来运行CGI脚本。主服务器使用Unix套接字来与此守护进程进行通信。</p>
+<p>如果在Apache编译过程中选择了多线程MPM，那么Apache将会默认安装mod_cgid模块，而不是mod_cgi。但在用户配置使用层面，mod_cgid 和 mod_cgi 基本相同，唯一例外的是，mod_cgid 通过指令 ScriptSock 给socket命名用于与CGI守护进程通信。</p>
+<p><code>mod_actions</code> ,模块提供基于基于媒体类型或请求方法来执行CGI脚本的方法。该模块引入 <code>Action</code> 和 <code>Script</code> 两个指令。</p>
+</blockquote>
+<ul>
+<li><p>然后在 <code>httpd.conf</code> 中找到 <code>&lt;IfModule mime_module&gt;</code> 配置段，在其中添加</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">AddHandler php-cgi .php</div><div class="line">Action php-cgi "/cgi-bin/php-cgi"</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后在 <code>httpd.conf</code> 中找到 <code>&lt;IfModule cgid_module&gt;</code> 配置段，在其中添加</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;IfModule cgid_module&gt;</div><div class="line">    Scriptsock /var/run/cgid.sock</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>重启 Apache ,在站点目录下添加 <code>index.php</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    phpinfo();</div><div class="line"> <span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>通过浏览器访问该文件，能够正确输出，则说明配置成功。</p>
+<blockquote>
+<p>这时 <code>phpinfo();</code> 输出的 <code>Server API</code> 应该为 <code>CGI/FastCGI</code>.</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="FastCGI模式，用Apache内置进程管理器"><a href="#FastCGI模式，用Apache内置进程管理器" class="headerlink" title="FastCGI模式，用Apache内置进程管理器"></a>FastCGI模式，用Apache内置进程管理器</h3><ul>
+<li><p>在 <code>httpd.conf</code> 中添加或者开启</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">LoadModule fastcgi_module modules/mod_fastcgi.so</div><div class="line">LoadModule actions_module modules/mod_actions.so</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后在 <code>httpd.conf</code> 中添加 <code>&lt;IfModule fastcgi_module&gt;</code> 配置段</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;IfModule fastcgi_module&gt;</div><div class="line">   FastCgiServer /usr/local/apache2/cgi-bin/php-cgi -processes 20</div><div class="line">   AddType application/x-httpd-php .php</div><div class="line">   AddHandler php-fastcgi .php</div><div class="line">   Action php-fastcgi /cgi-bin/php-cgi</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p><code>-processes 20</code> ,配置启动的进程数</p>
+</blockquote>
+<ul>
+<li><p>重启 Apache ,执行 <code>ps aux | grep php</code> 查看相应 php-cgi 进程是否启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">[root@iZ23a3ua2stZ apache2]<span class="comment"># ps aux | grep php</span></div><div class="line">daemon   21382  0.0  0.5  42104  5604 ?        S    11:30   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21435  0.0  0.4  42104  4724 ?        S    11:30   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21436  0.0  0.4  42104  4732 ?        S    11:30   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21437  0.0  0.4  42104  4724 ?        S    11:30   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21438  0.0  0.4  42104  4724 ?        S    11:30   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21439  0.0  0.4  42104  4728 ?        S    11:30   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21440  0.0  0.4  42104  4728 ?        S    11:30   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21441  0.0  0.4  42104  4728 ?        S    11:30   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21442  0.0  0.4  42104  4728 ?        S    11:30   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21443  0.0  0.4  42104  4728 ?        S    11:30   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21444  0.0  0.4  42104  4728 ?        S    11:30   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21445  0.0  0.4  42104  4724 ?        S    11:30   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21446  0.0  0.4  42104  4728 ?        S    11:30   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21447  0.0  0.4  42104  4724 ?        S    11:30   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21448  0.0  0.4  42104  4728 ?        S    11:30   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21449  0.0  0.4  42104  4728 ?        S    11:31   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21450  0.0  0.4  42104  4724 ?        S    11:31   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21451  0.0  0.4  42104  4724 ?        S    11:31   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21452  0.0  0.4  42104  4732 ?        S    11:31   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">daemon   21453  0.0  0.4  42104  4728 ?        S    11:31   0:00 /usr/<span class="built_in">local</span>/apache2/cgi-bin/php-cgi</div><div class="line">root     21455  0.0  0.0 112668   984 pts/0    S+   11:31   0:00 grep --color=auto php</div></pre></td></tr></table></figure>
+</li>
+<li><p>在站点目录下添加 <code>index.php</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    phpinfo();</div><div class="line"> <span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>通过浏览器访问该文件，能够正确输出，则说明配置成功。</p>
+<blockquote>
+<p>这时 <code>phpinfo();</code> 输出的 <code>Server API</code> 应该为 <code>CGI/FastCGI</code>.</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="FastCGI模式，使用php-fpm进程管理器"><a href="#FastCGI模式，使用php-fpm进程管理器" class="headerlink" title="FastCGI模式，使用php-fpm进程管理器"></a>FastCGI模式，使用php-fpm进程管理器</h3><ul>
+<li><p>在 <code>httpd.conf</code> 中添加或者开启</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">LoadModule fastcgi_module modules/mod_fastcgi.so</div><div class="line">LoadModule actions_module modules/mod_actions.so</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后在 <code>httpd.conf</code> 中添加 <code>&lt;IfModule fastcgi_module&gt;</code> 配置段</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;IfModule fastcgi_module&gt;</div><div class="line">   FastCgiExternalServer /usr/local/apache2/cgi-bin/php-cgi -host 127.0.0.1:9000</div><div class="line">   AddType application/x-httpd-php .php</div><div class="line">   AddHandler php-fastcgi .php</div><div class="line">   Action php-fastcgi /cgi-bin/php-cgi</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p><code>-host 127.0.0.1:9000</code> ,是php-fpm的开启端口，所以我们还需要把php-fpm打开。</p>
+</blockquote>
+<ul>
+<li>启动 <code>php-fpm</code><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@iZ23a3ua2stZ apache2]<span class="comment"># /usr/local/php5.6/sbin/php-fpm</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>/usr/local/php/sbin/php-fpm{start|stop|quit|restart|reload|logrotate}</p>
+<p>–start 启动php的fastcgi进程<br>–stop 强制终止php的fastcgi进程<br>–quit 平滑终止php的fastcgi进程<br>–restart 重启php的fastcgi进程<br>–reload 重新平滑加载php的php.ini<br>–logrotate 重新启用log文件</p>
+</blockquote>
+<ul>
+<li><p>重启 Apache ,执行 <code>ps aux | grep php</code> 查看相应 php-cgi 进程是否启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@iZ23a3ua2stZ apache2]<span class="comment"># ps aux | grep php</span></div><div class="line">[root@iZ23a3ua2stZ apache2]<span class="comment"># ps aux | grep php</span></div><div class="line">root     21680  0.0  0.3 147920  3660 ?        Ss   12:41   0:00 php-fpm: master process (/usr/<span class="built_in">local</span>/php5.6/etc/php-fpm.conf)</div><div class="line">nobody   21681  0.0  0.3 147920  3312 ?        S    12:41   0:00 php-fpm: pool www</div><div class="line">nobody   21682  0.0  0.4 147920  4888 ?        S    12:41   0:00 php-fpm: pool www</div><div class="line">root     21684  0.0  0.0 112664   980 pts/3    S+   12:42   0:00 grep --color=auto php</div></pre></td></tr></table></figure>
+</li>
+<li><p>在站点目录下添加 <code>index.php</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    phpinfo();</div><div class="line"> <span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>通过浏览器访问该文件，能够正确输出，则说明配置成功。</p>
+<blockquote>
+<p>这时 <code>phpinfo();</code> 输出的 <code>Server API</code> 应该为 <code>FPM/FastCGI</code>.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="各种模式比较"><a href="#各种模式比较" class="headerlink" title="各种模式比较"></a>各种模式比较</h2><blockquote>
+<p>有空再整理。。。</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Apache通过不同的方式，能够实现对PHP支持。常见的几种支持方式有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;模块支持（handler模式）&lt;/li&gt;
+&lt;li&gt;CGI模块&lt;/li&gt;
+&lt;li&gt;FastCGI模式，用Apache内置进程管理器&lt;/li&gt;
+&lt;li&gt;FastCGI模式，用php-fpm进程管理器&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="Apache" scheme="https://weizhimiao.github.io/categories/Apache/"/>
+    
+      <category term="PHP" scheme="https://weizhimiao.github.io/categories/Apache/PHP/"/>
+    
+    
+      <category term="Apache" scheme="https://weizhimiao.github.io/tags/Apache/"/>
+    
+      <category term="PHP" scheme="https://weizhimiao.github.io/tags/PHP/"/>
+    
+      <category term="Apache&amp;PHP" scheme="https://weizhimiao.github.io/tags/Apache-PHP/"/>
+    
+  </entry>
   
   <entry>
     <title>Apache 虚拟主机配置</title>
