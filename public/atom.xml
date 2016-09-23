@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://weizhimiao.github.io/"/>
-  <updated>2016-09-08T05:28:54.000Z</updated>
+  <updated>2016-09-20T15:09:18.000Z</updated>
   <id>https://weizhimiao.github.io/</id>
   
   <author>
@@ -14,6 +14,779 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Mac下包管理工具homebrew</title>
+    <link href="https://weizhimiao.github.io/2016/09/20/Mac%E4%B8%8B%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7homebrew/"/>
+    <id>https://weizhimiao.github.io/2016/09/20/Mac下包管理工具homebrew/</id>
+    <published>2016-09-20T15:30:00.000Z</published>
+    <updated>2016-09-20T15:09:18.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a>Homebrew</h2><p>homebrew,一个在Mac OS上的软件包管理工具。是一款有Ruby开发的智能包管理系统.</p>
+<p><a href="http://brew.sh" target="_blank" rel="external">官网地址</a></p>
+<ul>
+<li><p>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/bin/ruby <span class="_">-e</span> <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)</span>"</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>功能：</p>
+<blockquote>
+<p>软件包管理。homebrew会将套件安装到独立目录，并将文件软连接链接到/usr/local</p>
+</blockquote>
+</li>
+<li><p>命令格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">$ brew -h</div><div class="line">Example usage:</div><div class="line">  brew search [TEXT|/REGEX/]</div><div class="line">  brew (info|home|options) [FORMULA...]</div><div class="line">  brew install FORMULA...</div><div class="line">  brew update</div><div class="line">  brew upgrade [FORMULA...]</div><div class="line">  brew uninstall FORMULA...</div><div class="line">  brew list [FORMULA...]</div><div class="line">Troubleshooting:</div><div class="line">  brew config</div><div class="line">  brew doctor</div><div class="line">  brew install -vd FORMULA</div><div class="line">Brewing:</div><div class="line">  brew create [URL [--no-fetch]]</div><div class="line">  brew edit [FORMULA...]</div><div class="line">  https://github.com/Homebrew/brew/blob/master/share/doc/homebrew/Formula-Cookbook.md</div><div class="line">Further help:</div><div class="line">  man brew</div><div class="line">  brew help [COMMAND]</div><div class="line">  brew home</div></pre></td></tr></table></figure>
+</li>
+<li><p>示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ brew install wget</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="brew-cask"><a href="#brew-cask" class="headerlink" title="brew-cask"></a>brew-cask</h2><p>brew-cask,是一套建立在homebrew之上的Mac软件安装命令行工具。其与brew的区别是，后者侧重与软件套件和软件环境的配置安装。</p>
+<p><a href="http://caskrom.github.io" target="_blank" rel="external">官网</a></p>
+<ul>
+<li><p>安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ brew install brew-cask</div></pre></td></tr></table></figure>
+</li>
+<li><p>命令格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">$ brew cask -h</div><div class="line">brew-cask provides a friendly homebrew-style CLI workflow for the</div><div class="line">administration of macOS applications distributed as binaries.</div><div class="line">Commands:</div><div class="line">    audit                  verifies installability of Casks</div><div class="line">    cat                    dump raw source of the given Cask to the standard output</div><div class="line">    cleanup                cleans up cached downloads and tracker symlinks</div><div class="line">    create                 creates the given Cask and opens it in an editor</div><div class="line">    doctor                 checks for configuration issues</div><div class="line">    edit                   edits the given Cask</div><div class="line">    fetch                  downloads remote application files to local cache</div><div class="line">    home                   opens the homepage of the given Cask</div><div class="line">    info                   displays information about the given Cask</div><div class="line">    install                installs the given Cask</div><div class="line">    list                   with no args, lists installed Casks; given installed Casks, lists staged files</div><div class="line">    search                 searches all known Casks</div><div class="line">    style                  checks Cask style using RuboCop</div><div class="line">    uninstall              uninstalls the given Cask</div><div class="line">    update                 a synonym for &apos;brew update&apos;</div><div class="line">    zap                    zaps all files associated with the given Cask</div><div class="line">See also &quot;man brew-cask&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>示例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ brew cask install iterm2</div></pre></td></tr></table></figure>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Homebrew&quot;&gt;&lt;a href=&quot;#Homebrew&quot; class=&quot;headerlink&quot; title=&quot;Homebrew&quot;&gt;&lt;/a&gt;Homebrew&lt;/h2&gt;&lt;p&gt;homebrew,一个在Mac OS上的软件包管理工具。是一款有Ruby开发的智能包管理系统
+    
+    </summary>
+    
+      <category term="Mac" scheme="https://weizhimiao.github.io/categories/Mac/"/>
+    
+    
+      <category term="Mac" scheme="https://weizhimiao.github.io/tags/Mac/"/>
+    
+      <category term="homebrew" scheme="https://weizhimiao.github.io/tags/homebrew/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Schema数据类型优化</title>
+    <link href="https://weizhimiao.github.io/2016/09/19/Schema%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%BC%98%E5%8C%96/"/>
+    <id>https://weizhimiao.github.io/2016/09/19/Schema数据类型优化/</id>
+    <published>2016-09-19T10:30:00.000Z</published>
+    <updated>2016-09-20T14:35:05.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>良好的数据路逻辑设计和物理设计是高性能的基石，所以要打造一个高性能的数据库服务，在Schema设计之初就应该需要权衡各种因素。</p>
+<h2 id="选择最优化的数据类型"><a href="#选择最优化的数据类型" class="headerlink" title="选择最优化的数据类型"></a>选择最优化的数据类型</h2><p>数据库支持的数据类型非常多，选择一个正确的数据类型对于获得高性能至关重要。</p>
+<p>选择合适数据类型的几个原则：</p>
+<ol>
+<li><p>更小的通常更好<br>一般情况下，应该尽量使用可以正确数据类型的最小数据类型。但也要确保没有低估需要存储的范围。</p>
+</li>
+<li><p>简单就好<br>简单的数据类型的操作通常需要更少的CPU周期。例如，</p>
+</li>
+</ol>
+<ul>
+<li>整型比字符串操作代价更低</li>
+<li>使用MySQL内建的数据类型（比如，date、time、datetime），比用字符串更快</li>
+<li>使用整型存储一个IP地址，比用一个字符串更好</li>
+</ul>
+<ol>
+<li>尽量避免使用NULL<br>因为如果在查询中包含有NULL的列，对MySQL来说更难优化。所以通常情况下，最好指定列为 NOT NULL。</li>
+</ol>
+<p><strong>TIPS：</strong><br>datetime和timstamp列都可以存储相同类型的数据（时间和日期，都可以精确到秒），然而timestamp实际只使用datetime一般的存储空间。但另一方面，timestamp允许的时间范围要小的多。</p>
+<a id="more"></a>
+<h2 id="基本的数据类型"><a href="#基本的数据类型" class="headerlink" title="基本的数据类型"></a>基本的数据类型</h2><ol>
+<li><p>数字</p>
+<ol>
+<li><p>整数</p>
+<ul>
+<li>TINYINT (8)</li>
+<li>SMALLINT (16)</li>
+<li>MEDIUMINT (24)</li>
+<li>INT (32)</li>
+<li>BIGINT (64)</li>
+</ul>
+<blockquote>
+<p><strong>TIPS1:</strong> 整数类型有可选的 unsigned 属性，表示不允许有负值，如果将要使用的列不会出现负值的话，加上这个属性，将会可以使正数的上限增加一倍。</p>
+<p><strong>TIPS2:</strong> int(1)与int(11)，对于存储和计算来说，这两者本质是没有区别的；两者只是在MySQL的一些交互工具中略有差别（比如，MySQL命令行客户端，用来控制显示字符的个数）。</p>
+</blockquote>
+</li>
+<li><p>实数</p>
+<ul>
+<li><p>作用</p>
+<blockquote>
+<p>存储小数</p>
+<p>存储比BIGINT更大的数</p>
+</blockquote>
+</li>
+<li><p>float</p>
+</li>
+<li><p>double</p>
+<blockquote>
+<p>float 和 double支持使用标准的浮点运算进行近似的计算。</p>
+</blockquote>
+</li>
+<li><p>decimal</p>
+<blockquote>
+<p>decimal 类型用于存储精确的小数，支持精确的计算。</p>
+<p>由于CPU不支持对decimal的直接计算，所以对decimal的精确计算是由MySQL服务器自己来实现。</p>
+<p><strong>Tips:</strong> 因为在进行精确计算时需要额外的空间和计算开销，所以尽量只对小数才使用decimal。比如，财务数据。另外如果数据量大的话，可以考虑使用bigint代替decimal，只需将存储的货币单位根据小数的位数乘以相应的倍数即可。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>字符串</p>
+<ol>
+<li><p>CHAR</p>
+<blockquote>
+<p>char 类型是定长的：MySQL是根据定义的字符串长度分配足够的空间。<br>char，适合存储很短的字符串，或者所有值的长度都差不多的的字符串。例如，密码的md5值。<br>另外，char还适合存储经常进行变更的值，相比于vachar，char类型很少会产生碎片。所以这一类的列，会比varchar更好。</p>
+</blockquote>
+</li>
+<li><p>VARCHAR</p>
+<blockquote>
+<p>varchar 类型用于存储可变长的字符串。它只使用必要的空间，所以比定长类型更节省空间。</p>
+<p>varchar,需要使用一个或者两个额外的字节来存储当前字符串的长度信息；如果列的长度小于或等于255个字节，则只需要一个字节表示，否则就需要两个字节来表示。</p>
+<p>下面的这些情况适合使用varchar</p>
+<ol>
+<li>字符串列的长度比平均长度大很多</li>
+<li>列的更新很少，所以碎片不是问题</li>
+<li>使用了像UTF-8这样复杂的字符集，因为该字符集中每个字符可能使用不同的字节来进行存储</li>
+</ol>
+</blockquote>
+<p><strong>Tips:</strong><br>用varchar(5)和varchar(200)来存储 「hello」有什么区别？</p>
+<p>首先两者在存储空间的开销是一样的。<br>但是，一般的列在查询时会消耗更多的内存，因为在读到这些列时MySQL通常会分配固定大小的内存块来保存内部值。<br>尤其在使用内存临时表进行排序或者其他操作时，会特别的糟糕。<br>所以最好的策略就是，<strong>分配真正需要的空间</strong>。</p>
+<p><strong>Tips：</strong><br>字符串长度定义不是字节数，而是字符数。两者概念是不同的，多字节字符集会需要更多的空间存储单个字符。</p>
+</li>
+</ol>
+</li>
+<li><p>BLOB和TEXT</p>
+<blockquote>
+<p>两者都是为存储很大的数据而设计的字符串数据类型，不同的是两者分别采用二进制和字符方式存储。</p>
+<p>MySQL在处理两个类型的值时，处理基本相同，仅有的不同是BLOB类型是以二进制格式来存储的，所以没有排序规则和字符集，而text类型有排序规则和字符集。</p>
+</blockquote>
+</li>
+<li><p>枚举（ENUM）</p>
+<blockquote>
+<p>枚举可以把一些不重复的字符串存储成一个预定义的集合。<br>MySQL会在存储枚举类型时粉肠紧凑，会根据列的值的数量压缩到一个或者两个字节中。<br>MySQL会在内部将每个值在列表中的位置保存成整数，而这些『数字–字符串』的对应关系，会保存在 .frm 文件中。<br>所以当该列需要新添加一个新的枚举值时，必须添加在之前枚举列表的最后面，否则就会出现数据错乱的问题。切记。</p>
+</blockquote>
+</li>
+<li><p>日期和时间类型</p>
+<ul>
+<li><p>DATETIME</p>
+<blockquote>
+<p>该类型能保存大范围的值，从1001年到9999年，精度为秒。他会把时间封装到YYYYMMDDHHIISS的整数中，没有时区概念。使用8个字节的存储空间。</p>
+</blockquote>
+</li>
+<li><p>TIMESTAMP</p>
+<blockquote>
+<p>该类型保存了从1970-01-01 00：00：00（格林威治时间）以来的秒数。该类型使用4个字节的存储空间，所以只能表示1970到2023年，其值还具有时区的概念。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>位数据类型</p>
+<blockquote>
+<p>存储更紧凑。但所有这些位类型，不管底层存储格式和存储方式，从技术上来说都是字符串类型。虽然用它存储数据更紧凑，但是对于大部分应用来说，最好避免使用该类型。</p>
+</blockquote>
+<ul>
+<li><p>BIT</p>
+</li>
+<li><p>SET</p>
+</li>
+</ul>
+</li>
+<li><p>特殊类型的数据</p>
+<blockquote>
+<p>某些数据的类型并不直接和内置的类型一致。所以需要一定的转换进行存储。</p>
+</blockquote>
+<ul>
+<li><p>低于秒级的时间戳</p>
+<blockquote>
+<p>低于秒级的时间需要在引用层做处理，一般可以通过存储两个或者多个列来存储（一个存储秒级的时间戳，另外的存储秒级以下的）</p>
+</blockquote>
+</li>
+<li><p>ipv4地址</p>
+<blockquote>
+<p>我们常见到有人会用 varchar(15)来存错一个IP地址，IP地址实际是一个32位的无符号整数，所以应该用无符号整数来存储IP地址。MySQL提供了 INET_ATON()和 INET_NTOA() 函数在这两表示方法之间转换。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<p>love over~<br>2016-09-19</p>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="http://music.163.com/outchain/player?type=2&id=28947001&auto=1&height=66"></iframe>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;良好的数据路逻辑设计和物理设计是高性能的基石，所以要打造一个高性能的数据库服务，在Schema设计之初就应该需要权衡各种因素。&lt;/p&gt;
+&lt;h2 id=&quot;选择最优化的数据类型&quot;&gt;&lt;a href=&quot;#选择最优化的数据类型&quot; class=&quot;headerlink&quot; title=&quot;选择最优化的数据类型&quot;&gt;&lt;/a&gt;选择最优化的数据类型&lt;/h2&gt;&lt;p&gt;数据库支持的数据类型非常多，选择一个正确的数据类型对于获得高性能至关重要。&lt;/p&gt;
+&lt;p&gt;选择合适数据类型的几个原则：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;更小的通常更好&lt;br&gt;一般情况下，应该尽量使用可以正确数据类型的最小数据类型。但也要确保没有低估需要存储的范围。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;简单就好&lt;br&gt;简单的数据类型的操作通常需要更少的CPU周期。例如，&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;整型比字符串操作代价更低&lt;/li&gt;
+&lt;li&gt;使用MySQL内建的数据类型（比如，date、time、datetime），比用字符串更快&lt;/li&gt;
+&lt;li&gt;使用整型存储一个IP地址，比用一个字符串更好&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;尽量避免使用NULL&lt;br&gt;因为如果在查询中包含有NULL的列，对MySQL来说更难优化。所以通常情况下，最好指定列为 NOT NULL。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;TIPS：&lt;/strong&gt;&lt;br&gt;datetime和timstamp列都可以存储相同类型的数据（时间和日期，都可以精确到秒），然而timestamp实际只使用datetime一般的存储空间。但另一方面，timestamp允许的时间范围要小的多。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="MySQL" scheme="https://weizhimiao.github.io/categories/MySQL/"/>
+    
+    
+      <category term="数据类型" scheme="https://weizhimiao.github.io/tags/%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL存储引擎概述</title>
+    <link href="https://weizhimiao.github.io/2016/09/17/MySQL%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E%E6%A6%82%E8%BF%B0/"/>
+    <id>https://weizhimiao.github.io/2016/09/17/MySQL存储引擎概述/</id>
+    <published>2016-09-17T15:00:00.000Z</published>
+    <updated>2016-09-17T15:06:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>基于存储引擎在MySQL架构中的地位，在学习和使用MySQL时我们需要对MySQL的各种存储引擎有一个大概的了解。<br>并且知道在实际项目中如何选择适合的存储引擎，以及如何实现不同存储引擎的相互切换。</p>
+<a id="more"></a>
+<h2 id="存储引擎分类"><a href="#存储引擎分类" class="headerlink" title="存储引擎分类"></a>存储引擎分类</h2><h3 id="InnoDB"><a href="#InnoDB" class="headerlink" title="InnoDB"></a>InnoDB</h3><p>InnoDB，是MySQL的默认事务型引擎，也是做重要、使用最广泛的存储引擎。它的性能和自动崩溃恢复特性，使得它在非事务行存储的需求中也很流行。所以除非有非常特别的原因需要使用其他的存储引擎，否则应该优先考虑InnoDB引擎。并且InnoDB作为事务型存储引擎，它通过一些机制和工具可以支持真正的热备份，而MySQL其他的存储引擎则不支持热备份。</p>
+<h3 id="MyISAM"><a href="#MyISAM" class="headerlink" title="MyISAM"></a>MyISAM</h3><p>在MySQL 5.1 及之前的版本，MyISAM是MySQL默认的存储引擎。MyISAM提供大量的特性，包括全文索引、压缩、空间函数（GIS）等，但是MyISAM不支持事务和行级锁，而且有一个毫无疑问的缺陷就是崩溃后无法安全恢复。尽管MyISAM不支持事务、不支持崩溃后的安全恢复，但是对于一些只读的数据，或者表比较小，可以忍受repair（修复）操作，则依然可以继续使用MyISAM。<strong>但请不要默认使用MyISAM，而是应当默认使用InnoDB</strong></p>
+<h3 id="Archive"><a href="#Archive" class="headerlink" title="Archive"></a>Archive</h3><p>Archive 存储引擎只支持INSERT 和SELECT 操作，在MySQL 5.1之前还不支持索引。Archive会缓存所有的写并利用zlib对插入的行进行压缩，所以比MyISAM表的磁盘I/O更少。但是每次select操作都需要对全表进行扫描，所以Archive表适合日志和数据采集类应用，或者一些需要更快速insert操作的场合下使用。总之，MyISAM是一个针对告诉插入和压缩做了优化的简单引擎。</p>
+<h3 id="Blackhole"><a href="#Blackhole" class="headerlink" title="Blackhole"></a>Blackhole</h3><p>Blackhole引擎没有实现任何的存储机制，他会丢弃所有的插入的数据，不做任何的保存。但是服务器会记录Blackhole表的日志，所以可以用于复制数据库到备库，或者只是简单地记录到日志。这种特殊的存储引擎可以在一些特殊的复制架构和日志审核时发挥所用。</p>
+<h3 id="CSV"><a href="#CSV" class="headerlink" title="CSV"></a>CSV</h3><p>CSV引擎可以将普通的CSV文件作为MySQL的表来处理，但这种表不支持索引。CSV引擎可以在数据运行是拷入或者烤出文件。可以将Excel等电子表格中的数据存储为CSV文件，然后复制到MySQL数据目录下，然后就能在MySQL中打开使用。因此，CSV引擎可以作为一种数据交换的机制，非常有用。</p>
+<h3 id="Federated"><a href="#Federated" class="headerlink" title="Federated"></a>Federated</h3><p>Federated引擎是访问其他MySQL服务器的一个代理，他会创建一个到远程MySQL服务器的的客户端连接，并将查询传输到远程服务器执行，然后提取或者发送需要的数据。但是尽管该引擎看起来提供了一种很好的跨服务器的灵活性，但也经常带来问题。因此默认是禁用的。</p>
+<h3 id="Memory"><a href="#Memory" class="headerlink" title="Memory"></a>Memory</h3><p>Memory表所有的数据都保存在内存中，因此Memory表的访问速度非常的快（至少要比MyISAM快一个数量级），并且不需要磁盘的I/O操作。但是Memory表在系统重启后虽然表结构会保留，但是数据会丢失。</p>
+<p>Memory表支持Hash索引，因此查询操作非常快。但是MySQL表采用的表级锁，因此并发写入的性能较低。</p>
+<p>Memory表的应用场景：</p>
+<ul>
+<li>用于查找（lookup）或者映射（mapping）表。</li>
+<li>用于缓存周期性聚合数据的结果。</li>
+<li>用于保存数据分析中产生的中间问题。</li>
+</ul>
+<p><strong>Tips：</strong><br>如果MySQL在执行查询的过程中需要使用临时表来保存中间结果，内部使用的临时表就是Memory表。如果中间结果大大超出了Memory表的限制，或者有大量的BLOB或TEXT字段，则临时表会转换成MyISAM表。</p>
+<h3 id="Merge"><a href="#Merge" class="headerlink" title="Merge"></a>Merge</h3><p>Merge引擎是MyISAM的一种变种。Merge表是由多个MyISAM表合并而来的虚拟表。</p>
+<h3 id="NDB"><a href="#NDB" class="headerlink" title="NDB"></a>NDB</h3><p>MySQL服务器、NDB集群引擎、以及分布式的、share-nothing的、容灾的、高可用的NDB数据库组合，被称之为MySQL集群（MySQL Cluster）。</p>
+<h3 id="其他的第三方存储引擎"><a href="#其他的第三方存储引擎" class="headerlink" title="其他的第三方存储引擎"></a>其他的第三方存储引擎</h3><p>MySQL从07年开始提供了插件式的存储引擎API，从此出现了一系列为不同目的而设计的存储引擎。其中一些已经合并到MySQL服务器，但大多数还是第三方产品或者开源项目。比较有名的有：</p>
+<ul>
+<li>OLTP类引擎</li>
+<li>面向列的存储引擎</li>
+<li>社区存储引擎</li>
+</ul>
+<h2 id="选择合适的存储引擎的考虑因素"><a href="#选择合适的存储引擎的考虑因素" class="headerlink" title="选择合适的存储引擎的考虑因素"></a>选择合适的存储引擎的考虑因素</h2><p>不同的应用可能会根据不同的需求而采用不同的存储引擎。那么我们再为应用选择存储引擎时，通常会考虑以下几点：</p>
+<ul>
+<li><p>事务<br>引用是否需要事务支持。如果需要，那么InnoDB是目前最稳定且经过验证的选择。如果不需要，并且主要是select和insert操作，那么MyISAM是不错的选择。</p>
+</li>
+<li><p>备份<br>如果可以定期的通过关闭服务器来执行备份，那么备份因素就可以忽略。反之，如果需要支持在线热备份，那么选择InnoDB就是基本的要求。</p>
+</li>
+<li><p>崩溃恢复<br>相对而言，MyISAM崩溃后发生的数据毁坏的概率要比InnoDB高的多，并且恢复速度也要慢的多。所以，即使不需要事务支持，很多人也会选择InnoDB引擎。</p>
+</li>
+<li><p>特有的特性<br>有些应用可能需要一些存储引擎锁独有的特性或者优化，比如依赖聚簇索引的优化，或者需要对地理空间的搜索。</p>
+</li>
+</ul>
+<p><strong>总之，如无特殊的需求和例外，统统建议选择InnoDB存储引擎。</strong></p>
+<h2 id="如何转换表的存储引擎"><a href="#如何转换表的存储引擎" class="headerlink" title="如何转换表的存储引擎"></a>如何转换表的存储引擎</h2><p>有很多中方法可以转换，一般我们会使用以下三种方法：</p>
+<h3 id="ALTER-TABLE"><a href="#ALTER-TABLE" class="headerlink" title="ALTER TABLE"></a>ALTER TABLE</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql&gt;alter table mytable engine=innodb;</div></pre></td></tr></table></figure>
+<p>上述语法可以适应与任何存储引擎。但是当表数据很大时，这种方法将会执行很长时间。MySQL会按行将数据从原表复制到一张新的表中。所以，在繁忙的表上执行此操作要非常小心。</p>
+<h3 id="导入-导出"><a href="#导入-导出" class="headerlink" title="导入/导出"></a>导入/导出</h3><p>使用mysqldump工具将数据到出到文件，然后修改文件中create table 语句中的存储引擎的选项，（同时注意修改表名，避免在导入的时候将原表删除，造成数据丢失）。然后导入文件到数据库，这样就得到了一个原表的一个全量复制表。</p>
+<h3 id="创建与查询"><a href="#创建与查询" class="headerlink" title="创建与查询"></a>创建与查询</h3><p>综合第一种方法的高效和第二种的安全。不需要导出整张表的数据，而是先创建一个新的存储引擎的表，然后利用 insert…select语法来导数据。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mysql&gt;create table innodb_table like myisam_table;</div><div class="line">mysql&gt;alter table innodb_table engine=innodb;</div><div class="line">mysql&gt;insert into innodb_table select * from myisam_table;</div></pre></td></tr></table></figure></p>
+<p>如果数据量大的话，可以考虑分批处理，并使用事务进行提交操作；<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mysql&gt;start transaction;</div><div class="line">mysql&gt;insert into innodb_table select * from myisam_table where id between x and y;</div><div class="line">mysql&gt;commit;</div></pre></td></tr></table></figure></p>
+<p>如果有必要，在操作的时候可以对原表加锁，以确保新表和原表数据一致。<br>这样操作之后也会得到一个对原表的全量复制的表，如果需要还可以删除原表。</p>
+<p><strong>Tips：</strong><br>Persona Toolkit 提供了一个 pt-online-schema-change的工具（基于Facebook的在线变更技术），可以比较简单、方便的执行上述过程，避免收工操作可能会带来的错误是繁琐。。。。。。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;基于存储引擎在MySQL架构中的地位，在学习和使用MySQL时我们需要对MySQL的各种存储引擎有一个大概的了解。&lt;br&gt;并且知道在实际项目中如何选择适合的存储引擎，以及如何实现不同存储引擎的相互切换。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="MySQL" scheme="https://weizhimiao.github.io/categories/MySQL/"/>
+    
+    
+      <category term="存储引擎" scheme="https://weizhimiao.github.io/tags/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何查看表的相关信息</title>
+    <link href="https://weizhimiao.github.io/2016/09/17/MySQL%E5%A6%82%E4%BD%95%E6%9F%A5%E7%9C%8B%E8%A1%A8%E7%9A%84%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF/"/>
+    <id>https://weizhimiao.github.io/2016/09/17/MySQL如何查看表的相关信息/</id>
+    <published>2016-09-17T14:00:00.000Z</published>
+    <updated>2016-09-17T08:42:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在文件系统中，MySQL将每个数据库（也被称为schema）保存为数据目录下的一个子目录。在创建表的时候，MySQL会在数据库子目录下创建一个和表同名的 .frm 文件对表的定义。例如，创建一个名为 mytable 的表，MySQL会在 mytable.frm 文件中保存对该表的定义。</p>
+<p>通常，我们可以使用 show table status 命令来显示表的相关信息。（MySQL 5.0 + 的版本，也可以查看 INFOMATION_SCHEMA 中对应的表的信息）。<br>例如，对于MySQL数据库中的 user 表：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show table status like 'user' \G;</div><div class="line">*************************** 1. row ***************************</div><div class="line">           Name: user</div><div class="line">         Engine: MyISAM</div><div class="line">        Version: 10</div><div class="line">     Row_format: Dynamic</div><div class="line">           Rows: 14</div><div class="line"> Avg_row_length: 63</div><div class="line">    Data_length: 952</div><div class="line">Max_data_length: 281474976710655</div><div class="line">   Index_length: 2048</div><div class="line">      Data_free: 64</div><div class="line"> Auto_increment: NULL</div><div class="line">    Create_time: 2012-12-25 14:23:08</div><div class="line">    Update_time: 2015-08-11 11:17:42</div><div class="line">     Check_time: NULL</div><div class="line">      Collation: utf8_bin</div><div class="line">       Checksum: NULL</div><div class="line"> Create_options:</div><div class="line">        Comment: Users and global privileges</div><div class="line">1 row in set (0.01 sec)</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>下面简单介绍一下每行的含义：</p>
+<ul>
+<li><p>Name</p>
+<blockquote>
+<p>表名。</p>
+</blockquote>
+</li>
+<li><p>Engine</p>
+<blockquote>
+<p>表的存储引擎。</p>
+</blockquote>
+</li>
+<li><p>Row_format</p>
+<blockquote>
+<p>行的格式，对于MyISAM表，可选的值为Dynamic、Fixed、Compressed。</p>
+<ul>
+<li>Dynamic，表示行的长度是可变的，一般包含可变长度的字段，如varchar、blob等。</li>
+<li>Fixed，行的长度是固定的，只包含固定长短的列。</li>
+<li>Compressed，只在压缩表中出现，表示是被压缩的。</li>
+</ul>
+</blockquote>
+</li>
+<li><p>Rrows</p>
+<blockquote>
+<p>表中行数，对于MyISAM和其他的一些存储引擎该值是精确的，但对于InnoDB该值只是一个大概值。</p>
+</blockquote>
+</li>
+<li><p>Avg_row_length</p>
+<blockquote>
+<p>平均每行包含的字节数</p>
+</blockquote>
+</li>
+<li><p>Data_length</p>
+<blockquote>
+<p>表数据的大小(单位：字节)</p>
+</blockquote>
+</li>
+<li><p>Max_data_length</p>
+<blockquote>
+<p>表数据的最大容量，该值和存储引擎有关。</p>
+</blockquote>
+</li>
+<li><p>Index_length</p>
+<blockquote>
+<p>索引的大小(单位：字节)</p>
+</blockquote>
+</li>
+<li><p>Data_free</p>
+<blockquote>
+<p>对于MyISAM表示已经分配但是目前没有被使用的空间。这部分空间包括之前删除的行，以及后续可以被Insert利用的行。</p>
+</blockquote>
+</li>
+<li><p>Auto_increment</p>
+<blockquote>
+<p>下一个Auto_increment的值。</p>
+</blockquote>
+</li>
+<li><p>Create_time</p>
+<blockquote>
+<p>表的创建时间。</p>
+</blockquote>
+</li>
+<li><p>Update_time</p>
+<blockquote>
+<p>表数据的最后修改时间。</p>
+</blockquote>
+</li>
+<li><p>Check_time</p>
+<blockquote>
+<p>使用check table命令或者muisamchk 工具最后一次检查表的时间。</p>
+</blockquote>
+</li>
+<li><p>Collation</p>
+<blockquote>
+<p>表的默认字符集和字符列排序规则。</p>
+</blockquote>
+</li>
+<li><p>Checksum</p>
+<blockquote>
+<p>如果启用，保存的是整个表的实时校验和。</p>
+</blockquote>
+</li>
+<li><p>Create_options</p>
+<blockquote>
+<p>创建表时指定的其他选项。</p>
+</blockquote>
+</li>
+<li><p>Comment</p>
+<blockquote>
+<p>该列包含了一些其他的额外信息。对于MyISAM表，保存的是在表创建的时候附带的注释。对于InnoDB表，该值保存的是InnoDB表空间的剩余空间信息。如果是一个视图，该列将会包含『VIEW』字样。</p>
+</blockquote>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在文件系统中，MySQL将每个数据库（也被称为schema）保存为数据目录下的一个子目录。在创建表的时候，MySQL会在数据库子目录下创建一个和表同名的 .frm 文件对表的定义。例如，创建一个名为 mytable 的表，MySQL会在 mytable.frm 文件中保存对该表的定义。&lt;/p&gt;
+&lt;p&gt;通常，我们可以使用 show table status 命令来显示表的相关信息。（MySQL 5.0 + 的版本，也可以查看 INFOMATION_SCHEMA 中对应的表的信息）。&lt;br&gt;例如，对于MySQL数据库中的 user 表：&lt;br&gt;&lt;figure class=&quot;highlight&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;21&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;mysql&amp;gt; show table status like &#39;user&#39; \G;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;*************************** 1. row ***************************&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           Name: user&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;         Engine: MyISAM&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        Version: 10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     Row_format: Dynamic&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           Rows: 14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; Avg_row_length: 63&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    Data_length: 952&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Max_data_length: 281474976710655&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;   Index_length: 2048&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      Data_free: 64&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; Auto_increment: NULL&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    Create_time: 2012-12-25 14:23:08&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    Update_time: 2015-08-11 11:17:42&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;     Check_time: NULL&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      Collation: utf8_bin&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       Checksum: NULL&lt;/div&gt;&lt;div class=&quot;line&quot;&gt; Create_options:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        Comment: Users and global privileges&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;1 row in set (0.01 sec)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="MySQL" scheme="https://weizhimiao.github.io/categories/MySQL/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>MVCC多版本并发控制</title>
+    <link href="https://weizhimiao.github.io/2016/09/17/MVCC-%E5%A4%9A%E7%89%88%E6%9C%AC%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E6%95%B4%E7%90%86/"/>
+    <id>https://weizhimiao.github.io/2016/09/17/MVCC-多版本并发控制整理/</id>
+    <published>2016-09-16T17:00:00.000Z</published>
+    <updated>2016-09-17T05:17:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>MySQL中大多数事务型的存储引擎都不是简单的行级锁。为了提高并发性，他们一般会采用多版本并发控制（MVCC，一种行级锁的变种）来使很多情况下在避免加锁的情况下就实现并发操作，从而是的系统开销更低。</p>
+<p>MySQL的InnoDB存储引擎的MCVV，是通过在每行记录后面保存两个隐藏的列来实现。一个保存行的创建时间，另一个保存过期时间。当然这里所说的时间并不是实际时间，是系统版本号。数据库系统在每开始一个事务，其系统版本号就会自动递增。一个事务开始时刻，事务会去当前的系统版本号作为当前事务的事务版本号，用来和查询到的每行记录的版本号做比较。</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>fields …</th>
+<th>create_version</th>
+<th>delete_version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>….</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>….</td>
+<td>2</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>Repeatable read 隔离级别下，MVCC具体操作：</p>
+<h3 id="Select-操作："><a href="#Select-操作：" class="headerlink" title="Select 操作："></a>Select 操作：</h3><p>a. InnoDB 只查找版本号小于当前事务版本号的行（即，行的系统版本号小于或者等于当前事务的系统版本号），以确保当前事务读取到的行，要么是当前事务开始之前就已经存在的行，要么就是当前事务插入或者修改过的行。<br>b. 行的删除版本号要么未定义，要么大于当前事务的版本号。这样可以确保当前事务读取到行，在事务开始之前为被删除。</p>
+<p>只有同事符合上述两个条件的记录，才能被作为查询结果被返回。</p>
+<h3 id="Insert-操作："><a href="#Insert-操作：" class="headerlink" title="Insert 操作："></a>Insert 操作：</h3><p>InnoDB为新插入的行保存当前事务的版本号作为行版本号。</p>
+<h3 id="Delete-操作："><a href="#Delete-操作：" class="headerlink" title="Delete 操作："></a>Delete 操作：</h3><p>InnoDB为删除的每一行记录保存当前的事务版本号作为行删除标识。</p>
+<h3 id="Update-操作："><a href="#Update-操作：" class="headerlink" title="Update 操作："></a>Update 操作：</h3><p>InnoDB会插入一条新纪录，保存当前事务版本号作为改行的行版本号，同事保存当前的事务版本号到原来的行作为行删除标识版本号。</p>
+<h2 id="多版本并发控制优缺点"><a href="#多版本并发控制优缺点" class="headerlink" title="多版本并发控制优缺点"></a>多版本并发控制优缺点</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>通过两个额外的版本号，能使大多数读操作都可以不用加锁，从而使得查询性能更好。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><p>每行记录多需要做存储两个版本号，需要浪费额外的存储空间。</p>
+<p><strong>TIPS:</strong><br>MVCC，只在Repeatable read 和read committed两个隔离级别下工作。其他两个隔离级别都和MVCC不兼容，因为 read uncommitted总是读取最新的行，而不是符合当前事务版本号的行，而 serializable 则会对所有读取的行都会加锁。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;MySQL中大多数事务型的存储引擎都不是简单的行级锁。为了提高并发性，他们一般会采用多版本并发控制（MVCC，一种行级锁的变种）来使很多情况下在避免加锁的情况下就实现并发操作，从而是的系统开销更低。&lt;/p&gt;
+&lt;p&gt;MySQL的InnoDB存储引擎的MCVV，是通过在每行记录后面保存两个隐藏的列来实现。一个保存行的创建时间，另一个保存过期时间。当然这里所说的时间并不是实际时间，是系统版本号。数据库系统在每开始一个事务，其系统版本号就会自动递增。一个事务开始时刻，事务会去当前的系统版本号作为当前事务的事务版本号，用来和查询到的每行记录的版本号做比较。&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;id&lt;/th&gt;
+&lt;th&gt;fields …&lt;/th&gt;
+&lt;th&gt;create_version&lt;/th&gt;
+&lt;th&gt;delete_version&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;….&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;….&lt;/td&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+    
+    </summary>
+    
+      <category term="MySQL" scheme="https://weizhimiao.github.io/categories/MySQL/"/>
+    
+    
+      <category term="MVCC" scheme="https://weizhimiao.github.io/tags/MVCC/"/>
+    
+      <category term="多版本并发控制" scheme="https://weizhimiao.github.io/tags/%E5%A4%9A%E7%89%88%E6%9C%AC%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>事务的ACID概念</title>
+    <link href="https://weizhimiao.github.io/2016/09/17/%E4%BA%8B%E5%8A%A1%E7%9A%84ACID%E6%A6%82%E5%BF%B5/"/>
+    <id>https://weizhimiao.github.io/2016/09/17/事务的ACID概念/</id>
+    <published>2016-09-16T16:00:00.000Z</published>
+    <updated>2016-09-16T17:54:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>数据库中的事务就是一组原子行的SQL查询，或者说一个独立的工作但愿。也就是说，事务内的语句，要么全部执行成功，要么全部执行失败。</p>
+<p>ACID表示原子性（atomicity）、一致性（consistency）、隔离行（isolation）和持久性（durability）。一个运行良好的事务处理系统，必须具备这些特征。</p>
+<blockquote>
+<p>一个实现了ACID的数据库，相比于没有实现ACID的数据库，通常需要更强的CPU，更大的内存，更多的存储空间。所以对于一些不需要事务支持的查询类型应用，选择一个非事务型的存储引擎，是可以获得更高的性能的。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="事务ACID的概念"><a href="#事务ACID的概念" class="headerlink" title="事务ACID的概念"></a>事务ACID的概念</h2><ul>
+<li><p>A,automicity 原子性</p>
+<blockquote>
+<p>即，一个不可分割的最小单元。</p>
+</blockquote>
+</li>
+<li><p>C,consistency 一致性</p>
+<blockquote>
+<p>总是从一种状态到另一种状态，没有第三种状态。</p>
+</blockquote>
+</li>
+<li><p>I,isolation 隔离性</p>
+<blockquote>
+<p>一个事务再提交之前，对其他事务是不可见的。即不同的事务之间相互之间不影响。</p>
+</blockquote>
+</li>
+<li><p>D,durability 持久性</p>
+<blockquote>
+<p>事务一旦提交，就会永久生效。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h2><p>隔离级别，规定一个事务中所做的修改，哪些是在事务内和事务间是可见的，哪些是不可见的。<br>一般，较低隔离级别的隔离可以支持更高的并发，系统的开销会更低。</p>
+<h3 id="隔离要解决的问题"><a href="#隔离要解决的问题" class="headerlink" title="隔离要解决的问题"></a>隔离要解决的问题</h3><ul>
+<li><p>脏读，Dirty read</p>
+<blockquote>
+<p>即其他事务可以读取到当前事务未提交的数据。</p>
+</blockquote>
+</li>
+<li><p>不可重复读，nonrepeatable read</p>
+<blockquote>
+<p>即两次执行同样的查询，得到的结果可能是不一样的。</p>
+</blockquote>
+</li>
+<li><p>幻读，Phantom read</p>
+<blockquote>
+<p>某一个事务在取一范围记录时，另一事务又在该范围插入了新纪录，当之前事务再读取该范围是，就会产生幻读。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="不同的隔离划分"><a href="#不同的隔离划分" class="headerlink" title="不同的隔离划分"></a>不同的隔离划分</h3><table>
+<thead>
+<tr>
+<th>隔离级别</th>
+<th>脏读</th>
+<th>不可重复读可能性</th>
+<th>幻读</th>
+<th>加锁读</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>read uncommitted</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>read committed</td>
+<td>N</td>
+<td>Y</td>
+<td>Y</td>
+<td>N</td>
+</tr>
+<tr>
+<td>repeatable read</td>
+<td>N</td>
+<td>N</td>
+<td>Y</td>
+<td>N</td>
+</tr>
+<tr>
+<td>serializable</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+<td>Y</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Read uncommitted（未提交读）</p>
+<blockquote>
+<p>在这个级别下，事务中的修改，即使在没有提交的情况下，其他的事务也是可见的。<br>所以，除非有非常必要的理由，在实际应用中一般很少使用。</p>
+</blockquote>
+</li>
+<li><p>Read committed（提交读）</p>
+<blockquote>
+<p>read committed隔离级别满足前面提到的隔离性的定义。即一个事务开始时，只能看见已经提交的事务所做的修改。换句话说，一个事务从开始到提交之前，所做的任何修改对其他的事务都是不可见的。<br><strong>大多数的数据库系统的默认隔离级别都是这个级别</strong><br>但这个级别有时候会出现不可重复读的现象，即执行两次同样的查询可能会得到两个不同的结果。</p>
+</blockquote>
+</li>
+<li><p>repeatable read（可重复读）</p>
+<blockquote>
+<p>该级别解决了脏读的问题，而且保证了在同一个事务中多次读取同一条记录的结果是一致的。<br><strong>该级别是MySQL的默认事务级别</strong><br>但是理论上，该级别下会出现另一个幻读的问题。<br>MySQL的InnoDB通过多版本并发控制（MVCC）来解决了该级别下出现幻读的可能性问题。</p>
+</blockquote>
+</li>
+<li><p>serializable（可串行化）</p>
+<blockquote>
+<p>该级别为最高的隔离级别。他通过强制事务串行执行，避免了前面 repeatable read 级别下可能会出现幻读的情况。简单说，就是serializable会在读取的每行数据上都加锁。所以会导致大量的超时和锁争用的情况。故实际应用中该级别也很少用到。</p>
+</blockquote>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;数据库中的事务就是一组原子行的SQL查询，或者说一个独立的工作但愿。也就是说，事务内的语句，要么全部执行成功，要么全部执行失败。&lt;/p&gt;
+&lt;p&gt;ACID表示原子性（atomicity）、一致性（consistency）、隔离行（isolation）和持久性（durability）。一个运行良好的事务处理系统，必须具备这些特征。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;一个实现了ACID的数据库，相比于没有实现ACID的数据库，通常需要更强的CPU，更大的内存，更多的存储空间。所以对于一些不需要事务支持的查询类型应用，选择一个非事务型的存储引擎，是可以获得更高的性能的。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="MySQL" scheme="https://weizhimiao.github.io/categories/MySQL/"/>
+    
+    
+      <category term="事务" scheme="https://weizhimiao.github.io/tags/%E4%BA%8B%E5%8A%A1/"/>
+    
+      <category term="ACID" scheme="https://weizhimiao.github.io/tags/ACID/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL并发控制整理</title>
+    <link href="https://weizhimiao.github.io/2016/09/16/MySQL%E7%9A%84%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E6%95%B4%E7%90%86/"/>
+    <id>https://weizhimiao.github.io/2016/09/16/MySQL的并发控制整理/</id>
+    <published>2016-09-16T13:00:00.000Z</published>
+    <updated>2016-09-16T18:06:35.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>根据控制的不同层次，MySQL的并发控制可以分为：</p>
+<ul>
+<li>服务器层</li>
+<li>存储引擎层</li>
+</ul>
+<p>实现并发控制的方法策略：<strong><em>锁机制</em></strong></p>
+<ul>
+<li>共享锁（shared lock）&lt;======&gt; 读锁（read lock）</li>
+<li>排它锁（exclusive lock） &lt;======&gt; 写锁（write lock）</li>
+</ul>
+<p>如何选择适合的锁？<strong><em>锁策略</em></strong></p>
+<ul>
+<li>锁的粒度越小，系统的并发性越高</li>
+<li>所得操作越多，系统的开销越大<blockquote>
+<p>所以所谓的锁策略，就是在锁的开销和数据的安全性之间寻求平衡。</p>
+</blockquote>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="MySQL中锁策略类型"><a href="#MySQL中锁策略类型" class="headerlink" title="MySQL中锁策略类型"></a>MySQL中锁策略类型</h2><p>MySQL不同的存储引擎中用到的锁策略基本有两种。一种是表级锁，另一种是行级锁。</p>
+<ul>
+<li><p>表锁，一种开销最小的锁策略。</p>
+<blockquote>
+<p>一个用户对表进行写操作时，需要先获得写锁，这是其他用户读该表进行的读写操作都会进行阻塞。只有当前写操作被释放之后，其他人才能活的读锁。当当前表有读锁时，其他人也可以继续获得读锁。读锁是共享性的不同的读锁之间是互相不阻塞的。<br>另外，写锁的优先级高于读锁。所以当有多个锁请求存在是，读锁的请求会被优先插入到锁队列的前边。</p>
+</blockquote>
+</li>
+<li><p>行锁，最大程度支持并发处理，同时也是锁开销最大的锁策略。</p>
+<blockquote>
+<p>顾名思义，行级锁只在将要修改的记录行上进行锁操作，对其他的行的操作没有影响。</p>
+</blockquote>
+</li>
+</ul>
+<p>尽管我们一般提到的锁，都处于存储引擎这一层，但是MySQL本身在某些情况下，也会对锁策略进行控制。比如表的alter table操作，会对表本身使用表锁，而直接忽略存储引擎的锁机制。</p>
+<h2 id="MySQL中死锁问题解决方法"><a href="#MySQL中死锁问题解决方法" class="headerlink" title="MySQL中死锁问题解决方法"></a>MySQL中死锁问题解决方法</h2><blockquote>
+<p>死锁，即两个或者多个事务在同一资源上相互占用，并请求占用对方已经占用的资源的情况。</p>
+</blockquote>
+<p>既然有锁存在，当然就会有死锁的情况发生。那么MySQL中是如何处理死锁问题的呢？<br>死锁的通常解决方案有两种，即：</p>
+<ul>
+<li>死锁检测机制</li>
+<li>超时机制</li>
+</ul>
+<p>InnoDB存储引擎在检测到有死锁发生的处理方法是，将当前持有最少的行级锁的事务进行回滚。待打破死锁后，重新执行因为死锁而回滚的事务。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;根据控制的不同层次，MySQL的并发控制可以分为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;服务器层&lt;/li&gt;
+&lt;li&gt;存储引擎层&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;实现并发控制的方法策略：&lt;strong&gt;&lt;em&gt;锁机制&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;共享锁（shared lock）&amp;lt;======&amp;gt; 读锁（read lock）&lt;/li&gt;
+&lt;li&gt;排它锁（exclusive lock） &amp;lt;======&amp;gt; 写锁（write lock）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如何选择适合的锁？&lt;strong&gt;&lt;em&gt;锁策略&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;锁的粒度越小，系统的并发性越高&lt;/li&gt;
+&lt;li&gt;所得操作越多，系统的开销越大&lt;blockquote&gt;
+&lt;p&gt;所以所谓的锁策略，就是在锁的开销和数据的安全性之间寻求平衡。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="MySQL" scheme="https://weizhimiao.github.io/categories/MySQL/"/>
+    
+    
+      <category term="并发控制" scheme="https://weizhimiao.github.io/tags/%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL逻辑架构设计</title>
+    <link href="https://weizhimiao.github.io/2016/09/16/MySQL%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%B0%8F%E7%BB%93/"/>
+    <id>https://weizhimiao.github.io/2016/09/16/MySQL逻辑架构实现小结/</id>
+    <published>2016-09-16T12:00:00.000Z</published>
+    <updated>2016-09-16T08:42:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>通常MySQL架构有两种划分，一种划为两层架构，另一种划为三层。<br>两层架构划为MySQL服务器层和存储引擎层，三层架构则把MySQL层又划为两层。</p>
+<p><img src="http://n.sinaimg.cn/games/3ece443e/20160916/MySQLJiaGouTu1.png" alt="MySQL架构图"></p>
+<a id="more"></a>
+<h2 id="三层架构说明"><a href="#三层架构说明" class="headerlink" title="三层架构说明"></a>三层架构说明</h2><ul>
+<li><p>第一层，用于连接处理、授权认证、安全认证等等。大多数基于客户端/服务器端的工具或者服务器都有类似架构。</p>
+</li>
+<li><p>第二层，是MySQL架构的核心部分。MySQL的大部分核心服务功能大都在这一层。包括查询解析、分析、优化、缓存以及所有的内置函数的实现，还有所有的跨存储引擎的功能都在这一层实现：存储过程、触发器、试图等。</p>
+</li>
+<li><p>第三层，存储引擎层。存储引擎负责MySQL中数据的存储和读取。每个存储引擎都有自己的优势和劣势。MySQL服务器层通过API与存储引擎进行通信。存储引擎本身是不会解析SQL，且不同的存储引擎之间也是不会相互通信。</p>
+</li>
+</ul>
+<h2 id="MySQL服务器接收-处理一个查询请求的过程"><a href="#MySQL服务器接收-处理一个查询请求的过程" class="headerlink" title="MySQL服务器接收/处理一个查询请求的过程"></a>MySQL服务器接收/处理一个查询请求的过程</h2><ol>
+<li><p>当MySQL服务器接收到一个查询请求，首先会对当前的连接请求进行认证，认证其用户名和密码信息。</p>
+</li>
+<li><p>连接成功之后，会继续验证该连接是否具有执行某个特定查询的权限。</p>
+</li>
+<li><p>所有的验证都通过，如果是 select 操作，MySQL会先检查查询缓存中是否存在该缓存，如果存在直接返回结果。不存在继续下一步。</p>
+</li>
+<li><p>解析查询，并创建内部数据结构（生成 解析树），然后对解析树进行各种优化（包括，重写查询，决定表的读取顺序、选择合适的索引等等）。</p>
+</li>
+<li><p>通过存储引擎存储或者提取结果。</p>
+</li>
+<li><p>如果是select操作，生成查询缓存。</p>
+</li>
+<li><p>返回结果。</p>
+</li>
+</ol>
+<p>over~</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;通常MySQL架构有两种划分，一种划为两层架构，另一种划为三层。&lt;br&gt;两层架构划为MySQL服务器层和存储引擎层，三层架构则把MySQL层又划为两层。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://n.sinaimg.cn/games/3ece443e/20160916/MySQLJiaGouTu1.png&quot; alt=&quot;MySQL架构图&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="MySQL" scheme="https://weizhimiao.github.io/categories/MySQL/"/>
+    
+    
+      <category term="MySQL逻辑架构" scheme="https://weizhimiao.github.io/tags/MySQL%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84/"/>
+    
+  </entry>
   
   <entry>
     <title>Apache中PHP支持模式小结</title>
