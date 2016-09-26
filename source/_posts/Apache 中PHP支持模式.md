@@ -2,12 +2,11 @@
 title: Apache中PHP支持模式小结
 date: 2016-09-07 20:10:00
 tags:
-- Apache
-- PHP
+- FastCGI
+- CGI
 - Apache&PHP
 categories:
 - Apache
-- PHP
 ---
 Apache通过不同的方式，能够实现对PHP支持。常见的几种支持方式有：
 - 模块支持（handler模式）
