@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://weizhimiao.github.io/"/>
-  <updated>2016-09-26T13:14:08.000Z</updated>
+  <updated>2016-09-27T09:28:51.000Z</updated>
   <id>https://weizhimiao.github.io/</id>
   
   <author>
@@ -14,6 +14,254 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Nginx运行状态监控</title>
+    <link href="https://weizhimiao.github.io/2016/09/27/Nginx%E8%BF%90%E8%A1%8C%E7%8A%B6%E6%80%81%E7%9B%91%E6%8E%A7/"/>
+    <id>https://weizhimiao.github.io/2016/09/27/Nginx运行状态监控/</id>
+    <published>2016-09-27T14:30:00.000Z</published>
+    <updated>2016-09-27T09:28:51.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Nginx可以通过stub_status模块来查看服务器的状态信息。</p>
+<h2 id="安装stub-status模块"><a href="#安装stub-status模块" class="headerlink" title="安装stub_status模块"></a>安装stub_status模块</h2><p>查看服务器当前是否已经编译安装过stub_status模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/usr/local/nginx/sbin/nginx -V</div><div class="line">nginx version: nginx/1.11.4</div><div class="line">built by gcc 4.8.5 20150623 (Red Hat 4.8.5-4) (GCC)</div><div class="line">configure arguments: --prefix=/usr/local/nginx</div></pre></td></tr></table></figure></p>
+<p>安装 stub_status 模块</p>
+<p>解压相应版本的nginx源码包，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd nginx-1.11.4</div></pre></td></tr></table></figure></p>
+<p>配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure --prefix=/usr/local/nginx --with-http_stub_status_module</div></pre></td></tr></table></figure></p>
+<p>编译（不执行make install操作）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make</div></pre></td></tr></table></figure></p>
+<p>手动替换 nginx 执行文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mv /usr/local/nginx/sbin/nginx /usr/local/nginx/sbin/nginx.bak</div><div class="line">cp ./objs/nginx /usr/local/nginx/sbin/</div></pre></td></tr></table></figure></p>
+<p>查看是否安装成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/usr/local/nginx/sbin/nginx -V</div><div class="line">nginx version: nginx/1.11.4</div><div class="line">built by gcc 4.8.5 20150623 (Red Hat 4.8.5-4) (GCC)</div><div class="line">configure arguments: --prefix=/usr/local/nginx --with-http_stub_status_module</div></pre></td></tr></table></figure></p>
+<h2 id="启用nginx-status配置"><a href="#启用nginx-status配置" class="headerlink" title="启用nginx status配置"></a>启用nginx status配置</h2><p>修改配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /usr/local/nginx/conf/nginx.conf</div></pre></td></tr></table></figure></p>
+<p>加入配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">location /ngx_status</div><div class="line">&#123;</div><div class="line">    stub_status on;</div><div class="line">    access_log off;</div><div class="line">    allow all;</div><div class="line">    #deny all;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>重启nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># /usr/local/nginx/sbin/nginx -s reload 可能或有问题，所以先停止当前nginx进程，然后在重启。</div><div class="line">/usr/local/nginx/sbin/nginx -s stop</div><div class="line">/usr/local/nginx/sbin/nginx</div></pre></td></tr></table></figure></p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>浏览器或者curl访问</p>
+<p><a href="http://120.76.250.101/ngx_status" target="_blank" rel="external">http://120.76.250.101/ngx_status</a><br>或<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">curl 127.0.0.1/ngx_status</div><div class="line">Active connections: 1</div><div class="line">server accepts handled requests</div><div class="line"> 2 2 2</div><div class="line">Reading: 0 Writing: 1 Waiting: 0</div></pre></td></tr></table></figure></p>
+<p>参数说明</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Active connections</td>
+<td>活跃的连接数量</td>
+</tr>
+<tr>
+<td>server accepts handled requests</td>
+<td>2 2 2 表示总共处理了2个连接 , 成功创建2次握手, 总共处理了2个请求</td>
+</tr>
+<tr>
+<td>reading</td>
+<td>读取客户端的连接数.</td>
+</tr>
+<tr>
+<td>writing</td>
+<td>响应数据到客户端的数量</td>
+</tr>
+<tr>
+<td>waiting</td>
+<td>开启 keep-alive 的情况下,这个值等于 active – (reading+writing), 意思就是 Nginx 已经处理完正在等候下一次请求指令的驻留连接.</td>
+</tr>
+</tbody>
+</table>
+<p>over~</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Nginx可以通过stub_status模块来查看服务器的状态信息。&lt;/p&gt;
+&lt;h2 id=&quot;安装stub-status模块&quot;&gt;&lt;a href=&quot;#安装stub-status模块&quot; class=&quot;headerlink&quot; title=&quot;安装stub_status模块&quot;&gt;&lt;/a
+    
+    </summary>
+    
+      <category term="Nginx" scheme="https://weizhimiao.github.io/categories/Nginx/"/>
+    
+    
+      <category term="监控" scheme="https://weizhimiao.github.io/tags/%E7%9B%91%E6%8E%A7/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PHP-FPM运行状态监控</title>
+    <link href="https://weizhimiao.github.io/2016/09/27/PHP-FPM%E8%BF%90%E8%A1%8C%E7%8A%B6%E6%80%81%E7%9B%91%E6%8E%A7/"/>
+    <id>https://weizhimiao.github.io/2016/09/27/PHP-FPM运行状态监控/</id>
+    <published>2016-09-27T13:30:00.000Z</published>
+    <updated>2016-09-27T09:29:18.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>PHP-FPM内置了一个运行状态页，开启后便可查看PHP-FPM的详细运行状态，可以给我们在优化PHP-FPM时带来帮助。</p>
+<a id="more"></a>
+<h2 id="php-fpm配置"><a href="#php-fpm配置" class="headerlink" title="php-fpm配置"></a>php-fpm配置</h2><p>查看php-fpm配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ /usr/local/php56/sbin/php-fpm -t</div><div class="line">[27-Sep-2016 14:59:06] NOTICE: configuration file /usr/local/php56/etc/php-fpm.conf test is successful</div></pre></td></tr></table></figure></p>
+<p>开启php-fpm的status配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /usr/local/php56/etc/php-fpm.conf</div></pre></td></tr></table></figure></p>
+<p>修改加入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pm.status_path = /phpfpm_status</div></pre></td></tr></table></figure></p>
+<p>配置文件中相关的说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div></pre></td><td class="code"><pre><div class="line">; The URI to view the FPM status page. If this value is not set, no URI will be</div><div class="line">; recognized as a status page. It shows the following informations:</div><div class="line">;   pool                 - the name of the pool;</div><div class="line">;   process manager      - static, dynamic or ondemand;</div><div class="line">;   start time           - the date and time FPM has started;</div><div class="line">;   start since          - number of seconds since FPM has started;</div><div class="line">;   accepted conn        - the number of request accepted by the pool;</div><div class="line">;   listen queue         - the number of request in the queue of pending</div><div class="line">;                          connections (see backlog in listen(2));</div><div class="line">;   max listen queue     - the maximum number of requests in the queue</div><div class="line">;                          of pending connections since FPM has started;</div><div class="line">;   listen queue len     - the size of the socket queue of pending connections;</div><div class="line">;   idle processes       - the number of idle processes;</div><div class="line">;   active processes     - the number of active processes;</div><div class="line">;   total processes      - the number of idle + active processes;</div><div class="line">;   max active processes - the maximum number of active processes since FPM</div><div class="line">;                          has started;</div><div class="line">;   max children reached - number of times, the process limit has been reached,</div><div class="line">;                          when pm tries to start more children (works only for</div><div class="line">;                          pm &apos;dynamic&apos; and &apos;ondemand&apos;);</div><div class="line">; Value are updated in real time.</div><div class="line">; Value are updated in real time.</div><div class="line">; Example output:</div><div class="line">;   pool:                 www</div><div class="line">;   process manager:      static</div><div class="line">;   start time:           01/Jul/2011:17:53:49 +0200</div><div class="line">;   start since:          62636</div><div class="line">;   accepted conn:        190460</div><div class="line">;   listen queue:         0</div><div class="line">;   max listen queue:     1</div><div class="line">;   listen queue len:     42</div><div class="line">;   idle processes:       4</div><div class="line">;   active processes:     11</div><div class="line">;   total processes:      15</div><div class="line">;   max active processes: 12</div><div class="line">;   max children reached: 0</div><div class="line">;</div><div class="line">; By default the status page output is formatted as text/plain. Passing either</div><div class="line">; &apos;html&apos;, &apos;xml&apos; or &apos;json&apos; in the query string will return the corresponding</div><div class="line">; output syntax. Example:</div><div class="line">;   http://www.foo.bar/status</div><div class="line">;   http://www.foo.bar/status?json</div><div class="line">;   http://www.foo.bar/status?html</div><div class="line">;   http://www.foo.bar/status?xml</div><div class="line">;</div><div class="line">; By default the status page only outputs short status. Passing &apos;full&apos; in the</div><div class="line">; query string will also return status for each pool process.</div><div class="line">; Example:</div><div class="line">;   http://www.foo.bar/status?full</div><div class="line">;   http://www.foo.bar/status?json&amp;full</div><div class="line">;   http://www.foo.bar/status?html&amp;full</div><div class="line">;   http://www.foo.bar/status?xml&amp;full</div><div class="line">; The Full status returns for each process:</div><div class="line">; The Full status returns for each process:</div><div class="line">;   pid                  - the PID of the process;</div><div class="line">;   state                - the state of the process (Idle, Running, ...);</div><div class="line">;   start time           - the date and time the process has started;</div><div class="line">;   start since          - the number of seconds since the process has started;</div><div class="line">;   requests             - the number of requests the process has served;</div><div class="line">;   request duration     - the duration in µs of the requests;</div><div class="line">;   request method       - the request method (GET, POST, ...);</div><div class="line">;   request URI          - the request URI with the query string;</div><div class="line">;   content length       - the content length of the request (only with POST);</div><div class="line">;   user                 - the user (PHP_AUTH_USER) (or &apos;-&apos; if not set);</div><div class="line">;   script               - the main script called (or &apos;-&apos; if not set);</div><div class="line">;   last request cpu     - the %cpu the last request consumed</div><div class="line">;                          it&apos;s always 0 if the process is not in Idle state</div><div class="line">;                          because CPU calculation is done when the request</div><div class="line">;                          processing has terminated;</div><div class="line">;   last request memory  - the max amount of memory the last request consumed</div><div class="line">;                          it&apos;s always 0 if the process is not in Idle state</div><div class="line">;                          because memory calculation is done when the request</div><div class="line">;                          processing has terminated;</div><div class="line">; If the process is in Idle state, then informations are related to the</div><div class="line">; last request the process has served. Otherwise informations are related to</div><div class="line">; the current request being served.</div><div class="line">; Example output:</div><div class="line">;   ************************</div><div class="line">;   pid:                  31330</div><div class="line">;   state:                Running</div><div class="line">;   start time:           01/Jul/2011:17:53:49 +0200</div><div class="line">;   start since:          63087</div><div class="line">;   requests:             12808</div><div class="line">;   request duration:     1250261</div><div class="line">;   request method:       GET</div><div class="line">;   request URI:          /test_mem.php?N=10000</div><div class="line">;   content length:       0</div><div class="line">;   user:                 -</div><div class="line">;   script:               /home/fat/web/docs/php/test_mem.php</div><div class="line">;   last request cpu:     0.00</div><div class="line">;   last request memory:  0</div><div class="line">;</div><div class="line">; Note: There is a real-time FPM status monitoring sample web page available</div><div class="line">;       It&apos;s available in: /usr/local/php56/share/php/fpm/status.html</div><div class="line">;</div><div class="line">; Note: The value must start with a leading slash (/). The value can be</div><div class="line">;       anything, but it may not be a good idea to use the .php extension or it</div><div class="line">;       may conflict with a real PHP file.</div><div class="line">; Default Value: not set</div><div class="line">pm.status_path = /phpfpm_status</div></pre></td></tr></table></figure></p>
+<h2 id="重启PHP-FPM"><a href="#重启PHP-FPM" class="headerlink" title="重启PHP-FPM"></a>重启PHP-FPM</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">kill -USR2 `cat /usr/local/php56/var/run/php-fpm.pid`</div></pre></td></tr></table></figure>
+<h2 id="配置nginx代理"><a href="#配置nginx代理" class="headerlink" title="配置nginx代理"></a>配置nginx代理</h2><p>查看nginx配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/usr/local/nginx/sbin/nginx -t</div><div class="line">nginx: the configuration file /usr/local/nginx/conf/nginx.conf syntax is ok</div><div class="line">nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful</div></pre></td></tr></table></figure></p>
+<p>修改配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /usr/local/nginx/conf/nginx.conf</div></pre></td></tr></table></figure></p>
+<p>加入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">location /phpfpm_status &#123;</div><div class="line">        fastcgi_pass  127.0.0.1:9000;</div><div class="line">        include fastcgi_params;</div><div class="line">        fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>重启nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/nginx/sbin/nginx -s reload</div></pre></td></tr></table></figure></p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>浏览器或者通过curl访问</p>
+<p><a href="http://127.0.0.1/phpfpm_status" target="_blank" rel="external">http://you-server-ip/phpfpm_status</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">[root@iZwz9g8nzni5lj69dhlesoZ ~]# curl 127.0.0.1/phpfpm_status</div><div class="line">pool:                 www</div><div class="line">process manager:      dynamic</div><div class="line">start time:           27/Sep/2016:15:08:57 +0800</div><div class="line">start since:          385</div><div class="line">accepted conn:        3</div><div class="line">listen queue:         0</div><div class="line">max listen queue:     0</div><div class="line">listen queue len:     128</div><div class="line">idle processes:       1</div><div class="line">active processes:     1</div><div class="line">total processes:      2</div><div class="line">max active processes: 1</div><div class="line">max children reached: 0</div><div class="line">slow requests:        0</div></pre></td></tr></table></figure>
+<ul>
+<li>参数说明：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pool</td>
+<td>fpm池子名称，大多数为www</td>
+</tr>
+<tr>
+<td>process manager</td>
+<td>进程管理方式,值：static, dynamic or ondemand. dynamic</td>
+</tr>
+<tr>
+<td>start time</td>
+<td>启动日期,如果reload了php-fpm，时间会更新</td>
+</tr>
+<tr>
+<td>start since</td>
+<td>运行时长</td>
+</tr>
+<tr>
+<td>accepted conn</td>
+<td>当前池子接受的请求数</td>
+</tr>
+<tr>
+<td>listen queue</td>
+<td>请求等待队列，如果这个值不为0，那么要增加FPM的进程数量</td>
+</tr>
+<tr>
+<td>max listen queue</td>
+<td>请求等待队列最高的数量</td>
+</tr>
+<tr>
+<td>listen queue len</td>
+<td>socket等待队列长度</td>
+</tr>
+<tr>
+<td>idle processes</td>
+<td>空闲进程数量</td>
+</tr>
+<tr>
+<td>active processes</td>
+<td>活跃进程数量</td>
+</tr>
+<tr>
+<td>total processes</td>
+<td>总进程数量</td>
+</tr>
+<tr>
+<td>max active processes</td>
+<td>最大的活跃进程数量（FPM启动开始算）</td>
+</tr>
+<tr>
+<td>max children reached</td>
+<td>大道进程最大数量限制的次数，如果这个数量不为0，那说明你的最大进程数量太小了，请改大一点。</td>
+</tr>
+<tr>
+<td>slow requests</td>
+<td>启用了php-fpm slow-log，缓慢请求的数量</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>php-fpm还提供不同格式的输入，方便我们查看和与其他监控系统对接。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">http://www.foo.bar/status       #默认纯文本</div><div class="line">http://www.foo.bar/status?json  #json格式</div><div class="line">http://www.foo.bar/status?html  #html</div><div class="line">http://www.foo.bar/status?xml   #xml</div></pre></td></tr></table></figure>
+<ul>
+<li>通过增加full参数，php-fpm还提供查看所有进程的运行状况</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">http://www.foo.bar/status?full        #默认纯文本</div><div class="line">http://www.foo.bar/status?json&amp;full   #json格式</div><div class="line">http://www.foo.bar/status?html&amp;full   #html</div><div class="line">http://www.foo.bar/status?xml&amp;full    #xml</div></pre></td></tr></table></figure>
+<p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">curl &apos;http://127.0.0.1/phpfpm_status?full&apos;</div><div class="line">pool:                 www</div><div class="line">process manager:      dynamic</div><div class="line">start time:           27/Sep/2016:15:08:57 +0800</div><div class="line">start since:          1546</div><div class="line">accepted conn:        14</div><div class="line">listen queue:         0</div><div class="line">max listen queue:     0</div><div class="line">listen queue len:     128</div><div class="line">idle processes:       1</div><div class="line">active processes:     1</div><div class="line">total processes:      2</div><div class="line">max active processes: 1</div><div class="line">max children reached: 0</div><div class="line">slow requests:        0</div><div class="line">************************</div><div class="line">pid:                  12132</div><div class="line">state:                Running</div><div class="line">start time:           27/Sep/2016:15:08:57 +0800</div><div class="line">start since:          1546</div><div class="line">requests:             7</div><div class="line">request duration:     117</div><div class="line">request method:       GET</div><div class="line">request URI:          /phpfpm_status?full</div><div class="line">content length:       0</div><div class="line">user:                 -</div><div class="line">script:               /phpfpm_status</div><div class="line">last request cpu:     0.00</div><div class="line">last request memory:  0</div><div class="line">************************</div><div class="line">pid:                  12133</div><div class="line">state:                Idle</div><div class="line">start time:           27/Sep/2016:15:08:57 +0800</div><div class="line">start since:          1546</div><div class="line">requests:             7</div><div class="line">request duration:     132</div><div class="line">request method:       GET</div><div class="line">request URI:          /phpfpm_status?html&amp;full</div><div class="line">content length:       0</div><div class="line">user:                 -</div><div class="line">script:               /phpfpm_status</div><div class="line">last request cpu:     0.00</div><div class="line">last request memory:  262144</div></pre></td></tr></table></figure></p>
+<p>具体进程参数说明</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pid</td>
+<td>进程号</td>
+</tr>
+<tr>
+<td>state</td>
+<td>状态（Idle - 闲置， Running - 运行， …）</td>
+</tr>
+<tr>
+<td>start time</td>
+<td>进程开始运行时间</td>
+</tr>
+<tr>
+<td>start since</td>
+<td>进程开始持续时间（单位：秒）</td>
+</tr>
+<tr>
+<td>requests</td>
+<td>进程已经处理的请求数</td>
+</tr>
+<tr>
+<td>request duration</td>
+<td>µs的请求数量</td>
+</tr>
+<tr>
+<td>request method</td>
+<td>请求方式（GET, POST, …）</td>
+</tr>
+<tr>
+<td>request URI</td>
+<td>请求URI</td>
+</tr>
+<tr>
+<td>content length</td>
+<td>请求内容长度（仅限POST请求）</td>
+</tr>
+<tr>
+<td>user</td>
+<td>PHP_AUTH_USER （’-‘， 表示没有限制）</td>
+</tr>
+<tr>
+<td>script</td>
+<td>请求文件</td>
+</tr>
+<tr>
+<td>last request cpu</td>
+<td>最后一次请求占用CPU百分比（如果进程不是处于 <code>Idle - 闲置</code> 状态，该值总是0，因为当请求处理终止时，CPU计算已经完成）</td>
+</tr>
+<tr>
+<td>last request memory</td>
+<td>最后一次请求占用内存（如果进程不是处于 <code>Idle - 闲置</code> 状态，该值总是0，因为当请求处理终止时，memory计算已经完成）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tips:</strong><br>如果进程处于 idle 状态，所显示的信息就是基于最后一次请求给出的状态，否则就是基于本次请求的状态。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;PHP-FPM内置了一个运行状态页，开启后便可查看PHP-FPM的详细运行状态，可以给我们在优化PHP-FPM时带来帮助。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
+    
+    
+      <category term="PHP-FPM" scheme="https://weizhimiao.github.io/tags/PHP-FPM/"/>
+    
+      <category term="监控" scheme="https://weizhimiao.github.io/tags/%E7%9B%91%E6%8E%A7/"/>
+    
+  </entry>
   
   <entry>
     <title>PHP扩展模块安装</title>
@@ -2176,304 +2424,6 @@
       <category term="Apache分层" scheme="https://weizhimiao.github.io/tags/Apache%E5%88%86%E5%B1%82/"/>
     
       <category term="Apache模块" scheme="https://weizhimiao.github.io/tags/Apache%E6%A8%A1%E5%9D%97/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Apache性能监控</title>
-    <link href="https://weizhimiao.github.io/2016/08/23/Apache%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7/"/>
-    <id>https://weizhimiao.github.io/2016/08/23/Apache性能监控/</id>
-    <published>2016-08-23T08:10:00.000Z</published>
-    <updated>2016-08-24T03:16:28.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>谈到服务器性能监控，目前市面上有很多成熟的关于性能监控的产品可供我们使用。比如 <a href="http://www.oneapm.com/ci/feature.html" target="_blank" rel="external">Cloud Insight</a><br>。但通过 Apache本身提供的监控模块或者通过一些简单的bash命令也能实现简单的监控。</p>
-<a id="more"></a>
-<h2 id="Linux下通过Server-status来监控Apache"><a href="#Linux下通过Server-status来监控Apache" class="headerlink" title="Linux下通过Server-status来监控Apache"></a>Linux下通过Server-status来监控Apache</h2><ol>
-<li><p>加载 mod_status.so 模块</p>
-<blockquote>
-<p>mod_status, Apache状态管理模块</p>
-</blockquote>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#在httpd.conf中加入下面这句或将其前面注释去掉</div><div class="line">LoadModule status_module modules/server_status.so</div></pre></td></tr></table></figure>
-</li>
-<li><p>修改配置文件</p>
-<ul>
-<li><p>方式一：直接在 httpd.conf 底部添加以下配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;location /c-server-status&gt;</div><div class="line">    setHandle Server-status</div><div class="line">    Order Deny,Allow</div><div class="line">    Deny from nothing</div><div class="line">    Allow from all</div><div class="line">&lt;/location&gt;</div><div class="line">ExtendedStatus on</div></pre></td></tr></table></figure>
-</li>
-<li><p>方式二：添加到子配置文件中<br>在 httpd.conf 中找到 <code>Include conf/extra/httpd-info.conf</code>,去掉<code>#</code>,<br>在 httpd-info.conf 文件中加入 方式一 中的内容。</p>
-</li>
-</ul>
-<p><strong>Tips：</strong></p>
-<ul>
-<li><code>&lt;location /c-server-status&gt;</code>: 这个名字可以任意取，最好不要让别人猜到。</li>
-<li><code>ExtendedStatus on</code>: 启用扩展状态。该设置仅能用于全局设置，不能在特定的虚拟主机中打开或者关闭。并且，启用该扩展会使服务器运行效率降低。</li>
-</ul>
-</li>
-<li><p>重启Apache</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/apache2/bin/httpd -k start|restart|stop</div></pre></td></tr></table></figure>
-</li>
-<li><p>访问页面</p>
-<p><a href="http://your-domain/c-server-status" target="_blank" rel="external">http://your-domain/c-server-status</a></p>
-<p><a href="http://your-domain/c-server-status?refresh=5" target="_blank" rel="external">http://your-domain/c-server-status?refresh=5</a></p>
-<p><a href="http://www.apache.org/server-status" target="_blank" rel="external">官网示例</a></p>
-</li>
-<li><p>监控参数</p>
-</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th>参数名称</th>
-<th>参数描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Total Accesses</td>
-<td>服务器自启动来接收到的请求连接数</td>
-</tr>
-<tr>
-<td>Total kBytes</td>
-<td>传输的总数据量，单位是KB</td>
-</tr>
-<tr>
-<td>CPULoad</td>
-<td>NCPU负荷</td>
-</tr>
-<tr>
-<td>Uptime</td>
-<td>运行时间，单位秒</td>
-</tr>
-<tr>
-<td>ReqPerSec</td>
-<td>每秒请求数</td>
-</tr>
-<tr>
-<td>BytesPerSec</td>
-<td>每秒传输数据量，单位B/s</td>
-</tr>
-<tr>
-<td>BytesPerReq</td>
-<td>平均每个请求的数据传输量（事实上就是BytesPerSec/BytesPerSec）</td>
-</tr>
-<tr>
-<td>BusyWorkers</td>
-<td>在跑的进程数</td>
-</tr>
-<tr>
-<td>IdleWorkers</td>
-<td>空闲的进程数</td>
-</tr>
-</tbody>
-</table>
-<h2 id="Linux下通过命令来实现监控"><a href="#Linux下通过命令来实现监控" class="headerlink" title="Linux下通过命令来实现监控"></a>Linux下通过命令来实现监控</h2><ol>
-<li>ps 查看httpd进程数<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ps -ef | grep httpd | wc -l</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>当连接数多了，他就会生出更多进程来处理请求。当然这结果包含 grep httpd 的进程输出，所以一般来说实际进程数比输出结果少1</p>
-<ol>
-<li>用netstat来查看当前连接数<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$netstat -ant | grep &quot;:80&quot; | wc -l</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>连接数目并不等于httpd线程数目，当然连接数目越多，httpd进程数就有可能数会增多。上面的返回结果数目，有可能包括多种连接状态，比如 LISTEN、ESTABLISHED、TIME_WAIT等等，可以加入状态关键字进一步过滤，得到想要的结果。</p>
-<ol>
-<li><p>实时检测httpd连接数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#watch -n 1 -d &quot;pgrep httpd|wc -l&quot;</div></pre></td></tr></table></figure>
-</li>
-<li><p>计算httpd进程占用内在的平均数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#ps aux|grep -v grep|awk &apos;/httpd/&#123;sum+=$6&#125;; END&#123;print sum/n&#125;&apos;</div></pre></td></tr></table></figure>
-</li>
-<li><p>查看Apache的并发请求数及期TCP连接状态</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#netstat -n | awk &apos;/^tcp/&#123;++S[$NF]&#125;END&#123;for(a in S) print a, S[a]&#125;&apos;</div><div class="line">返回结果示例：</div><div class="line">LAST_ACK 5</div><div class="line">SYN_RECV 30       #表示正在等待处理的请求数；</div><div class="line">ESTABLISHED 1597  #表示正常数据传输状态；</div><div class="line">FIN_WAIT1 51</div><div class="line">FIN_WAIT2 504</div><div class="line">TIME_WAIT 1057    #表示处理完毕,等待超时结束的请求数</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>常见的连接状态</p>
-<table>
-<thead>
-<tr>
-<th>状态</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>CLOSED</td>
-<td>无连接是活动的或正在进行</td>
-</tr>
-<tr>
-<td>LISTEN</td>
-<td>服务器在等待进入呼叫</td>
-</tr>
-<tr>
-<td>SYN_RECV</td>
-<td>一个连接请求已经到达,等待确认</td>
-</tr>
-<tr>
-<td>SYN_SENT</td>
-<td>应用已经开始,打开一个连接</td>
-</tr>
-<tr>
-<td>ESTABLISHED</td>
-<td>正常数据传输状态</td>
-</tr>
-<tr>
-<td>FIN_WAIT1</td>
-<td>应用说它已经完成</td>
-</tr>
-<tr>
-<td>FIN_WAIT2</td>
-<td>另一边已同意释放</td>
-</tr>
-<tr>
-<td>ITMED_WAIT</td>
-<td>等待所有分组死掉</td>
-</tr>
-<tr>
-<td>CLOSING</td>
-<td>两边同时尝试关闭</td>
-</tr>
-<tr>
-<td>TIME_WAIT</td>
-<td>另一边已初始化一个释放</td>
-</tr>
-<tr>
-<td>LAST_ACK</td>
-<td>等待所有分组死掉</td>
-</tr>
-</tbody>
-</table>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;谈到服务器性能监控，目前市面上有很多成熟的关于性能监控的产品可供我们使用。比如 &lt;a href=&quot;http://www.oneapm.com/ci/feature.html&quot;&gt;Cloud Insight&lt;/a&gt;&lt;br&gt;。但通过 Apache本身提供的监控模块或者通过一些简单的bash命令也能实现简单的监控。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Apache" scheme="https://weizhimiao.github.io/categories/Apache/"/>
-    
-    
-      <category term="Apache 监控" scheme="https://weizhimiao.github.io/tags/Apache-%E7%9B%91%E6%8E%A7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Apache 并行处理模块小结</title>
-    <link href="https://weizhimiao.github.io/2016/08/22/Apache%E5%A4%9A%E5%A4%84%E7%90%86%E6%A8%A1%E5%9D%97%E6%95%B4%E7%90%86/"/>
-    <id>https://weizhimiao.github.io/2016/08/22/Apache多处理模块整理/</id>
-    <published>2016-08-22T14:36:00.000Z</published>
-    <updated>2016-08-24T03:16:32.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Apache 2.X  支持插入式并行处理模块，称为多路处理模块 MPM，（Multi-Processing Modules）它是一个用于选择和处理网络端口的绑定，接收请求并指派子进程处理来自客户端的请求的一个Apache模块。和其他Apache模块相比，它最大的区别是，在任何时间， 必须有一个，而且只有一个 MPM 加载到服务器中。</p>
-<blockquote>
-<p>原理就是增加服务器服务进程或线程数量，是服务器可同时处理更多用户请求。</p>
-</blockquote>
-<a id="more"></a>
-<h2 id="如何为Apache选择并安装一个合适的MPM模块"><a href="#如何为Apache选择并安装一个合适的MPM模块" class="headerlink" title="如何为Apache选择并安装一个合适的MPM模块"></a>如何为Apache选择并安装一个合适的MPM模块</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>MPM 必须在编译前夕，配置时指定，然后编译到服务器程序中。</p>
-<p>即在执行 configure 时，使用参数 –with-mpm=NAME 来指定一个希望安装的MPM模块。NAME 是指定的 MPM 名称。</p>
-<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">./configure --prefix=/usr/local/apache2 --with-mpm=worker</div><div class="line">make &amp; make install</div></pre></td></tr></table></figure></p>
-<p>或者也可以编译为支持指定的几种或者全部MPM，之后通过修改配置来更换具体使用哪种MPM。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">--enable-mpms-shared=&apos;prefork worker&apos;</div><div class="line">--enable-mpms-shared=all</div></pre></td></tr></table></figure></p>
-<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">./configure --prefix=/usr/local/apache2 --enable-mpms-shared=all</div><div class="line">···</div></pre></td></tr></table></figure></p>
-<p>安装成功之后，会在modules文件夹下，自动编译出我们指定的MPM的so模块，在httpd.conf中修改Apache的多处理模式MPM可以切换不同MPM模块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#LoadModule mpm_prefork_module modules/mod_mpm_prefork.so</div><div class="line">LoadModule mpm_worker_module modules/mod_mpm_worker.so</div><div class="line">#LoadModule mpm_event_module modules/mod_mpm_event.so</div></pre></td></tr></table></figure></p>
-<h3 id="如何查看当前使用的是哪种MPM模块"><a href="#如何查看当前使用的是哪种MPM模块" class="headerlink" title="如何查看当前使用的是哪种MPM模块"></a>如何查看当前使用的是哪种MPM模块</h3><ol>
-<li><p>使用 ./httpd -l 来确定选择的 MPM。 此命令会列出编译到服务器程序中的所有模块，包括 MPM。例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ httpd -l</div><div class="line">Compiled in modules:</div><div class="line">  core.c</div><div class="line">  mod_so.c</div><div class="line">  http_core.c</div><div class="line">  prefork.c</div></pre></td></tr></table></figure>
-<p>如上显示，我们呢当前安装的是以prefork方式工作的MPM模块。</p>
-</li>
-<li><p>使用./httpd -V 来确定当前使用的MPM模块。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">$ httpd -V</div><div class="line">Server version: Apache/2.4.18 (Unix)</div><div class="line">Server built:   Feb 20 2016 20:03:19</div><div class="line">Server&apos;s Module Magic Number: 20120211:52</div><div class="line">Server loaded:  APR 1.4.8, APR-UTIL 1.5.2</div><div class="line">Compiled using: APR 1.4.8, APR-UTIL 1.5.2</div><div class="line">Architecture:   64-bit</div><div class="line">Server MPM:     prefork</div><div class="line">  threaded:     no</div><div class="line">    forked:     yes (variable process count)</div><div class="line">Server compiled with....</div><div class="line"> -D APR_HAS_SENDFILE</div><div class="line"> -D APR_HAS_MMAP</div><div class="line"> -D APR_HAVE_IPV6 (IPv4-mapped addresses enabled)</div><div class="line"> -D APR_USE_FLOCK_SERIALIZE</div><div class="line"> -D APR_USE_PTHREAD_SERIALIZE</div><div class="line"> -D SINGLE_LISTEN_UNSERIALIZED_ACCEPT</div><div class="line"> -D APR_HAS_OTHER_CHILD</div><div class="line"> -D AP_HAVE_RELIABLE_PIPED_LOGS</div><div class="line"> -D DYNAMIC_MODULE_LIMIT=256</div><div class="line"> -D HTTPD_ROOT=&quot;/usr&quot;</div><div class="line"> -D SUEXEC_BIN=&quot;/usr/bin/suexec&quot;</div><div class="line"> -D DEFAULT_PIDLOG=&quot;/private/var/run/httpd.pid&quot;</div><div class="line"> -D DEFAULT_SCOREBOARD=&quot;logs/apache_runtime_status&quot;</div><div class="line"> -D DEFAULT_ERRORLOG=&quot;logs/error_log&quot;</div><div class="line"> -D AP_TYPES_CONFIG_FILE=&quot;/private/etc/apache2/mime.types&quot;</div><div class="line"> -D SERVER_CONFIG_FILE=&quot;/private/etc/apache2/httpd.conf&quot;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="常见的几种MPM模块以及它们之间的区别"><a href="#常见的几种MPM模块以及它们之间的区别" class="headerlink" title="常见的几种MPM模块以及它们之间的区别"></a>常见的几种MPM模块以及它们之间的区别</h2><p>如果我们在编译的时候没有明确选择使用哪种MPM模块，那么Apache将会根据不同的系统选择不同的MPM模块进行编译安装。</p>
-<table>
-<thead>
-<tr>
-<th>系统</th>
-<th>默认MPM</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>BeOS</td>
-<td>beos</td>
-</tr>
-<tr>
-<td>Netware</td>
-<td>mpm_netware</td>
-</tr>
-<tr>
-<td>OS/2</td>
-<td>mpmt_os2</td>
-</tr>
-<tr>
-<td>Unix</td>
-<td>prefork</td>
-</tr>
-<tr>
-<td>Windows</td>
-<td>mpm_winnt</td>
-</tr>
-</tbody>
-</table>
-<p>对于类UNIX系统，根据不同的场景需要我们可以选择使用不同的MPM模块。</p>
-<ul>
-<li>prefork</li>
-<li>worker</li>
-<li>event</li>
-</ul>
-<h3 id="prefork-MPM"><a href="#prefork-MPM" class="headerlink" title="prefork MPM"></a>prefork MPM</h3><blockquote>
-<p>非线程型的、预派生的MPM</p>
-</blockquote>
-<p><strong>原理：</strong> 启动之初，就预先fork一些子进程，然后等待请求进来。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># prefork MPM</div><div class="line"># StartServers: number of server processes to start</div><div class="line"># MinSpareServers: minimum number of server processes which are kept spare</div><div class="line"># MaxSpareServers: maximum number of server processes which are kept spare</div><div class="line"># MaxRequestWorkers: maximum number of server processes allowed to start</div><div class="line"># MaxConnectionsPerChild: maximum number of connections a server process serves</div><div class="line">#                         before terminating</div><div class="line">&lt;IfModule mpm_prefork_module&gt;</div><div class="line">    StartServers             1  #推荐 小=默认，中=20~50，大=50~100</div><div class="line">    MinSpareServers          1  #推荐 与 StartServers 保持一致</div><div class="line">    MaxSpareServers         10  #推荐 小=20，中=30~80，大=80~120</div><div class="line">    MaxRequestWorkers      250  #推荐 小=500，中=500~1500，大=1500~3000</div><div class="line">    MaxConnectionsPerChild   0  #推荐 小=10000，中或大10000~50000</div><div class="line">    #ServerLimit           250  #推荐 与 MaxRequestWorkers 保持一致，当MaxRequestWorkers 值超过256，则需要增加该值配置</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure></p>
-<p>启动时建立<code>StartServers</code>个子进程，然后按每秒创建指数级个进程数，直到达到<code>MinSpareServers</code>个进程（最多增到每秒32个）。如果空闲进程大于<code>MaxSpareServers</code>，则检查kill掉一些空闲进程。</p>
-<p><code>MaxRequestWorkers</code>指定Apache最多可以同时同时处理的请求数，即进程数，当请求数多余这个值之后，多余的请求就会进入请求队列等待处理（默认不能大于256）。但可以通过设定ServerLimit来增大限制数，serverlimit最大为20000。apache2.3.1之前的版本该参数叫 MaxClients 。当我们的服务器资源很多，但访问却很慢时，我们就可以试一下增大该值，来提高服务器的请求处理能力。<br><code>MaxConnectionsPerChild</code>每个子进程可处理的请求数。处理完之后子进程就会自动销毁。<code>0</code>表示无限，永不销毁。</p>
-<ul>
-<li>优点：成熟稳定，兼容所有新老模块。同时，不需要担心线程安全的问题。</li>
-<li>缺点：相对于线程，进程相对占用更多的系统资源，消耗更多的内存。所以不擅长处理高并发请求。</li>
-</ul>
-<h3 id="worker-MPM"><a href="#worker-MPM" class="headerlink" title="worker MPM"></a>worker MPM</h3><blockquote>
-<p>支持混合的多线程、多进程的MPM。相比于prefork，worker采用了多进程和多线程混合模式，所以在使用中它占据更少的内存，在高并发情况下表现更优秀。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># worker MPM</div><div class="line"># StartServers: initial number of server processes to start</div><div class="line"># MinSpareThreads: minimum number of worker threads which are kept spare</div><div class="line"># MaxSpareThreads: maximum number of worker threads which are kept spare</div><div class="line"># ThreadsPerChild: constant umber of worker threads in each server process</div><div class="line"># MaxRequestWorkers: maximum number of worker threads</div><div class="line"># MaxConnectionsPerChild: maximum number of connections a server process serves</div><div class="line">#                         before terminating</div><div class="line">&lt;IfModule mpm_worker_module&gt;</div><div class="line">    StartServers             3  #推荐 小=默认，中=3~5，大=5~10</div><div class="line">    MinSpareThreads         75  #推荐 小=默认，中=50~100，大=100~200</div><div class="line">    MaxSpareThreads        250  #推荐 小=默认，中=80~160，大=200~400</div><div class="line">    ThreadsPerChild         25  #推荐 小=默认，中=50~100，大=100~200</div><div class="line">    MaxRequestWorkers      400  #推荐 小=500，中=500~1500，大=1500~3000</div><div class="line">    MaxConnectionsPerChild   0  #推荐 小=10000，中或大=10000~50000</div><div class="line">    #ServerLimit           250  #推荐 当 MaxRequestWorkers/ThreadsPerChild 大于16时，则需要增加该值配置。并且该值必须大于等于MaxRequestWorkers/ThreadsPerChild 的值</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure>
-<p><code>ThreadsPerChild</code> 每个进程包含线程数<br><code>MaxSpareThreads</code> 定义最大空闲线程数，超过则清理</p>
-<ul>
-<li>优点：占用更少系统资源，高并发情况下表现更优秀。</li>
-<li>缺点：必须考虑线程安全的问题。</li>
-</ul>
-<h3 id="event-MPM"><a href="#event-MPM" class="headerlink" title="event MPM"></a>event MPM</h3><blockquote>
-<p>worker方式的升级版，也采用多进程和多线程混合模式，并且解决了在 <code>keep-alive</code> 情况下，长期被占用的线程的资源浪费问题。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># event MPM</div><div class="line"># StartServers: initial number of server processes to start</div><div class="line"># MinSpareThreads: minimum number of worker threads which are kept spare</div><div class="line"># MaxSpareThreads: maximum number of worker threads which are kept spare</div><div class="line"># ThreadsPerChild: constant number of worker threads in each server process</div><div class="line"># MaxRequestWorkers: maximum number of worker threads</div><div class="line"># MaxConnectionsPerChild: maximum number of connections a server process serves</div><div class="line">#                         before terminating</div><div class="line">&lt;IfModule mpm_event_module&gt;</div><div class="line">    StartServers             3</div><div class="line">    MinSpareThreads         75</div><div class="line">    MaxSpareThreads        250</div><div class="line">    ThreadsPerChild         25</div><div class="line">    MaxRequestWorkers      400</div><div class="line">    MaxConnectionsPerChild   0</div><div class="line">&lt;/IfModule&gt;</div></pre></td></tr></table></figure>
-<ul>
-<li>优点：更好的高并发请求处理能力。</li>
-<li>缺点：兼容性问题可能不是很好（最新的官方自带的模块，已经全部支持event MPM了），需要Linux系统（Linux 2.6+）对EPoll的支持，才能启用</li>
-</ul>
-<p><strong>Tips：</strong></p>
-<ul>
-<li><strong><em>空闲子进程：</em></strong> 即没有正在处理请求的子进程。</li>
-<li><strong><em>请求等待队列：</em></strong> 任何超过 MaxClients 或 MaxRequestWorkers 限制的请求都将进入到等待队列，直到收到 ListenBacklog 指令限制的最大值为止（默认 ListenBacklog 511）</li>
-<li><strong><em>ServerLimit：</em></strong> 该值表示Apache允许创建的最大进程数。值得注意的是 Apache在编译的时候会有一个硬限制 ServerLimit 20000 ，你不能超过该值。该值如果设置过高，将会有过多的内存被分配，可能会导致Apache 无法启动或者不稳定的情况。</li>
-</ul>
-<h2 id="简单测试对比"><a href="#简单测试对比" class="headerlink" title="简单测试对比"></a>简单测试对比</h2><p>对上面三种模式，我们做简单的测试进行对比。</p>
-<h3 id="静态页面"><a href="#静态页面" class="headerlink" title="静态页面"></a>静态页面</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./ab -k -c 200 -n 200000 192.168.1.234/index.html</div></pre></td></tr></table></figure>
-<p>结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">prefork：9556QPS</div><div class="line">worker ：11038QPS</div><div class="line">event ：10224QPS</div></pre></td></tr></table></figure></p>
-<h3 id="PHP页面"><a href="#PHP页面" class="headerlink" title="PHP页面"></a>PHP页面</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./ab -k -c 200 -n 200000 192.168.1.234/index.php  #echo &quot;hello world&quot;;</div></pre></td></tr></table></figure>
-<p>结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">prefork：6094QPS</div><div class="line">worker ：7411QPS</div><div class="line">event ：7089QPS</div></pre></td></tr></table></figure></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Apache 2.X  支持插入式并行处理模块，称为多路处理模块 MPM，（Multi-Processing Modules）它是一个用于选择和处理网络端口的绑定，接收请求并指派子进程处理来自客户端的请求的一个Apache模块。和其他Apache模块相比，它最大的区别是，在任何时间， 必须有一个，而且只有一个 MPM 加载到服务器中。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;原理就是增加服务器服务进程或线程数量，是服务器可同时处理更多用户请求。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="Apache" scheme="https://weizhimiao.github.io/categories/Apache/"/>
-    
-    
-      <category term="Apache Apache性能优化" scheme="https://weizhimiao.github.io/tags/Apache-Apache%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
     
   </entry>
   
