@@ -370,54 +370,12 @@
 
       
         
-          
-            <p>Nginx可以通过stub_status模块来查看服务器的状态信息。</p>
-<h2 id="安装stub-status模块"><a href="#安装stub-status模块" class="headerlink" title="安装stub_status模块"></a>安装stub_status模块</h2><p>查看服务器当前是否已经编译安装过stub_status模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/usr/local/nginx/sbin/nginx -V</div><div class="line">nginx version: nginx/1.11.4</div><div class="line">built by gcc 4.8.5 20150623 (Red Hat 4.8.5-4) (GCC)</div><div class="line">configure arguments: --prefix=/usr/local/nginx</div></pre></td></tr></table></figure></p>
-<p>安装 stub_status 模块</p>
-<p>解压相应版本的nginx源码包，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd nginx-1.11.4</div></pre></td></tr></table></figure></p>
-<p>配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure --prefix=/usr/local/nginx --with-http_stub_status_module</div></pre></td></tr></table></figure></p>
-<p>编译（不执行make install操作）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make</div></pre></td></tr></table></figure></p>
-<p>手动替换 nginx 执行文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mv /usr/local/nginx/sbin/nginx /usr/local/nginx/sbin/nginx.bak</div><div class="line">cp ./objs/nginx /usr/local/nginx/sbin/</div></pre></td></tr></table></figure></p>
-<p>查看是否安装成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/usr/local/nginx/sbin/nginx -V</div><div class="line">nginx version: nginx/1.11.4</div><div class="line">built by gcc 4.8.5 20150623 (Red Hat 4.8.5-4) (GCC)</div><div class="line">configure arguments: --prefix=/usr/local/nginx --with-http_stub_status_module</div></pre></td></tr></table></figure></p>
-<h2 id="启用nginx-status配置"><a href="#启用nginx-status配置" class="headerlink" title="启用nginx status配置"></a>启用nginx status配置</h2><p>修改配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /usr/local/nginx/conf/nginx.conf</div></pre></td></tr></table></figure></p>
-<p>加入配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">location /ngx_status</div><div class="line">&#123;</div><div class="line">    stub_status on;</div><div class="line">    access_log off;</div><div class="line">    allow all;</div><div class="line">    #deny all;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>重启nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># /usr/local/nginx/sbin/nginx -s reload 可能或有问题，所以先停止当前nginx进程，然后在重启。</div><div class="line">/usr/local/nginx/sbin/nginx -s stop</div><div class="line">/usr/local/nginx/sbin/nginx</div></pre></td></tr></table></figure></p>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>浏览器或者curl访问</p>
-<p><a href="http://120.76.250.101/ngx_status" target="_blank" rel="external">http://120.76.250.101/ngx_status</a><br>或<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">curl 127.0.0.1/ngx_status</div><div class="line">Active connections: 1</div><div class="line">server accepts handled requests</div><div class="line"> 2 2 2</div><div class="line">Reading: 0 Writing: 1 Waiting: 0</div></pre></td></tr></table></figure></p>
-<p>参数说明</p>
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Active connections</td>
-<td>活跃的连接数量</td>
-</tr>
-<tr>
-<td>server accepts handled requests</td>
-<td>2 2 2 表示总共处理了2个连接 , 成功创建2次握手, 总共处理了2个请求</td>
-</tr>
-<tr>
-<td>reading</td>
-<td>读取客户端的连接数.</td>
-</tr>
-<tr>
-<td>writing</td>
-<td>响应数据到客户端的数量</td>
-</tr>
-<tr>
-<td>waiting</td>
-<td>开启 keep-alive 的情况下,这个值等于 active – (reading+writing), 意思就是 Nginx 已经处理完正在等候下一次请求指令的驻留连接.</td>
-</tr>
-</tbody>
-</table>
-<p>over~</p>
-
-          
+          <p>Nginx可以通过stub_status模块来查看服务器的状态信息。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/09/27/Nginx运行状态监控/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>

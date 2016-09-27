@@ -9,6 +9,7 @@ categories:
 
 Nginx可以通过stub_status模块来查看服务器的状态信息。
 
+<!-- more -->
 ## 安装stub_status模块
 查看服务器当前是否已经编译安装过stub_status模块
 ```

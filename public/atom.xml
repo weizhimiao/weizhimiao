@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://weizhimiao.github.io/"/>
-  <updated>2016-09-27T09:28:51.000Z</updated>
+  <updated>2016-09-27T09:41:45.000Z</updated>
   <id>https://weizhimiao.github.io/</id>
   
   <author>
@@ -20,9 +20,10 @@
     <link href="https://weizhimiao.github.io/2016/09/27/Nginx%E8%BF%90%E8%A1%8C%E7%8A%B6%E6%80%81%E7%9B%91%E6%8E%A7/"/>
     <id>https://weizhimiao.github.io/2016/09/27/Nginx运行状态监控/</id>
     <published>2016-09-27T14:30:00.000Z</published>
-    <updated>2016-09-27T09:28:51.000Z</updated>
+    <updated>2016-09-27T09:41:45.000Z</updated>
     
     <content type="html"><![CDATA[<p>Nginx可以通过stub_status模块来查看服务器的状态信息。</p>
+<a id="more"></a>
 <h2 id="安装stub-status模块"><a href="#安装stub-status模块" class="headerlink" title="安装stub_status模块"></a>安装stub_status模块</h2><p>查看服务器当前是否已经编译安装过stub_status模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/usr/local/nginx/sbin/nginx -V</div><div class="line">nginx version: nginx/1.11.4</div><div class="line">built by gcc 4.8.5 20150623 (Red Hat 4.8.5-4) (GCC)</div><div class="line">configure arguments: --prefix=/usr/local/nginx</div></pre></td></tr></table></figure></p>
 <p>安装 stub_status 模块</p>
 <p>解压相应版本的nginx源码包，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd nginx-1.11.4</div></pre></td></tr></table></figure></p>
@@ -72,7 +73,6 @@
     <summary type="html">
     
       &lt;p&gt;Nginx可以通过stub_status模块来查看服务器的状态信息。&lt;/p&gt;
-&lt;h2 id=&quot;安装stub-status模块&quot;&gt;&lt;a href=&quot;#安装stub-status模块&quot; class=&quot;headerlink&quot; title=&quot;安装stub_status模块&quot;&gt;&lt;/a
     
     </summary>
     
@@ -257,9 +257,9 @@
       <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
     
     
-      <category term="PHP-FPM" scheme="https://weizhimiao.github.io/tags/PHP-FPM/"/>
-    
       <category term="监控" scheme="https://weizhimiao.github.io/tags/%E7%9B%91%E6%8E%A7/"/>
+    
+      <category term="PHP-FPM" scheme="https://weizhimiao.github.io/tags/PHP-FPM/"/>
     
   </entry>
   
