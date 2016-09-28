@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://weizhimiao.github.io/"/>
-  <updated>2016-09-27T09:41:45.000Z</updated>
+  <updated>2016-09-28T08:50:00.000Z</updated>
   <id>https://weizhimiao.github.io/</id>
   
   <author>
@@ -14,6 +14,316 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>linux服务和进程管理</title>
+    <link href="https://weizhimiao.github.io/2016/09/28/Linux%E6%9C%8D%E5%8A%A1%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/"/>
+    <id>https://weizhimiao.github.io/2016/09/28/Linux服务和进程管理/</id>
+    <published>2016-09-28T10:30:00.000Z</published>
+    <updated>2016-09-28T08:50:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://n.sinaimg.cn/games/3ece443e/20160928/FuWuHeJinChengGuanLi.png" alt="Linux服务和进程管理"></p>
+<a id="more"></a>
+<h2 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h2><p>进程管理的三个主要任务</p>
+<ul>
+<li>判断服务器的健康状态</li>
+<li>查看所有正在运行的进程</li>
+<li>强制终止进程</li>
+</ul>
+<h3 id="进程查看"><a href="#进程查看" class="headerlink" title="进程查看"></a>进程查看</h3><h4 id="ps-aux"><a href="#ps-aux" class="headerlink" title="ps aux"></a>ps aux</h4><blockquote>
+<p>查看当前系统所有运行的进程（可以不加-）</p>
+<ul>
+<li>-a 显示前台所有进程</li>
+<li>-u 显示用户名</li>
+<li>-x 显示后台进程</li>
+</ul>
+</blockquote>
+<p>命令执行结果示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">ps aux</div><div class="line">USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND</div><div class="line">root         1  0.0  0.3  41280  3732 ?        Ss   9月26   0:02 /usr/lib/systemd/systemd --switched-root --system</div><div class="line">root         2  0.0  0.0      0     0 ?        S    9月26   0:00 [kthreadd]</div><div class="line">root         3  0.0  0.0      0     0 ?        S    9月26   0:00 [ksoftirqd/0]</div><div class="line">root         5  0.0  0.0      0     0 ?        S&lt;   9月26   0:00 [kworker/0:0H]</div><div class="line">root         6  0.0  0.0      0     0 ?        S    9月26   0:00 [kworker/u2:0]</div><div class="line">root         7  0.0  0.0      0     0 ?        S    9月26   0:00 [migration/0]</div><div class="line">root         8  0.0  0.0      0     0 ?        S    9月26   0:00 [rcu_bh]</div><div class="line">root         9  0.0  0.0      0     0 ?        S    9月26   0:00 [rcuob/0]</div><div class="line">root        10  0.0  0.0      0     0 ?        S    9月26   0:36 [rcu_sched]</div><div class="line">root        11  0.0  0.0      0     0 ?        S    9月26   0:32 [rcuos/0]</div><div class="line">···</div></pre></td></tr></table></figure></p>
+<p>参数说明:</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>USER</td>
+<td>用户名</td>
+</tr>
+<tr>
+<td>PID</td>
+<td>进程PID 1  init  系统启动的第一个进程</td>
+</tr>
+<tr>
+<td>%CPU</td>
+<td>cpu占用百分比</td>
+</tr>
+<tr>
+<td>%MEM</td>
+<td>内存占用百分比</td>
+</tr>
+<tr>
+<td>VSZ</td>
+<td>虚拟内存占用量（KB）</td>
+</tr>
+<tr>
+<td>RSS</td>
+<td>固定内存占有量</td>
+</tr>
+<tr>
+<td>TTY</td>
+<td>登录终端  tty1-7 本地终端1-6 字符、 7图形） pts/0-255</td>
+</tr>
+<tr>
+<td>STAT</td>
+<td>状态 （S：睡眠 D：不可唤醒 R：运行 T：停止 Z：僵死 W：进入内存交换 X：死掉的进程 &lt;:高优先级 N：低优先级 L：被锁进内存 s：含子进程 +：位于后台 l：多线程）</td>
+</tr>
+<tr>
+<td>START</td>
+<td>进程触发时间</td>
+</tr>
+<tr>
+<td>TIME</td>
+<td>占用cpu时间</td>
+</tr>
+<tr>
+<td>COMMAND</td>
+<td>进程本身</td>
+</tr>
+</tbody>
+</table>
+<h4 id="pstree"><a href="#pstree" class="headerlink" title="pstree"></a>pstree</h4><blockquote>
+<ul>
+<li>-a 查看进程树</li>
+</ul>
+</blockquote>
+<p>命令执行结果示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">pstree -a</div><div class="line">systemd --switched-root --system --deserialize 21</div><div class="line">  ├─AliHids</div><div class="line">  │   └─4*[&#123;AliHids&#125;]</div><div class="line">  ├─AliYunDun</div><div class="line">  │   └─8*[&#123;AliYunDun&#125;]</div><div class="line">  ├─AliYunDunUpdate</div><div class="line">  │   └─3*[&#123;AliYunDunUpdate&#125;]</div><div class="line">  ├─agetty --noclear tty1 linux</div><div class="line">  ├─aliyun-service -d</div><div class="line">  ├─crond -n</div><div class="line">  ├─dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation</div><div class="line">  ├─memcached -d -m 128 -u root -p 11211</div><div class="line">  │   └─6*[&#123;memcached&#125;]</div><div class="line">  ├─nginx</div><div class="line">  │   └─nginx</div><div class="line">  ├─ntpd -u ntp:ntp -g</div><div class="line">  ├─php-fpm</div><div class="line">  │   ├─php-fpm</div><div class="line">  │   └─php-fpm</div><div class="line">  ├─rsyslogd -n</div><div class="line">  │   └─2*[&#123;rsyslogd&#125;]</div><div class="line">  ├─sshd -D</div><div class="line">  │   └─sshd</div><div class="line">  │       └─bash</div><div class="line">  │           └─pstree -a</div><div class="line">  ├─systemd-journal</div><div class="line">  ├─systemd-logind</div><div class="line">  └─systemd-udevd</div></pre></td></tr></table></figure></p>
+<h4 id="top"><a href="#top" class="headerlink" title="top"></a>top</h4><blockquote>
+<p>实时显示进程状态</p>
+</blockquote>
+<p>命令执行结果示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">top - 15:04:52 up 2 days,  5:25,  1 user,  load average: 0.00, 0.01, 0.05</div><div class="line">Tasks:  70 total,   2 running,  68 sleeping,   0 stopped,   0 zombie</div><div class="line">%Cpu(s):  0.3 us,  0.3 sy,  0.0 ni, 99.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st</div><div class="line">KiB Mem :  1016796 total,   599400 free,    41948 used,   375448 buff/cache</div><div class="line">KiB Swap:        0 total,        0 free,        0 used.   838500 avail Mem</div><div class="line"></div><div class="line">  PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND</div><div class="line">  917 root      20   0   82696   9152   5456 S  0.3  0.9   5:50.76 AliHids</div><div class="line">    1 root      20   0   41280   3732   2388 S  0.0  0.4   0:02.36 systemd</div><div class="line">    2 root      20   0       0      0      0 S  0.0  0.0   0:00.01 kthreadd</div><div class="line">    3 root      20   0       0      0      0 S  0.0  0.0   0:00.00 ksoftirqd/0</div><div class="line">    5 root       0 -20       0      0      0 S  0.0  0.0   0:00.00 kworker/0:0H</div><div class="line">    6 root      20   0       0      0      0 S  0.0  0.0   0:00.26 kworker/u2:0</div><div class="line">    7 root      rt   0       0      0      0 S  0.0  0.0   0:00.00 migration/0</div><div class="line">    ···</div></pre></td></tr></table></figure></p>
+<p>参数说明</p>
+<ul>
+<li>第一行：系统当前时间，系统持续时间， 登录用户，1,5,15分钟之前的平均负载</li>
+<li>第二行：进程总数</li>
+<li>第三行：CPU占用率</li>
+<li>第四行：内存使用：总共，空闲，已使用，缓存</li>
+<li>第五行：swap使用情况</li>
+</ul>
+<p>操作命令：</p>
+<ul>
+<li>M,按内存占用排序</li>
+<li>P,安CPU占用排序</li>
+<li>q,退出</li>
+</ul>
+<h3 id="终止进程"><a href="#终止进程" class="headerlink" title="终止进程"></a>终止进程</h3><h4 id="kill-结束单个进程"><a href="#kill-结束单个进程" class="headerlink" title="kill 结束单个进程"></a>kill 结束单个进程</h4><blockquote>
+<p>kill命令是通过向进程发送指定的信号来结束相应进程的。在默认情况下，采用编号为15的TERM信号。TERM信号将终止所有不能捕获该信号的进程。对于那些可以捕获该信号的进程就要用编号为9的kill信号，强行“杀掉”该进程。</p>
+<p>命令格式：kill 信号  PID</p>
+</blockquote>
+<p>信号，进程间的通信方式</p>
+<p>我们常用的信号有</p>
+<table>
+<thead>
+<tr>
+<th>信号名称</th>
+<th>信号</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HUP</td>
+<td>1</td>
+<td>终端断线</td>
+</tr>
+<tr>
+<td>INT</td>
+<td>2</td>
+<td>中断（同 Ctrl + C）</td>
+</tr>
+<tr>
+<td>QUIT</td>
+<td>3</td>
+<td>退出（同 Ctrl + \）</td>
+</tr>
+<tr>
+<td>TERM</td>
+<td>15</td>
+<td>终止</td>
+</tr>
+<tr>
+<td>KILL</td>
+<td>9</td>
+<td>强制终止</td>
+</tr>
+<tr>
+<td>CONT</td>
+<td>18</td>
+<td>继续（与STOP相反， fg/bg命令）</td>
+</tr>
+<tr>
+<td>STOP</td>
+<td>19</td>
+<td>暂停（同 Ctrl + Z）</td>
+</tr>
+</tbody>
+</table>
+<p>示例：结束 memcached 进程</p>
+<p>获取memcached进程pid（24428，即为memcached进程PID）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">ps -aux | grep memcache</div><div class="line">root     24428  0.0  0.0 323120   864 ?        Ssl  11:00   0:02 /usr/local/memcached/bin/memcached -d -m 128 -u root -p 11211</div><div class="line">root     24727  0.0  0.0 112664   984 pts/0    S+   15:54   0:00 grep --color=auto memcache</div><div class="line">#</div><div class="line">ps -ef | grep memcache</div><div class="line">root     24428     1  0 11:00 ?        00:00:02 /usr/local/memcached/bin/memcached -d -m 128 -u root -p 11211</div><div class="line">root     24708 24568  0 15:49 pts/0    00:00:00 grep --color=auto memcache</div></pre></td></tr></table></figure></p>
+<p>或者使用pidof查看 （ pid + of ）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@...]# pidof memcached</div><div class="line">24428</div></pre></td></tr></table></figure></p>
+<p>终止 memcached<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">kill -9 24428</div><div class="line">ps -aux | grep memcache</div><div class="line">root     24729  0.0  0.0 112664   984 pts/0    S+   15:55   0:00 grep --color=auto memcache</div></pre></td></tr></table></figure></p>
+<h4 id="killall"><a href="#killall" class="headerlink" title="killall"></a>killall</h4><blockquote>
+<p>杀死指定名字的进程</p>
+<p>命令格式：killall 信号  进程名</p>
+</blockquote>
+<p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">killall -9 memcached</div></pre></td></tr></table></figure></p>
+<h4 id="pkill"><a href="#pkill" class="headerlink" title="pkill"></a>pkill</h4><blockquote>
+<p>支持按照一定规则匹配来杀死进程</p>
+<p>命令格式：pkill [options] <pattern></pattern></p>
+</blockquote>
+<p>示例：杀死用户 wahaha 下的所有进程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pkill -u wahaha</div></pre></td></tr></table></figure></p>
+<p>把某个终端登陆的用户踢出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pkill -9 -t 终端号</div></pre></td></tr></table></figure></p>
+<p>把本地登陆终端1登陆用户踢出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pkill -9 -t tty1</div></pre></td></tr></table></figure></p>
+<h2 id="服务管理"><a href="#服务管理" class="headerlink" title="服务管理"></a>服务管理</h2><h3 id="Linux中服务的分类"><a href="#Linux中服务的分类" class="headerlink" title="Linux中服务的分类"></a>Linux中服务的分类</h3><h4 id="系统默认安装的服务-RPM"><a href="#系统默认安装的服务-RPM" class="headerlink" title="系统默认安装的服务(RPM)"></a>系统默认安装的服务(RPM)</h4><ul>
+<li>独立的服务</li>
+<li>基于xinetd的服务，xinetd是系统超级守护进程<blockquote>
+<p>xinetd服务其本身就是一个独立的服务。</p>
+<p>当程序调用xinetd服务时，它先调用的事xinetd服务，让后xinetd服务在调用索要调用的服务进行相应。</p>
+<p>Linux系统默认是没有安装xinetd服务的，需要进行安装后才能使用。</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="源码包安装的服务"><a href="#源码包安装的服务" class="headerlink" title="源码包安装的服务"></a>源码包安装的服务</h4><h3 id="系统默认安装的服务"><a href="#系统默认安装的服务" class="headerlink" title="系统默认安装的服务"></a>系统默认安装的服务</h3><h4 id="如何区分服务的分类"><a href="#如何区分服务的分类" class="headerlink" title="如何区分服务的分类"></a>如何区分服务的分类</h4><p>查看服务的自启动状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chkconfig  --list</div></pre></td></tr></table></figure></p>
+<p>运行结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">chkconfig  --list</div><div class="line">注意：该输出结果只显示 SysV 服务，并不包含原生 systemd 服务。SysV 配置数据可能被原生 systemd 配置覆盖。</div><div class="line">      如果您想列出 systemd 服务,请执行 &apos;systemctl list-unit-files&apos;。</div><div class="line">      欲查看对特定 target 启用的服务请执行</div><div class="line">      &apos;systemctl list-dependencies [target]&apos;。</div><div class="line">aegis          	0:关	1:关	2:开	3:开	4:开	5:开	6:关</div><div class="line">agentwatch     	0:关	1:关	2:开	3:开	4:开	5:开	6:关</div><div class="line">netconsole     	0:关	1:关	2:关	3:关	4:关	5:关	6:关</div><div class="line">network        	0:关	1:关	2:开	3:开	4:开	5:开	6:关</div></pre></td></tr></table></figure></p>
+<p>Linux的运行级别：0-6</p>
+<table>
+<thead>
+<tr>
+<th>级别</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>关机</td>
+</tr>
+<tr>
+<td>1</td>
+<td>单用户模式</td>
+</tr>
+<tr>
+<td>2</td>
+<td>不完全多用户，不包含NFS服务</td>
+</tr>
+<tr>
+<td>3</td>
+<td>完全多用户,字符界面</td>
+</tr>
+<tr>
+<td>4</td>
+<td>未分配</td>
+</tr>
+<tr>
+<td>5</td>
+<td>图形界面</td>
+</tr>
+<tr>
+<td>6</td>
+<td>重启</td>
+</tr>
+</tbody>
+</table>
+<p>查看当前系统的运行级别：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">runlevel</div><div class="line">N 3</div></pre></td></tr></table></figure></p>
+<p>切换系统当前的运行级别：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>init  0</td>
+<td>关机                   </td>
+</tr>
+<tr>
+<td>init  5</td>
+<td>切换到图形界面（前提图形界面已经安装）</td>
+</tr>
+<tr>
+<td>init  3</td>
+<td>切换到字符界面</td>
+</tr>
+<tr>
+<td>init  6</td>
+<td>重启</td>
+</tr>
+</tbody>
+</table>
+<h4 id="独立的服务管理"><a href="#独立的服务管理" class="headerlink" title="独立的服务管理"></a>独立的服务管理</h4><ul>
+<li>启动</li>
+</ul>
+<p>第一种方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/etc/rc.d/init.d/服务名 start| stop | restart | status</div><div class="line"># 例：</div><div class="line">/etc/rc.d/init.d/httpd start</div></pre></td></tr></table></figure></p>
+<p>第二种方式：（只支持RedHat系列的Linux）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service 服务名 tart| stop | restart | status</div></pre></td></tr></table></figure></p>
+<p><strong><em>service命令其本质是当命令运行时直接在/etc/rc.d/init.d目录下查找相应的服务，并进行相应的操作。）</em></strong></p>
+<ul>
+<li>自启动<br>-<br>第一种方式：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chkconfig --level 2345 服务名 on|off</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>第二种方式：（推荐）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi  /etc/rc.local (系统启动时会运行该文件)</div></pre></td></tr></table></figure></p>
+<p>修改文件内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">touch /var/lock/subsys/local （更新系统的开机时间）</div><div class="line"># 在下一行，写入自己要启动的服务名，比如我要开机自启动httpd服务：</div><div class="line"># 就加入/etc/rc.d/init.d/httpd start</div><div class="line"># 更改后文件就是：</div><div class="line">touch /var/lock/subsys/local</div><div class="line">/etc/rc.d/init.d/httpd start</div></pre></td></tr></table></figure></p>
+<h4 id="ntsysv自启动管理工具"><a href="#ntsysv自启动管理工具" class="headerlink" title="ntsysv自启动管理工具"></a>ntsysv自启动管理工具</h4><p>所有系统默认安装服务都可以使用ntsysv命令进行自启动管理。rpm包安装服务，自启动管理工具（只要rpm安装的，都可进行管理）</p>
+<h3 id="源码包安装的服务-1"><a href="#源码包安装的服务-1" class="headerlink" title="源码包安装的服务"></a>源码包安装的服务</h3><p>启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/apache2/bin/apachectl  start</div></pre></td></tr></table></figure></p>
+<p>自启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vi /etc/rc.local         </div><div class="line">加入</div><div class="line">/usr/local/apache2/bin/apachectl  start</div></pre></td></tr></table></figure></p>
+<h2 id="计划任务"><a href="#计划任务" class="headerlink" title="计划任务"></a>计划任务</h2><blockquote>
+<p>首先保证crond服务时启动的（crond默认是自启动的）</p>
+</blockquote>
+<p>命令：crontab</p>
+<p>编辑格式： <em> </em> <em> </em> *  命令</p>
+<p>说明：</p>
+<ul>
+<li>第一个*：一小时中第几分钟  0-59</li>
+<li>第二个*：一天中第几个小时  0-23</li>
+<li>第三个*：一个月中第几天    1-31</li>
+<li>第四个*：一年第几个月      1-12</li>
+<li>第五个*：一周中星期几       0-6             </li>
+</ul>
+<p>例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">10  *  31  *  *  命令</div><div class="line">10  *  *  *  *  命令</div><div class="line">5  4  *  5-10  *  命令</div><div class="line">*/10  *  *  *  *  命令</div><div class="line">5 4  1,15  *  *  命令  #日期和星期不要同时指定，会超出预期</div><div class="line">5 4 10 * 5 命令</div><div class="line">*/20 4 * 5 2   命令    #每隔二十分钟</div></pre></td></tr></table></figure></p>
+<p>查看系统定时任务<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">crontab  -l</div></pre></td></tr></table></figure></p>
+<p>删除定时任务(慎用，删除之前记得备份数据)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">crontab  -r</div></pre></td></tr></table></figure></p>
+<p><strong>注意事项：</strong></p>
+<ul>
+<li>选项都不能为空，必须填入，不知道的值使用通配符*表示任何时间</li>
+<li>每个时间字段都可以指定多个值，不连续的值用,间隔，连续的值用-间隔</li>
+<li>间隔固定时间执行书写为*/n格式</li>
+<li>命令应该给出绝对路径</li>
+<li>星期几何第几天不能同时出现</li>
+<li>最小时间范围是分钟，最大时间范围是月</li>
+</ul>
+<h2 id="查看系统启动信息"><a href="#查看系统启动信息" class="headerlink" title="查看系统启动信息"></a>查看系统启动信息</h2><p>查看系统启动信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dmesg</div></pre></td></tr></table></figure></p>
+<p>系统启动信息日志<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat  /var/log/dmesg</div></pre></td></tr></table></figure></p>
+<p>查看eth0信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dmesg | grep eth0</div></pre></td></tr></table></figure></p>
+<p>查看cpu信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dmesg | grep CPU</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;http://n.sinaimg.cn/games/3ece443e/20160928/FuWuHeJinChengGuanLi.png&quot; alt=&quot;Linux服务和进程管理&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
+    
+    
+      <category term="进程管理" scheme="https://weizhimiao.github.io/tags/%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/"/>
+    
+      <category term="服务管理" scheme="https://weizhimiao.github.io/tags/%E6%9C%8D%E5%8A%A1%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
   
   <entry>
     <title>Nginx运行状态监控</title>
@@ -257,9 +567,9 @@
       <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
     
     
-      <category term="监控" scheme="https://weizhimiao.github.io/tags/%E7%9B%91%E6%8E%A7/"/>
-    
       <category term="PHP-FPM" scheme="https://weizhimiao.github.io/tags/PHP-FPM/"/>
+    
+      <category term="监控" scheme="https://weizhimiao.github.io/tags/%E7%9B%91%E6%8E%A7/"/>
     
   </entry>
   
@@ -2084,346 +2394,6 @@
       <category term="Apache" scheme="https://weizhimiao.github.io/tags/Apache/"/>
     
       <category term=".htaccess" scheme="https://weizhimiao.github.io/tags/htaccess/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Apache分层与模块化体系结构小结</title>
-    <link href="https://weizhimiao.github.io/2016/08/26/Apache%E5%88%86%E5%B1%82%E4%B8%8E%E6%A8%A1%E5%9D%97%E5%8C%96%E7%BB%93%E6%9E%84%E4%BD%93%E7%B3%BB%E5%B0%8F%E7%BB%93/"/>
-    <id>https://weizhimiao.github.io/2016/08/26/Apache分层与模块化结构体系小结/</id>
-    <published>2016-08-26T02:10:00.000Z</published>
-    <updated>2016-09-02T02:25:59.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Apache的分层体系结构"><a href="#Apache的分层体系结构" class="headerlink" title="Apache的分层体系结构"></a>Apache的分层体系结构</h2><p>最新版本的Apache按照其功能一般会被划分为五层，</p>
-<ol>
-<li><p>操作系统平台功能层</p>
-<blockquote>
-<p>各操作系统本身提供的底层功能，比如进程、线程管理,进程和线程之间通信、网络套接字通信、文件操作等</p>
-</blockquote>
-</li>
-<li><p>可移植运行库层（操作系统适配层）</p>
-<blockquote>
-<p>封装不同操作系统的底层细节，向上提供统一的接口。</p>
-</blockquote>
-</li>
-<li><p>Apache核心功能层</p>
-<blockquote>
-<p>提供最基本的HTTP服务功能，对其他模块提供对应的API。</p>
-</blockquote>
-</li>
-<li><p>Apache可选功能层</p>
-<blockquote>
-<p>这一层通常指 Apache模块，Apache核心功能层提供不了的功能交给不同的Apache模块来处理。</p>
-</blockquote>
-</li>
-<li><p>Apache第三方功能层</p>
-<blockquote>
-<p>Apache的一些模块中用到的一些第三方开发的类库等</p>
-</blockquote>
-</li>
-</ol>
-<p><img src="http://n.sinaimg.cn/games/3ece443e/20160826/apacheFenCengYuMoKuaiHuaTiXiJieGou.png" alt="Apache的分层体系结构"></p>
-<a id="more"></a>
-<p><strong>Apache源码目录结构简介</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">build/    #</div><div class="line">docs/     #包含一些相关文档</div><div class="line">include/  #包含一些必须的头文件</div><div class="line">modules/  #包含Apache的各种模块</div><div class="line">os/       #各种操作系统的依赖文件</div><div class="line">server/   #Apache核心功能（请求处理、协议处理、多处理模块mpm等）</div><div class="line">srclib/   #Apache开发和运行需要的基础库（Apr_util,apr,pcre）</div><div class="line">support/  #一些辅助工具等</div><div class="line">test/     #APR的测试函数</div></pre></td></tr></table></figure>
-<h3 id="操作系统平台功能层"><a href="#操作系统平台功能层" class="headerlink" title="操作系统平台功能层"></a>操作系统平台功能层</h3><p>Apache实质上还是运行在操作系统上面的应用程序，因此必须使用操作系统本身提供的底层功能，比如进程和线程、进程和线程的通信，网络套接字通信和文件操作等。</p>
-<h3 id="可移植运行库（操作系统适配层，APR）"><a href="#可移植运行库（操作系统适配层，APR）" class="headerlink" title="可移植运行库（操作系统适配层，APR）"></a>可移植运行库（操作系统适配层，APR）</h3><p>APR(Apache portable runtime) 是操作系统的适配层，通过APR也实现了Apache的跨平台。因为不同的操作系统提供的底层API不同，也就是实现同一个操作所用的函数方法不同，这时在Apache和操作系统中间设计一个APR，这样APR根据不同的操作系统分别实现一个相同的功能，这样apache可以调用APR的提供的一个API接口。</p>
-<p>例如，如果Apache要创建一个进程，这时会调用 APR中的 apr_proc_create()函数，此时APR会自动识别操作系统的类型根据不同的类型调用操作系统通过的API，如是Unix系列则会调用unix中的fork()方法实现创建进程；如果是windows系统，则调用createProcess()创建进程。</p>
-<p>所以，Apache在处理与操作系统有关的事物时，不用考虑是基于哪一个操作系统，直接用APR的统一API接口就可，具体的由APR来实现跨操作系统。</p>
-<p>实际上任何应用程序都可以借助APR进行跨平台。</p>
-<h3 id="Apache核心功能层"><a href="#Apache核心功能层" class="headerlink" title="Apache核心功能层"></a>Apache核心功能层</h3><ol>
-<li>核心功能层主要实现Apache的基本功能和核心功能，包括读取和响应HTTP请求，处理HTTP协议；核心功能层包括核心程序和核心模块</li>
-</ol>
-<p><strong>核心程序</strong> 主要是实现Apache的基本功能：</p>
-<ul>
-<li>启动和终止apache</li>
-<li>处理配置文件(config.c)</li>
-<li>接受和处理HTTP连接</li>
-<li>读取HTTP请求并对该请求进行处理</li>
-<li>处理HTTP协议</li>
-</ul>
-<p>核心功能层另一个是 <strong>核心模块</strong></p>
-<ol>
-<li>Apache 最基本的核心功能由apache 核心完成，除此之外，核心无法提供的功能则全部由模块提供。为了允许这些模块能完成控制apache的处理，apache核心程序提供了对应的API；这些API是指每个模块中包含的一系列的函数(核心程序处理HTTP请求的时候用来将信息传递给模块)，以及一些列apr的函数。</li>
-</ol>
-<h3 id="Apache可选功能层"><a href="#Apache可选功能层" class="headerlink" title="Apache可选功能层"></a>Apache可选功能层</h3><p>Apache有很多模块，包括mod_ssl mod_proxy mod_perl ；apache的文件都是C语言开发的，如果有perl脚本写的模块，必须把mod_perl 模块加载，否则不能运行</p>
-<h3 id="Apache第三方功能库"><a href="#Apache第三方功能库" class="headerlink" title="Apache第三方功能库"></a>Apache第三方功能库</h3><p>apahe的一些模块会使用到第三方的开发库，比如 mod_ssl 使用了 openssl；mod_perl 使用了perl 开发库，这些库并不属于apache，是第三方库。</p>
-<h2 id="Apache模块化体系结构"><a href="#Apache模块化体系结构" class="headerlink" title="Apache模块化体系结构"></a>Apache模块化体系结构</h2><p>Apache体系结构的模块化特点，主要体现在第三层（核心功能层）与第四层（可选功能层）。Apache采用模块化体系结构，使它作为一个HTTP服务器的大部分功能都被分割为相互独立的模块，使我们能够通过增加或者删除模块就可以扩展和修改Apache的功能。</p>
-<h3 id="核心模块-amp-可选模块"><a href="#核心模块-amp-可选模块" class="headerlink" title="核心模块&amp;可选模块"></a>核心模块&amp;可选模块</h3><p>Apache中大部分模块都是可选择的，这意味着这些模块的缺失至多影响Apache的功能完整性，而不影响起运行。但有两个模块是必须的，mod_core和mod_so。</p>
-<h4 id="核心模块"><a href="#核心模块" class="headerlink" title="核心模块"></a>核心模块</h4><ul>
-<li><strong>mod_core:</strong> 负责处理配置文件中的大部分配置指令，并根据这些指令运行Apache。</li>
-<li><strong>mod_so:</strong> 负责动态加载其余的模块。没有该模块，其余的模块就无法被加载使用。</li>
-<li><strong>MPM模块</strong> 即，多进程处理模块，虽然该模块是一个可选模块，但一般情况下，我们都会使用，所以我们将其也视为核心模块。<blockquote>
-<p>前两个模块我们必须静态编译。mpm模块的话，当我们在编译Apache是已经确定使用某一MPM模块之后通过也可将其采用静态编译的方式进行编译。但是如果我们想要在Apache安装之后动态修改MPM模式的话，那么在Apache编译安装的时候，MPM模块就需要通过动态编译的方式进行编译安装。</p>
-</blockquote>
-</li>
-</ul>
-<h4 id="非核心模块"><a href="#非核心模块" class="headerlink" title="非核心模块"></a>非核心模块</h4><p>一些常见的可选模块：</p>
-<ul>
-<li><p>mod_alias</p>
-<blockquote>
-<p>Provides for mapping different parts of the host filesystem in the document tree and for URL redirection<br>为不同的url地址映射到文件系统的指定位置，即『起别名』</p>
-</blockquote>
-</li>
-<li><p>mod_autoindex</p>
-<blockquote>
-<p>用于生成目录索引</p>
-</blockquote>
-</li>
-<li><p>mod_cache</p>
-<blockquote>
-<p>RFC 2616标准的HTTP缓存的过滤器。是apache中基于URI键的内容动态缓冲(内存或磁盘)。<br>从Apache2.2起，mod_cache和mod_file_cache将不再是试验模块，它们已经足够稳定，可以用于实际生产中了。这些缓冲体系提供了一个强有力的途径来加速原始web服务器(origin webserver)和代理服务器(proxy)的HTTP处理速度。</p>
-</blockquote>
-</li>
-<li><p>mod_cgi</p>
-<blockquote>
-<p> 执行cgi脚本</p>
-</blockquote>
-</li>
-<li><p>mod_dir</p>
-<blockquote>
-<p>目录的索引可以来自两个来源：</p>
-<ul>
-<li>由用户编写的文件，通常被称为 index.html。该DirectoryIndex指令设置该文件的名称。这是由控制 mod_dir。</li>
-<li>否则，由服务器生成的列表。这是通过提供mod_autoindex。</li>
-</ul>
-<p>这两种功能是分开的，这样如果你想你可以完全删除（或更换）自动索引生成。</p>
-<p>当服务器收到一个URL请求的“斜线”重定向发出 <a href="http://servername/foo/dirname那里" target="_blank" rel="external">http://servername/foo/dirname那里</a> dirname是一个目录。目录需要一个结尾斜杠，所以mod_dir发出一个重定向 <a href="http://servername/foo/dirname/。" target="_blank" rel="external">http://servername/foo/dirname/。</a></p>
-</blockquote>
-</li>
-<li><p>mod_filter</p>
-<blockquote>
-<p>该模块实现输出内容过滤器的智能，上下文相关的配置。例如，Apache可以被配置为处理不同的内容类型通过不同的过滤器，即使当内容类型是不是预先已知的（例如，在一个代理）。</p>
-</blockquote>
-</li>
-<li><p>mod_include</p>
-<blockquote>
-<p>服务器端包含</p>
-</blockquote>
-</li>
-<li><p>mod_isapi</p>
-<blockquote>
-<p>ISAPI Extensions within Apache for Windows<br>本模块实现了互联网服务扩展应用程序编程接口(Internet Server extension API)。本模块使得Windows上的Apache能有限地实现互联网服务扩展(比如调用ISAPI的动态连接库)。</p>
-</blockquote>
-</li>
-<li><p>mod_mime</p>
-<blockquote>
-<p>关联请求的文件名的扩展名与文件的行为（处理器和过滤器）和内容（MIME类型，语言，字符集和编码)</p>
-</blockquote>
-</li>
-<li><p>mod_mime_magic</p>
-<blockquote>
-<p>通过读取部分文件内容自动猜测文件的MIME类型<br>本模块采取Unix系统下file(1)命令相同的方法：检查文件开始的几个字节，来判定文件的MIME类型。它被作为当mod_mime无法解析时，用来处理的”第二道防线”。</p>
-</blockquote>
-</li>
-<li><p>mod_proxy</p>
-<blockquote>
-<p>用于提供代理服务，能够支持的包括正向代理、反向代理、透明代理、缓存、负载均衡，HTTP代理、FTP代理、SSL代理等若干强大的功能.</p>
-</blockquote>
-</li>
-<li><p>mod_rewrite</p>
-<blockquote>
-<p>提供了一个基于规则的重写动态URL重写引擎。</p>
-</blockquote>
-</li>
-<li><p>mod_session</p>
-<blockquote>
-<p>会话支持</p>
-</blockquote>
-</li>
-<li><p>mod_ssl</p>
-<blockquote>
-<p>提供使用安全套接字层（SSL）和传输层安全（TLS）协议强加密。（https协议必须）</p>
-</blockquote>
-</li>
-<li><p>mod_status</p>
-<blockquote>
-<p>提供有关服务器活动和性能信息</p>
-</blockquote>
-</li>
-<li><p>mod_vhost_alias</p>
-<blockquote>
-<p>虚拟主机配置支持</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="静态模块-amp-动态模块"><a href="#静态模块-amp-动态模块" class="headerlink" title="静态模块&amp;动态模块"></a>静态模块&amp;动态模块</h3><h4 id="概念-amp-区别"><a href="#概念-amp-区别" class="headerlink" title="概念&amp;区别"></a>概念&amp;区别</h4><p><strong>什么是静态？</strong>  其实就是编译的时候所有的模块自己编译进 httpd 这个文件中 ，启动的时候这些模块就已经加载进来了，也就是可以使用了。</p>
-<p>查看当前Apache通过静态编译的模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@MyServer ~]# httpd -l</div><div class="line">Compiled in modules:</div><div class="line">core.c</div><div class="line">mod_so.c</div><div class="line">http_core.c</div><div class="line">event.c</div></pre></td></tr></table></figure></p>
-<p><strong>那么什么是动态？</strong>  静态是直接编译进httpd中， 那么动态显然就不编译进去了，也就是你启动的时候根本不会加载这个模块， 而是给你一个module.so 文件，你一定要使用 loadmodule 这个语法来加载，这个模块才有效。</p>
-<p><strong><em>配置方法：</em></strong><br>静态的模块通常在http.conf中用<ifmodule></ifmodule> 来配置，动态的要先loadmoule来加载，然后再<ifmodule></ifmodule>配置。<br>官方说静态的比动态的在性能方面多5%左右。</p>
-<p><strong><em>比较：</em></strong><br>相对来说，静态的效率高些，而动态方式配置方面灵活。想想如果编译进去的C这个module你想升级或者去掉，静态方式的就只能重新编译Apache了。</p>
-<p>下面这句在Apache源文件夹下运行，可以查看默认情况下Apache都给你装了那些module进去：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure –help | grep disable</div></pre></td></tr></table></figure></p>
-<p>####</p>
-<h4 id="模块管理"><a href="#模块管理" class="headerlink" title="模块管理"></a>模块管理</h4><h5 id="1-模块的类型："><a href="#1-模块的类型：" class="headerlink" title="1. 模块的类型："></a>1. 模块的类型：</h5><ul>
-<li>基本(B)模块默认包含，必须明确禁用；</li>
-<li>扩展(E)/实验(X)模块默认不包含，必须明确启用。</li>
-</ul>
-<p>那么，针对以上这些类型的模块，在编译时有以下几种操作方式：</p>
-<p><strong>–disable-MODULE</strong><br>禁用MODULE模块(仅用于基本模块)</p>
-<p><strong>–enable-MODULE=shared</strong><br>将MODULE编译为DSO(可用于所有模块)</p>
-<p><strong>–enable-MODULE=static</strong><br>将MODULE静态连接进核心(仅用于扩展和实验模块)</p>
-<p><strong>–enable-mods-shared=MODULE-LIST</strong><br>将MODULE-LIST中的所有模块都编译成DSO(可用于所有模块)</p>
-<p><strong>–enable-modules=MODULE-LIST</strong><br>将MODULE-LIST静态连接进核心(可用于所有模块)</p>
-<p><strong><em>针对–enable-modules和–enable-mods-shared有两个懒办法就是 most参数和all参数，分别表示“很多的”和“所有”。</em></strong><br><strong>例如：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mod_alias是个基本模块，不想安装的话就： --disable-alias</div><div class="line">mod_rewrite是个扩展模块，想动态加载它：--enable-rewrite=shared，想静态加载就是：--enable-rewrite=static</div><div class="line">想静态编译mod_alias和mod_rewrite：--enable-modules=&apos;alias rewrite&apos;</div><div class="line">想动态编译mod_alias和mod_rewrite：--enable-mods-shared=&apos;alias rewrite&apos;</div></pre></td></tr></table></figure></p>
-<h5 id="2-动态模块管理"><a href="#2-动态模块管理" class="headerlink" title="2. 动态模块管理"></a>2. 动态模块管理</h5><p><strong>Tips:</strong> 让Apache日后可以动态编译和加载模块：<br>如果想让Apache日后可以支持动态编译(DSO)更多的module，需要在初次安装时把so这个模块编译到核心（即，静态编译）。</p>
-<blockquote>
-<p>如果编译中包含任何DSO模块，则mod_so会被自动包含进核心。如果希望核心以后能够装载DSO，但不实际编译任何DSO模块，则需明确指定：</p>
-<ul>
-<li>针对apache1.x: –enable-module=so</li>
-<li>针对apache2.x: –enable-so=static</li>
-</ul>
-</blockquote>
-<p>针对Apache2.2.x的一些例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">最大化静态安装Apache:</div><div class="line">./configure --prefix=/usr/local/apache --enable-modules=all</div><div class="line">最大化动态安装Apache:</div><div class="line">./configure --prefix=/usr/local/apache --enable-mods-shared=all</div><div class="line">静态安装rewrite、动态安装deflate以及headers</div><div class="line">./configure --prefix=/usr/local/apache --enable-rewrite=static --enable-deflate=shared --enable-headers=shared</div><div class="line">不安装基本的alais，保留以后的扩展DSO能力：</div><div class="line">./configure --prefix=/usr/local/apache --enable-so=static --disable-alias</div></pre></td></tr></table></figure></p>
-<h5 id="利用APXS工具动态为Apache编译新的DSO（动态共享对象）"><a href="#利用APXS工具动态为Apache编译新的DSO（动态共享对象）" class="headerlink" title="利用APXS工具动态为Apache编译新的DSO（动态共享对象）"></a>利用APXS工具动态为Apache编译新的DSO（动态共享对象）</h5><p>一般如果我们需要开启或者关闭某一些模块，只需要在 <code>httpd.conf</code> 中注释相应的模块的加载指令或者去掉指令前面的注释。<br>但如果我们需要的模块在 Apache编译安装的时候没有编译进去，我们可以用APXS工具来动态编译，并加入到Apache中。</p>
-<p>APXS,是一个给Apache服务器编译和安装扩展模块的工具。即将一个或者多个源代码或者目标文件编译成一个动态共享对象（DSO），然后可以通过Apache的 LoadModule 指令加载运行。<br>因此，要使用该工具，我们的Apache必须支持DSO特性，即已经安装有mod_so 模块，否则安装会报错。</p>
-<p>apxs命令选项说明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">apxs -g [ -S name=value ] -n modname</div><div class="line">apxs -q [ -v ] [ -S name=value ] query ...</div><div class="line">apxs -c [ -S name=value ] [ -o dsofile ] [ -I incdir ] [ -D name=value ] [ -L libdir ] [ -l libname ] [ -Wc,compiler-flags ] [ -Wl,linker-flags ] files ...</div><div class="line">apxs -i [ -S name=value ] [ -n modname ] [ -a ] [ -A ] dso-file ...</div><div class="line">apxs -e [ -S name=value ] [ -n modname ] [ -a ] [ -A ] dso-file ...</div></pre></td></tr></table></figure></p>
-<p>常用选项：</p>
-<ul>
-<li>-n modname<blockquote>
-<p>明确的设置模块名称, -i(安装)和-g（模板生成）选项</p>
-</blockquote>
-</li>
-</ul>
-<p>执行选项：</p>
-<ul>
-<li>-q<blockquote>
-<p>设置编译httpd时的变量和环境</p>
-</blockquote>
-</li>
-</ul>
-<p>配置选项：</p>
-<ul>
-<li>-S name=value<blockquote>
-<p>此选项更改apxs的上述设置。</p>
-</blockquote>
-</li>
-</ul>
-<p>模板生成选项：</p>
-<ul>
-<li>-g<blockquote>
-<p>该选项将生成一个子目录（名称将取决 -n设置），并会生成两个文件，一个要编译模块的源文件，用来创建模块或作为一个快速启动的apxs机制。另一个，用于编译和安装此模块，如mod_name.cMakefile</p>
-</blockquote>
-</li>
-</ul>
-<p>DSO 编译选项</p>
-<ul>
-<li><p>-c</p>
-<blockquote>
-<p>表明将进行编译操作。它首先编译C源文件(.c)，到对应的目标文件（.o），然后通过连接这些目标文件以及其余的目标文件（.a和.a）构建一个动态的共享对象dsofile</p>
-</blockquote>
-</li>
-<li><p>-o dsofile</p>
-<blockquote>
-<p>明确规定创建动态共享对象文件名。如果没有指定，并且不能从文件名猜测到，则会生成 mod_unknow.so</p>
-</blockquote>
-</li>
-<li><p>-D name=value</p>
-<blockquote>
-<p>直接传给编译命令自定义参数</p>
-</blockquote>
-</li>
-<li><p>-L libdir</p>
-<blockquote>
-<p>设置编译时将要用到的自定义类库路径</p>
-</blockquote>
-</li>
-<li><p>-l libname</p>
-<blockquote>
-<p>设置编译时用到的自定义类库名称</p>
-</blockquote>
-</li>
-<li><p>-Wc，compiler-flags</p>
-<blockquote>
-<p>设置或添加本地编译器特定的选项</p>
-</blockquote>
-</li>
-<li><p>-Wl，linker-flags</p>
-<blockquote>
-<p>设置或添加本地特定连接的选项。</p>
-</blockquote>
-</li>
-<li><p>-p</p>
-<blockquote>
-<p>该选项将会使apxs 连接和引用apr/apr-util类库，使用apr/apr-util将会对编译非常有用。</p>
-</blockquote>
-</li>
-</ul>
-<p>DSO的安装和配置选项</p>
-<ul>
-<li><p>-i</p>
-<blockquote>
-<p>表明安装操作，安装一个或多个动态共享对象到服务器的模块目录</p>
-</blockquote>
-</li>
-<li><p>-a</p>
-<blockquote>
-<p>自动添加 LoadModule 指令到 httpd.conf 配置文件，或者开启该指令。</p>
-</blockquote>
-</li>
-<li><p>-A</p>
-<blockquote>
-<p>同 -a 选项，但创建的 LoadModule指令是被注释的状态，也就是说该模块已经准备就绪，但没开启。</p>
-</blockquote>
-</li>
-<li><p>-e</p>
-<blockquote>
-<p>类似于 -a 和 -A 用来编辑 httpd.conf 而不安装该模块。</p>
-</blockquote>
-</li>
-</ul>
-<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><p>示例：我们有一个可用的Apache 模块 mod_foo.c 想要编译进Apache的DSO。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ apxs -c mod_foo.c</div><div class="line">/path/to/libtool --mode=compile gcc ... -c mod_foo.c</div><div class="line">/path/to/libtool --mode=link gcc ... -o mod_foo.la mod_foo.slo</div><div class="line">$ _</div></pre></td></tr></table></figure></p>
-<p>然后，在Apache的配置文件中加入 loadModule 指令加载此共享对象。为了简化该步骤 apxs 提供了自动更新配置文件的的功能选项(-a,-A)。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ apxs -i -a mod_foo.la</div><div class="line">/path/to/instdso.sh mod_foo.la /path/to/apache/modules</div><div class="line">/path/to/libtool --mode=install cp mod_foo.la /path/to/apache/modules ... chmod 755 /path/to/apache/modules/mod_foo.so</div><div class="line">[activating module `foo&apos; in /path/to/apache/conf/httpd.conf]</div><div class="line">$ _</div></pre></td></tr></table></figure>
-<p>这时，我们在httpd.conf 中就能看到这条指令。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LoadModule foo_module modules/mod_foo.so</div></pre></td></tr></table></figure></p>
-<p>如果没有使用 -a 选项自动添加，则需要手动添加进去。</p>
-<p>如果想默认不开启该模块，可以使用 -A 选项。即<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ apxs -i -A mod_foo.c</div></pre></td></tr></table></figure></p>
-<p><strong>apxs快速测试</strong></p>
-<p>我们可以通过创建一个Apache的测试模块，通过对应的Makefile<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ apxs -g -n foo</div><div class="line">Creating [DIR] foo</div><div class="line">Creating [FILE] foo/Makefile</div><div class="line">Creating [FILE] foo/modules.mk</div><div class="line">Creating [FILE] foo/mod_foo.c</div><div class="line">Creating [FILE] foo/.deps</div><div class="line">$ _</div></pre></td></tr></table></figure></p>
-<p>然后可以立即编译该测试模块到DSO，并加载到Apache。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">$ cd foo</div><div class="line">$ make all reload</div><div class="line">apxs -c mod_foo.c</div><div class="line">/path/to/libtool --mode=compile gcc ... -c mod_foo.c</div><div class="line">/path/to/libtool --mode=link gcc ... -o mod_foo.la mod_foo.slo</div><div class="line">apxs -i -a -n &quot;foo&quot; mod_foo.la</div><div class="line">/path/to/instdso.sh mod_foo.la /path/to/apache/modules</div><div class="line">/path/to/libtool --mode=install cp mod_foo.la /path/to/apache/modules ... chmod 755 /path/to/apache/modules/mod_foo.so</div><div class="line">[activating module `foo&apos; in /path/to/apache/conf/httpd.conf]</div><div class="line">apachectl restart</div><div class="line">/path/to/apache/sbin/apachectl restart: httpd not running, trying to start</div><div class="line">[Tue Mar 31 11:27:55 1998] [debug] mod_so.c(303): loaded module foo_module</div><div class="line">/path/to/apache/sbin/apachectl restart: httpd started</div><div class="line">$ _</div></pre></td></tr></table></figure>
-<p>over~</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Apache的分层体系结构&quot;&gt;&lt;a href=&quot;#Apache的分层体系结构&quot; class=&quot;headerlink&quot; title=&quot;Apache的分层体系结构&quot;&gt;&lt;/a&gt;Apache的分层体系结构&lt;/h2&gt;&lt;p&gt;最新版本的Apache按照其功能一般会被划分为五层，&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;操作系统平台功能层&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;各操作系统本身提供的底层功能，比如进程、线程管理,进程和线程之间通信、网络套接字通信、文件操作等&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;可移植运行库层（操作系统适配层）&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;封装不同操作系统的底层细节，向上提供统一的接口。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Apache核心功能层&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;提供最基本的HTTP服务功能，对其他模块提供对应的API。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Apache可选功能层&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;这一层通常指 Apache模块，Apache核心功能层提供不了的功能交给不同的Apache模块来处理。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Apache第三方功能层&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Apache的一些模块中用到的一些第三方开发的类库等&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src=&quot;http://n.sinaimg.cn/games/3ece443e/20160826/apacheFenCengYuMoKuaiHuaTiXiJieGou.png&quot; alt=&quot;Apache的分层体系结构&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Apache" scheme="https://weizhimiao.github.io/categories/Apache/"/>
-    
-    
-      <category term="Apache分层" scheme="https://weizhimiao.github.io/tags/Apache%E5%88%86%E5%B1%82/"/>
-    
-      <category term="Apache模块" scheme="https://weizhimiao.github.io/tags/Apache%E6%A8%A1%E5%9D%97/"/>
     
   </entry>
   
