@@ -180,7 +180,7 @@ php扩展Memcached安装
 wget https://launchpadlibrarian.net/165454254/libmemcached-1.0.18.tar.gz
 tar -zxvf libmemcached-1.0.18.tar.gz
 cd libmemcached-1.0.18
-./configure --with-php-config=/usr/local/php56/bin/php-config --with-libmemcached-dir=/usr/local/libmemcached  --enable-memcached --disable-memcached-sasl
+./configure --prefix=/usr/local/libmemcached
 make && make install
 ```
 
@@ -189,6 +189,8 @@ make && make install
 tar -xvf memcached-2.2.0.tar
 cd memcached-2.2.0
 /usr/local/php56/bin/phpize
+./configure --with-php-config=/usr/local/php56/bin/php-config --with-libmemcached-dir=/usr/local/libmemcached  --enable-memcached --disable-memcached-sasl
+make && make install
 Installing shared extensions:     /usr/local/php56/lib/php/extensions/no-debug-non-zts-20131226/
 ```
 
@@ -270,7 +272,7 @@ $mem->setOption(Memcached::OPT_DISTRIBUTION,Memcached::DISTRIBUTION_CONSISTENT);
 $mem->setOption(Memcached::OPT_LIBKETAMA_COMPATIBLE,true);
 ```
 
-### Memcached监控
+## Memcached监控
 
 ### 利用phpmemcache.php图形监控工具
 下载 phpmemcache.php
