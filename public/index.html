@@ -299,6 +299,133 @@
             
               
                 
+                <a class="post-title-link" href="/2016/09/29/memcache高速缓存的工作原理及应用小结/" itemprop="url">
+                  memcache高速缓存工作原理及应用
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-29T18:30:00+08:00" content="2016-09-29">
+              2016-09-29
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/29/memcache高速缓存的工作原理及应用小结/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/29/memcache高速缓存的工作原理及应用小结/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Memcached,是高性能的分布式内存缓存服务器，主要功能就是通过缓存数据库的查询，减少对数据库的访问次数，来提高动态web应用的速度和可扩展性。</p>
+<p>memcached 是以守护程序方法运行于一个或多个服务器中，随时接受客户端的连接操作，客户端可以由各种语言编写，目前一致的客户端api包括 Perl / PHP / Python / Java / C# / C 等等。客户端在与 memcached 服务建立连接之后，接下来的事情就是存取对象了， 每个被存取的对象都有一个唯一的标识符 key，存取操作均通过这个 key进行，保存到 memcached 中的对象实际上是放置内存中的，并不是保存在平时的 cache 文件中的，这也是为什么 memcached 能够如此高效快速的原因。</p>
+<p>注意，这些对象并不是持久的， 服务停止之后， 里边的数据就会丢失。</p>
+<p><img src="http://n.sinaimg.cn/games/3ece443e/20160929/MemcacheYingYongMoXing.png?1" alt="Memcached应用模型"></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/09/29/memcache高速缓存的工作原理及应用小结/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/09/28/Linux服务和进程管理/" itemprop="url">
                   linux服务和进程管理
                 </a>
@@ -370,7 +497,7 @@
 
       
         
-          <p><img src="http://n.sinaimg.cn/games/3ece443e/20160928/FuWuHeJinChengGuanLi.png" alt="Linux服务和进程管理"></p>
+          <p><img src="http://n.sinaimg.cn/games/3ece443e/20160929/LinuxFuWuHeJinChengGuanLi.png?1" alt="Linux服务和进程管理"></p>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/09/28/Linux服务和进程管理/#more" rel="contents">
               阅读全文 &raquo;
@@ -1411,158 +1538,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/20/Mac下包管理工具homebrew/" itemprop="url">
-                  Mac下包管理工具homebrew
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-20T23:30:00+08:00" content="2016-09-20">
-              2016-09-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Mac/" itemprop="url" rel="index">
-                    <span itemprop="name">Mac</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/20/Mac下包管理工具homebrew/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/20/Mac下包管理工具homebrew/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-            
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Homebrew"><a href="#Homebrew" class="headerlink" title="Homebrew"></a>Homebrew</h2><p>homebrew,一个在Mac OS上的软件包管理工具。是一款有Ruby开发的智能包管理系统.</p>
-<p><a href="http://brew.sh" target="_blank" rel="external">官网地址</a></p>
-<ul>
-<li><p>安装：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/bin/ruby <span class="_">-e</span> <span class="string">"<span class="variable">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)</span>"</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>功能：</p>
-<blockquote>
-<p>软件包管理。homebrew会将套件安装到独立目录，并将文件软连接链接到/usr/local</p>
-</blockquote>
-</li>
-<li><p>命令格式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">$ brew -h</div><div class="line">Example usage:</div><div class="line">  brew search [TEXT|/REGEX/]</div><div class="line">  brew (info|home|options) [FORMULA...]</div><div class="line">  brew install FORMULA...</div><div class="line">  brew update</div><div class="line">  brew upgrade [FORMULA...]</div><div class="line">  brew uninstall FORMULA...</div><div class="line">  brew list [FORMULA...]</div><div class="line">Troubleshooting:</div><div class="line">  brew config</div><div class="line">  brew doctor</div><div class="line">  brew install -vd FORMULA</div><div class="line">Brewing:</div><div class="line">  brew create [URL [--no-fetch]]</div><div class="line">  brew edit [FORMULA...]</div><div class="line">  https://github.com/Homebrew/brew/blob/master/share/doc/homebrew/Formula-Cookbook.md</div><div class="line">Further help:</div><div class="line">  man brew</div><div class="line">  brew help [COMMAND]</div><div class="line">  brew home</div></pre></td></tr></table></figure>
-</li>
-<li><p>示例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ brew install wget</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="brew-cask"><a href="#brew-cask" class="headerlink" title="brew-cask"></a>brew-cask</h2><p>brew-cask,是一套建立在homebrew之上的Mac软件安装命令行工具。其与brew的区别是，后者侧重与软件套件和软件环境的配置安装。</p>
-<p><a href="http://caskrom.github.io" target="_blank" rel="external">官网</a></p>
-<ul>
-<li><p>安装：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ brew install brew-cask</div></pre></td></tr></table></figure>
-</li>
-<li><p>命令格式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">$ brew cask -h</div><div class="line">brew-cask provides a friendly homebrew-style CLI workflow for the</div><div class="line">administration of macOS applications distributed as binaries.</div><div class="line">Commands:</div><div class="line">    audit                  verifies installability of Casks</div><div class="line">    cat                    dump raw source of the given Cask to the standard output</div><div class="line">    cleanup                cleans up cached downloads and tracker symlinks</div><div class="line">    create                 creates the given Cask and opens it in an editor</div><div class="line">    doctor                 checks for configuration issues</div><div class="line">    edit                   edits the given Cask</div><div class="line">    fetch                  downloads remote application files to local cache</div><div class="line">    home                   opens the homepage of the given Cask</div><div class="line">    info                   displays information about the given Cask</div><div class="line">    install                installs the given Cask</div><div class="line">    list                   with no args, lists installed Casks; given installed Casks, lists staged files</div><div class="line">    search                 searches all known Casks</div><div class="line">    style                  checks Cask style using RuboCop</div><div class="line">    uninstall              uninstalls the given Cask</div><div class="line">    update                 a synonym for &apos;brew update&apos;</div><div class="line">    zap                    zaps all files associated with the given Cask</div><div class="line">See also &quot;man brew-cask&quot;</div></pre></td></tr></table></figure>
-</li>
-<li><p>示例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ brew cask install iterm2</div></pre></td></tr></table></figure>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1608,7 +1583,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">26</span>
+              <span class="site-state-item-count">27</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1625,7 +1600,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">37</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

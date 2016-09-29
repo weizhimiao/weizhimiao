@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://weizhimiao.github.io/"/>
-  <updated>2016-09-28T08:50:00.000Z</updated>
+  <updated>2016-09-29T04:37:50.000Z</updated>
   <id>https://weizhimiao.github.io/</id>
   
   <author>
@@ -16,13 +16,473 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>memcache高速缓存工作原理及应用</title>
+    <link href="https://weizhimiao.github.io/2016/09/29/memcache%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%8F%8A%E5%BA%94%E7%94%A8%E5%B0%8F%E7%BB%93/"/>
+    <id>https://weizhimiao.github.io/2016/09/29/memcache高速缓存的工作原理及应用小结/</id>
+    <published>2016-09-29T10:30:00.000Z</published>
+    <updated>2016-09-29T04:37:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Memcached,是高性能的分布式内存缓存服务器，主要功能就是通过缓存数据库的查询，减少对数据库的访问次数，来提高动态web应用的速度和可扩展性。</p>
+<p>memcached 是以守护程序方法运行于一个或多个服务器中，随时接受客户端的连接操作，客户端可以由各种语言编写，目前一致的客户端api包括 Perl / PHP / Python / Java / C# / C 等等。客户端在与 memcached 服务建立连接之后，接下来的事情就是存取对象了， 每个被存取的对象都有一个唯一的标识符 key，存取操作均通过这个 key进行，保存到 memcached 中的对象实际上是放置内存中的，并不是保存在平时的 cache 文件中的，这也是为什么 memcached 能够如此高效快速的原因。</p>
+<p>注意，这些对象并不是持久的， 服务停止之后， 里边的数据就会丢失。</p>
+<p><img src="http://n.sinaimg.cn/games/3ece443e/20160929/MemcacheYingYongMoXing.png?1" alt="Memcached应用模型"></p>
+<a id="more"></a>
+<h2 id="Memcached的安装"><a href="#Memcached的安装" class="headerlink" title="Memcached的安装"></a>Memcached的安装</h2><h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>libevent</p>
+<blockquote>
+<p>Libevent 是一个用C语言编写的、轻量级的开源高性能网络库。<br>主要有以下几个亮点：事件驱动（ event-driven），高性能;轻量级，专注于网络，不如 ACE 那么臃肿庞大；源代码相当精炼、易读；跨平台，支持 Windows、 Linux、 BSD 和 Mac Os；支持多种 I/O 多路复用技术， epoll、 poll、 dev/poll、 select 和 kqueue 等；支持 I/O，定时器和信号等事件；注册事件优先级。<br>Libevent 已经被广泛的应用，作为底层的网络库；比如 memcached、 Vomit、 Nylon、 Netchat等等。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tar -vxf libevent-2.0.22-stable.tar</div><div class="line">cd libevent-2.0.22-stable</div><div class="line">./configure --prefix=/usr/local/libevent</div><div class="line">make &amp;&amp; make install</div></pre></td></tr></table></figure>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd memcached-1.4.31</div><div class="line"> ./configure --prefix=/usr/local/memcached --with-libevent=/usr/local/libevent</div><div class="line">make &amp;&amp; make install</div></pre></td></tr></table></figure>
+<p>查看是否已经安装成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/memcached/</div><div class="line">ll</div><div class="line">drwxr-xr-x 2 root root 4096 9月  28 10:56 bin</div><div class="line">drwxr-xr-x 3 root root 4096 9月  28 10:56 include</div><div class="line">drwxr-xr-x 3 root root 4096 9月  28 10:56 share</div></pre></td></tr></table></figure></p>
+<h2 id="Memcached管理"><a href="#Memcached管理" class="headerlink" title="Memcached管理"></a>Memcached管理</h2><h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>启动Memcached服务器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/memcached/bin/memcached -d -m 128 -u root -p 11211</div></pre></td></tr></table></figure></p>
+<p>查看是否启动成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ps aux | grep memcache</div><div class="line">root     24428  0.0  0.0 323120   864 ?        Ssl  11:00   0:00 /usr/local/memcached/bin/memcached -d -m 128 -u root -p 11211</div><div class="line">root     24436  0.0  0.0 112664   984 pts/0    D+   11:00   0:00 grep --color=auto memcache</div></pre></td></tr></table></figure></p>
+<p>或<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">netstat -tlun | grep 11211</div><div class="line">tcp        0      0 0.0.0.0:11211           0.0.0.0:*               LISTEN</div><div class="line">tcp6       0      0 :::11211                :::*                    LISTEN</div><div class="line">udp        0      0 0.0.0.0:11211           0.0.0.0:*</div><div class="line">udp6       0      0 :::11211                :::*</div></pre></td></tr></table></figure></p>
+<p>设置开机自启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo &quot;/usr/local/memcached/bin/memcached -d -m 128 -u root -p 11211&quot; &gt;&gt; /etc/rc.d/rc.local</div></pre></td></tr></table></figure></p>
+<p>Memcached启动选项及说明</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-p <num></num></td>
+<td>Memcached监听的TCP端口，要保证该端口号未被占用</td>
+</tr>
+<tr>
+<td>-U <num></num></td>
+<td>指定监听UDP的端口，默认11211，0表示关闭</td>
+</tr>
+<tr>
+<td>-s <file></file></td>
+<td>指定Memcached用于监听的UNIX socket文件</td>
+</tr>
+<tr>
+<td>-A</td>
+<td>enable ascii “shutdown” command</td>
+</tr>
+<tr>
+<td>-a <mask></mask></td>
+<td>设置-s选项指定的UNIX socket文件的权限(默认权限: 0700)</td>
+</tr>
+<tr>
+<td>-l <addr></addr></td>
+<td>监听的服务器IP地址，如果有多个地址的话，使用逗号分隔，格式可以为“IP地址:端口号”，例如：-l 指定192.168.0.184:19830,192.168.0.195:13542；端口号也可以通过-p选项指定</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>指定memcached进程作为一个守护进程启动</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>设置产生core文件大小</td>
+</tr>
+<tr>
+<td>-u <username></username></td>
+<td>运行memcached的用户 (only when run as root)</td>
+</tr>
+<tr>
+<td>-m <num></num></td>
+<td>指定分配给memcached使用的内存，单位是MB(默认: 64 MB)</td>
+</tr>
+<tr>
+<td>-M</td>
+<td>当内存使用超出配置值时，禁止自动清除缓存中的数据项，此时Memcached不可用，直到内存被释放</td>
+</tr>
+<tr>
+<td>-c <num></num></td>
+<td>设置最大运行的并发连接数，默认是1024</td>
+</tr>
+<tr>
+<td>-k</td>
+<td>设置锁定所有分页的内存，对于大缓存应用场景，谨慎使用该选项</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>输出警告和错误信息</td>
+</tr>
+<tr>
+<td>-vv</td>
+<td>打印信息比-v更详细：不仅输出警告和错误信息，也输出客户端请求和响应信息</td>
+</tr>
+<tr>
+<td>-vvv</td>
+<td>extremely verbose (also print internal state transitions)</td>
+</tr>
+<tr>
+<td>-h</td>
+<td>显示Memcached版本和摘要信息</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>打印libevent和Memcached的licenses信息</td>
+</tr>
+<tr>
+<td>-V</td>
+<td>输出Memcached版本号</td>
+</tr>
+<tr>
+<td>-P <file></file></td>
+<td>保存memcached进程的pid文件，（与 -d 一起搭配使用）</td>
+</tr>
+<tr>
+<td>-f <factor></factor></td>
+<td>用于计算缓存数据项的内存块大小的乘数因子，默认是1.25</td>
+</tr>
+<tr>
+<td>-n <bytes></bytes></td>
+<td>为缓存数据项的key、value、flag设置最小分配字节数，默认是48</td>
+</tr>
+<tr>
+<td>-L</td>
+<td>尝试使用大内存分页（pages）</td>
+</tr>
+<tr>
+<td>-D <char></char></td>
+<td>用于统计报告中Key前缀和ID之间的分隔符，默认是冒号“:”  </td>
+</tr>
+<tr>
+<td>-t <num></num></td>
+<td>指定用来处理请求的线程数，默认为4</td>
+</tr>
+<tr>
+<td>-R</td>
+<td>为避免客户端饿死（starvation），对连续达到的客户端请求数设置一个限额，如果超过该设置，会选择另一个连接来处理请求，默认为20</td>
+</tr>
+<tr>
+<td>-C</td>
+<td>禁用CAS</td>
+</tr>
+<tr>
+<td>-b <num></num></td>
+<td>Set the backlog queue limit (default: 1024)</td>
+</tr>
+<tr>
+<td>-B</td>
+<td>指定使用的协议，默认行为是自动协商（autonegotiate），可能使用的选项有auto、ascii、binary。</td>
+</tr>
+<tr>
+<td>-I</td>
+<td>Override the size of each slab page. Adjusts max item size(default: 1mb, min: 1k, max: 128m)</td>
+</tr>
+<tr>
+<td>-F</td>
+<td>禁用flush_all命令</td>
+</tr>
+<tr>
+<td>-o</td>
+<td>指定逗号分隔的选项，一般用于用于扩展或实验性质的选项</td>
+</tr>
+</tbody>
+</table>
+<h3 id="通过telnet连接使用Memcache"><a href="#通过telnet连接使用Memcache" class="headerlink" title="通过telnet连接使用Memcache"></a>通过telnet连接使用Memcache</h3><p>连接<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">telnet 127.0.0.1 11211</div></pre></td></tr></table></figure></p>
+<p>命令格式：<command name=""> <key> <flags> <exptime> <bytes>\r\n <data block="">\r\n</data></bytes></exptime></flags></key></p>
+<blockquote>
+<p><command name=""> 可以是”set”, “add”, “replace”</p>
+<p><key> 客户端需要保存数据的key。</key></p>
+<p><flags> 是一个16位的无符号的整数(以十进制的方式表示)。</flags></p>
+<p><exptime> 过期的时间。<br>最后客户端需要加上”\r\n”作为”命令头”的结束标志。即回车</exptime></p>
+</blockquote>
+<p>示例：</p>
+<p>保存一个数据（保存一个『cache_key1=&gt;12345』的键值对到memcached 60s）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">set cache_key1 0 60 5</div><div class="line">12345</div><div class="line">STORED</div></pre></td></tr></table></figure></p>
+<p>获取刚保存的值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">get cache_key1</div><div class="line">VALUE cache_key1 0 5</div><div class="line">12345</div><div class="line">END</div></pre></td></tr></table></figure></p>
+<p>其他命令：</p>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>get</td>
+<td>获取值</td>
+<td>get mykey</td>
+</tr>
+<tr>
+<td>set</td>
+<td>设置值（可以存在可以不存在）</td>
+<td>set mykey 0 60 5</td>
+</tr>
+<tr>
+<td>add</td>
+<td>添加新值</td>
+<td>add newkey 0 60 5</td>
+</tr>
+<tr>
+<td>replace</td>
+<td>替换值（必须已存在）</td>
+<td>replace key 0 60 5</td>
+</tr>
+<tr>
+<td>append</td>
+<td>在原有值之后添加数据</td>
+<td>append key 0 60 15</td>
+</tr>
+<tr>
+<td>prepend</td>
+<td>在原有值之前添加数据</td>
+<td>prepend key 0 60 15</td>
+</tr>
+<tr>
+<td>incr</td>
+<td>Increments numerical key value by given number</td>
+<td>incr mykey 2</td>
+</tr>
+<tr>
+<td>decr</td>
+<td>Decrements numerical key value by given number</td>
+<td>decr mykey 5</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>删除一条数据</td>
+<td>delete mykey</td>
+</tr>
+<tr>
+<td>flush_all</td>
+<td>清除所有数据</td>
+<td>flush_all</td>
+</tr>
+<tr>
+<td></td>
+<td>清除900秒之内的数据</td>
+<td>flush_all 900</td>
+</tr>
+<tr>
+<td>stats</td>
+<td>查看所有状态</td>
+<td>stats</td>
+</tr>
+<tr>
+<td></td>
+<td>Prints memory statistics</td>
+<td>stats slabs</td>
+</tr>
+<tr>
+<td></td>
+<td>Prints memory statistics</td>
+<td>stats malloc</td>
+</tr>
+<tr>
+<td></td>
+<td>Print higher level allocation statistics</td>
+<td>stats items</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>stats detail</td>
+</tr>
+<tr>
+<td></td>
+<td>已使用大小</td>
+<td>stats sizes</td>
+</tr>
+<tr>
+<td></td>
+<td>重置状态</td>
+<td>stats reset</td>
+</tr>
+<tr>
+<td>version</td>
+<td>查看版本</td>
+<td>version</td>
+</tr>
+<tr>
+<td>verbosity</td>
+<td>Increases log level</td>
+<td>verbosity</td>
+</tr>
+<tr>
+<td>quit</td>
+<td>退出telnet连接</td>
+<td>quit</td>
+</tr>
+</tbody>
+</table>
+<h3 id="通过客户端（PHP）连接和使用Memcached"><a href="#通过客户端（PHP）连接和使用Memcached" class="headerlink" title="通过客户端（PHP）连接和使用Memcached"></a>通过客户端（PHP）连接和使用Memcached</h3><p>php扩展Memcached安装</p>
+<p>依赖</p>
+<blockquote>
+<p>libmemcached, 是一个 memcached 的库，客户端库，C 和 C++ 语言实现的客户端库，具有低内存占用率、线程安全、并提供对memcached功能的全面支持。它还采用 多种命令行工具： memcat ， memflush ， memrm ， memstat ，并memslap （负载代）。程序库一直在设计，让不同的散列方法对密钥，分割的钥匙，并使用统一的散列分配。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wget https://launchpadlibrarian.net/165454254/libmemcached-1.0.18.tar.gz</div><div class="line">tar -zxvf libmemcached-1.0.18.tar.gz</div><div class="line">cd libmemcached-1.0.18</div><div class="line">./configure --with-php-config=/usr/local/php56/bin/php-config --with-libmemcached-dir=/usr/local/libmemcached  --enable-memcached --disable-memcached-sasl</div><div class="line">make &amp;&amp; make install</div></pre></td></tr></table></figure>
+<p>安装扩展<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">tar -xvf memcached-2.2.0.tar</div><div class="line">cd memcached-2.2.0</div><div class="line">/usr/local/php56/bin/phpize</div><div class="line">Installing shared extensions:     /usr/local/php56/lib/php/extensions/no-debug-non-zts-20131226/</div></pre></td></tr></table></figure></p>
+<p>查看是否安装成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/php56/lib/php/extensions/no-debug-non-zts-20131226/</div><div class="line">ll</div><div class="line">-rwxr-xr-x 1 root root  380475 9月  28 22:25 memcached.so</div><div class="line">-rwxr-xr-x 1 root root  756714 9月  26 17:32 mysqli.so</div><div class="line">-rwxr-xr-x 1 root root 1333912 9月  24 23:31 opcache.a</div><div class="line">-rwxr-xr-x 1 root root  618435 9月  24 23:31 opcache.so</div></pre></td></tr></table></figure></p>
+<p>修改配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">vi /usr/local/php56/lib/php.ini</div><div class="line">extension=/usr/local/php56/lib/php/extensions/no-debug-non-zts-20131226/memcached.so</div></pre></td></tr></table></figure></p>
+<p>重启php-fpm<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">kill -USR2 `cat /usr/local/php56/var/run/php-fpm.pid`</div></pre></td></tr></table></figure></p>
+<p>查看是否已经加载成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/usr/local/php56/bin/php -m</div><div class="line">或通过phpinfo();查看</div></pre></td></tr></table></figure></p>
+<p>测试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi memcache_test.php</div></pre></td></tr></table></figure></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">        $mc = <span class="keyword">new</span> Memcached();</div><div class="line">        var_dump($mc);</div><div class="line">        $mc-&gt;addServer(<span class="string">'127.0.0.1'</span>, <span class="number">11211</span>);</div><div class="line">        $mc-&gt;set(<span class="string">'cache_key'</span>,<span class="string">'mem_value'</span>,<span class="number">30</span>);</div><div class="line">        $val = $mc-&gt;get(<span class="string">'cache_key'</span>);</div><div class="line">        var_dump($val);</div><div class="line">        var_dump($mc-&gt;delete(<span class="string">'cache_key'</span>));</div><div class="line">        $mc-&gt;quit();</div></pre></td></tr></table></figure>
+<p>访问结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">object(Memcached)#1 (0) &#123; &#125; string(9) &quot;mem_value&quot; bool(true)</div></pre></td></tr></table></figure></p>
+<p>php关于memcached 的两种扩展memcache 和 memcached 介绍</p>
+<ol>
+<li><p>目前大多数php环境里使用的都是不带d的memcache版本，这个版本出的比较早，是一个原生版本，完全在php框架内开发的。与之对应的带d的memcached是建立在libmemcached的基础上，所以相对来说，memcached版本的功能更全一些。</p>
+<blockquote>
+<p><a href="http://cn2.php.net/manual/en/book.memcache.php" target="_blank" rel="external">memcache:</a></p>
+<p><a href="http://cn2.php.net/manual/en/book.memcached.php" target="_blank" rel="external">memcached:</a></p>
+</blockquote>
+</li>
+<li><p>Memcache是原生实现的，支持OO和非OO两套接口并存。而memcached是使用libmemcached，只支持OO接口。</p>
+</li>
+<li>memcached有了一个统一的setOption()来设置设置，而不用在操作的时候设置了。Memcached实现了更多的memcached协议。</li>
+<li>memcached支持Binary Protocol，而memcache不支持。这意味着memcached会有更高的性能。不过memcached目前还不支持长连接。</li>
+<li>另外一点也是大家比较关心的，就是所使用的算法。“一致性hash算法”是当添加或删除存储节点时，对存储在memcached上的数据影响较小的一种算法。在php的两个扩展库中，都可以使用该算法，只是设置方法有所不同。</li>
+</ol>
+<ul>
+<li>Memcache</li>
+</ul>
+<p>修改php.ini添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[Memcache]</div><div class="line">Memcache.allow_failover = 1</div><div class="line">Memcache.hash_strategy =consistent</div><div class="line">Memcache.hash_function =crc32</div></pre></td></tr></table></figure></p>
+<p>或在php中使用ini_set方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ini_set(‘memcache.hash_strategy&apos;,&apos;standard&apos;);</div><div class="line">ini_set(‘memcache.hash_function&apos;,&apos;crc32&apos;);</div></pre></td></tr></table></figure></p>
+<ul>
+<li>Memcached</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$mem = new memcached();</div><div class="line">$mem-&gt;setOption(Memcached::OPT_DISTRIBUTION,Memcached::DISTRIBUTION_CONSISTENT);</div><div class="line">$mem-&gt;setOption(Memcached::OPT_LIBKETAMA_COMPATIBLE,true);</div></pre></td></tr></table></figure>
+<h3 id="Memcached监控"><a href="#Memcached监控" class="headerlink" title="Memcached监控"></a>Memcached监控</h3><h3 id="利用phpmemcache-php图形监控工具"><a href="#利用phpmemcache-php图形监控工具" class="headerlink" title="利用phpmemcache.php图形监控工具"></a>利用phpmemcache.php图形监控工具</h3><p>下载 phpmemcache.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget http://n.sinaimg.cn/games/3ece443e/20160929/phpmemcache.php</div></pre></td></tr></table></figure></p>
+<p>将phpmemcache.php放入web目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mv phpmemcache.php /usr/local/nginx/html</div></pre></td></tr></table></figure></p>
+<p>修改phpmemcache.php中配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">define(&apos;ADMIN_USERNAME&apos;,&apos;xxxx&apos;);    // 用户名修改，在访问 phpmemcache.php 需要进行认证</div><div class="line">define(&apos;ADMIN_PASSWORD&apos;,&apos;xxxx&apos;);    // 密码</div><div class="line">define(&apos;DATE_FORMAT&apos;,&apos;Y/m/d H:i:s&apos;);</div><div class="line">define(&apos;GRAPH_SIZE&apos;,200);</div><div class="line">define(&apos;MAX_ITEM_DUMP&apos;,50);</div><div class="line"></div><div class="line">$MEMCACHE_SERVERS[] = &apos;127.0.0.1:11211&apos;; // 加入需要监控的memcached服务器</div><div class="line">//$MEMCACHE_SERVERS[] = &apos;192.168.200.104:11212&apos;; // add more as an array</div></pre></td></tr></table></figure></p>
+<p>浏览器访问<br><img src="http://n.sinaimg.cn/games/3ece443e/20160929/phpmemcache.png?1" alt="phpmemcache浏览器访问效果"></p>
+<h4 id="利用Stats命令查看"><a href="#利用Stats命令查看" class="headerlink" title="利用Stats命令查看"></a>利用Stats命令查看</h4><p>利用stats命令可以查看当前memcached的各种状态<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">telnet 127.0.0.1 11211</div><div class="line">Trying 127.0.0.1...</div><div class="line">Connected to 127.0.0.1.</div><div class="line">Escape character is &apos;^]&apos;.</div><div class="line">stats</div><div class="line">STAT pid 24732</div><div class="line">STAT uptime 66597</div><div class="line">STAT time 1475115983</div><div class="line">STAT version 1.4.31</div><div class="line">STAT libevent 2.0.22-stable</div><div class="line">STAT pointer_size 64</div><div class="line">STAT rusage_user 6.194421</div><div class="line">STAT rusage_system 2.419890</div><div class="line">STAT curr_connections 10</div><div class="line">STAT total_connections 16</div><div class="line">STAT connection_structures 11</div><div class="line">STAT reserved_fds 20</div><div class="line">STAT cmd_get 5</div><div class="line">STAT cmd_set 8</div><div class="line">STAT cmd_flush 0</div><div class="line">STAT cmd_touch 0</div><div class="line">STAT get_hits 4</div><div class="line">STAT get_misses 1</div><div class="line">STAT get_expired 0</div><div class="line">STAT get_flushed 0</div><div class="line">STAT delete_misses 0</div><div class="line">STAT delete_hits 2</div><div class="line">STAT incr_misses 0</div><div class="line">STAT incr_hits 0</div><div class="line">STAT decr_misses 0</div><div class="line">STAT decr_hits 0</div><div class="line">STAT cas_misses 0</div><div class="line">STAT cas_hits 0</div><div class="line">STAT cas_badval 0</div><div class="line">STAT touch_hits 0</div><div class="line">STAT touch_misses 0</div><div class="line">STAT auth_cmds 0</div><div class="line">STAT auth_errors 0</div><div class="line">STAT bytes_read 3850</div><div class="line">STAT bytes_written 293</div><div class="line">STAT limit_maxbytes 134217728</div><div class="line">STAT accepting_conns 1</div><div class="line">STAT listen_disabled_num 0</div><div class="line">STAT time_in_listen_disabled_us 0</div><div class="line">STAT threads 4</div><div class="line">STAT conn_yields 0</div><div class="line">STAT hash_power_level 16</div><div class="line">STAT hash_bytes 524288</div><div class="line">STAT hash_is_expanding 0</div><div class="line">STAT malloc_fails 0</div><div class="line">STAT log_worker_dropped 0</div><div class="line">STAT log_worker_written 0</div><div class="line">STAT log_watcher_skipped 0</div><div class="line">STAT log_watcher_sent 0</div><div class="line">STAT bytes 0</div><div class="line">STAT curr_items 0</div><div class="line">STAT total_items 6</div><div class="line">STAT expired_unfetched 0</div><div class="line">STAT evicted_unfetched 0</div><div class="line">STAT evictions 0</div><div class="line">STAT reclaimed 2</div><div class="line">STAT crawler_reclaimed 0</div><div class="line">STAT crawler_items_checked 0</div><div class="line">STAT lrutail_reflocked 0</div><div class="line">END</div></pre></td></tr></table></figure></p>
+<p>Stats详解</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pid</td>
+<td>memcache服务器的进程ID</td>
+</tr>
+<tr>
+<td>uptime</td>
+<td>服务器已经运行的秒数</td>
+</tr>
+<tr>
+<td>time</td>
+<td>服务器当前的unix时间戳</td>
+</tr>
+<tr>
+<td>version</td>
+<td>memcache版本</td>
+</tr>
+<tr>
+<td>pointer_size</td>
+<td>当前操作系统的指针大小（32位系统一般是32bit）</td>
+</tr>
+<tr>
+<td>rusage_user</td>
+<td>进程的累计用户时间</td>
+</tr>
+<tr>
+<td>rusage_system</td>
+<td>进程的累计系统时间</td>
+</tr>
+<tr>
+<td>curr_items</td>
+<td>服务器当前存储的items数量</td>
+</tr>
+<tr>
+<td>total_items</td>
+<td>从服务器启动以后存储的items总数量</td>
+</tr>
+<tr>
+<td>bytes</td>
+<td>当前服务器存储items占用的字节数</td>
+</tr>
+<tr>
+<td>curr_connections</td>
+<td>当前打开着的连接数</td>
+</tr>
+<tr>
+<td>total_connections</td>
+<td>从服务器启动以后曾经打开过的连接数</td>
+</tr>
+<tr>
+<td>connection_structures</td>
+<td>服务器分配的连接构造数</td>
+</tr>
+<tr>
+<td>cmd_get</td>
+<td>get命令（获取）总请求次数</td>
+</tr>
+<tr>
+<td>cmd_set</td>
+<td>set命令（保存）总请求次数</td>
+</tr>
+<tr>
+<td>get_hits</td>
+<td>总命中次数</td>
+</tr>
+<tr>
+<td>get_misses</td>
+<td>总未命中次数</td>
+</tr>
+<tr>
+<td>evictions</td>
+<td>为获取空闲内存而删除的items数（分配给memcache的空间用满后需要删除旧的items来得到空间分配给新的items）</td>
+</tr>
+<tr>
+<td>bytes_read</td>
+<td>总读取字节数（请求字节数）</td>
+</tr>
+<tr>
+<td>bytes_written</td>
+<td>总发送字节数（结果字节数）</td>
+</tr>
+<tr>
+<td>limit_maxbytes</td>
+<td>分配给memcache的内存大小（字节）</td>
+</tr>
+<tr>
+<td>threads</td>
+<td>当前线程数</td>
+</tr>
+</tbody>
+</table>
+<h3 id="利用各种监控软件查看（例如：nagios监控memcache的插件）"><a href="#利用各种监控软件查看（例如：nagios监控memcache的插件）" class="headerlink" title="利用各种监控软件查看（例如：nagios监控memcache的插件）"></a>利用各种监控软件查看（例如：nagios监控memcache的插件）</h3><blockquote>
+<p>只以命中率大于和小于为例两种状态。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim check_memcache</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"><span class="keyword">if</span> [ <span class="variable">$#</span> <span class="_">-ne</span> 1 ]</div><div class="line"><span class="keyword">then</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"Usage:<span class="variable">$0</span> -c num2"</span></div><div class="line"><span class="built_in">exit</span> 0</div><div class="line"><span class="keyword">fi</span></div><div class="line">cmd_get=`/usr/<span class="built_in">local</span>/nagios/libexec/check_tcp -H localhost -p 11211 -E <span class="_">-s</span> <span class="string">'stats\r\nquit\r\n'</span> <span class="_">-e</span> <span class="string">'uptime'</span> |grep cmd_get | awk <span class="string">'&#123;print $3+0&#125;'</span>`</div><div class="line">get_hits=`/usr/<span class="built_in">local</span>/nagios/libexec/check_tcp -H localhost -p 11211 -E <span class="_">-s</span> <span class="string">'stats\r\nquit\r\n'</span> <span class="_">-e</span> <span class="string">'uptime'</span> |grep get_hits | awk <span class="string">'&#123;print $3+0&#125;'</span>`</div><div class="line">hit_rate=`<span class="built_in">echo</span> <span class="string">"<span class="variable">$get_hits</span>*100/<span class="variable">$cmd_get</span>"</span>|bc`</div><div class="line"><span class="keyword">if</span> [ <span class="variable">$hit_rate</span> <span class="_">-gt</span> <span class="variable">$1</span> ];<span class="keyword">then</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"OK - hit rate is <span class="variable">$hit_rate</span> | hit_rate=<span class="variable">$hit_rate</span>; cmd_get=<span class="variable">$cmd_get</span>; get_hits=<span class="variable">$get_hits</span>"</span></div><div class="line"><span class="built_in">exit</span> 0</div><div class="line"><span class="keyword">else</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"CRITICAL - hit rate is <span class="variable">$hit_rate</span> | hit_rate=<span class="variable">$hit_rate</span>; cmd_get=<span class="variable">$cmd_get</span>; get_hits=<span class="variable">$get_hits</span>"</span></div><div class="line"><span class="built_in">exit</span> 2</div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
+<p>测试命中率大于80%为正常为例;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">eg：</div><div class="line">sh check_memcache 80</div><div class="line">root@ip-10-250-114-95:/liang# sh check_memcache 80</div><div class="line">OK - hit rate is 99 | hit_rate=99; cmd_get=142547; get_hits=141880</div></pre></td></tr></table></figure></p>
+<p>以上证明命中率99%，即状态为OK.</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Memcached,是高性能的分布式内存缓存服务器，主要功能就是通过缓存数据库的查询，减少对数据库的访问次数，来提高动态web应用的速度和可扩展性。&lt;/p&gt;
+&lt;p&gt;memcached 是以守护程序方法运行于一个或多个服务器中，随时接受客户端的连接操作，客户端可以由各种语言编写，目前一致的客户端api包括 Perl / PHP / Python / Java / C# / C 等等。客户端在与 memcached 服务建立连接之后，接下来的事情就是存取对象了， 每个被存取的对象都有一个唯一的标识符 key，存取操作均通过这个 key进行，保存到 memcached 中的对象实际上是放置内存中的，并不是保存在平时的 cache 文件中的，这也是为什么 memcached 能够如此高效快速的原因。&lt;/p&gt;
+&lt;p&gt;注意，这些对象并不是持久的， 服务停止之后， 里边的数据就会丢失。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://n.sinaimg.cn/games/3ece443e/20160929/MemcacheYingYongMoXing.png?1&quot; alt=&quot;Memcached应用模型&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
+    
+    
+      <category term="缓存" scheme="https://weizhimiao.github.io/tags/%E7%BC%93%E5%AD%98/"/>
+    
+      <category term="memcache" scheme="https://weizhimiao.github.io/tags/memcache/"/>
+    
+      <category term="memcached" scheme="https://weizhimiao.github.io/tags/memcached/"/>
+    
+  </entry>
+  
+  <entry>
     <title>linux服务和进程管理</title>
     <link href="https://weizhimiao.github.io/2016/09/28/Linux%E6%9C%8D%E5%8A%A1%E5%92%8C%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/"/>
     <id>https://weizhimiao.github.io/2016/09/28/Linux服务和进程管理/</id>
     <published>2016-09-28T10:30:00.000Z</published>
-    <updated>2016-09-28T08:50:00.000Z</updated>
+    <updated>2016-09-29T03:17:46.000Z</updated>
     
-    <content type="html"><![CDATA[<p><img src="http://n.sinaimg.cn/games/3ece443e/20160928/FuWuHeJinChengGuanLi.png" alt="Linux服务和进程管理"></p>
+    <content type="html"><![CDATA[<p><img src="http://n.sinaimg.cn/games/3ece443e/20160929/LinuxFuWuHeJinChengGuanLi.png?1" alt="Linux服务和进程管理"></p>
 <a id="more"></a>
 <h2 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h2><p>进程管理的三个主要任务</p>
 <ul>
@@ -312,7 +772,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;&lt;img src=&quot;http://n.sinaimg.cn/games/3ece443e/20160928/FuWuHeJinChengGuanLi.png&quot; alt=&quot;Linux服务和进程管理&quot;&gt;&lt;/p&gt;
+      &lt;p&gt;&lt;img src=&quot;http://n.sinaimg.cn/games/3ece443e/20160929/LinuxFuWuHeJinChengGuanLi.png?1&quot; alt=&quot;Linux服务和进程管理&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -567,9 +1027,9 @@
       <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
     
     
-      <category term="PHP-FPM" scheme="https://weizhimiao.github.io/tags/PHP-FPM/"/>
-    
       <category term="监控" scheme="https://weizhimiao.github.io/tags/%E7%9B%91%E6%8E%A7/"/>
+    
+      <category term="PHP-FPM" scheme="https://weizhimiao.github.io/tags/PHP-FPM/"/>
     
   </entry>
   
@@ -2199,201 +2659,6 @@
     
     
       <category term="Apache虚拟主机" scheme="https://weizhimiao.github.io/tags/Apache%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>.htaccess 文件功能及配置介绍</title>
-    <link href="https://weizhimiao.github.io/2016/09/05/htaccess%20%E6%96%87%E4%BB%B6%E5%8A%9F%E8%83%BD%E5%8F%8A%E9%85%8D%E7%BD%AE%E6%95%B4%E7%90%86/"/>
-    <id>https://weizhimiao.github.io/2016/09/05/htaccess 文件功能及配置整理/</id>
-    <published>2016-09-05T02:00:00.000Z</published>
-    <updated>2016-09-05T11:44:28.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>URL重定向是<code>.htaccess</code> 的重头戏，它可以将长地址转为短地址、将动态地址转为静态地址、重定向丢失的页面、防止盗链、实现自动语言转换等等。</p>
-<p><strong>难点：</strong> 正则表达式的运用和理解。</p>
-<a id="more"></a>
-<h2 id="准备-mod-rewrite"><a href="#准备-mod-rewrite" class="headerlink" title="准备 mod_rewrite"></a>准备 mod_rewrite</h2><p>要实现上述功能，首先得装上mod_rewrite 模块，并确保启用了该模块。</p>
-<p>一般我们会这样设置。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;IfModule mod_rewrite.c&gt;</div><div class="line">  Options +FollowSymlinks</div><div class="line">  RewriteEngine on</div><div class="line">  ...</div><div class="line"></div><div class="line">&lt;IfModule&gt;</div></pre></td></tr></table></figure></p>
-<p><strong><em>Tips:</em></strong></p>
-<ul>
-<li>FollowSymlinks:必须启用，这是rewrite引擎的安全要求。</li>
-<li>RewriteEngine：用于启用rewrite引擎。</li>
-</ul>
-<h2 id="URL重写及重定向"><a href="#URL重写及重定向" class="headerlink" title="URL重写及重定向"></a>URL重写及重定向</h2><p>利用<code>.htaccess</code> 文件可以实现对URL的重写（rewrite）与重定向（redirect）</p>
-<ol>
-<li>将<code>.html</code> 映射到<code>.php</code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Options +FollowSymlinks</div><div class="line">RewriteEngine on</div><div class="line">RewriteRule ^(.*)\.html$ $1.php [NC]</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><strong><em>注</em></strong></p>
-<ul>
-<li>必须保证服务器上有对应的<code>.php</code> 文件，否则会报 404</li>
-<li>浏览器和搜索引擎可同事用<code>.html</code> 和<code>.php</code> 访问到网页。</li>
-<li>[NC] 表示不区分大小写</li>
-</ul>
-<ol>
-<li>临时重定向（R=302）与永久重定向（R=301）<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteBase /</div><div class="line">RewriteRule ^(.*)\.html $1.php [R,NC,L]</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><strong><em>注</em></strong></p>
-<ul>
-<li><p>RewriteBase 定义了重写基准目录。</p>
-<blockquote>
-<p>例如，如虚拟机站点设在 /var/www目录下，删除这行这行将会导致重定向到 <a href="http://your-domain/var/www/1.php" target="_blank" rel="external">http://your-domain/var/www/1.php</a>. 显然这不是我们想要的。如果RewriteBase /base/，那么将会重定向到<a href="http://your-domain/base/1.php" target="_blank" rel="external">http://your-domain/base/1.php</a>.</p>
-</blockquote>
-</li>
-<li><p>对于重写基准目录，我们还可以将 <code>$1.php</code> 变成 <code>/$1.php</code> 实现直接变换，这是就可以将 <code>RewriteBase</code> 省略。</p>
-</li>
-<li><p>字母<code>L</code>，表示如果能匹配到本条规则，则本条规则是最后一条（Last），忽略之后的规则。</p>
-<p>永久重定向（R=301）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteRule ^(.*)$ http://newdomain/$1 [R=301,NC,L]</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<ol>
-<li><p>为什么要用重定向</p>
-<ol>
-<li>通过重定向，浏览器知道页面位置发生变化，从而会改变地址栏到新的地址。</li>
-<li>通过重定向，搜索引擎能够发现位置发生变化，从而进行更新。</li>
-<li>R=302，R=301都是亲搜索引擎的，是SEO的一个重要手段。</li>
-<li><strong>URL重写用于将页面映射到本站的另一页面，而重写到另一个域名下，则安重定向处理。</strong></li>
-</ol>
-</li>
-<li><p>长短地址处理   </p>
-<blockquote>
-<p>利用URL重写，方便实现长短地址转换。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteRule ^grab /public/files/download/download.php</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>若访问 <a href="http://your-domain/grab?file=my.zip" target="_blank" rel="external">http://your-domain/grab?file=my.zip</a>, 则页面会实际执行该页面 <a href="http://your-domain/public/files/download/download.php?file=my.zip" target="_blank" rel="external">http://your-domain/public/files/download/download.php?file=my.zip</a></p>
-<ol>
-<li>去掉WWW<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(.*)$</div><div class="line">RewriteRule (.*) http://www\.%1/$1 [R=301,L]</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><strong><em>注:</em></strong></p>
-<ul>
-<li>RewriteCond 定义了规则的生效条件。即，一个RewriteRule规则之前可以有一个或者多个RewriteCond指令。</li>
-<li>语法：RewriteCond TestString CondPattern [flags]</li>
-</ul>
-<ol>
-<li><p>加上www</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteCond %&#123;HTTP_HOST&#125; ^(.*)$</div><div class="line">RewriteRule (.*) http://www\.%1/$1 [R=301,L]</div></pre></td></tr></table></figure>
-</li>
-<li><p>支持多域名访问</p>
-<blockquote>
-<p>如果有些主机不支持多域名，那么<code>.htaccess</code> 或许也可以解决。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#one.com</div><div class="line">RewriteCond %&#123;HTTP_HOST&#125; one.com</div><div class="line">RewriteCond %&#123;REQUEST_URI&#125; !^/one</div><div class="line">RewriteRule ^(.*)$ /one/$1 [L]</div><div class="line">#two.com</div><div class="line">RewriteCond %&#123;HTTP_HOST&#125; two.com</div><div class="line">RewriteCond %&#123;REQUEST_URI&#125; !^/two</div><div class="line">RewriteRule ^(.*)$ /two/$1 [L]</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="改写查询字符串-QUERY-STRING"><a href="#改写查询字符串-QUERY-STRING" class="headerlink" title="改写查询字符串 QUERY_STRING"></a>改写查询字符串 QUERY_STRING</h2><p>所谓查询字符串，就是值URL问号之后的部分。</p>
-<ol>
-<li>利用QSA转换 QUERY_STRING<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteRule /page/(.+) /page.php?page=$1 [QSA]</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><strong><em>注：</em></strong></p>
-<ol>
-<li>将会把 <code>/page/123?one=two</code> 映射到 <code>/page.php?page=123&amp;one=two</code>.</li>
-<li>如果没有[QAS] 标志，则会映射到<code>page.php?page=123</code>.</li>
-<li><p>如果没有用到小括号正则表达式，就不需要 QSA</p>
-<blockquote>
-<p>例，将 <code>/simple/flat/link</code> =&gt; server-side.php?first-var=flat&amp;second-var=link</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteRule ^/simple/([^/]+)/([^/]+)/? /server-side.php?first-var=$1&amp;second-var=$2 [QSA]</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol>
-<li><p>利用RewriteCond 改写 QUERY_STRING</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RewriteEngine On</div><div class="line">RewriteCond %&#123;QUERY_STRING&#125; foo=(.*)</div><div class="line">RewriteRule ^grab(.*) /page.php?bar=%1</div></pre></td></tr></table></figure>
-<ul>
-<li>该规则将访问请求<a href="http://mysite/grab?foo=bar转换为http://mysite/page.php?bar=bar" target="_blank" rel="external">http://mysite/grab?foo=bar转换为http://mysite/page.php?bar=bar</a></li>
-<li>RewriteCond用于捕获查询字符串（QUERY_STRING）中变量foo的值，并存储在%1中</li>
-<li>QUERY_STRING是Apache定义的“变量=值”向量（数组）</li>
-</ul>
-</li>
-<li><p>RewriteCond与QSA双剑齐发</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RewriteEngine On</div><div class="line">RewriteCond %&#123;QUERY_STRING&#125; foo=(.+)</div><div class="line">RewriteRule ^grab/(.*) /%1/index.php?file=$1 [QSA]</div></pre></td></tr></table></figure>
-<ul>
-<li>会把/grab/foobar.zip?level=5&amp;foo=bar 映射到 /bar/index.php?file=foobar.zip&amp;level=5&amp;foo=bar</li>
-<li>转换后根目录是bar目录</li>
-<li>foobar.zip?level=5中的“问号”变成了foobar.zip&amp;level=5中的“与”符号</li>
-</ul>
-</li>
-<li><p>剥离查询字符串</p>
-<blockquote>
-<p>只需在要开始剥离的链接后面加个“问号”，并且不要启用QSA标志，就可剥离查询字符串</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">RewriteEngine On</div><div class="line"># Whatever QS is</div><div class="line">RewriteCond %&#123;QUERY_STRING&#125; .</div><div class="line"># I don&apos;t want it with Question mark</div><div class="line">RewriteRule foo.php(.*) /foo.php? [L]</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h2><ol>
-<li><p>文件访问控制</p>
-<blockquote>
-<p>利用Order、Files及FilesMatch命令实现的访问控制可以满足大部分要求，但是当用户被拒绝时，他们看到的是硕大的“403 Forbidden”，如果你不想伤害用户的感情，就需要显示一些别的东西，通过Rewrite就可以实现这个特性：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">RewriteEngine On</div><div class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !^(.+)\.css$</div><div class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !^(.+)\.js$</div><div class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !special.zip$</div><div class="line">RewriteRule ^(.+)$ /chat/ [NC]</div></pre></td></tr></table></figure>
-<ul>
-<li>该规则将仅允许用户请求.css, .js类型的文件，还有special.zip文件</li>
-<li>RewriteRule 后面指定了限制规则：映射到/char/目录下处理</li>
-<li>RewriteCond 后面的“感叹号”(!)起到了“否定”作用，它表明，对不满足后面正则表达式者应用RewriteRule规则，也就是对当前类型的文件将不应用规则</li>
-<li>RewriteCond 之间是以逻辑“与”连接的，也就是只有当三个条件都不满足时才执行RewriteRule</li>
-<li>该规则也会限制访问.htm, .jpg等格式</li>
-<li>该规则不可以放在虚拟站点根目录（/）下，否则会死循环</li>
-<li>如果是二级目录，如/test/，那么传入RewriteCond的参数是以/test/开始的，因此从(.+)获得的文件名也含有/test/，读者必须对此多加小心</li>
-<li>要想仅获得文件名，可以将(.+)替换成([^/]+)，并且去掉符号^，如下所示：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">RewriteEngine On</div><div class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !([^/]+)\.css$</div><div class="line">RewriteCond %&#123;REQUEST_FILENAME&#125; !([^/]+)\.js$</div><div class="line">RewriteRule ^(.+)$ /chat/ [NC]</div></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>用.htaccess阻止User-agent</p>
-<blockquote>
-<p>User-agent用于浏览器向服务器“自报家门”，更确切的说是所有HTTP客户端都得用User-agent向服务器“自报家门”，以便服务器对不同的客户端作出不同响应。比如，某站点可能需要对浏览器、搜索引擎crawl还有各类下载工具作出不同的响应。服务器就是通过所谓的User-agent进行区分的。<br>如果你的服务器提供某些资源的下载，那么你就必须多加小心诸如“迅雷”等下载软件，因为它们可能把你网站资源吸干，并且影响你的正常访客访问。</p>
-</blockquote>
-<p>为此，我们可以利用Rewrite限制某些UA的访问：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteCond %&#123;HTTP_USER_AGENT&#125; 2.0.50727 [NC]</div><div class="line">RewriteRule . abuse.txt [L]</div></pre></td></tr></table></figure>
-<ul>
-<li>该规则限制“迅雷”客户端下载资源，并将下载文件重置到abuse.txt</li>
-<li>HTTP_USER_AGENT是Apache的内置变量</li>
-<li>2.0.50727是迅雷User-agent的特征字符串</li>
-<li>RewriteRule后面的“点”表示“任意URI”，也就是不管请求的是什么，都输出abuse.txt</li>
-</ul>
-<p>通常，我们不会仅限制一个UA。利用[OR]即可实现对多个UA作出统一处理：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">RewriteEngine on</div><div class="line">RewriteCond %&#123;HTTP_USER_AGENT&#125; 2.0.50727 [NC,OR]</div><div class="line">RewriteCond %&#123;HTTP_USER_AGENT&#125; ^BlackWidow [NC,OR]</div><div class="line"># etc..</div><div class="line">RewriteCond %&#123;HTTP_USER_AGENT&#125; ^Net\ Vampire [NC]</div><div class="line">RewriteRule . abuse.txt [L]</div></pre></td></tr></table></figure>
-</li>
-<li><p>用.htaccess阻止盗链(hot-linking)</p>
-<blockquote>
-<p>盗链，特别是图片，是非常可耻的！哪怕将图片复制到自己服务器上，也比盗用他人的图片链接来得光彩！</p>
-</blockquote>
-<p>.htaccess的Rewrite功能可以提供非常简单、有效的方法阻止这种可耻行为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">RewriteEngine On</div><div class="line">RewriteCond %&#123;HTTP_REFERER&#125; !^$</div><div class="line">RewriteCond %&#123;HTTP_REFERER&#125; !^http://(www\.)?lesca\.me/ [NC]</div><div class="line">RewriteCond %&#123;REQUEST_URI&#125; !hotlink\.png [NC]</div><div class="line">RewriteRule .*\.(gif|jpg|png)$ /hotlink.png [NC]</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>简单解释一下该规则的功能：</p>
-<ul>
-<li>除本站以外其他网站都不得引用本站图片，具体可以理解为</li>
-<li>如果引用站点为“空”或者是“本站”，或者，所引用对象是“hotlink.png”，那么就允许访问</li>
-<li>再次提醒，RewriteCond之间默认的逻辑连接词是逻辑“与”</li>
-<li>这里的难点是理解逻辑转换，即德·摩根定律</li>
-</ul>
-<h2 id="htaccess-缺点"><a href="#htaccess-缺点" class="headerlink" title="htaccess 缺点"></a>htaccess 缺点</h2><p>说了这么多<code>.htaccess</code> 可以实现这么多的功能，那么它有没有什么缺点呢?</p>
-<p>答案是，当然有。由于开启了<code>.htaccess</code> 文件，当我们访问了一个地址对应到服务器端某个目录之后<code>Apache</code> 会遍历并解析每层目录下的<code>.htaccess</code> 文件，所有对服务器性能会有一定的影响。</p>
-<p>但是具体影响有多大，要不要使用还需要看具体的环境。或者需要进行前后对比在进行选择。</p>
-<h2 id="htaccess-生成工具"><a href="#htaccess-生成工具" class="headerlink" title="htaccess 生成工具"></a>htaccess 生成工具</h2><p>说了这么多，貌似真正配置起来还是非常麻烦。不用着急目前网上有非常多<code>htaccess</code> 在线生成工具，可大大方便我们进行完成各种配置。</p>
-<p>如：<a href="http://htaccess.uuz.cc/" target="_blank" rel="external">smarty .htaccess :http://htaccess.uuz.cc/</a></p>
-<p><a href="http://lesca.me/archives/htaccess-rewrite.html" target="_blank" rel="external">转自:Lesca技术宅</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;URL重定向是&lt;code&gt;.htaccess&lt;/code&gt; 的重头戏，它可以将长地址转为短地址、将动态地址转为静态地址、重定向丢失的页面、防止盗链、实现自动语言转换等等。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;难点：&lt;/strong&gt; 正则表达式的运用和理解。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Apache" scheme="https://weizhimiao.github.io/categories/Apache/"/>
-    
-    
-      <category term="Apache" scheme="https://weizhimiao.github.io/tags/Apache/"/>
-    
-      <category term=".htaccess" scheme="https://weizhimiao.github.io/tags/htaccess/"/>
     
   </entry>
   

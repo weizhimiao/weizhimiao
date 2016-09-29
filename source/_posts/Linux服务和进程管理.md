@@ -11,7 +11,7 @@ categories:
 - Linux
 ---
 
-![Linux服务和进程管理](http://n.sinaimg.cn/games/3ece443e/20160928/FuWuHeJinChengGuanLi.png)
+![Linux服务和进程管理](http://n.sinaimg.cn/games/3ece443e/20160929/LinuxFuWuHeJinChengGuanLi.png?1)
 
 <!-- more -->
 
