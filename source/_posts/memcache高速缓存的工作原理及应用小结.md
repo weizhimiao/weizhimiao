@@ -299,7 +299,7 @@ $MEMCACHE_SERVERS[] = '127.0.0.1:11211'; // 加入需要监控的memcached服务
 ![phpmemcache浏览器访问效果](http://n.sinaimg.cn/games/3ece443e/20160929/phpmemcache.png?1)
 
 
-#### 利用Stats命令查看
+### 利用Stats命令查看
 利用stats命令可以查看当前memcached的各种状态
 ```
 telnet 127.0.0.1 11211
