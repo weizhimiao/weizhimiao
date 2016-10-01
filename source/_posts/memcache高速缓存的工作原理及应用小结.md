@@ -30,6 +30,7 @@ libevent
 > Libevent 已经被广泛的应用，作为底层的网络库；比如 memcached、 Vomit、 Nylon、 Netchat等等。
 
 ```
+wget http://n.sinaimg.cn/games/3ece443e/20160929/libevent-2.0.22-stable.tar
 tar -vxf libevent-2.0.22-stable.tar
 cd libevent-2.0.22-stable
 ./configure --prefix=/usr/local/libevent
@@ -38,6 +39,7 @@ make && make install
 
 ### 安装
 ```
+wget http://n.sinaimg.cn/games/3ece443e/20160930/memcached-1.4.31.tar.gz
 cd memcached-1.4.31
  ./configure --prefix=/usr/local/memcached --with-libevent=/usr/local/libevent
 make && make install
@@ -186,6 +188,7 @@ make && make install
 
 安装扩展
 ```
+wget http://n.sinaimg.cn/games/3ece443e/20160929/memcached-2.2.0.tar
 tar -xvf memcached-2.2.0.tar
 cd memcached-2.2.0
 /usr/local/php56/bin/phpize
