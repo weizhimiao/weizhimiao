@@ -136,4 +136,13 @@ server {
 ```
 之后每次在reload时，就不需要在输入密码了。
 
+
+最后，用 [SSLLABS](https://www.ssllabs.com/ssltest/index.html) 来进行一下测试。
+![ssllabs](http://n.sinaimg.cn/games/3ece443e/20161004/ssllabs.png)
+结果
+![ssllabs](http://n.sinaimg.cn/games/3ece443e/20161004/ssllabsres.png)
+
+
+
+
 over~
