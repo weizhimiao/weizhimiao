@@ -10,6 +10,8 @@ categories:
 - Nginx
 ---
 
+![virtual Host](http://n.sinaimg.cn/games/3ece443e/20161004/VirtualHost.png)
+
 <!-- more -->
 
 ## 准备
