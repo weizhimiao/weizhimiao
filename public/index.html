@@ -299,6 +299,263 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/05/ElasticSearch整理/" itemprop="url">
+                  ElasticSearch整理
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-05T21:00:00+08:00" content="2016-10-05">
+              2016-10-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/05/ElasticSearch整理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/05/ElasticSearch整理/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>ElasticSearch是由Shay Banon发起的一个开源搜索服务器项目。由于其分布式特性和实时搜索能力，成为当前搜索和数据分析解决方案领域的重要成员。</p>
+<p><img src="http://n.sinaimg.cn/games/3ece443e/20161006/ElasticSearch.png" alt="ElasticSearch"></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/05/ElasticSearch整理/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/05/keepalived工作原理和配置/" itemprop="url">
+                  keepalive工作原理和配置(转)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-05T20:30:00+08:00" content="2016-10-05">
+              2016-10-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/05/keepalived工作原理和配置/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/05/keepalived工作原理和配置/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="keepalived是什么"><a href="#keepalived是什么" class="headerlink" title="keepalived是什么"></a>keepalived是什么</h2><p>keepalived是集群管理中保证集群高可用的一个服务软件，其功能类似于<a href="https://github.com/chenzhiwei/linux/tree/master/heartbeat">heartbeat</a>，用来防止单点故障。</p>
+<h2 id="keepalived工作原理"><a href="#keepalived工作原理" class="headerlink" title="keepalived工作原理"></a>keepalived工作原理</h2><p>keepalived是以VRRP协议为实现基础的，VRRP全称Virtual Router Redundancy Protocol，即<a href="http://en.wikipedia.org/wiki/VRRP">虚拟路由冗余协议</a>。</p>
+<p>虚拟路由冗余协议，可以认为是实现路由器高可用的协议，即将N台提供相同功能的路由器组成一个路由器组，这个组里面有一个master和多个backup，master上面有一个对外提供服务的vip（该路由器所在局域网内其他机器的默认路由为该vip），master会发组播，当backup收不到vrrp包时就认为master宕掉了，这时就需要根据<a href="http://tools.ietf.org/html/rfc5798#section-5.1">VRRP的优先级</a>来选举一个backup当master。这样的话就可以保证路由器的高可用了。</p>
+<p>keepalived主要有三个模块，分别是core、check和vrrp。</p>
+<ul>
+<li>core模块为keepalived的核心，负责主进程的启动、维护以及全局配置文件的加载和解析。</li>
+<li>check负责健康检查，包括常见的各种检查方式。</li>
+<li>vrrp模块是来实现VRRP协议的。</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/05/keepalived工作原理和配置/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/04/Nginx服务器https配置/" itemprop="url">
                   Nginx服务器https配置
                 </a>
@@ -1309,254 +1566,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/27/PHP-FPM运行状态监控/" itemprop="url">
-                  PHP-FPM运行状态监控
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-27T21:30:00+08:00" content="2016-09-27">
-              2016-09-27
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/27/PHP-FPM运行状态监控/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/27/PHP-FPM运行状态监控/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-            
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>PHP-FPM内置了一个运行状态页，开启后便可查看PHP-FPM的详细运行状态，可以给我们在优化PHP-FPM时带来帮助。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/27/PHP-FPM运行状态监控/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/09/26/PHP扩展模块安装/" itemprop="url">
-                  PHP扩展模块安装
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-26T21:30:00+08:00" content="2016-09-26">
-              2016-09-26
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/09/26/PHP扩展模块安装/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/26/PHP扩展模块安装/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-            
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>PHP编译安装之后，通常我们还需要根据我们的业务需求去安装各种扩展。通常我们可以通过php提供的phpize这个工具来为PHP动态地添加我们需要的模块。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/09/26/PHP扩展模块安装/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1602,7 +1611,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">32</span>
+              <span class="site-state-item-count">34</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1619,7 +1628,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-count">44</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
