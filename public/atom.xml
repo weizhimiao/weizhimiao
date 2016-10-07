@@ -330,6 +330,249 @@
   </entry>
   
   <entry>
+    <title>PHP魔术方法小结</title>
+    <link href="https://weizhimiao.github.io/2016/10/06/PHP%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%B0%8F%E7%BB%93/"/>
+    <id>https://weizhimiao.github.io/2016/10/06/PHP魔术方法小结/</id>
+    <published>2016-10-06T14:30:00.000Z</published>
+    <updated>2016-10-07T13:24:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>魔术方法：</p>
+<blockquote>
+<p>一种特殊的函数</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="构造方法：-construct-或者和类名同名的方法"><a href="#构造方法：-construct-或者和类名同名的方法" class="headerlink" title="构造方法： __construct()  或者和类名同名的方法"></a>构造方法： __construct()  或者和类名同名的方法</h2><p>触发时机：在对象实例化的时候自动触发。</p>
+<p>作用：初始化成员属性</p>
+<p>参数：可以有，可以没有，取决于设定和逻辑</p>
+<p>返回值：没有</p>
+<p>注意：如果构造方法具有参数，且参数没有默认值，在实例化对象时，必须在类名()内添加对应的实参值。</p>
+<h2 id="析构方法-destruct"><a href="#析构方法-destruct" class="headerlink" title="析构方法 __destruct()"></a>析构方法 __destruct()</h2><p>触发时机： 在销毁对象的时候自动触发(unset或者页面执行完毕)</p>
+<p>作用：回收对象使用过程中的资源。</p>
+<p>参数：没有</p>
+<p>返回值：没有</p>
+<h2 id="get"><a href="#get" class="headerlink" title="__get()"></a>__get()</h2><p>触发时机：访问私有成员属性的时候自动触发</p>
+<p>功能：1.防止报错  2.为私有属性访问提供后门</p>
+<p>参数：1个    访问的私有属性名称</p>
+<p>返回值：可以有，可以没有</p>
+<h2 id="set"><a href="#set" class="headerlink" title="__set()"></a>__set()</h2><p>触发时机: 对私有成员属性进行设置值的时候自动触发</p>
+<p>功能:1.屏蔽错误  2.为私有成员属性设置</p>
+<p>参数: 2个   1私有成员属性名  2 要设置的值</p>
+<p>返回值:无</p>
+<h2 id="isset"><a href="#isset" class="headerlink" title="__isset()"></a>__isset()</h2><p>触发时机:对私有成员属性进行isset检测时自动触发</p>
+<p>功能: 1.代替对象外部的isset检测，返回结果</p>
+<p>参数: 1个   1私有成员属性名</p>
+<p>返回值:有  一般返回 isset(属性)结果</p>
+<h2 id="unset"><a href="#unset" class="headerlink" title="__unset()"></a>__unset()</h2><p>触发时机:在对象外部对私有成员属性进行unset操作时自动触发</p>
+<p>功能: 1.代替对象外部的unset操作，返回结果</p>
+<p>参数: 1个   1私有成员属性名</p>
+<p>返回值:无</p>
+<h2 id="sleep"><a href="#sleep" class="headerlink" title="__sleep()"></a>__sleep()</h2><p>触发时机：在对象进行串行化操作时触发.</p>
+<p>功能：指定需要串行化的成员属性.</p>
+<p>参数:无</p>
+<p>返回值: 需要返回一个数组类型，每个元素都是需要串行化的成员属性名.</p>
+<h2 id="wakeup"><a href="#wakeup" class="headerlink" title="__wakeup()"></a>__wakeup()</h2><p>触发时机：.在对象进行反串行化时自动触发</p>
+<p>功能：.反串行化时自动修改部分成员属性值.</p>
+<p>参数:无</p>
+<p>返回值: 无</p>
+<h2 id="tostring"><a href="#tostring" class="headerlink" title="__tostring()"></a>__tostring()</h2><p>触发时机：对一个对象进行echo操作时 自动触发</p>
+<p>功能：简化操作或者为对象输出值</p>
+<p>参数:无</p>
+<p>返回值:必须有且必须为字符串类型.</p>
+<h2 id="clone"><a href="#clone" class="headerlink" title="__clone()"></a>__clone()</h2><p>触发时机:对对象进行克隆操作时自动触发</p>
+<p>功能：修改克隆之后的对象的部分属性值.</p>
+<p>参数:无</p>
+<p>返回值:无</p>
+<p>注意：对象的赋值默认就是引用赋值，不能通过赋值操作获取一个新的对象，获取新对象的操作应该使用克隆操作</p>
+<p>格式： 变量=clone 对象变量</p>
+<h2 id="call（）"><a href="#call（）" class="headerlink" title="__call（）"></a>__call（）</h2><p>触发时机:    调用了类中不存在的方法时自动触发</p>
+<p>功能：1.屏蔽错误  2.为不存在的方法定义个一个功能.</p>
+<p>参数:2个   1 不存在的方法名   2所有的实参组成的数组</p>
+<p>返回值:可有可无(根据实际功能来看)</p>
+<h2 id="autoload-唯一一个类外部的魔术方法"><a href="#autoload-唯一一个类外部的魔术方法" class="headerlink" title="__autoload()(唯一一个类外部的魔术方法)"></a>__autoload()(唯一一个类外部的魔术方法)</h2><p>触发时机:    当页面中需要一个 类而该类不存在时自动触发</p>
+<p>功能：实现类的自动加载.</p>
+<p>参数1个 不存在的类名</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;魔术方法：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;一种特殊的函数&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Linux网络配置</title>
+    <link href="https://weizhimiao.github.io/2016/10/06/Linux%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/"/>
+    <id>https://weizhimiao.github.io/2016/10/06/Linux网络配置/</id>
+    <published>2016-10-06T14:30:00.000Z</published>
+    <updated>2016-10-07T13:59:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://n.sinaimg.cn/games/3ece443e/20161007/ifconfig.png" alt="Linux网络配置"></p>
+<a id="more"></a>
+<p>##虚拟机网卡的配置（IP地址的配置）</p>
+<h3 id="IP地址的配置"><a href="#IP地址的配置" class="headerlink" title="IP地址的配置"></a>IP地址的配置</h3><p>给Linux配置IP<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">setup  进行IP地址的设置</div><div class="line">service network restart</div></pre></td></tr></table></figure></p>
+<p>手工启动Linux网卡<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi  /etc/sysconfig/network-scripts/ifcfg-eth0		编辑网卡配置文件</div></pre></td></tr></table></figure></p>
+<p>配置文件内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">DEVICE=eth0</div><div class="line">IPADDR=192.168.140.158</div><div class="line">GATEWAY=192.168.140.1</div><div class="line">NETMASK=255.255.255.0</div><div class="line">HWADDR=00:0c:29:41:c7:1f</div><div class="line">UUID=&quot;60bfdea1-c598-4dc8-bf93-da162ea4fb41&quot;</div><div class="line">TYPE=Ethernet</div><div class="line">BOOTPROTO=none</div><div class="line">IPV6INIT=no</div><div class="line">ONBOOT=yes</div><div class="line">USERCTL=no</div></pre></td></tr></table></figure></p>
+<p>修改如下配置项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ONBOOT=no		改为</div><div class="line">ONBOOT=yes		（是否开机启动）</div></pre></td></tr></table></figure></p>
+<p>修改UUID</p>
+<blockquote>
+<p>解决虚拟机网卡不通：（需要进行如下修改）</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi  /etc/sysconfig/network-scripts/ifcfg-eth0</div></pre></td></tr></table></figure>
+<p>删除MAC地址行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm –rf /etc/udev/rules.d/70-persistent-net.rules</div></pre></td></tr></table></figure></p>
+<p>删除网卡和MAC地址绑定文件<br>重启系统<br>修改虚拟机配置</p>
+<blockquote>
+<p>网卡连接方式改为桥接模式<br>确定桥接到有线网卡上<br>（桥接方式是虚拟机和真实机共享使用本机的真实物理网卡，故采用这种方式vMare0和8的这两块虚拟网卡可以同时禁掉）</p>
+</blockquote>
+<h2 id="Linux网络配置"><a href="#Linux网络配置" class="headerlink" title="Linux网络配置"></a>Linux网络配置</h2><h3 id="IP地址配置（3种方法，推介使用地3种）"><a href="#IP地址配置（3种方法，推介使用地3种）" class="headerlink" title="IP地址配置（3种方法，推介使用地3种）"></a>IP地址配置（3种方法，推介使用地3种）</h3><ol>
+<li><p>setup</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service   network  restart</div></pre></td></tr></table></figure>
+</li>
+<li><p>ifconfig  eth0  ip    netmask       临时生效</p>
+</li>
+<li>修改网卡配置文件</li>
+</ol>
+<p><strong>网卡信息文件：<code>/etc/sysconfig/network-scripts/ifcfg-eth0</code> 文件内容如下：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">DEVICE=eth0					网卡设备名</div><div class="line">BOOTPROTO=none				是否自动获取IP。none：不生效					static：手动		dhcp：动态获取IP</div><div class="line">BROADCAST=192.168.140.255			广播地址</div><div class="line">HWADDR=00:0c:29:21:80:48			mac地址</div><div class="line">IPADDR=192.168.140.253			IP地址</div><div class="line">IPV6INIT=yes					IPv6开启</div><div class="line">IPV6_AUTOCONF=yes				IPv6获取</div><div class="line">NETMASK=255.255.255.0				掩码</div><div class="line">NETWORK=192.168.140.0				网段</div><div class="line">ONBOOT=yes					网卡开机启动</div><div class="line">TYPE=Ethernet					以太网</div><div class="line">GATEWAY=192.168.140.1				网关</div></pre></td></tr></table></figure></p>
+<p>如果是采用DHCP方式获取IP信息，则可以只填写上述用橙色标记的配置项即可。<br>修改配置文件后，需要重启服务（如service  network  restart）</p>
+<p><strong>主机名配置文件</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/sysconfig/network		永久生效，但是要重启</div></pre></td></tr></table></figure></p>
+<p>文件内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NETWORKING=yes</div><div class="line">HOSTNAME=localhost.localdomain</div></pre></td></tr></table></figure></p>
+<p>另外，还可以用命令进行修改，不过只能临时生效<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hostname  sc		将用户名修改为sc</div><div class="line">hostname		查看主机名</div></pre></td></tr></table></figure></p>
+<p><strong>DNS配置文件</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/resolv.conf</div></pre></td></tr></table></figure></p>
+<p>文件内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">nameserver  202.106.0.20</div><div class="line">如有多个DNS服务器地址，可在IP地址后面直接加，并以“，”分割，或者再起下一行写入“nameserver  xx.xx.xx.xx”</div></pre></td></tr></table></figure></p>
+<h3 id="网络命令"><a href="#网络命令" class="headerlink" title="网络命令"></a>网络命令</h3><ol>
+<li><p>ifconfig        查看网卡信息</p>
+<blockquote>
+<p>   -a     全部（包括没有启动的）</p>
+</blockquote>
+</li>
+<li><p>ifup  eth0        快速开启</p>
+<blockquote>
+<p>   ifdown    eth0        快速关闭</p>
+</blockquote>
+</li>
+<li><p>netstat   -an        查看所有网络连接</p>
+<blockquote>
+<p>netstat  -tlun        查看TCP和UDP协议监听的端口</p>
+<p>   netstat   -rn        查看路由default：默认路由（网关）</p>
+</blockquote>
+</li>
+<li><p>route        查看路由</p>
+<blockquote>
+<p>   route  add   default   gw    192.168.140.1     手工设定网关，临时生效<br>   route  del    default   gw  192.168.190.6       删除网关</p>
+</blockquote>
+</li>
+<li><p>ping    IP    探测网络畅通</p>
+</li>
+<li><p>traceroute    ip或域名        探测到目的地址的路径（Linux命令）</p>
+<blockquote>
+<p>   tracert   ip       （windows命令）</p>
+</blockquote>
+</li>
+<li><p>tcpdump</p>
+<blockquote>
+<p>   tcpdump -i eth0 -nnX port 21        抓取eth0网卡  21端口的传输信息</p>
+</blockquote>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;http://n.sinaimg.cn/games/3ece443e/20161007/ifconfig.png&quot; alt=&quot;Linux网络配置&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Linux目录结构介绍</title>
+    <link href="https://weizhimiao.github.io/2016/10/06/Linux%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E4%BB%8B%E7%BB%8D/"/>
+    <id>https://weizhimiao.github.io/2016/10/06/Linux目录结构介绍/</id>
+    <published>2016-10-06T14:30:00.000Z</published>
+    <updated>2016-10-07T14:50:52.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://www.centoscn.com/uploads/allimg58981378314368.jpg" alt="Linux目录结构"></p>
+<a id="more"></a>
+<h2 id="Linux常见目录"><a href="#Linux常见目录" class="headerlink" title="Linux常见目录"></a>Linux常见目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">/		根目录</div><div class="line">/bin		命令保存目录（普通用户就可以读取的命令）</div><div class="line">/boot		启动目录，启动相关文件</div><div class="line">/dev		设备文件保存目录</div><div class="line">/etc		配置文件保存目录</div><div class="line">/etc/rc.d		主要在记录一些开关机过程中的 scripts 档案， scripts 有点像是 DOS 下的批次档（.bat檔名）</div><div class="line">/etc/rc.d/init.d	所以服务预设的启动 scripts 都是放在这里的，例如要启动与关闭 iptables 的话，可以：</div><div class="line">/etc/rc.d/init.d/iptables start</div><div class="line">/etc/rc.d/init.d/iptables stop</div><div class="line">/etc/xinetd.d		这个路径在较新的 Linux distribution 当中才有，由于早期的版本用来开启服务的档案是 inetd.conf ，但是在较新的版本中，开启服务的项目已经变成使用 xinetd.conf 这个档案，因此，你若需要启动一些额外的服务的话，在 Mandrake 9.0 或者是 Red Hat 7.0 以后就要到 /etc/xinetd.d 这个目录下了。</div><div class="line">/etc/X11	这是与 X windows 有关的设定文件所在的目录，尤其里面的 XF86Config-4 更是重要呢！</div><div class="line">/etc/opt/		/opt/的配置文件</div><div class="line">/etc/sgml/		SGML的配置文件</div><div class="line">/etc/xml/		XML的配置文件</div><div class="line">/home		普通用户的家目录</div><div class="line">/lib		系统库保存目录</div><div class="line">/mnt		系统挂载目录（空目录）（一般建议将光盘、U盘等都关在在此目录下）</div><div class="line">/media		挂载目录（空目录）</div><div class="line">/root		超级用户的家目录</div><div class="line">/tmp		临时目录</div><div class="line">/sbin		命令保存目录（超级用户才能使用的目录）</div><div class="line">/proc		直接写入内存的</div><div class="line">/proc/cpuinfo		关于处理器的信息，如类型、厂家、型号和性能等</div><div class="line">/proc/devices		当前运行内核所配置的所有设备清单</div><div class="line">/proc/dma		当前正在使用的DMA通道。/proc/filesystems 当前运行内核所配置的文件系统</div><div class="line">/proc/interrupts		正在使用的中断，和曾经有多少个中断</div><div class="line">/proc/ioports		当前正在使用的I/O端口</div><div class="line">/sys		同上</div><div class="line">/usr		系统软件资源目录</div><div class="line">/usr/bin/		系统命令（普通用户）</div><div class="line">/usr/sbin/		系统命令（超级用户）</div><div class="line">/usr/locate/		源码包安装的软件存放目录</div><div class="line">/usr/X11		同/usr/X11R6 （/usr/X11R6的符号连接）</div><div class="line">/usr/X11R6		X Window System存放相关档案的目录</div><div class="line">/usr/X11R6/bin		大量的小X-WINDOWS应用程序（也可能是一些在其它子目录下大执行文件的符号连接）</div><div class="line">/usr/include		一些套件的header檔。基本上，当我们在以 tarball 方式（ *.tar.gz 的方式安装软件）安装某些数据时，会使用到的一些函式库都在这个目录底下喔！</div><div class="line">/usr/lib		内含许多程序与子程序所需的函式库。</div><div class="line">/usr/local		在你安装完了 Linux 之后，基本上所有的配备你都有了，但是软件总是可以升级的，例如你要升级你的 proxy 服务，则通常软件预设的安装地方就是在 /usr/local 中（ local 是『当地』的意思），同时，安装完毕之后所得到的执行文件，为了与系统原先的执行文件有分别，因此升级后的执行档通常摆在 /usr/local/bin 这个地方。</div><div class="line">/usr/local/bin		可能是用户安装的小的应用程序，和一些在/usr/local目录下大应用程序的符号连接</div><div class="line">/usr/share/doc		放置一些系统说明文件的地方，例如你安装了 lilo 了，那么在该目录底下找一找，就可以查到 lilo 的说明文件了！很是便利！</div><div class="line">/usr/share/man		放置一些程序的说明文件的地方，那是什么？呵呵！就是你使用 man 的时候，会去查询的路径呀！例如你使用 man ls 这个指令时，就会查出 /usr/share/man/man1/ls.1.bz2 这个说明档的内容啰！</div><div class="line">/usr/src		这是放置核心原始码的预设目录，未来我们要编译核心的时候，就必须到这个目录底下呦！</div><div class="line">/var		系统相关文档内容</div><div class="line">/var/log/	系统日志位置</div><div class="line">/var/spool/mail/		系统默认邮箱位置</div><div class="line">/var/lib/mysql/		默认安装的mysql的库文件目录</div><div class="line">/ost+found /		分区的复目录（当系统非正常关机时，可以进行恢复，每个分区都会有这样一个lost+found目录）系统不正常产生错误时，会将一些遗失的片段放置于此目录下，通常这个目录会自动出现在装置目录下。例如你加装一棵硬盘于 /disk 中，那在这个目录下就会自动产生一个这样的目录 /disk/lost+found</div></pre></td></tr></table></figure>
+<h2 id="etc-目录"><a href="#etc-目录" class="headerlink" title="/etc/目录"></a>/etc/目录</h2><p>特定主机系统范围内的配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">/etc/rc /etc/rc.d		启动、或改变运行级时运行的scripts或scripts的目录.</div><div class="line">/etc/rc*.d</div><div class="line">/etc/hosts			本地域名解析文件</div><div class="line">/etc/sysconfig/network	IP、掩码、网关、主机名配置</div><div class="line">/etc/resolv.conf		DNS服务器配置</div><div class="line">/etc/fstab			开机自动挂载系统，所有分区开机都会自动挂载</div><div class="line">/etc/inittab	设定系统启动时Init进程将把系统设置成什么样的runlevel及加载相关的启动文件配置</div><div class="line">/etc/exports			设置NFS系统用的配置文件路径</div><div class="line">/etc/init.d			这个目录来存放系统启动脚本</div><div class="line">/etc/profile,</div><div class="line">/etc/csh.login,</div><div class="line">/etc/csh.cshrc		全局系统环境配置变量</div><div class="line">/etc/issue			认证前的输出信息，默认输出版本内核信息</div><div class="line">/etc/motd			设置认证后的输出信息，</div><div class="line">/etc/mtab		当前安装的文件系统列表.由scripts初始化，并由mount 命令自动更新.需要一个当前安装的文件系统的列表时使用，例如df 命令</div><div class="line">/etc/group			类似/etc/passwd ，但说明的不是用户而是组.</div><div class="line">/etc/passwd		用户数据库，其中的域给出了用户名、真实姓名、家目录、加密的口令和用户的其他信息.</div><div class="line">/etc/shadow		在安装了影子口令软件的系统上的影子口令文件.影子口令文件将</div><div class="line">/etc/passwd 		文件中的加密口令移动到/etc/shadow 中，而后者只对root可读.这使破译口令更困难.</div><div class="line">/etc/sudoers			可以sudo命令的配置文件</div><div class="line">/etc/syslog.conf		系统日志参数配置</div><div class="line">/etc/login.defs		设置用户帐号限制的文件</div><div class="line">/etc/securetty		确认安全终端，即哪个终端允许root登录.一般只列出虚拟控制台，这样就不可能(至少很困难)通过modem或网络闯入系统并得到超级用户特权.</div><div class="line">/etc/printcap			类似/etc/termcap ，但针对打印机.语法不同.</div><div class="line">/etc/shells		列出可信任的shell.chsh 命令允许用户在本文件指定范围内改变登录shell.提供一台机器FTP服务的服务进程ftpd 检查用户shell是否列在 /etc/shells 文件中，如果不是将不允许该用户登录.</div><div class="line">/etc/xinetd.d		如果服务器是通过xinetd模式运行的，它的脚本要放在这个目录下。有些系统没有这个目录，比如Slackware，有些老的版本也没有。在Redhat Fedora中比较新的版本中存在。</div><div class="line">/etc/opt/			/opt/的配置文件</div><div class="line">/etc/X11/			X_Window系统(版本11)的配置文件</div><div class="line">/etc/sgml/			SGML的配置文件</div><div class="line">/etc/xml/			XML的配置文件</div><div class="line">/etc/skel/			默认创建用户时，把该目录拷贝到家目录下</div></pre></td></tr></table></figure>
+<h2 id="usr-目录"><a href="#usr-目录" class="headerlink" title="/usr/目录"></a>/usr/目录</h2><p>默认软件都会存于该目录下。用于存储只读用户数据的第二层次；包含绝大多数的用户工具和应用程序。</p>
+<h2 id="var-目录"><a href="#var-目录" class="headerlink" title="/var/目录"></a>/var/目录</h2><p>/var 包括系统一般运行时要改变的数据.每个系统是特定的，即不通过网络与其他计算机共享.</p>
+<h2 id="proc-目录"><a href="#proc-目录" class="headerlink" title="/proc/目录"></a>/proc/目录</h2><p>虚拟文件系统，将内核与进程状态归档为文本文件（系统信息都存放这目录下）。</p>
+<p>例如：uptime、 network。在Linux中，对应Procfs格式挂载。该目录下文件只能看不能改（包括root）</p>
+<h2 id="dev-目录"><a href="#dev-目录" class="headerlink" title="/dev/目录"></a>/dev/目录</h2><p>设备文件分为两种：</p>
+<ul>
+<li>块设备文件(b)</li>
+<li>字符设备文件(c)</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;http://www.centoscn.com/uploads/allimg58981378314368.jpg&quot; alt=&quot;Linux目录结构&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Linux中的用户和用户组管理</title>
+    <link href="https://weizhimiao.github.io/2016/10/06/Linux%E4%B8%AD%E7%9A%84%E7%94%A8%E6%88%B7%E5%92%8C%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86/"/>
+    <id>https://weizhimiao.github.io/2016/10/06/Linux中的用户和用户组管理/</id>
+    <published>2016-10-06T14:30:00.000Z</published>
+    <updated>2016-10-07T14:41:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>用户账号的管理主要涉及到用户账号的添加、删除和修改。<br>添加用户账号就是在系统中创建一个新账号，然后为新账号分配用户号、用户组、主目录和登录Shell等。</p>
+<a id="more"></a>
+<h2 id="关于用户管理的配置文件说明"><a href="#关于用户管理的配置文件说明" class="headerlink" title="关于用户管理的配置文件说明"></a>关于用户管理的配置文件说明</h2><h3 id="用户信息文件："><a href="#用户信息文件：" class="headerlink" title="用户信息文件："></a>用户信息文件：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/passwd</div></pre></td></tr></table></figure>
+<p>文件内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">root:x:0:0:root:/root:/bin/bash</div><div class="line"></div><div class="line">第一位：用户名</div><div class="line">第二位：密码位（只是一个密码标志，真实密码并不是存在这）</div><div class="line">第三位：UID	用户ID</div><div class="line">		0	超级管理员</div><div class="line">		1-499	系统用户（伪用户）</div><div class="line">		&gt;500	普通用户</div><div class="line">第四位：GID	初始组ID</div><div class="line">第五位：用户说明</div><div class="line">第六位：家目录</div><div class="line">第七位：用户登录之后的权限</div></pre></td></tr></table></figure>
+<h3 id="影子文件："><a href="#影子文件：" class="headerlink" title="影子文件："></a>影子文件：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/shadow</div></pre></td></tr></table></figure>
+<p>文件内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root:$6$w5RBeFe7Y1bixrQR$tp0zHL1bMmAVv0SAS56LsCOyZ4KUj3V0GI0dRZ4KSlf.ggisV7dwiQ8s5xebcZghVDxwlYTjN6qKGU9zRc.En1:16247:0:99999:7:::</div></pre></td></tr></table></figure>
+<p>说明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">#</div><div class="line"># 第一字段：用户名（也被称为登录名），在/etc/shadow中，用户名和/etc/passwd 是相同的，</div><div class="line"># 这样就把passwd 和shadow中用的用户记录联系在一起；这个字段是非空的；</div><div class="line">#</div><div class="line"># 第二字段：密码（已被加密），如果是有些用户在这段是x，表示这个用户不能登录到系统；这个字段是非空的；</div><div class="line">#</div><div class="line"># 第三字段：上次修改口令的时间；这个时间是从1970年01月01日算起到最近一次修改口令的时间间隔（天数），</div><div class="line"># 您可以通过passwd 来修改用户的密码，然后查看/etc/shadow中此字段的变化；</div><div class="line">#</div><div class="line"># 第四字段：两次修改口令间隔最少的天数；如果设置为0,则禁用此功能；也就是说用户必须经过多少天才能修改其口令；</div><div class="line"># 此项功能用处不是太大；默认值是通过/etc/login.defs文件定义中获取，PASS_MIN_DAYS 中有定义；</div><div class="line">#</div><div class="line"># 第五字段：两次修改口令间隔最多的天数；这个能增强管理员管理用户口令的时效性，应该说在增强了系统的安全性；</div><div class="line"># 如果是系统默认值，是在添加用户时由/etc/login.defs文件定义中获取，在PASS_MAX_DAYS 中定义；</div><div class="line">#</div><div class="line"># 第六字段：提前多少天警告用户口令将过期；当用户登录系统后，系统登录程序提醒用户口令将要作废；</div><div class="line"># 如果是系统默认值，是在添加用户时由/etc/login.defs文件定义中获取，在PASS_WARN_AGE 中定义；</div><div class="line">#</div><div class="line"># 第七字段：在口令过期之后多少天禁用此用户；此字段表示用户口令作废多少天后，系统会禁用此用户，</div><div class="line"># 也就是说系统会不能再让此用户登录，也不会提示用户过期，是完全禁用；</div><div class="line">#</div><div class="line"># 第八字段：用户过期日期；此字段指定了用户作废的天数（从1970年的1月1日开始的天数），</div><div class="line"># 如果这个字段的值为空，帐号永久可用；</div><div class="line">#</div><div class="line"># 第九字段：保留字段，目前为空，以备将来Linux发展之用；</div></pre></td></tr></table></figure>
+<h3 id="组信息文件："><a href="#组信息文件：" class="headerlink" title="组信息文件："></a>组信息文件：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/group</div></pre></td></tr></table></figure>
+<p>文件内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">bin:x:1:bin,daemon</div><div class="line">组名：组密码位：组ID：组中的附加用户</div><div class="line">初始组：每个用户初始组只能有一个，初始组只能有一个，一般都是和用户名相同的组作为初始组</div><div class="line">附加组：每个用户可以属于多个附加组。要把用户加入组，都是加入附加组</div></pre></td></tr></table></figure>
+<h2 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">useradd	用户名</div><div class="line">useradd  选项    用户名		</div><div class="line">		-g	组名		指定初始组（但最好不要手动指定）</div><div class="line">		-G	组名		指定附加组（把用户加入组，使用附加组）</div><div class="line">		-c	说明		添加说明</div><div class="line">		-d	目录		手工指定家目录</div><div class="line">		-s	/bin/bash	手工指定用户登录后之后的权限</div></pre></td></tr></table></figure>
+<p>例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">useradd  -g  aa  bb   		添加bb用户，同时指定初始组aa</div><div class="line">useradd   -G   user1   aa		添加用户aa，指定附加组为user1</div></pre></td></tr></table></figure>
+<h2 id="设定密码"><a href="#设定密码" class="headerlink" title="设定密码"></a>设定密码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">passwd	用户名</div><div class="line">passwd		改变当前用户密码（普通用户只能通过这种方式来更改自己的密码）</div><div class="line">passwd	root	更改root的密码</div></pre></td></tr></table></figure>
+<h2 id="删除密码"><a href="#删除密码" class="headerlink" title="删除密码"></a>删除密码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">userdel	-r  用户名</div><div class="line">		    -r 	连带家目录一起删除</div></pre></td></tr></table></figure>
+<h2 id="添加组"><a href="#添加组" class="headerlink" title="添加组"></a>添加组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">groupadd	组名</div></pre></td></tr></table></figure>
+<h2 id="删除组"><a href="#删除组" class="headerlink" title="删除组"></a>删除组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">groupdel	组名		注意：组中没有初始用户</div></pre></td></tr></table></figure>
+<h2 id="把已经存在的用户加入组"><a href="#把已经存在的用户加入组" class="headerlink" title="把已经存在的用户加入组"></a>把已经存在的用户加入组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gpasswd	-a  用户名   组名	用户加入组</div><div class="line">gpasswd	-d  用户名  组名	把用户从组中删除</div></pre></td></tr></table></figure>
+<h2 id="查看用户相关信息"><a href="#查看用户相关信息" class="headerlink" title="查看用户相关信息"></a>查看用户相关信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id   用户名		显示用户的UID，初始组，和附加组</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">例#id   sc   </div><div class="line">uid=0(root) gid=0(root) 组=0(root)</div></pre></td></tr></table></figure>
+<h2 id="用户间的相互切换"><a href="#用户间的相互切换" class="headerlink" title="用户间的相互切换"></a>用户间的相互切换</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">su  -  用户名		切换用户身份</div><div class="line">  	-	连带环境变量一起切换</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;用户账号的管理主要涉及到用户账号的添加、删除和修改。&lt;br&gt;添加用户账号就是在系统中创建一个新账号，然后为新账号分配用户号、用户组、主目录和登录Shell等。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Linux常用命令</title>
     <link href="https://weizhimiao.github.io/2016/10/06/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
     <id>https://weizhimiao.github.io/2016/10/06/Linux常用命令/</id>
@@ -513,162 +756,146 @@
   </entry>
   
   <entry>
-    <title>PHP魔术方法小结</title>
-    <link href="https://weizhimiao.github.io/2016/10/06/PHP%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%B0%8F%E7%BB%93/"/>
-    <id>https://weizhimiao.github.io/2016/10/06/PHP魔术方法小结/</id>
-    <published>2016-10-06T14:30:00.000Z</published>
-    <updated>2016-10-07T13:24:03.000Z</updated>
+    <title>Linux常见的配置文件</title>
+    <link href="https://weizhimiao.github.io/2016/10/06/Linux%E5%B8%B8%E8%A7%81%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6/"/>
+    <id>https://weizhimiao.github.io/2016/10/06/Linux常见的配置文件/</id>
+    <published>2016-10-06T12:00:00.000Z</published>
+    <updated>2016-10-07T14:43:33.000Z</updated>
     
-    <content type="html"><![CDATA[<p>魔术方法：</p>
-<blockquote>
-<p>一种特殊的函数</p>
-</blockquote>
+    <content type="html"><![CDATA[<p>在Linux中我们经常需要修改各种配置文件，例如，启动引导程序配置文件、系统启动文件核脚本、网络配置文件、文件系统配置文件、文件服务程序配置文件等等。</p>
 <a id="more"></a>
-<h2 id="构造方法：-construct-或者和类名同名的方法"><a href="#构造方法：-construct-或者和类名同名的方法" class="headerlink" title="构造方法： __construct()  或者和类名同名的方法"></a>构造方法： __construct()  或者和类名同名的方法</h2><p>触发时机：在对象实例化的时候自动触发。</p>
-<p>作用：初始化成员属性</p>
-<p>参数：可以有，可以没有，取决于设定和逻辑</p>
-<p>返回值：没有</p>
-<p>注意：如果构造方法具有参数，且参数没有默认值，在实例化对象时，必须在类名()内添加对应的实参值。</p>
-<h2 id="析构方法-destruct"><a href="#析构方法-destruct" class="headerlink" title="析构方法 __destruct()"></a>析构方法 __destruct()</h2><p>触发时机： 在销毁对象的时候自动触发(unset或者页面执行完毕)</p>
-<p>作用：回收对象使用过程中的资源。</p>
-<p>参数：没有</p>
-<p>返回值：没有</p>
-<h2 id="get"><a href="#get" class="headerlink" title="__get()"></a>__get()</h2><p>触发时机：访问私有成员属性的时候自动触发</p>
-<p>功能：1.防止报错  2.为私有属性访问提供后门</p>
-<p>参数：1个    访问的私有属性名称</p>
-<p>返回值：可以有，可以没有</p>
-<h2 id="set"><a href="#set" class="headerlink" title="__set()"></a>__set()</h2><p>触发时机: 对私有成员属性进行设置值的时候自动触发</p>
-<p>功能:1.屏蔽错误  2.为私有成员属性设置</p>
-<p>参数: 2个   1私有成员属性名  2 要设置的值</p>
-<p>返回值:无</p>
-<h2 id="isset"><a href="#isset" class="headerlink" title="__isset()"></a>__isset()</h2><p>触发时机:对私有成员属性进行isset检测时自动触发</p>
-<p>功能: 1.代替对象外部的isset检测，返回结果</p>
-<p>参数: 1个   1私有成员属性名</p>
-<p>返回值:有  一般返回 isset(属性)结果</p>
-<h2 id="unset"><a href="#unset" class="headerlink" title="__unset()"></a>__unset()</h2><p>触发时机:在对象外部对私有成员属性进行unset操作时自动触发</p>
-<p>功能: 1.代替对象外部的unset操作，返回结果</p>
-<p>参数: 1个   1私有成员属性名</p>
-<p>返回值:无</p>
-<h2 id="sleep"><a href="#sleep" class="headerlink" title="__sleep()"></a>__sleep()</h2><p>触发时机：在对象进行串行化操作时触发.</p>
-<p>功能：指定需要串行化的成员属性.</p>
-<p>参数:无</p>
-<p>返回值: 需要返回一个数组类型，每个元素都是需要串行化的成员属性名.</p>
-<h2 id="wakeup"><a href="#wakeup" class="headerlink" title="__wakeup()"></a>__wakeup()</h2><p>触发时机：.在对象进行反串行化时自动触发</p>
-<p>功能：.反串行化时自动修改部分成员属性值.</p>
-<p>参数:无</p>
-<p>返回值: 无</p>
-<h2 id="tostring"><a href="#tostring" class="headerlink" title="__tostring()"></a>__tostring()</h2><p>触发时机：对一个对象进行echo操作时 自动触发</p>
-<p>功能：简化操作或者为对象输出值</p>
-<p>参数:无</p>
-<p>返回值:必须有且必须为字符串类型.</p>
-<h2 id="clone"><a href="#clone" class="headerlink" title="__clone()"></a>__clone()</h2><p>触发时机:对对象进行克隆操作时自动触发</p>
-<p>功能：修改克隆之后的对象的部分属性值.</p>
-<p>参数:无</p>
-<p>返回值:无</p>
-<p>注意：对象的赋值默认就是引用赋值，不能通过赋值操作获取一个新的对象，获取新对象的操作应该使用克隆操作</p>
-<p>格式： 变量=clone 对象变量</p>
-<h2 id="call（）"><a href="#call（）" class="headerlink" title="__call（）"></a>__call（）</h2><p>触发时机:    调用了类中不存在的方法时自动触发</p>
-<p>功能：1.屏蔽错误  2.为不存在的方法定义个一个功能.</p>
-<p>参数:2个   1 不存在的方法名   2所有的实参组成的数组</p>
-<p>返回值:可有可无(根据实际功能来看)</p>
-<h2 id="autoload-唯一一个类外部的魔术方法"><a href="#autoload-唯一一个类外部的魔术方法" class="headerlink" title="__autoload()(唯一一个类外部的魔术方法)"></a>__autoload()(唯一一个类外部的魔术方法)</h2><p>触发时机:    当页面中需要一个 类而该类不存在时自动触发</p>
-<p>功能：实现类的自动加载.</p>
-<p>参数1个 不存在的类名</p>
+<h2 id="etc-passwd-用户信息配置文件"><a href="#etc-passwd-用户信息配置文件" class="headerlink" title="/etc/passwd    用户信息配置文件"></a>/etc/passwd    用户信息配置文件</h2><ul>
+<li>文件作用：保存Linux用户信息</li>
+<li>文件内容：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root:x:0:0:root:/root:/bin/bash</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li>第一位：用户名</li>
+<li>第二位：密码位（只是一个密码标志，真实密码并不是存在这）</li>
+<li><p>第三位：UID    用户ID</p>
+<blockquote>
+<p>   0    超级管理员<br>   1-499    系统用户（伪用户）<br>   >500    普通用户</p>
+</blockquote>
+</li>
+<li><p>第四位：GID    初始组ID</p>
+</li>
+<li>第五位：用户说明</li>
+<li>第六位：家目录</li>
+<li>第七位：用户登录之后的权限<blockquote>
+<p>常见的两种权限：</p>
+<p>   /bin/bash</p>
+<p>   /sbin/nologin伪用户，不能进行登陆</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="etc-shadow-影子文件"><a href="#etc-shadow-影子文件" class="headerlink" title="/etc/shadow    影子文件"></a>/etc/shadow    影子文件</h2><ul>
+<li>文件作用：保存用户密码，及密码的有效期</li>
+<li>文件内容：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root:$6$w5RBeFe7Y1bixrQR$tp0zHL1bMmAVv0SAS56LsCOyZ4KUj3V0GI0dRZ4KSlf.ggisV7dwiQ8s5xebcZghVDxwlYTjN6qKGU9zRc.En1:16247:0:99999:7:::</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li><p>第一字段：用户名（也被称为登录名），在/etc/shadow中，用户名和/etc/passwd 是相同的，这样就把passwd 和shadow中用的用户记录联系在一起；这个字段是非空的</p>
+</li>
+<li><p>第二字段：密码（已被加密），如果是有些用户在这段是x，表示这个用户不能登录到系统；这个字段是非空的</p>
+</li>
+<li><p>第三字段：上次修改口令的时间；这个时间是从1970年01月01日算起到最近一次修改口令的时间间隔（天数），您可以通过passwd 来修改用户的密码，然后查看/etc/shadow中此字段的变化</p>
+</li>
+<li><p>第四字段：两次修改口令间隔最少的天数；如果设置为0,则禁用此功能；也就是说用户必须经过多少天才能修改其口令；此项功能用处不是太大；默认值是通过/etc/login.defs文件定义中获取，PASS_MIN_DAYS 中有定义</p>
+</li>
+<li><p>第五字段：两次修改口令间隔最多的天数；这个能增强管理员管理用户口令的时效性，应该说在增强了系统的安全性；如果是系统默认值，是在添加用户时由/etc/login.defs文件定义中获取，在PASS_MAX_DAYS 中定义</p>
+</li>
+<li><p>第六字段：提前多少天警告用户口令将过期；当用户登录系统后，系统登录程序提醒用户口令将要作废；如果是系统默认值，是在添加用户时由/etc/login.defs文件定义中获取，在PASS_WARN_AGE 中定义</p>
+</li>
+<li><p>第七字段：在口令过期之后多少天禁用此用户；此字段表示用户口令作废多少天后，系统会禁用此用户，也就是说系统会不能再让此用户登录，也不会提示用户过期，是完全禁用</p>
+</li>
+<li><p>第八字段：用户过期日期；此字段指定了用户作废的天数（从1970年的1月1日开始的天数），如果这个字段的值为空，帐号永久可用</p>
+</li>
+<li><p>第九字段：保留字段，目前为空，以备将来Linux发展之用</p>
+</li>
+</ul>
+<h2 id="etc-group-用户组配置文件"><a href="#etc-group-用户组配置文件" class="headerlink" title="/etc/group    用户组配置文件"></a>/etc/group    用户组配置文件</h2><ul>
+<li>文件作用：用户组配置</li>
+<li>文件内容：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">root:x:0:</div><div class="line">bin:x:1:bin,daemon</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li><p>组名：组密码位：组ID：组中的附加用户</p>
+</li>
+<li><p>初始组：每个用户初始组只能有一个，初始组只能有一个，一般都是和用户名相同的组作为初始组</p>
+</li>
+<li><p>附加组：每个用户可以属于多个附加组。要把用户加入组，都是加入附加组</p>
+</li>
+</ul>
+<h2 id="etc-sysconfig-network-scripts-ifcfg-eth0-网卡信息文件"><a href="#etc-sysconfig-network-scripts-ifcfg-eth0-网卡信息文件" class="headerlink" title="/etc/sysconfig/network-scripts/ifcfg-eth0    网卡信息文件"></a>/etc/sysconfig/network-scripts/ifcfg-eth0    网卡信息文件</h2><ul>
+<li>文件作用：保存网卡配置</li>
+<li>文件内容：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">DEVICE=eth0					网卡设备名</div><div class="line">BOOTPROTO=none				是否自动获取IP。none：不生效					static：手动		dhcp：动态获取IP</div><div class="line">BROADCAST=192.168.140.255			广播地址</div><div class="line">HWADDR=00:0c:29:21:80:48			mac地址</div><div class="line">IPADDR=192.168.140.253			IP地址</div><div class="line">IPV6INIT=yes					IPv6开启</div><div class="line">IPV6_AUTOCONF=yes				IPv6获取</div><div class="line">NETMASK=255.255.255.0				掩码</div><div class="line">NETWORK=192.168.140.0				网段</div><div class="line">ONBOOT=yes					网卡开机启动</div><div class="line">TYPE=Ethernet					以太网</div><div class="line">GATEWAY=192.168.140.1				网关</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li><p>如果是采用DHCP方式获取IP信息，则可以只填写上述用橙色标记的配置项即可。</p>
+</li>
+<li><p>修改配置文件后，需要重启服务（如service  network  restart）。</p>
+</li>
+</ul>
+<h2 id="etc-udev-rules-d-70-persistent-net-rules-网卡和MAC地址绑定文件"><a href="#etc-udev-rules-d-70-persistent-net-rules-网卡和MAC地址绑定文件" class="headerlink" title="/etc/udev/rules.d/70-persistent-net.rules    网卡和MAC地址绑定文件"></a>/etc/udev/rules.d/70-persistent-net.rules    网卡和MAC地址绑定文件</h2><ul>
+<li>文件作用：绑定网卡和MAC地址</li>
+<li>文件内容：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SUBSYSTEM==&quot;net&quot;, ACTION==&quot;add&quot;, DRIVERS==&quot;?*&quot;, ATTR&#123;address&#125;==&quot;00:0c:29:41:c7:1f&quot;, ATTR&#123;type&#125;==&quot;1&quot;, KERNEL==&quot;eth*&quot;, NAME=&quot;eth0&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li>当虚拟机网卡不通是，有时需要删除<code>/etc/sysconfig/network-scripts/ifcfg-eth0</code> 中的MAC地址行，并且要删掉此文件。</li>
+</ul>
+<h2 id="etc-inittab-系统默认运行级别配置文件"><a href="#etc-inittab-系统默认运行级别配置文件" class="headerlink" title="/etc/inittab    系统默认运行级别配置文件"></a>/etc/inittab    系统默认运行级别配置文件</h2><ul>
+<li>文件作用：设置默认系统运行级别。</li>
+<li>文件内容：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id:3:initdefault:</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">运行级别可分为：</div><div class="line"># Default runlevel. The runlevels used are:</div><div class="line">#   0 - halt (Do NOT set initdefault to this)</div><div class="line">#   1 - Single user mode</div><div class="line">#   2 - Multiuser, without NFS (The same as 3, if you do not have networking)</div><div class="line">#   3 - Full multiuser mode	命令行</div><div class="line">#   4 - unused</div><div class="line">#   5 - X11			图形界面</div><div class="line">#   6 - reboot (Do NOT set initdefault to this)</div></pre></td></tr></table></figure></p>
+<h2 id="etc-rc-local—-gt-etc-rc-d-rc-local-自启动程序配置文件"><a href="#etc-rc-local—-gt-etc-rc-d-rc-local-自启动程序配置文件" class="headerlink" title="/etc/rc.local—-&gt;/etc/rc.d/rc.local    自启动程序配置文件"></a>/etc/rc.local—-&gt;/etc/rc.d/rc.local    自启动程序配置文件</h2><ul>
+<li>文件作用：设置自启动程序，系统启动时会一次执行该文件中的命令</li>
+<li>文件内容<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># This script will be executed *after* all the other init scripts.</div><div class="line"># You can put your own initialization stuff in here if you don&apos;t</div><div class="line"># want to do the full Sys V style init stuff.</div><div class="line">touch /var/lock/subsys/local</div><div class="line">ulimit -SHn 65535</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="etc-services-所有系统常见端口"><a href="#etc-services-所有系统常见端口" class="headerlink" title="/etc/services    所有系统常见端口"></a>/etc/services    所有系统常见端口</h2><ul>
+<li>文件作用：显示系统常见的端口及绑定的协议</li>
+</ul>
+<h2 id="etc-sysconfig-network-主机名配置文件"><a href="#etc-sysconfig-network-主机名配置文件" class="headerlink" title="/etc/sysconfig/network        主机名配置文件"></a>/etc/sysconfig/network        主机名配置文件</h2><ul>
+<li>文件作用：配置主机名，永久保存</li>
+<li>文件内容：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NETWORKING=yes</div><div class="line">HOSTNAME=localhost.localdomain</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li>建议不要更改。</li>
+</ul>
+<h2 id="etc-resolv-conf-DNS配置文件"><a href="#etc-resolv-conf-DNS配置文件" class="headerlink" title="/etc/resolv.conf        DNS配置文件"></a>/etc/resolv.conf        DNS配置文件</h2><ul>
+<li>文件作用：设置ＤＮＳ服务器</li>
+<li>文件内容：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nameserver  202.106.0.20</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li>如有多个DNS服务器地址，可在IP地址后面直接加，并以“，”分割，或者再起下一行写入“nameserver  xx.xx.xx.xx”</li>
+</ul>
+<h2 id="etc-vimrc-vim配置文件"><a href="#etc-vimrc-vim配置文件" class="headerlink" title="/etc/vimrc vim配置文件"></a>/etc/vimrc vim配置文件</h2><p>别名配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">~.bashrc</div></pre></td></tr></table></figure></p>
+<h2 id="etc-selinux-config-seLinux的配置文件"><a href="#etc-selinux-config-seLinux的配置文件" class="headerlink" title="/etc/selinux/config seLinux的配置文件"></a>/etc/selinux/config seLinux的配置文件</h2><ul>
+<li>文件内容<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># This file controls the state of SELinux on the system.</div><div class="line"># SELINUX= can take one of these three values:</div><div class="line">#     enforcing - SELinux security policy is enforced.</div><div class="line">#     permissive - SELinux prints warnings instead of enforcing.</div><div class="line">#     disabled - No SELinux policy is loaded.</div><div class="line">SELINUX=disabled</div><div class="line"># SELINUXTYPE= can take one of these two values:</div><div class="line">#     targeted - Targeted processes are protected,</div><div class="line">#     mls - Multi Level Security protection.</div><div class="line">SELINUXTYPE=targeted</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>关闭seLinux</p>
+<ul>
+<li>将配置文件中seLinux项改为SELINUX=disabled，然后重启Linux。</li>
+</ul>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;魔术方法：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;一种特殊的函数&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Linux网络配置</title>
-    <link href="https://weizhimiao.github.io/2016/10/06/Linux%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/"/>
-    <id>https://weizhimiao.github.io/2016/10/06/Linux网络配置/</id>
-    <published>2016-10-06T14:30:00.000Z</published>
-    <updated>2016-10-07T13:59:08.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="http://n.sinaimg.cn/games/3ece443e/20161007/ifconfig.png" alt="Linux网络配置"></p>
-<a id="more"></a>
-<p>##虚拟机网卡的配置（IP地址的配置）</p>
-<h3 id="IP地址的配置"><a href="#IP地址的配置" class="headerlink" title="IP地址的配置"></a>IP地址的配置</h3><p>给Linux配置IP<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">setup  进行IP地址的设置</div><div class="line">service network restart</div></pre></td></tr></table></figure></p>
-<p>手工启动Linux网卡<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi  /etc/sysconfig/network-scripts/ifcfg-eth0		编辑网卡配置文件</div></pre></td></tr></table></figure></p>
-<p>配置文件内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">DEVICE=eth0</div><div class="line">IPADDR=192.168.140.158</div><div class="line">GATEWAY=192.168.140.1</div><div class="line">NETMASK=255.255.255.0</div><div class="line">HWADDR=00:0c:29:41:c7:1f</div><div class="line">UUID=&quot;60bfdea1-c598-4dc8-bf93-da162ea4fb41&quot;</div><div class="line">TYPE=Ethernet</div><div class="line">BOOTPROTO=none</div><div class="line">IPV6INIT=no</div><div class="line">ONBOOT=yes</div><div class="line">USERCTL=no</div></pre></td></tr></table></figure></p>
-<p>修改如下配置项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ONBOOT=no		改为</div><div class="line">ONBOOT=yes		（是否开机启动）</div></pre></td></tr></table></figure></p>
-<p>修改UUID</p>
-<blockquote>
-<p>解决虚拟机网卡不通：（需要进行如下修改）</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi  /etc/sysconfig/network-scripts/ifcfg-eth0</div></pre></td></tr></table></figure>
-<p>删除MAC地址行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm –rf /etc/udev/rules.d/70-persistent-net.rules</div></pre></td></tr></table></figure></p>
-<p>删除网卡和MAC地址绑定文件<br>重启系统<br>修改虚拟机配置</p>
-<blockquote>
-<p>网卡连接方式改为桥接模式<br>确定桥接到有线网卡上<br>（桥接方式是虚拟机和真实机共享使用本机的真实物理网卡，故采用这种方式vMare0和8的这两块虚拟网卡可以同时禁掉）</p>
-</blockquote>
-<h2 id="Linux网络配置"><a href="#Linux网络配置" class="headerlink" title="Linux网络配置"></a>Linux网络配置</h2><h3 id="IP地址配置（3种方法，推介使用地3种）"><a href="#IP地址配置（3种方法，推介使用地3种）" class="headerlink" title="IP地址配置（3种方法，推介使用地3种）"></a>IP地址配置（3种方法，推介使用地3种）</h3><ol>
-<li><p>setup</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service   network  restart</div></pre></td></tr></table></figure>
-</li>
-<li><p>ifconfig  eth0  ip    netmask       临时生效</p>
-</li>
-<li>修改网卡配置文件</li>
-</ol>
-<p><strong>网卡信息文件：<code>/etc/sysconfig/network-scripts/ifcfg-eth0</code> 文件内容如下：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">DEVICE=eth0					网卡设备名</div><div class="line">BOOTPROTO=none				是否自动获取IP。none：不生效					static：手动		dhcp：动态获取IP</div><div class="line">BROADCAST=192.168.140.255			广播地址</div><div class="line">HWADDR=00:0c:29:21:80:48			mac地址</div><div class="line">IPADDR=192.168.140.253			IP地址</div><div class="line">IPV6INIT=yes					IPv6开启</div><div class="line">IPV6_AUTOCONF=yes				IPv6获取</div><div class="line">NETMASK=255.255.255.0				掩码</div><div class="line">NETWORK=192.168.140.0				网段</div><div class="line">ONBOOT=yes					网卡开机启动</div><div class="line">TYPE=Ethernet					以太网</div><div class="line">GATEWAY=192.168.140.1				网关</div></pre></td></tr></table></figure></p>
-<p>如果是采用DHCP方式获取IP信息，则可以只填写上述用橙色标记的配置项即可。<br>修改配置文件后，需要重启服务（如service  network  restart）</p>
-<p><strong>主机名配置文件</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/sysconfig/network		永久生效，但是要重启</div></pre></td></tr></table></figure></p>
-<p>文件内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NETWORKING=yes</div><div class="line">HOSTNAME=localhost.localdomain</div></pre></td></tr></table></figure></p>
-<p>另外，还可以用命令进行修改，不过只能临时生效<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hostname  sc		将用户名修改为sc</div><div class="line">hostname		查看主机名</div></pre></td></tr></table></figure></p>
-<p><strong>DNS配置文件</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/resolv.conf</div></pre></td></tr></table></figure></p>
-<p>文件内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">nameserver  202.106.0.20</div><div class="line">如有多个DNS服务器地址，可在IP地址后面直接加，并以“，”分割，或者再起下一行写入“nameserver  xx.xx.xx.xx”</div></pre></td></tr></table></figure></p>
-<h3 id="网络命令"><a href="#网络命令" class="headerlink" title="网络命令"></a>网络命令</h3><ol>
-<li><p>ifconfig        查看网卡信息</p>
-<blockquote>
-<p>   -a     全部（包括没有启动的）</p>
-</blockquote>
-</li>
-<li><p>ifup  eth0        快速开启</p>
-<blockquote>
-<p>   ifdown    eth0        快速关闭</p>
-</blockquote>
-</li>
-<li><p>netstat   -an        查看所有网络连接</p>
-<blockquote>
-<p>netstat  -tlun        查看TCP和UDP协议监听的端口</p>
-<p>   netstat   -rn        查看路由default：默认路由（网关）</p>
-</blockquote>
-</li>
-<li><p>route        查看路由</p>
-<blockquote>
-<p>   route  add   default   gw    192.168.140.1     手工设定网关，临时生效<br>   route  del    default   gw  192.168.190.6       删除网关</p>
-</blockquote>
-</li>
-<li><p>ping    IP    探测网络畅通</p>
-</li>
-<li><p>traceroute    ip或域名        探测到目的地址的路径（Linux命令）</p>
-<blockquote>
-<p>   tracert   ip       （windows命令）</p>
-</blockquote>
-</li>
-<li><p>tcpdump</p>
-<blockquote>
-<p>   tcpdump -i eth0 -nnX port 21        抓取eth0网卡  21端口的传输信息</p>
-</blockquote>
-</li>
-</ol>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;http://n.sinaimg.cn/games/3ece443e/20161007/ifconfig.png&quot; alt=&quot;Linux网络配置&quot;&gt;&lt;/p&gt;
+      &lt;p&gt;在Linux中我们经常需要修改各种配置文件，例如，启动引导程序配置文件、系统启动文件核脚本、网络配置文件、文件系统配置文件、文件服务程序配置文件等等。&lt;/p&gt;
     
     </summary>
     
@@ -2679,831 +2906,6 @@
       <category term="监控" scheme="https://weizhimiao.github.io/tags/%E7%9B%91%E6%8E%A7/"/>
     
       <category term="PHP-FPM" scheme="https://weizhimiao.github.io/tags/PHP-FPM/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Redis安装与管理</title>
-    <link href="https://weizhimiao.github.io/2016/09/27/Redis%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B8%8E%E6%93%8D%E4%BD%9C/"/>
-    <id>https://weizhimiao.github.io/2016/09/27/Redis数据类型与操作/</id>
-    <published>2016-09-27T12:30:00.000Z</published>
-    <updated>2016-10-07T12:54:14.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Redis共有5种数据类型</p>
-<ul>
-<li>string(字符串)</li>
-<li>hash(哈希表)</li>
-<li>list(双向队列)</li>
-<li>set(集合)</li>
-<li>zset(有序集合)</li>
-</ul>
-<a id="more"></a>
-<h2 id="String（子串类型）"><a href="#String（子串类型）" class="headerlink" title="String（子串类型）"></a>String（子串类型）</h2><p>String是最简单的类型，一个Key对应一个Value，string类型是二进制安全的。Redis的string可以包含任何数据，比如jpg图片或者序列化的对象。</p>
-<ol>
-<li>set 键  “值”<blockquote>
-<p>设置一个键和值，键存在则覆盖，返回ok</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; set name liming</div><div class="line">OK</div></pre></td></tr></table></figure>
-<ol>
-<li>get 键<blockquote>
-<p>获取一个键的值，返回值</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; get name</div><div class="line">&quot;liming&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>setnx 键 值<blockquote>
-<p>只有当该键不存在时设置一个键的值，若键已存在则返回0表示失败（防止覆盖），</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; setnx age 18</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; setnx age 18</div><div class="line">(integer) 0</div></pre></td></tr></table></figure>
-<ol>
-<li>setex 键 [有效时间] 值<blockquote>
-<p>设置一个指定有效期的键和值（单位秒）。不写有效时间则表示永久有效，等价于set</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; setex movie 30 canglaoshi</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; ttl movie				//获取键的有效时间</div><div class="line">(integer) 26</div><div class="line">127.0.0.1:6379&gt; ttl movie</div><div class="line">(integer) 20</div><div class="line">127.0.0.1:6379&gt; get movie</div><div class="line">&quot;canglaoshi&quot;</div><div class="line">127.0.0.1:6379&gt; ttl movie</div><div class="line">(integer) -2</div><div class="line">127.0.0.1:6379&gt; get movie</div><div class="line">(nil)</div></pre></td></tr></table></figure>
-<ol>
-<li>ttl 键<blockquote>
-<p>以秒为单位，返回给定 key 的剩余生存时间</p>
-<ul>
-<li>当 key 不存在时，返回 -2 。<ul>
-<li>当 key 存在但没有设置剩余生存时间时，返回 -1 。</li>
-<li>否则，以秒为单位，返回 key 的剩余生存时间。</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-</li>
-</ol>
-<ol>
-<li>setrange 键 位置 子字串<blockquote>
-<p>替换子字符串 (替换长度由子子串长度决定)</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; set key1 &quot;hello world&quot;</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; get key1</div><div class="line">&quot;hello world&quot;</div><div class="line">127.0.0.1:6379&gt; setrange key1 6 liming</div><div class="line">(integer) 12</div><div class="line">127.0.0.1:6379&gt; get key1</div><div class="line">&quot;hello liming&quot;</div><div class="line">	#将key1键对应值的第6个位置开始替换（字符串位置从0开始计算）</div></pre></td></tr></table></figure>
-<ol>
-<li>mset 键1 值1 键2 值2 键3 值3 ….<blockquote>
-<p>批量设置键和值,成功则返回ok</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; mset name1 lm name2 sc name3 zjj</div><div class="line">OK</div></pre></td></tr></table></figure>
-<ol>
-<li>mget 键1 键2 键3….<blockquote>
-<p>批量获取值</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; mget name1 name2 name3</div><div class="line">1) &quot;lm&quot;</div><div class="line">2) &quot;sc&quot;</div><div class="line">3) &quot;zjj&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>msetnx 键1 值1 键2 值2 键3 值3 ….<blockquote>
-<p>批量设置不存在的键和值,成功则返回ok</p>
-</blockquote>
-</li>
-</ol>
-<ol>
-<li>getset 键 新值<blockquote>
-<p>获取原值，并设置新值</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; set name &quot;shen chao&quot;</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; get name</div><div class="line">&quot;shen chao&quot;</div><div class="line">127.0.0.1:6379&gt; getset name &quot;liming&quot;</div><div class="line">&quot;shen chao&quot;</div><div class="line">127.0.0.1:6379&gt; get name</div><div class="line">&quot;liming&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>getrange 键 0 4  <blockquote>
-<p>获取指定范围的值（获取指定0到4位置上的值，字符串位置从0开始计算）</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; getrange key1 0 4</div><div class="line">&quot;hello&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>incr 键  <blockquote>
-<p>指定键的值做加1操作，返回加后的结果（只能加数字）。</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; set age 18</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; incr age</div><div class="line">(integer) 19</div><div class="line">127.0.0.1:6379&gt; get age</div><div class="line">&quot;19&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>incrby 键 m    <blockquote>
-<p>其中m可以是正整数或负整数.加指定值，键不存在时候会设置键</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; incrby age 10</div><div class="line">(integer) 29</div><div class="line">127.0.0.1:6379&gt; get age</div><div class="line">&quot;29&quot;</div><div class="line">127.0.0.1:6379&gt; incrby age -5</div><div class="line">(integer) 24</div></pre></td></tr></table></figure>
-<ol>
-<li>decr 键<blockquote>
-<p>指定键的值做减1操作，返回减后的结果。</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; decr age</div><div class="line">(integer) 23</div><div class="line">127.0.0.1:6379&gt; get age</div><div class="line">&quot;23&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>decrby 键 n<blockquote>
-<p>其中n可以是正整数或负整数.设置某个键减上指定值</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; decrby age 5</div><div class="line">(integer) 18</div><div class="line">127.0.0.1:6379&gt; decrby age -10</div><div class="line">(integer) 28</div><div class="line">127.0.0.1:6379&gt; get age</div><div class="line">&quot;28&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>append  键 追加字串<blockquote>
-<p>给指定key的字符串追加value，返回新字符串值的长度</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; append name1 &quot; have a hot body!&quot;</div><div class="line">(integer) 19</div><div class="line">127.0.0.1:6379&gt; get name1</div><div class="line">&quot;lm have a hot body!&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>strlen 键名<blockquote>
-<p>strlen求一个键长度</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; strlen name1</div><div class="line">(integer) 19</div></pre></td></tr></table></figure>
-<ol>
-<li>del命令：<blockquote>
-<p>删除一个键</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; del name3</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; get name3</div><div class="line">(nil)</div></pre></td></tr></table></figure>
-<h2 id="hashs类型"><a href="#hashs类型" class="headerlink" title="hashs类型"></a>hashs类型</h2><blockquote>
-<p>注意：redis中没有表概念，所有的数据都存入键中。</p>
-<ul>
-<li>string键类型：所有的值（可以是任何数据类型）都保存在一个键当中，放在一个内存块中<ul>
-<li>hashs键类型：所有的值也都保存在一个键当中，只是放在不同的内存块中，每个块称作字段</li>
-</ul>
-</li>
-</ul>
-</blockquote>
-<ol>
-<li>hset key field value<blockquote>
-<p>设置一个键，在键中保存字段和值<br>格式： hset 哈希集（键） 字段 值</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; hset user1 name4 ysm</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; keys *					//查看库中所有的键</div><div class="line">1) &quot;aa&quot;</div><div class="line">2) &quot;name&quot;</div><div class="line">3) &quot;name1&quot;</div><div class="line">4) &quot;user1&quot;</div><div class="line">5) &quot;name2&quot;</div><div class="line">6) &quot;age&quot;</div><div class="line">7) &quot;key1&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>hsetnx  键  字段  值<blockquote>
-<p>   设置一个键中，不存在的字段和值。如果字段存在则报错（成功返回1，失败返回0）</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; hsetnx user1 name1 lm</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; hsetnx user1 name1 sc</div><div class="line">(integer) 0					//报错</div><div class="line">127.0.0.1:6379&gt; hget user1 name1</div><div class="line">&quot;lm&quot;						//内容没有更新</div></pre></td></tr></table></figure>
-<ol>
-<li>hmset  键  字段1  值1  字段2  值2 …<blockquote>
-<p>   在一个键中，批量设置字段</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; hmset user2 name liming age 36 interest AV-Girl</div><div class="line">OK</div></pre></td></tr></table></figure>
-<ol>
-<li>hget 键 字段<blockquote>
-<p>   获取键中的一个指定字段的值</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; hget user1 name1</div><div class="line">&quot;lm&quot;</div><div class="line">127.0.0.1:6379&gt; hget user2 interest</div><div class="line">&quot;AV-Girl&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>hmget 键 字段1 [字段2…]<blockquote>
-<p>   获取键中一个或多个字段的值</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; hmget user2 name age interest</div><div class="line">1) &quot;liming&quot;</div><div class="line">2) &quot;36&quot;</div><div class="line">3) &quot;AV-Girl&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>hexists ：<blockquote>
-<p>判断指定的字段是否存在于键中</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; HEXISTS user2 age</div><div class="line">(integer) 1							//存在</div><div class="line">127.0.0.1:6379&gt; HEXISTS user1 age</div><div class="line">(integer) 0							//不存在</div></pre></td></tr></table></figure>
-<ol>
-<li>hlen ：获取键中的字段数量</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; hlen user2</div><div class="line">(integer) 3							//user2键中有3个字段</div></pre></td></tr></table></figure>
-<ol>
-<li>hkeys ：获取键中的所有字段名</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; hkeys user2</div><div class="line">1) &quot;name&quot;</div><div class="line">2) &quot;age&quot;</div><div class="line">3) &quot;interest&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>hvals：获取键中所有字段的值</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; hvals user2</div><div class="line">1) &quot;liming&quot;</div><div class="line">2) &quot;36&quot;</div><div class="line">3) &quot;AV-Girl&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>hgetall ：获取键中的所有字段和值</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; hgetall user2</div><div class="line">1) &quot;name&quot;</div><div class="line">2) &quot;liming&quot;</div><div class="line">3) &quot;age&quot;</div><div class="line">4) &quot;36&quot;</div><div class="line">5) &quot;interest&quot;</div><div class="line">6) &quot;AV-Girl&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>hincrby：将键中指定字段的值，增加指定的数字</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; hincrby user2 age 5</div><div class="line">(integer) 41</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; HINCRBY user2 name 5</div><div class="line">(error) ERR hash value is not an integer	//值不是数字的字段，不能加数字</div></pre></td></tr></table></figure>
-<ol>
-<li>hdel 键 字段1 字段2<blockquote>
-<p>   删除键中的一个或多个字段</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; hdel user2 age interest</div><div class="line">(integer) 2</div><div class="line">127.0.0.1:6379&gt; hkeys user2</div><div class="line">1) &quot;name&quot;</div><div class="line">	//删除一个键，还是要使用del命令</div></pre></td></tr></table></figure>
-<h2 id="list类型（双向链表结构）"><a href="#list类型（双向链表结构）" class="headerlink" title="list类型（双向链表结构）"></a>list类型（双向链表结构）</h2><p>List是一个链表结构，主要功能是push、pop、获取一个范围的所有值等等，操作中key理解为链表的名字。Redis的list类型其实就是一个每个子元素都是string类型的双向链表。列表允许有重复值</p>
-<ol>
-<li>lpush 键 值1 [值2…]<blockquote>
-<p>从队列左边向队列写入一个或多个值（认为队列的左面为队列头，右边为队列尾）</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; lpush list1 1</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; lpush list1 2</div><div class="line">(integer) 2</div><div class="line">127.0.0.1:6379&gt; lpush list1 3</div><div class="line">(integer) 3</div><div class="line">127.0.0.1:6379&gt; lpush list1 4</div><div class="line">(integer) 4</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; lpush list2 one two three four</div><div class="line">(integer) 4</div></pre></td></tr></table></figure>
-<ol>
-<li>lrange 键 起始下标 终止下标<blockquote>
-<p>   从队列中获取指定的返回值（从队列左边向右获取）<br>下标：</p>
-<ul>
-<li>0代表队列中第一个元素，1代表第二个元素，依次类推</li>
-<li>-1代表队列中最后一个元素，-2代表倒数第二个元素</li>
-</ul>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; LRANGE list1 0 -1</div><div class="line">1) &quot;4&quot;		//4是从左面写入队列的最后一个值，所以在队列的开头</div><div class="line">2) &quot;3&quot;</div><div class="line">3) &quot;2&quot;</div><div class="line">4) &quot;1&quot;		//1是从左面写入队列的第一个值，所以直接放到了队列尾。</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; LRANGE list2 0 -1</div><div class="line">1) &quot;four&quot;</div><div class="line">2) &quot;three&quot;</div><div class="line">3) &quot;two&quot;</div><div class="line">4) &quot;one&quot;</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; LRANGE list1 0 1</div><div class="line">1) &quot;4&quot;</div><div class="line">2) &quot;3&quot;</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; LRANGE list2 -4 3</div><div class="line">1) &quot;four&quot;		//-4代表从队列右边数第四个元素</div><div class="line">2) &quot;three&quot;</div><div class="line">3) &quot;two&quot;</div><div class="line">4) &quot;one&quot;		//3代表从队列左边数第四个元素</div></pre></td></tr></table></figure>
-<ol>
-<li>rpush 键 值1 [值2…]<blockquote>
-<p>   从队列右边向队列写入一个或多个值</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; RPUSH list3 1 2 3 4</div><div class="line">(integer) 4</div><div class="line">127.0.0.1:6379&gt; LRANGE list3 0 -1</div><div class="line">1) &quot;1&quot;		//从队列右边向队列写入值，第一个值就会写到队列的开头</div><div class="line">2) &quot;2&quot;</div><div class="line">3) &quot;3&quot;</div><div class="line">4) &quot;4&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>linsert  键  before|after  原值  新值<blockquote>
-<p>   在队列中指定元素之前或之后插入新值</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; LINSERT list3 before 3 hello</div><div class="line">(integer) 5</div><div class="line">127.0.0.1:6379&gt; LRANGE list3 0 -1</div><div class="line">1) &quot;1&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">3) &quot;hello&quot;</div><div class="line">4) &quot;3&quot;</div><div class="line">5) &quot;4&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>lset  键  下标  新值<blockquote>
-<p>   给队列中指定元素设定新值</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; lset list3 2 &quot;5&quot;</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; LRANGE list3 0 -1</div><div class="line">1) &quot;1&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">3) &quot;5&quot;</div><div class="line">4) &quot;3&quot;</div><div class="line">5) &quot;4&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>lerm  键  n  指定值<blockquote>
-<p>从队列中删除n个值为“指定值”的元素</p>
-<ul>
-<li>n &gt; 0     从队列头向尾删除n个元素</li>
-<li>n &lt; 0     从队列尾向头删除n个元素</li>
-<li>n = 0    删除所有值为“指定值”的元素</li>
-</ul>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; rpush list4 hello 1 hello 2 hello 3 hello</div><div class="line">(integer) 7</div><div class="line">127.0.0.1:6379&gt; lrange list4 0 -1</div><div class="line">1) &quot;hello&quot;</div><div class="line">2) &quot;1&quot;</div><div class="line">3) &quot;hello&quot;</div><div class="line">4) &quot;2&quot;</div><div class="line">5) &quot;hello&quot;</div><div class="line">6) &quot;3&quot;</div><div class="line">7) &quot;hello&quot;</div><div class="line">127.0.0.1:6379&gt; lrem list4 -2 hello			//删除后两个hello</div><div class="line">(integer) 2</div><div class="line">127.0.0.1:6379&gt; lrange list4 0 -1</div><div class="line">1) &quot;hello&quot;</div><div class="line">2) &quot;1&quot;</div><div class="line">3) &quot;hello&quot;</div><div class="line">4) &quot;2&quot;</div><div class="line">5) &quot;3&quot;</div><div class="line">127.0.0.1:6379&gt; lrem list4 0 hello			//删除所有hello</div><div class="line">(integer) 2</div><div class="line">127.0.0.1:6379&gt; lrange list4 0 -1</div><div class="line">1) &quot;1&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">3) &quot;3&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>ltrim  键  起始下标  结束下标<blockquote>
-<p>   修剪队列，让队列只保留指定指定范围内的元素</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; RPUSH list5 1 2 3 4</div><div class="line">(integer) 4</div><div class="line">127.0.0.1:6379&gt; ltrim list5 1 2</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; lrange list5 0 -1</div><div class="line">1) &quot;2&quot;</div><div class="line">2) &quot;3&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>lpop  键<blockquote>
-<p>   从指定的队列左面移除一个值</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; lrange list1 0 -1</div><div class="line">1) &quot;4&quot;</div><div class="line">2) &quot;3&quot;</div><div class="line">3) &quot;2&quot;</div><div class="line">4) &quot;1&quot;</div><div class="line">127.0.0.1:6379&gt; lpop list1</div><div class="line">&quot;4&quot;</div><div class="line">127.0.0.1:6379&gt; lrange list1 0 -1</div><div class="line">1) &quot;3&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">3) &quot;1&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>rpop  键<blockquote>
-<p>   从指定队列的右边移除一个值</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; lrange list1 0 -1</div><div class="line">1) &quot;3&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">3) &quot;1&quot;</div><div class="line">127.0.0.1:6379&gt; rpop list1</div><div class="line">&quot;1&quot;</div><div class="line">127.0.0.1:6379&gt; lrange list1 0 -1</div><div class="line">1) &quot;3&quot;</div><div class="line">2) &quot;2&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>rpoplpush  源队列  目标队列<blockquote>
-<p>   移除源队列的最后一个元素，并把该元素写入目标队列</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; lrange list1 0 -1</div><div class="line">1) &quot;3&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">127.0.0.1:6379&gt; lrange list5 0 -1</div><div class="line">1) &quot;2&quot;</div><div class="line">2) &quot;3&quot;</div><div class="line">127.0.0.1:6379&gt; RPOPLPUSH list1 list5</div><div class="line">&quot;2&quot;</div><div class="line">127.0.0.1:6379&gt; lrange list1 0 -1</div><div class="line">1) &quot;3&quot;</div><div class="line">127.0.0.1:6379&gt; lrange list5 0 -1</div><div class="line">1) &quot;2&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">3) &quot;3&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>lindex  键  下标<blockquote>
-<p>   获取队列中指定下标元素的值</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; lrange list2 0 -1</div><div class="line">1) &quot;four&quot;</div><div class="line">2) &quot;three&quot;</div><div class="line">3) &quot;two&quot;</div><div class="line">4) &quot;one&quot;</div><div class="line">127.0.0.1:6379&gt; lindex list2 1</div><div class="line">&quot;three&quot;</div><div class="line">127.0.0.1:6379&gt; lindex list2 3</div><div class="line">&quot;one&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>llen  键<blockquote>
-<p>   获得队列的长度</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; llen list2</div><div class="line">(integer) 4</div></pre></td></tr></table></figure>
-<h2 id="sets类型和操作"><a href="#sets类型和操作" class="headerlink" title="sets类型和操作"></a>sets类型和操作</h2><p>Set是集合，它是string类型的无序集合。对集合我们可以取并集、交集、差集。通过这些操作我们可以实现社交网站中的好友推荐和blog的tag功能。集合不允许有重复值。</p>
-<ol>
-<li>sadd  键  值1[值2…]<blockquote>
-<p>   添加一个或多个元素到集合中</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; sadd mset1 1</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; sadd mset1 2 3 4</div><div class="line">(integer) 3</div></pre></td></tr></table></figure>
-<ol>
-<li>smembers  键<blockquote>
-<p>   获取集合里面所有的元素</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; smembers mset1</div><div class="line">1) &quot;1&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">3) &quot;3&quot;</div><div class="line">4) &quot;4&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>srem  键  值1[值2…]<blockquote>
-<p>   从集合中删除指定的一个或多个元素</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; srem mset1 3 4</div><div class="line">(integer) 2</div><div class="line">127.0.0.1:6379&gt; smembers mset1</div><div class="line">1) &quot;1&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line"></div><div class="line">（删除键，依然使用“del 键” 命令）</div></pre></td></tr></table></figure>
-<ol>
-<li>spop  键  <blockquote>
-<p>   随机从集合中删除一个元素，并返回</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; sadd mset2 4 5 6 7 8</div><div class="line">(integer) 5</div><div class="line">127.0.0.1:6379&gt; spop mset2</div><div class="line">&quot;4&quot;</div><div class="line">127.0.0.1:6379&gt; spop mset2</div><div class="line">&quot;5&quot;</div><div class="line">127.0.0.1:6379&gt; spop mset2</div><div class="line">&quot;8&quot;</div><div class="line">127.0.0.1:6379&gt; smembers mset2</div><div class="line">1) &quot;6&quot;</div><div class="line">2) &quot;7&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>srandmember  键  值<blockquote>
-<p>   随机返回集合中一个元素，但不删除</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; sadd mset3 4 5 6 7 8</div><div class="line">(integer) 5</div><div class="line">127.0.0.1:6379&gt; srandmember mset3</div><div class="line">&quot;5&quot;</div><div class="line">127.0.0.1:6379&gt; srandmember mset3</div><div class="line">&quot;5&quot;</div><div class="line">127.0.0.1:6379&gt; srandmember mset3</div><div class="line">&quot;4&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>scard  键<blockquote>
-<p>   获取集合里面元素个数</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; scard mset1</div><div class="line">(integer) 2</div></pre></td></tr></table></figure>
-<ol>
-<li>sismember  键  值<blockquote>
-<p>   确定一个指定的值是否是集合中的元素</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; smembers mset1</div><div class="line">1) &quot;1&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">127.0.0.1:6379&gt; sismember mset1 3</div><div class="line">(integer) 0</div><div class="line">127.0.0.1:6379&gt; sismember mset1 1</div><div class="line">(integer) 1</div></pre></td></tr></table></figure>
-<ol>
-<li>sdiff  集合1  集合2<blockquote>
-<p>   返回集合1与集合2的差集。以集合1为主</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; sadd mset4 1 2 3</div><div class="line">(integer) 3</div><div class="line">127.0.0.1:6379&gt; sadd mset5 2 3 4</div><div class="line">(integer) 3</div><div class="line">127.0.0.1:6379&gt; sdiff mset4 mset5</div><div class="line">1) &quot;1&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>sdiffstore  新集合  集合1  集合2<blockquote>
-<p>   返回集合1和集合2的差集，并把结果存入新集合</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; sadd mset4 1 2 3</div><div class="line">(integer) 3</div><div class="line">127.0.0.1:6379&gt; sadd mset5 2 3 4</div><div class="line">(integer) 3</div><div class="line">127.0.0.1:6379&gt; sdiffstore mset6 mset5 mset4</div><div class="line">(integer) 1				//返回值为1 ，证明成功</div><div class="line">127.0.0.1:6379&gt; smembers mset6</div><div class="line">1) &quot;4&quot;					//结果存入了mset6，值为4</div></pre></td></tr></table></figure>
-<ol>
-<li>sinter  集合1  集合2<blockquote>
-<p>   获得两个集合的交集</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; smembers mset4</div><div class="line">1) &quot;1&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">3) &quot;3&quot;</div><div class="line">127.0.0.1:6379&gt; smembers mset5</div><div class="line">1) &quot;2&quot;</div><div class="line">2) &quot;3&quot;</div><div class="line">3) &quot;4&quot;</div><div class="line">127.0.0.1:6379&gt; sinter mset4 mset5</div><div class="line">1) &quot;2&quot;</div><div class="line">2) &quot;3&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>sinterstore  新集合  集合1  集合2<blockquote>
-<p>   获得集合1和集合2的交集，并把结果存入新集合</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; sinterstore mset7 mset4 mset5</div><div class="line">(integer) 2</div><div class="line">127.0.0.1:6379&gt; smembers mset7</div><div class="line">1) &quot;2&quot;</div><div class="line">2) &quot;3&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>sunion  集合1  集合2<blockquote>
-<p>   获得指定集合的并集</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; sunion mset4 mset5</div><div class="line">1) &quot;1&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">3) &quot;3&quot;</div><div class="line">4) &quot;4&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>sunionstore  新集合  集合1  集合2<blockquote>
-<p>   获得指定集合的并集，并把结果保存如新集合</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; sunionstore mset8 mset4 mset5</div><div class="line">(integer) 4</div><div class="line">127.0.0.1:6379&gt; smembers mset8</div><div class="line">1) &quot;1&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">3) &quot;3&quot;</div><div class="line">4) &quot;4&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>smove  源集合  目标集合  值<blockquote>
-<p>   将指定的值从源集合移动到目标集合</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; smembers mset1</div><div class="line">1) &quot;1&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">127.0.0.1:6379&gt; smembers mset2</div><div class="line">1) &quot;6&quot;</div><div class="line">2) &quot;7&quot;</div><div class="line">127.0.0.1:6379&gt; smove mset1 mset2 1</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; smembers mset1</div><div class="line">1) &quot;2&quot;</div><div class="line">127.0.0.1:6379&gt; smembers mset2</div><div class="line">1) &quot;1&quot;</div><div class="line">2) &quot;6&quot;</div><div class="line">3) &quot;7&quot;</div></pre></td></tr></table></figure>
-<h2 id="sorted-sets类型和操作"><a href="#sorted-sets类型和操作" class="headerlink" title="sorted sets类型和操作"></a>sorted sets类型和操作</h2><p>sorted set是set的一个升级版本，它给集合中每个元素都定义一个分数，集合中的元素按照其分数排序。也不允许有重复值</p>
-<ol>
-<li>zadd  键  分数1  值1  [分数2  值2…]<blockquote>
-<p>该命令添加指定的成员到key对应的有序集合中，每个成员都有一个分数。你可以指定多个分数/成员组合。如果一个指定的成员已经在对应的有序集合中了，那么其分数就会被更新成最新的，并且该成员会重新调整到正确的位置，以确保集合有序。分数的值必须是一个表示数字的字符串，并且可以是double类型的浮点数。</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zadd zset1 1 lm 2 sc 3 glf</div><div class="line">(integer) 3</div><div class="line">127.0.0.1:6379&gt; zadd zset1 1 ymj</div><div class="line">(integer) 1</div></pre></td></tr></table></figure>
-<ol>
-<li>zrange  集合  起始下标  截止下标  [withscores]<blockquote>
-<p>   返回有序集合中，指定区间内的成员。其中成员按照score（分数）值从小到大排序。具有相同score值的成员按照字典顺序来排列。</p>
-<p>   起始下标与截止下标和list类型一致：</p>
-<ul>
-<li>0代表队列中第一个元素，1代表第二个元素，依次类推</li>
-<li><p>-1代表队列中最后一个元素，-2代表倒数第二个元素</p>
-<p>withscores：返回集合中元素的同时，返回其分数（score）</p>
-</li>
-</ul>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zrange zset1 0 -1 withscores</div><div class="line">1) &quot;lm&quot;</div><div class="line">2) &quot;1&quot;</div><div class="line">3) &quot;ymj&quot;</div><div class="line">4) &quot;1&quot;</div><div class="line">5) &quot;sc&quot;</div><div class="line">6) &quot;2&quot;</div><div class="line">7) &quot;glf&quot;</div><div class="line">8) &quot;3&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>zrevrange  集合  起始下标  截止下标  [withscores]<blockquote>
-<p>   返回有序集合中，指定区间的成员。其成员按照score从大到小来排列。</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zrevrange zset1 0 -1 withscores</div><div class="line">1) &quot;glf&quot;		//下标为0</div><div class="line">2) &quot;3&quot;</div><div class="line">3) &quot;sc&quot;			//下标为1</div><div class="line">4) &quot;2&quot;</div><div class="line">5) &quot;ymj&quot;		//下标为2</div><div class="line">6) &quot;1&quot;</div><div class="line">7) &quot;lm&quot;			//下标为3</div><div class="line">8) &quot;1&quot;</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; zrevrange zset1 1 2 withscores		//查看集合中下标是1-2的值</div><div class="line">1) &quot;sc&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">3) &quot;ymj&quot;</div><div class="line">4) &quot;1&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>zrangebyscore  集合  起始分数  截止分数  withscores<blockquote>
-<p>   返回有序集合中score（分数）在指定区间的值</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zadd zset2 1 one 2 two 3 three 4 four</div><div class="line">(integer) 4</div><div class="line">127.0.0.1:6379&gt; zrange zset2 0 -1 withscores		//按照下标区间返回值</div><div class="line">1) &quot;one&quot;</div><div class="line">2) &quot;1&quot;</div><div class="line">3) &quot;two&quot;</div><div class="line">4) &quot;2&quot;</div><div class="line">5) &quot;three&quot;</div><div class="line">6) &quot;3&quot;</div><div class="line">7) &quot;four&quot;</div><div class="line">8) &quot;4&quot;</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; zrangebyscore zset2 2 3 withscores	//按照分数区间返回值</div><div class="line">1) &quot;two&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">3) &quot;three&quot;</div><div class="line">4) &quot;3&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>zrem  集合  值1  [值2…]<blockquote>
-<p>   删除有序集合中指定的值</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zrem zset1 lm</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; zrange zset1 0 -1 withscores</div><div class="line">1) &quot;ymj&quot;</div><div class="line">2) &quot;1&quot;</div><div class="line">3) &quot;sc&quot;</div><div class="line">4) &quot;2&quot;</div><div class="line">5) &quot;glf&quot;</div><div class="line">6) &quot;3&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>zincrby  集合  增量  值<blockquote>
-<p>   给有序集合中指定值的成员的分数（score）值加上增量（increment）。如果集合中没有这个值，则给添加一个分数是increment的值。</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zincrby zset1 2 ymj		//如果值存在，则在其分数上加增量</div><div class="line">&quot;3&quot;</div><div class="line">127.0.0.1:6379&gt; zrange zset1 0 -1 withscores</div><div class="line">1) &quot;sc&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">3) &quot;glf&quot;</div><div class="line">4) &quot;3&quot;</div><div class="line">5) &quot;ymj&quot;</div><div class="line">6) &quot;3&quot;</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; zincrby zset1 4 bro		//如果值不存在，则加入值。并指定分数为增&quot;4&quot;										量</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; zrange zset1 0 -1 withscores</div><div class="line">1) &quot;sc&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">3) &quot;glf&quot;</div><div class="line">4) &quot;3&quot;</div><div class="line">5) &quot;ymj&quot;</div><div class="line">6) &quot;3&quot;</div><div class="line">7) &quot;bro&quot;</div><div class="line">8) &quot;4&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>zrank  集合  值<blockquote>
-<p>   返回有序集合中指定值的下标。值按照score从小到大排序</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zrank zset1 sc</div><div class="line">(integer) 0</div><div class="line">127.0.0.1:6379&gt; zrank zset1 ymj</div><div class="line">(integer) 2</div></pre></td></tr></table></figure>
-<ol>
-<li>zrevrank  集合  值<blockquote>
-<p>   返回有序集合中指定值的下标，值按照score从大到小排序</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zrange zset1 0 -1 withscores</div><div class="line">1) &quot;sc&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">3) &quot;glf&quot;</div><div class="line">4) &quot;3&quot;</div><div class="line">5) &quot;ymj&quot;</div><div class="line">6) &quot;3&quot;</div><div class="line">7) &quot;bro&quot;</div><div class="line">8) &quot;4&quot;</div><div class="line">127.0.0.1:6379&gt; zrevrank zset1 ymj</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; zrevrank zset1 sc</div><div class="line">(integer) 3</div></pre></td></tr></table></figure>
-<ol>
-<li>zcount  集合  起始分数  截止分数<blockquote>
-<p>   返回有序集合中，score值在起始分数与截止分数之间的个数</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zrange zset2 0 -1 withscores</div><div class="line">1) &quot;one&quot;</div><div class="line">2) &quot;1&quot;</div><div class="line">3) &quot;two&quot;</div><div class="line">4) &quot;2&quot;</div><div class="line">5) &quot;three&quot;</div><div class="line">6) &quot;3&quot;</div><div class="line">7) &quot;four&quot;</div><div class="line">8) &quot;4&quot;</div><div class="line"></div><div class="line">127.0.0.1:6379&gt; zcount zset2 2 4</div><div class="line">(integer) 3</div></pre></td></tr></table></figure>
-<ol>
-<li>zcard  集合<blockquote>
-<p>   返回有序集合元素的个数</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zcard zset2</div><div class="line">(integer) 4</div></pre></td></tr></table></figure>
-<ol>
-<li>zremrangebyrank  集合  起始下标  结束下标<blockquote>
-<p>   删除有序集合中，下标在指定区间的元素</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zrange zset2 0 -1 withscores</div><div class="line">1) &quot;one&quot;</div><div class="line">2) &quot;1&quot;</div><div class="line">3) &quot;two&quot;</div><div class="line">4) &quot;2&quot;</div><div class="line">5) &quot;three&quot;</div><div class="line">6) &quot;3&quot;</div><div class="line">7) &quot;four&quot;</div><div class="line">8) &quot;4&quot;</div><div class="line">127.0.0.1:6379&gt; ZREMRANGEBYRANK zset2 0 1</div><div class="line">(integer) 2</div><div class="line">127.0.0.1:6379&gt; zrange zset2 0 -1 withscores</div><div class="line">1) &quot;three&quot;</div><div class="line">2) &quot;3&quot;</div><div class="line">3) &quot;four&quot;</div><div class="line">4) &quot;4&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>zremrangebyscore  集合  起始分数  截止分数<blockquote>
-<p>删除有序集合中，分数在指定区间的元素</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zrange zset1 0 -1 withscores</div><div class="line">1) &quot;sc&quot;</div><div class="line">2) &quot;2&quot;</div><div class="line">3) &quot;glf&quot;</div><div class="line">4) &quot;3&quot;</div><div class="line">5) &quot;ymj&quot;</div><div class="line">6) &quot;3&quot;</div><div class="line">7) &quot;bro&quot;</div><div class="line">8) &quot;4&quot;</div><div class="line">127.0.0.1:6379&gt; ZREMRANGEBYSCORE zset1 2 3</div><div class="line">(integer) 3</div><div class="line">127.0.0.1:6379&gt; zrange zset1 0 -1 withscores</div><div class="line">1) &quot;bro&quot;</div><div class="line">2) &quot;4&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>zinterstore  新集合  取交集的集合个数  集合1 集合2<blockquote>
-<p>   取集合1和集合2的交集，并把结果保存到新集合中。在计算交集之前，需要指定计算交集的集合的个数。交集中，值的分数是多个集合中分数的和。</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zadd zset1 1 one 2 two 3 three 4 four</div><div class="line">(integer) 4</div><div class="line">127.0.0.1:6379&gt; zadd zset2  2 two 3 three 4 four 5 five</div><div class="line">(integer) 4</div><div class="line">127.0.0.1:6379&gt; ZINTERSTORE zset3 2 zset1 zset2 	</div><div class="line">//有两个集合计算交集，所以集合个数是2</div><div class="line">(integer) 3</div><div class="line">127.0.0.1:6379&gt; ZRANGE zset3 0 -1 withscores</div><div class="line">1) &quot;two&quot;</div><div class="line">2) &quot;4&quot;				//分数是两个集合中two值的分数和</div><div class="line">3) &quot;three&quot;</div><div class="line">4) &quot;6&quot;</div><div class="line">5) &quot;four&quot;</div><div class="line">6) &quot;8&quot;</div></pre></td></tr></table></figure>
-<ol>
-<li>zunionstore  新集合  取并集的集合个数  集合1 集合2<blockquote>
-<p>   取集合1和集合2的并集，并把结果保存到新集合中。在计算并集之前，需要指定计算并集的集合的个数。并集中，值的分数是多个集合中分数的和。</p>
-</blockquote>
-</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; zadd zset1 1 one 2 two 3 three 4 four</div><div class="line">(integer) 4</div><div class="line">127.0.0.1:6379&gt; zadd zset2  2 two 3 three 4 four 5 five</div><div class="line">(integer) 4</div><div class="line">127.0.0.1:6379&gt; ZUNIONSTORE zset4 2 zset1 zset2</div><div class="line">(integer) 5</div><div class="line">127.0.0.1:6379&gt; ZRANGE zset4 0 -1 withscores</div><div class="line"> 1) &quot;one&quot;</div><div class="line"> 2) &quot;1&quot;</div><div class="line"> 3) &quot;two&quot;</div><div class="line"> 4) &quot;4&quot;</div><div class="line"> 5) &quot;five&quot;</div><div class="line"> 6) &quot;5&quot;</div><div class="line"> 7) &quot;three&quot;</div><div class="line"> 8) &quot;6&quot;</div><div class="line"> 9) &quot;four&quot;</div><div class="line">10) &quot;8&quot;</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Redis共有5种数据类型&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;string(字符串)&lt;/li&gt;
-&lt;li&gt;hash(哈希表)&lt;/li&gt;
-&lt;li&gt;list(双向队列)&lt;/li&gt;
-&lt;li&gt;set(集合)&lt;/li&gt;
-&lt;li&gt;zset(有序集合)&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
-    
-    
-      <category term="Redis" scheme="https://weizhimiao.github.io/tags/Redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Redis高级应用</title>
-    <link href="https://weizhimiao.github.io/2016/09/27/Redis%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8/"/>
-    <id>https://weizhimiao.github.io/2016/09/27/Redis高级应用/</id>
-    <published>2016-09-27T12:30:00.000Z</published>
-    <updated>2016-10-07T14:00:05.000Z</updated>
-    
-    <content type="html"><![CDATA[<ul>
-<li>给redis服务器设置密码</li>
-<li>持久化</li>
-<li>主从备份</li>
-</ul>
-<a id="more"></a>
-<h2 id="给redis服务器设置密码"><a href="#给redis服务器设置密码" class="headerlink" title="给redis服务器设置密码"></a>给redis服务器设置密码</h2><p>1、 修改redis服务器的配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@localhost redis]# vi /usr/local/redis/etc/redis.conf</div><div class="line"># requirepass foobared					（340行）</div><div class="line">#找到这句话，requirepass后面就是登录redis的密码，改为</div><div class="line">requirepass flzx_3QC</div></pre></td></tr></table></figure></p>
-<p>2、 重启redis<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost redis]# pkill  redis</div><div class="line">[root@localhost redis]# bin/redis-server  /usr/local/redis/etc/redis.conf</div></pre></td></tr></table></figure></p>
-<p>3、 连接redis<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@localhost redis]# /usr/local/redis/bin/redis-cli</div><div class="line">127.0.0.1:6379&gt; keys *						//可以正常连接redis</div><div class="line">(error) NOAUTH Authentication required.		//但因为没有密码，提示操作拒绝</div><div class="line">127.0.0.1:6379&gt; auth flzx_3QC				//利用auth命令输入密码</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; keys *						//才可以正常使用</div><div class="line">1) &quot;name&quot;</div></pre></td></tr></table></figure></p>
-<p>或<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost redis]# /usr/local/redis/bin/redis-cli -a flzx_3QC</div></pre></td></tr></table></figure></p>
-<p>在登录的同时指定密码</p>
-<p><strong>注意历史命令中会明文保存此密码</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; keys *</div><div class="line">1) &quot;name&quot;</div></pre></td></tr></table></figure></p>
-<h2 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h2><p>Redis 提供了不同级别的持久化方式:</p>
-<h3 id="RDB持久化方式"><a href="#RDB持久化方式" class="headerlink" title="RDB持久化方式"></a>RDB持久化方式</h3><blockquote>
-<p>RDB持久化方式能够在指定的时间间隔能对你的数据进行快照存储。是默认的持久化方式。这种方式是将内存中数据以快照的方式写入到二进制文件中，默认的文件名为dump.rdb。这种持久化方式被称为快照 snapshotting（快照）。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">save 900 1		</div><div class="line">#900秒内，最少有1个键被改动。则自动保存一次数据集</div><div class="line">save 300 10</div><div class="line">#300秒内，最少有10个键被改动。则自动保存一次数据集</div><div class="line">save 60 10000</div><div class="line">#60秒内，最少有10000个键被改动。则自动保存一次数据集</div></pre></td></tr></table></figure>
-<p>实验：验证dump.rdb数据保存文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# ls</div><div class="line">anaconda-ks.cfg  dump.rdb  install.log  install.log.syslog</div></pre></td></tr></table></figure></p>
-<p>root目录下有dump.rdb文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# /usr/local/redis/bin/redis-server  \</div><div class="line">/usr/local/redis/etc/redis.conf</div></pre></td></tr></table></figure></p>
-<p>在root目录中启动redis<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# /usr/local/redis/bin/redis-cli</div><div class="line">127.0.0.1:6379&gt; auth 123</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; keys *</div><div class="line">1) &quot;name2&quot;</div><div class="line">2) &quot;name&quot;</div><div class="line">3) &quot;name1&quot;</div></pre></td></tr></table></figure></p>
-<p>0库中有键<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# cd /usr/local/redis/</div><div class="line">[root@localhost redis]# pkill -9 redis</div><div class="line">[root@localhost redis]# /usr/local/redis/bin/redis-server  \</div><div class="line">/usr/local/redis/etc/redis.conf</div></pre></td></tr></table></figure></p>
-<p>在/usr/local/redis/库中重启redis，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@localhost redis]# ls</div><div class="line">[root@localhost redis]# /usr/local/redis/bin/redis-cli</div><div class="line">127.0.0.1:6379&gt; keys *</div><div class="line">(empty list or set)</div></pre></td></tr></table></figure></p>
-<p>0库中没有键<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; save</div><div class="line">OK</div></pre></td></tr></table></figure></p>
-<p>保存<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; quit</div><div class="line">[root@localhost redis]# ls</div><div class="line">bin  dump.rdb  etc</div></pre></td></tr></table></figure></p>
-<p>在redis目录中也生成dump.rdb文件</p>
-<p><strong>结论：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@localhost redis]# vi /usr/local/redis/etc/redis.conf</div><div class="line">dir ./</div></pre></td></tr></table></figure></p>
-<p>定义了dump.rdb数据库文件保存在当前位置。所以每次重启redis服务的所在位置不同，导致生成新的dump.rdb文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dir /usr/local/redis/</div></pre></td></tr></table></figure></p>
-<p>将数据库保存目录写为绝对路径（注意只能是目录）</p>
-<h3 id="使用AOF"><a href="#使用AOF" class="headerlink" title="使用AOF"></a>使用AOF</h3><blockquote>
-<p>使用AOF会让你的Redis更加耐久: 你可以使用不同的持久化策略：无备份,每秒备份,每次写的时候备份。使用默认的每秒备份策略,Redis的性能依然很好(备份是由后台线程进行处理的,主线程会尽力处理客户端请求),一旦出现故障，你最多丢失1秒的数据。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">appendonly no</div><div class="line">#默认不使用AOF持久化（450行）</div><div class="line"></div><div class="line">appendonly yes</div><div class="line">#开启AOF持久化</div><div class="line"># appendfsync always		#有写操作，就马上写入磁盘。效率最慢，到那时最按</div><div class="line">appendfsync everysec		#默认，每秒钟写入磁盘一次。</div><div class="line"># appendfsync no			#不进行AOF备份，将数据交给操作系统处理。最快，最不安全</div></pre></td></tr></table></figure>
-<h2 id="主从备份"><a href="#主从备份" class="headerlink" title="主从备份"></a>主从备份</h2><p>Redis主从复制特点：</p>
-<ul>
-<li>a.Master可以拥有多个slave</li>
-<li>b.多个slave可以连接同一个master外，还可以连接到其它slave</li>
-<li>c.主从复制不会阻塞master，在同步数据时，master可以继续处理client请求</li>
-<li>d.提高系统的伸缩性</li>
-</ul>
-<p>Redis主从复制过程：</p>
-<ul>
-<li>a.Slave与master建立连接，发送sync同步命令</li>
-<li>b.Master会启动一个后台进程，将数据库快照保存到文件中，同时master主进程会开始收集新的写命令并缓存。</li>
-<li>c.后台完成保存后，就将此文件发送给slave</li>
-<li>d.Slave将此文件保存到硬盘上</li>
-</ul>
-<h3 id="不同服务器配置主从"><a href="#不同服务器配置主从" class="headerlink" title="不同服务器配置主从"></a>不同服务器配置主从</h3><ol>
-<li>克隆一台linux作为从服务器<br>克隆机需要进行如下操作：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">①	vi /etc/sysconfig/network-scripts/ifcfg-eth0</div><div class="line">	删除MAC地址行</div><div class="line">②	rm  -rf  /etc/udev/rules.d/70-persistent-net.rules</div><div class="line">	删除网卡和MAC地址绑定文件</div><div class="line">③	注意关闭防火墙和SELinux</div><div class="line">④	重启动系统</div></pre></td></tr></table></figure>
-<ol>
-<li>在从服务器上配置</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# vi /usr/local/redis/etc/redis.conf</div><div class="line"># slaveof &lt;masterip&gt; &lt;masterport&gt;</div><div class="line">#把此句开启，并指定主服务器ip和端口	（196行）</div><div class="line"></div><div class="line">masterauth flzx_3QC</div><div class="line">#设定主服务器密码</div></pre></td></tr></table></figure>
-<ol>
-<li>重启从服务器上redis</li>
-</ol>
-<h3 id="同一台服务器实现主从配置"><a href="#同一台服务器实现主从配置" class="headerlink" title="同一台服务器实现主从配置"></a>同一台服务器实现主从配置</h3><p>这里我们以本机配置 1台Master + 1台Slave 为例子,其中:</p>
-<blockquote>
-<ul>
-<li>Master IP:127.0.0.1  PORT:6379</li>
-<li>Slave1 IP:127.0.0.1  PORT:63791</li>
-</ul>
-</blockquote>
-<ol>
-<li>复制出从服务器目录</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# cp -r /usr/local/redis/ /usr/local/redis-slave1</div></pre></td></tr></table></figure>
-<ol>
-<li>修改redis-slave1配置文件</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# vi /usr/local/redis-slave1/etc/redis.conf</div><div class="line">pidfile /usr/local/redis-slave1/redis.pid</div><div class="line">#指定pid文件</div><div class="line">port 63791</div><div class="line">#指定端口号</div><div class="line">dir /usr/local/redis-slave1/</div><div class="line">#指定服务器目录</div><div class="line">slaveof 127.0.0.1 6379</div><div class="line">#指定主服务器IP和端口</div><div class="line">masterauth flzx_3QC</div><div class="line">#指定主服务器密码</div></pre></td></tr></table></figure>
-<ol>
-<li>启动服务</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">/usr/local/redis-slave1/bin/redis-server /usr/local/redis-slave1/etc/redis.conf</div><div class="line">#启动从服务器，并调用从服务器配置文件</div><div class="line"></div><div class="line">[root@localhost ~]# netstat -tlun</div><div class="line">tcp     0      0 :::6379                     :::*                        LISTEN      </div><div class="line">tcp     0      0 :::63791                    :::*                        LISTEN</div><div class="line">#验证两个端口是否都启动</div></pre></td></tr></table></figure>
-<ol>
-<li>验证</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# /usr/local/redis/bin/redis-cli -a flzx_3QC   </div><div class="line">#启动主服务器，并建立一个键</div><div class="line">127.0.0.1:6379&gt; set bb 234</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; keys *</div><div class="line">1) &quot;sex&quot;</div><div class="line">2) &quot;aa&quot;</div><div class="line">3) &quot;name&quot;</div><div class="line">4) &quot;age&quot;</div><div class="line">5) &quot;bb&quot;</div><div class="line"></div><div class="line">[root@localhost ~]# /usr/local/redis-slave1/bin/redis-cli -a flzx_3QC -p 63791</div><div class="line">#启动从服务器，发现键已经同步</div><div class="line">127.0.0.1:63791&gt; keys *</div><div class="line">1) &quot;aa&quot;</div><div class="line">2) &quot;sex&quot;</div><div class="line">3) &quot;age&quot;</div><div class="line">4) &quot;name&quot;</div><div class="line">5) &quot;bb&quot;</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;ul&gt;
-&lt;li&gt;给redis服务器设置密码&lt;/li&gt;
-&lt;li&gt;持久化&lt;/li&gt;
-&lt;li&gt;主从备份&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
-    
-    
-      <category term="Redis" scheme="https://weizhimiao.github.io/tags/Redis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Redis安装与管理</title>
-    <link href="https://weizhimiao.github.io/2016/09/27/Redis%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%A1%E7%90%86/"/>
-    <id>https://weizhimiao.github.io/2016/09/27/Redis安装与管理/</id>
-    <published>2016-09-27T12:30:00.000Z</published>
-    <updated>2016-10-07T13:00:05.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>redis是一个key-value存储系统。<br>和Memcached类似，它支持存储的value类型相对更多，<br>包括string(字符串)、list(链表)、set(集合)和zset(有序集合)。<br>这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。</p>
-<p>在此基础上，redis支持各种不同方式的排序。与memcached一样，为了保证效率，数据都是缓存在内存中。<br>区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。</p>
-<p>Redis 是一个高性能的key-value数据库。<br> redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部 分场合可以对关系数据库起到很好的补充作用。<br>它提供了Python，Ruby，Erlang，PHP客户端，使用很方便。</p>
-<ul>
-<li><p>Memcache</p>
-<blockquote>
-<p>内存缓存服务，缓存数据保存在内存中，一旦断电重启，数据将丢失</p>
-</blockquote>
-</li>
-<li><p>mangoDB</p>
-<blockquote>
-<p>开源免费的NOSQL 数据库，提供数据持久化服务，以文档的形式提供数据组织方式，而不是表</p>
-</blockquote>
-</li>
-<li><p>Redis</p>
-<blockquote>
-<p>开源免费的 NOSQL数据库，提供数据持久化服务，即能实现内存缓存服务，也能提供数据结构服务取代MySQL 自建索引用来弥补关系型数据的不足</p>
-</blockquote>
-</li>
-</ul>
-<a id="more"></a>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="默认安装位置"><a href="#默认安装位置" class="headerlink" title="默认安装位置"></a>默认安装位置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# wget http://download.redis.io/releases/redis-2.8.6.tar.gz</div><div class="line">[root@localhost ~]# tar xzf redis-2.8.6.tar.gz</div><div class="line">[root@localhost ~]# cd redis-2.8.6</div><div class="line">[root@localhost ~]# make</div><div class="line">#不指定安装位置，则会把redis的可执行文件安装到  redis-2.8.6/src/目录下</div></pre></td></tr></table></figure>
-<h3 id="指定安装位置"><a href="#指定安装位置" class="headerlink" title="指定安装位置"></a>指定安装位置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# tar xzf redis-2.8.6.tar.gz</div><div class="line">[root@localhost ~]# cd redis-2.8.6</div><div class="line">[root@localhost ~]# make</div><div class="line">[root@localhost ~]# make PREFIX=/usr/local/redis install</div><div class="line">#指定安装位置，如果没有指定安装位置PREFIX=/usr/local/redis，则make install会把redis安装到/usr/local/bin/目录下</div><div class="line">[root@localhost ~]# mkdir /usr/local/redis/etc</div><div class="line">[root@localhost ~]# cp /root/redis-2.8.6/redis.conf /usr/local/redis/etc/</div></pre></td></tr></table></figure>
-<h3 id="安装的可执行文件的作用"><a href="#安装的可执行文件的作用" class="headerlink" title="安装的可执行文件的作用"></a>安装的可执行文件的作用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">redis-server           	服务器端</div><div class="line">redis-cli              	客户端</div><div class="line">redis-benchmark       	调试</div><div class="line">redis-check-dump      	数据导出</div><div class="line">redis-check-aof        	数据导入</div></pre></td></tr></table></figure>
-<h2 id="启动与关闭"><a href="#启动与关闭" class="headerlink" title="启动与关闭"></a>启动与关闭</h2><h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>路径<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/redis-server</div></pre></td></tr></table></figure></p>
-<p>配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/redis/bin/redis-server  /usr/local/redis/etc/redis.conf</div></pre></td></tr></table></figure></p>
-<p>注意：需要修改配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost redis]# vi /usr/local/redis/etc/redis.conf</div><div class="line">daemonize no		改为</div><div class="line">daemonize yes    	#后台启动</div></pre></td></tr></table></figure></p>
-<p>端口 6379<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@localhost redis]# /usr/local/redis/bin/redis-cli</div><div class="line">#客户端连接</div><div class="line">	-h  IP	：		连接指定的redis服务器</div><div class="line">	-p  6379：		指定redis服务器的端口</div><div class="line">	-a  密码：		使用密码登录</div><div class="line">	-n 数据库号：	指定连接哪个数据库</div></pre></td></tr></table></figure></p>
-<h3 id="关闭redis"><a href="#关闭redis" class="headerlink" title="关闭redis"></a>关闭redis</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# /usr/local/redis/bin/redis-cli shutdown</div></pre></td></tr></table></figure>
-<p>或<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# pkill  -9 redis</div></pre></td></tr></table></figure></p>
-<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div><div class="line">320</div><div class="line">321</div><div class="line">322</div><div class="line">323</div><div class="line">324</div><div class="line">325</div><div class="line">326</div><div class="line">327</div><div class="line">328</div><div class="line">329</div><div class="line">330</div><div class="line">331</div><div class="line">332</div><div class="line">333</div><div class="line">334</div><div class="line">335</div><div class="line">336</div><div class="line">337</div><div class="line">338</div><div class="line">339</div><div class="line">340</div><div class="line">341</div><div class="line">342</div><div class="line">343</div><div class="line">344</div><div class="line">345</div><div class="line">346</div><div class="line">347</div></pre></td><td class="code"><pre><div class="line">[root@localhost redis]# vi /usr/local/redis/etc/redis.conf</div><div class="line">#是否以后台进程运行，默认为no，如果需要以后台进程运行则改为yes</div><div class="line">daemonize no</div><div class="line"></div><div class="line"></div><div class="line">#如果以后台进程运行的话，就需要指定pid，你可以在此自定义redis.pid文件的位置。</div><div class="line">pidfile /var/run/redis.pid</div><div class="line"></div><div class="line"></div><div class="line">#接受连接的端口号，如果端口是0则redis将不会监听TCP socket连接</div><div class="line">port 6379</div><div class="line"></div><div class="line"># If you want you can bind a single interface, if the bind option is not</div><div class="line"># specified all the interfaces will listen for incoming connections.</div><div class="line">#</div><div class="line"># bind 127.0.0.1</div><div class="line"></div><div class="line"># Specify the path for the unix socket that will be used to listen for</div><div class="line"># incoming connections. There is no default, so Redis will not listen</div><div class="line"># on a unix socket when not specified.</div><div class="line">#</div><div class="line"># unixsocket /tmp/redis.sock</div><div class="line"># unixsocketperm 755</div><div class="line"></div><div class="line"></div><div class="line">#连接超时时间，单位秒。(0 to disable)？</div><div class="line">timeout 300000000</div><div class="line"></div><div class="line"></div><div class="line">#日志级别，默认是verbose（详细），各种日志级别：</div><div class="line">#debug:很详细的信息，适合开发和测试</div><div class="line">#verbose:包含许多不太有用的信息，但比debug要清爽一些（many rarely useful info, but not a mess like #the debug level）</div><div class="line">#notice:比较适合生产环境</div><div class="line">#warning:警告信息</div><div class="line">loglevel verbose</div><div class="line"></div><div class="line"></div><div class="line">#指定log文件的名字，默认是空。stdout会让redis把日志输出到标准输出。但是如果使用stdout而又以后台进#程的方式运行redis，则日志会输出到/dev/null。请改为需要的日志名</div><div class="line">logfile  &quot;&quot;</div><div class="line"></div><div class="line"></div><div class="line">#&apos;syslog-enabled&apos;设置为yes会把日志输出到系统日志，默认是no</div><div class="line"># syslog-enabled no</div><div class="line"></div><div class="line"></div><div class="line">#指定syslog的标示符，如果&apos;syslog-enabled&apos;是no，则这个选项无效。</div><div class="line"># syslog-ident redis</div><div class="line"></div><div class="line"></div><div class="line">#指定syslog 设备（facility), 必须是USER或者LOCAL0到LOCAL7.</div><div class="line"># syslog-facility local0</div><div class="line"></div><div class="line"></div><div class="line">#设置数据库数目。默认的数据库是DB 0。可以通过SELECT &lt;dbid&gt;来选择一个数据库，dbid是[0,&apos;databases&apos;-1]的数字</div><div class="line">databases 16</div><div class="line"></div><div class="line">################## 快照#################################</div><div class="line">#</div><div class="line"># 硬盘上保存数据:</div><div class="line">#</div><div class="line">#   save &lt;seconds&gt; &lt;changes&gt;</div><div class="line">#</div><div class="line">#   &lt;seconds&gt;和&lt;changes&gt;都满足时就会触发数据保存动作。</div><div class="line">#   </div><div class="line">#</div><div class="line">#   以下面的例子来说明：</div><div class="line">#   过了900秒并且有1个key发生了改变 就会触发save动作</div><div class="line">#   过了300秒并且有10个key发生了改变 就会触发save动作</div><div class="line">#   过了60秒并且至少有10000个key发生了改变 也会触发save动作</div><div class="line">#</div><div class="line">#   注意：如果你不想让redis自动保存数据，那就把下面的配置注释掉！</div><div class="line"></div><div class="line">save 900 1</div><div class="line">save 300 10</div><div class="line">save 60 10000</div><div class="line"></div><div class="line"></div><div class="line">#存储数据时是否压缩数据。默认是yes。</div><div class="line">rdbcompression yes</div><div class="line"></div><div class="line"># 保存dump数据的文件名</div><div class="line">dbfilename dump.rdb</div><div class="line"></div><div class="line"># 工作目录.</div><div class="line">#</div><div class="line"># 数据会被持久化到这个目录下的‘dbfilename’指定的文件中。</div><div class="line">#</div><div class="line">#</div><div class="line"># 注意，这里指定的必须是目录而不能是文件。</div><div class="line">dir ./</div><div class="line"></div><div class="line">######## REPLICATION（复制，冗余）#################################</div><div class="line"></div><div class="line"># Master-Slave replication. 使用slaveof把一个 Redis 实例设置成为另一个Redis server的从库（热备）. 注意： #配置只对当前slave有效。</div><div class="line"># 因此可以把某个slave配置成使用不同的时间间隔来保存数据或者监听其他端口等等。</div><div class="line">#命令格式：</div><div class="line"># slaveof &lt;masterip&gt; &lt;masterport&gt;</div><div class="line"></div><div class="line"></div><div class="line">#如果master有密码保护，则在slave与master进行数据同步之前需要进行密码校验，否则master会拒绝slave的请#求。</div><div class="line">#</div><div class="line"># masterauth &lt;master-password&gt;</div><div class="line"></div><div class="line">#当slave丢失与master的连接时，或者slave仍然在于master进行数据同步时（还没有与master保持一致），#slave可以有两种方式来响应客户端请求：</div><div class="line">#</div><div class="line"># 1) 如果 slave-serve-stale-data 设置成 &apos;yes&apos; (the default) slave会仍然响应客户端请求,此时可能会有问题。</div><div class="line">#</div><div class="line"># 2) 如果 slave-serve-stale data设置成  &apos;no&apos;  slave会返回&quot;SYNC with master in progress&quot;这样的错误信息。 但 INFO 和SLAVEOF命令除外。</div><div class="line">#</div><div class="line">slave-serve-stale-data yes</div><div class="line"></div><div class="line">############### 安全 ###################################</div><div class="line"></div><div class="line"># 需要客户端在执行任何命令之前指定 AUTH &lt;PASSWORD&gt;</div><div class="line">#</div><div class="line"># requirepass foobared</div><div class="line"></div><div class="line"># 命令重命名.</div><div class="line">#</div><div class="line">#</div><div class="line"># 例如:</div><div class="line">#</div><div class="line"># rename-command CONFIG b840fc02d524045429941cc15f59e41cb7be6c52</div><div class="line">#</div><div class="line"># 同样可以通过把一个命令重命名为空串来彻底kill掉这个命令，比如：</div><div class="line">#</div><div class="line"># rename-command CONFIG &quot;&quot;</div><div class="line"></div><div class="line">#################### 限制 ####################################</div><div class="line"></div><div class="line"># 设置最大连接数. 默认没有限制,  &apos;0&apos; 意味着不限制.</div><div class="line">#</div><div class="line"># maxclients 128</div><div class="line"></div><div class="line"></div><div class="line">#最大可使用内存。如果超过，Redis会试图删除EXPIRE集合中的keys，具体做法是：Redis会试图释放即将过期的#keys，而保护还有很长生命周期的keys。</div><div class="line">#</div><div class="line">#如果这样还不行，Redis就会报错，但像GET之类的查询请求还是会得到响应。</div><div class="line">#</div><div class="line">#警告：如果你想把Redis视为一个真正的DB的话，那不要设置&lt;maxmemory&gt;,只有你只想把Redis作为cache或者</div><div class="line">#有状态的server（&apos;state&apos; server)时才需要设置。</div><div class="line">#</div><div class="line"># maxmemory &lt;bytes&gt;</div><div class="line"></div><div class="line">#内存清理策略：如果达到了maxmemory，你可以采取如下动作：</div><div class="line">#</div><div class="line"># volatile-lru -&gt; 使用LRU算法来删除过期的set</div><div class="line"># allkeys-lru -&gt; 删除任何遵循LRU算法的key</div><div class="line"># volatile-random -&gt;随机地删除过期set中的key</div><div class="line"># allkeys-&gt;random -&gt; 随机地删除一个key</div><div class="line"># volatile-ttl -&gt; 删除最近即将过期的key（the nearest expire time (minor TTL)）</div><div class="line"># noeviction -&gt; 根本不过期，写操作直接报错</div><div class="line">#</div><div class="line">#</div><div class="line"># 默认策略:</div><div class="line">#</div><div class="line"># maxmemory-policy volatile-lru</div><div class="line"></div><div class="line"># 对于处理redis内存来说，LRU和minor TTL算法不是精确的，而是近似的（估计的）算法。所以我们会检查某些样本#来达到内存检查的目的。默认的样本数是3，你可以修改它。</div><div class="line">#</div><div class="line"># maxmemory-samples 3</div><div class="line"></div><div class="line">################# APPEND ONLY MODE ###############################</div><div class="line"></div><div class="line">#默认情况下，Redis会异步的把数据保存到硬盘。如果你的应用场景允许因为系统崩溃等极端情况而导致最新数据丢失#的话，那这种做法已经很ok了。否则你应该打开‘append only’模式，开启这种模式后，Redis会在#appendonly.aof文件中添加每一个写操作，这个文件会在Redis启动时被读取来在内存中重新构建数据集。</div><div class="line">#</div><div class="line">#注意：如果你需要，你可以同时开启‘append only’模式和异步dumps模式（你需要注释掉上面的‘save’表达式来禁#止dumps），这种情况下，Redis重建数据集时会优先使用appendonly.aof而忽略dump.rdb</div><div class="line">#</div><div class="line">appendonly no</div><div class="line"></div><div class="line">#  append only 文件名 (默认: &quot;appendonly.aof&quot;)</div><div class="line"># appendfilename appendonly.aof</div><div class="line"></div><div class="line"># 调用fsync()函数通知操作系统立刻向硬盘写数据</div><div class="line">#</div><div class="line"># Redis支持3中模式:</div><div class="line">#</div><div class="line"># no:不fsync, 只是通知OS可以flush数据了，具体是否flush取决于OS.性能更好.</div><div class="line"># always: 每次写入append only 日志文件后都会fsync . 性能差，但很安全.</div><div class="line"># everysec: 没间隔1秒进行一次fsync. 折中.</div><div class="line">#</div><div class="line"># 默认是 &quot;everysec&quot;</div><div class="line"># appendfsync always</div><div class="line">appendfsync everysec</div><div class="line"># appendfsync no</div><div class="line"></div><div class="line"># 当AOF fsync策略被设置为always或者everysec并且后台保存进程（saving process)正在执行大量I/O操作时</div><div class="line"># Redis可能会在fsync()调用上阻塞过长时间</div><div class="line">#</div><div class="line">no-appendfsync-on-rewrite no</div><div class="line"></div><div class="line"># append only 文件的自动重写</div><div class="line"># 当AOF 日志文件即将增长到指定百分比时，Redis可以通过调用BGREWRITEAOF 来自动重写append only文件。</div><div class="line">#</div><div class="line"># 它是这么干的：Redis会记住最近一次重写后的AOF 文件size。然后它会把这个size与当前size进行比较，如果当前# size比指定的百分比大，就会触发重写。同样，你需要指定AOF文件被重写的最小size，这对避免虽然百分比达到了# 但是实际上文件size还是很小（这种情况没有必要重写）却导致AOF文件重写的情况很有用。</div><div class="line">#</div><div class="line">#</div><div class="line"># auto-aof-rewrite-percentage 设置为 0 可以关闭AOF重写功能</div><div class="line"></div><div class="line">auto-aof-rewrite-percentage 100</div><div class="line">auto-aof-rewrite-min-size 64mb</div><div class="line"></div><div class="line">################## SLOW LOG ###################################</div><div class="line"></div><div class="line"># Redis slow log用来记录超过指定执行时间的查询。</div><div class="line">#</div><div class="line"># 你可以指定两个参数：一个是慢查询的阀值，单位是毫秒；另外一个是slow log的长度，相当于一个队列。</div><div class="line"></div><div class="line"># 负数则关闭slow log，0则会导致每个命令都被记录</div><div class="line">slowlog-log-slower-than 10000</div><div class="line"></div><div class="line"># 不设置会消耗过多内存，所以还是要设置一下。可以使用SLOWLOG RESET命令来回收slow log使用的内存</div><div class="line">slowlog-max-len 1024</div><div class="line"></div><div class="line">################ 虚拟内存 ###############################</div><div class="line">#使用redis 就别用虚拟内存了，绝对不是一个好主意，加个机器吧，所以这里不翻译啦！！</div><div class="line"></div><div class="line">### WARNING! Virtual Memory is deprecated in Redis 2.4</div><div class="line">### The use of Virtual Memory is strongly discouraged.</div><div class="line"></div><div class="line"># Virtual Memory allows Redis to work with datasets bigger than the actual</div><div class="line"># amount of RAM needed to hold the whole dataset in memory.</div><div class="line"># In order to do so very used keys are taken in memory while the other keys</div><div class="line"># are swapped into a swap file, similarly to what operating systems do</div><div class="line"># with memory pages.</div><div class="line">#</div><div class="line"># To enable VM just set &apos;vm-enabled&apos; to yes, and set the following three</div><div class="line"># VM parameters accordingly to your needs.</div><div class="line"></div><div class="line">vm-enabled no</div><div class="line"># vm-enabled yes</div><div class="line"></div><div class="line"># This is the path of the Redis swap file. As you can guess, swap files</div><div class="line"># can&apos;t be shared by different Redis instances, so make sure to use a swap</div><div class="line"># file for every redis process you are running. Redis will complain if the</div><div class="line"># swap file is already in use.</div><div class="line">#</div><div class="line"># The best kind of storage for the Redis swap file (that&apos;s accessed at random)</div><div class="line"># is a Solid State Disk (SSD).</div><div class="line">#</div><div class="line"># *** WARNING *** if you are using a shared hosting the default of putting</div><div class="line"># the swap file under /tmp is not secure. Create a dir with access granted</div><div class="line"># only to Redis user and configure Redis to create the swap file there.</div><div class="line">vm-swap-file /tmp/redis.swap</div><div class="line"></div><div class="line"># vm-max-memory configures the VM to use at max the specified amount of</div><div class="line"># RAM. Everything that deos not fit will be swapped on disk *if* possible, that</div><div class="line"># is, if there is still enough contiguous space in the swap file.</div><div class="line">#</div><div class="line"># With vm-max-memory 0 the system will swap everything it can. Not a good</div><div class="line"># default, just specify the max amount of RAM you can in bytes, but it&apos;s</div><div class="line"># better to leave some margin. For instance specify an amount of RAM</div><div class="line"># that&apos;s more or less between 60 and 80% of your free RAM.</div><div class="line">vm-max-memory 0</div><div class="line"></div><div class="line"># Redis swap files is split into pages. An object can be saved using multiple</div><div class="line"># contiguous pages, but pages can&apos;t be shared between different objects.</div><div class="line"># So if your page is too big, small objects swapped out on disk will waste</div><div class="line"># a lot of space. If you page is too small, there is less space in the swap</div><div class="line"># file (assuming you configured the same number of total swap file pages).</div><div class="line">#</div><div class="line"># If you use a lot of small objects, use a page size of 64 or 32 bytes.</div><div class="line"># If you use a lot of big objects, use a bigger page size.</div><div class="line"># If unsure, use the default :)</div><div class="line">vm-page-size 32</div><div class="line"></div><div class="line"># Number of total memory pages in the swap file.</div><div class="line"># Given that the page table (a bitmap of free/used pages) is taken in memory,</div><div class="line"># every 8 pages on disk will consume 1 byte of RAM.</div><div class="line">#</div><div class="line"># The total swap size is vm-page-size * vm-pages</div><div class="line">#</div><div class="line"># With the default of 32-bytes memory pages and 134217728 pages Redis will</div><div class="line"># use a 4 GB swap file, that will use 16 MB of RAM for the page table.</div><div class="line">#</div><div class="line"># It&apos;s better to use the smallest acceptable value for your application,</div><div class="line"># but the default is large in order to work in most conditions.</div><div class="line">vm-pages 134217728</div><div class="line"></div><div class="line"># Max number of VM I/O threads running at the same time.</div><div class="line"># This threads are used to read/write data from/to swap file, since they</div><div class="line"># also encode and decode objects from disk to memory or the reverse, a bigger</div><div class="line"># number of threads can help with big objects even if they can&apos;t help with</div><div class="line"># I/O itself as the physical device may not be able to couple with many</div><div class="line"># reads/writes operations at the same time.</div><div class="line">#</div><div class="line"># The special value of 0 turn off threaded I/O and enables the blocking</div><div class="line"># Virtual Memory implementation.</div><div class="line">vm-max-threads 4</div><div class="line"></div><div class="line">################高级配置###############################</div><div class="line"></div><div class="line"># Hashes are encoded in a special way (much more memory efficient) when they</div><div class="line"># have at max a given numer of elements, and the biggest element does not</div><div class="line"># exceed a given threshold. You can configure this limits with the following</div><div class="line"># configuration directives.</div><div class="line">hash-max-zipmap-entries 512</div><div class="line">hash-max-zipmap-value 64</div><div class="line"></div><div class="line"># Similarly to hashes, small lists are also encoded in a special way in order</div><div class="line"># to save a lot of space. The special representation is only used when</div><div class="line"># you are under the following limits:</div><div class="line">list-max-ziplist-entries 512</div><div class="line">list-max-ziplist-value 64</div><div class="line"></div><div class="line"># Sets have a special encoding in just one case: when a set is composed</div><div class="line"># of just strings that happens to be integers in radix 10 in the range</div><div class="line"># of 64 bit signed integers.</div><div class="line"># The following configuration setting sets the limit in the size of the</div><div class="line"># set in order to use this special memory saving encoding.</div><div class="line">set-max-intset-entries 512</div><div class="line"></div><div class="line"># Similarly to hashes and lists, sorted sets are also specially encoded in</div><div class="line"># order to save a lot of space. This encoding is only used when the length and</div><div class="line"># elements of a sorted set are below the following limits:</div><div class="line">zset-max-ziplist-entries 128</div><div class="line">zset-max-ziplist-value 64</div><div class="line"></div><div class="line"># Active rehashing uses 1 millisecond every 100 milliseconds of CPU time in</div><div class="line"># order to help rehashing the main Redis hash table (the one mapping top-level</div><div class="line"># keys to values). The hash table implementation redis uses (see dict.c)</div><div class="line"># performs a lazy rehashing: the more operation you run into an hash table</div><div class="line"># that is rhashing, the more rehashing &quot;steps&quot; are performed, so if the</div><div class="line"># server is idle the rehashing is never complete and some more memory is used</div><div class="line"># by the hash table.</div><div class="line">#</div><div class="line"># The default is to use this millisecond 10 times every second in order to</div><div class="line"># active rehashing the main dictionaries, freeing memory when possible.</div><div class="line">#</div><div class="line"># If unsure:</div><div class="line"># use &quot;activerehashing no&quot; if you have hard latency requirements and it is</div><div class="line"># not a good thing in your environment that Redis can reply form time to time</div><div class="line"># to queries with 2 milliseconds delay.</div><div class="line">#</div><div class="line"># use &quot;activerehashing yes&quot; if you don&apos;t have such hard requirements but</div><div class="line"># want to free memory asap when possible.</div><div class="line">activerehashing yes</div><div class="line"></div><div class="line">################## INCLUDES ###################################</div><div class="line"></div><div class="line"># Include one or more other config files here.  This is useful if you</div><div class="line"># have a standard template that goes to all redis server but also need</div><div class="line"># to customize a few per-server settings.  Include files can include</div><div class="line"># other files, so use this wisely.</div><div class="line">#</div><div class="line"># include /path/to/local.conf</div><div class="line"># include /path/to/other.conf</div></pre></td></tr></table></figure>
-<h2 id="Redis常用命令"><a href="#Redis常用命令" class="headerlink" title="Redis常用命令"></a>Redis常用命令</h2><h3 id="键值相关命令"><a href="#键值相关命令" class="headerlink" title="键值相关命令"></a>键值相关命令</h3><p>1、 keys  键名</p>
-<blockquote>
-<p>按照键名查找指定的键。支持通配符</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; set hello 1</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; set hallo 1</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; set heeeello 1</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; keys h?llo</div><div class="line">1) &quot;hallo&quot;</div><div class="line">2) &quot;hello&quot;</div><div class="line">127.0.0.1:6379&gt; keys h*llo</div><div class="line">1) &quot;hallo&quot;</div><div class="line">2) &quot;heeeello&quot;</div><div class="line">3) &quot;hello&quot;</div></pre></td></tr></table></figure>
-<p>2、    exists  键名</p>
-<blockquote>
-<p>   确认一个键是否存在</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; EXISTS name</div><div class="line">(integer) 1						//name键存在</div><div class="line">127.0.0.1:6379&gt; EXISTS age</div><div class="line">(integer) 0						//age键不存在</div></pre></td></tr></table></figure>
-<p>3、    del  键名</p>
-<blockquote>
-<p>   删除一个键</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; del hello</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; EXISTS hello</div><div class="line">(integer) 0</div></pre></td></tr></table></figure>
-<p>4、    expire  键  秒</p>
-<blockquote>
-<p>   设置一个键的过期时间，如果键已经过期，将会被自动删除</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; set age 18</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; EXPIRE age 20</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; ttl age</div><div class="line">(integer) 18</div><div class="line">127.0.0.1:6379&gt; ttl age</div><div class="line">(integer) -2</div><div class="line">127.0.0.1:6379&gt; EXISTS age</div><div class="line">(integer) 0</div></pre></td></tr></table></figure>
-<p>5、    ttl  键</p>
-<blockquote>
-<p>   以秒为单位，返回键的剩余生存时间。</p>
-<p>   当键不存在时，返回值为-2</p>
-<p>   当键存在，但没有设置剩余生存时间时，返回-1</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; ttl name</div><div class="line">(integer) -1</div></pre></td></tr></table></figure>
-<p>6、    select  数据库号</p>
-<blockquote>
-<p>   选择一个数据库。<br>   默认连接的数据库是0，可以支持共16个数据库。<br>   在配置文件中，通过databases 16 关键字定义</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; select 1</div><div class="line">OK</div><div class="line">127.0.0.1:6379[1]&gt;</div></pre></td></tr></table></figure>
-<p>7、    move  键  数据库号</p>
-<blockquote>
-<p>   将当前数据库的键移动到指定的数据空中</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; set age 18</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; move age 1</div><div class="line">(integer) 1</div><div class="line">127.0.0.1:6379&gt; get age</div><div class="line">(nil)</div><div class="line">127.0.0.1:6379&gt; select 1</div><div class="line">OK</div><div class="line">127.0.0.1:6379[1]&gt; get age</div><div class="line">&quot;18&quot;</div></pre></td></tr></table></figure>
-<p>8、    randomkey  </p>
-<blockquote>
-<p>   从当前数据库返回一个随机的键。如果当前库没有任何键，则返回nil</p>
-</blockquote>
-<p>9、    rename  旧名  新名</p>
-<blockquote>
-<p>   重命名键</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; rename name name_new</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; get name_new</div><div class="line">&quot;sc&quot;</div></pre></td></tr></table></figure>
-<p>10、 type  键</p>
-<blockquote>
-<pre><code>返回键类型。
-</code></pre></blockquote>
-<p>返回值</p>
-<ul>
-<li>none (key不存在)</li>
-<li>string (字符串)</li>
-<li>list (列表)</li>
-<li>set (集合)</li>
-<li>zset (有序集)</li>
-<li>hash (哈希表)</li>
-</ul>
-<h3 id="服务器相关命令"><a href="#服务器相关命令" class="headerlink" title="服务器相关命令"></a>服务器相关命令</h3><p>1、    ping</p>
-<blockquote>
-<p>   测试服务器是否可以连接</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; ping</div><div class="line">PONG					//连接正常</div><div class="line">127.0.0.1:6379&gt; ping</div><div class="line">Could not connect to Redis at 127.0.0.1:6379: Connection refused</div><div class="line">//redis被停止，连接拒绝</div></pre></td></tr></table></figure>
-<p>2、    echo  字符串</p>
-<blockquote>
-<p>   在命令行输出字符串</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; echo &quot;test message&quot;</div><div class="line">&quot;test message&quot;</div></pre></td></tr></table></figure>
-<p>3、    quit</p>
-<blockquote>
-<p>   退出redis数据库</p>
-</blockquote>
-<p>4、    save</p>
-<blockquote>
-<p>   保存所有的数据。很少在生产环境直接使用SAVE 命令，因为它会阻塞所有的客户端的请求，可以使用BGSAVE 命令代替. 如果在BGSAVE命令的保存数据的子进程发生错误的时,用 SAVE命令保存最新的数据是最后的手段</p>
-</blockquote>
-<p>5、    dbsize</p>
-<blockquote>
-<p>   返回当前库中键的数量</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; dbsize</div><div class="line">(integer) 6</div></pre></td></tr></table></figure>
-<p>6、    info</p>
-<blockquote>
-<p>   获取服务器的详细信息</p>
-</blockquote>
-<p>7、    config get 参数</p>
-<blockquote>
-<p>   获取redis服务器配置文件中的参数。支持通配符</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; config get *			//查询配置文件中所有的参数</div><div class="line">  1) &quot;dbfilename&quot;</div><div class="line">  2) &quot;dump.rdb&quot;</div><div class="line"> 45) &quot;port&quot;</div><div class="line"> 46) &quot;6379&quot;</div><div class="line"> 99) &quot;save&quot;</div><div class="line"> 100) &quot;900 1 300 10 60 10000&quot;</div></pre></td></tr></table></figure>
-<p>8、 flushdb</p>
-<blockquote>
-<p>   删除当前数据库中所有的数据</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">127.0.0.1:6379&gt; dbsize</div><div class="line">(integer) 6</div><div class="line">127.0.0.1:6379&gt; flushdb</div><div class="line">OK</div><div class="line">127.0.0.1:6379&gt; dbsize</div><div class="line">(integer) 0</div></pre></td></tr></table></figure>
-<p>9、    flushall</p>
-<blockquote>
-<pre><code>删除所有数据库中所有的数据
-</code></pre></blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;redis是一个key-value存储系统。&lt;br&gt;和Memcached类似，它支持存储的value类型相对更多，&lt;br&gt;包括string(字符串)、list(链表)、set(集合)和zset(有序集合)。&lt;br&gt;这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。&lt;/p&gt;
-&lt;p&gt;在此基础上，redis支持各种不同方式的排序。与memcached一样，为了保证效率，数据都是缓存在内存中。&lt;br&gt;区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。&lt;/p&gt;
-&lt;p&gt;Redis 是一个高性能的key-value数据库。&lt;br&gt; redis的出现，很大程度补偿了memcached这类key/value存储的不足，在部 分场合可以对关系数据库起到很好的补充作用。&lt;br&gt;它提供了Python，Ruby，Erlang，PHP客户端，使用很方便。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Memcache&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;内存缓存服务，缓存数据保存在内存中，一旦断电重启，数据将丢失&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;mangoDB&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;开源免费的NOSQL 数据库，提供数据持久化服务，以文档的形式提供数据组织方式，而不是表&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Redis&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;开源免费的 NOSQL数据库，提供数据持久化服务，即能实现内存缓存服务，也能提供数据结构服务取代MySQL 自建索引用来弥补关系型数据的不足&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
-    
-    
-      <category term="Redis" scheme="https://weizhimiao.github.io/tags/Redis/"/>
     
   </entry>
   
