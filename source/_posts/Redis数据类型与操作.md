@@ -1,5 +1,5 @@
 ---
-title: Redis安装与管理
+title: Redis数据类型与操作
 date: 2016-09-27 20:30:00
 tags:
 - Redis

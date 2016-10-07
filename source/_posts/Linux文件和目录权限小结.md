@@ -1,5 +1,5 @@
 ---
-title: Linux常用命令
+title: Linux文件和目录权限小结
 date: 2016-10-06 22:30:00
 categories:
 - Linux
