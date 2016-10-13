@@ -299,6 +299,416 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/13/大型网站技术架构剖析/" itemprop="url">
+                  大型网站技术架构剖析
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-13T10:30:00+08:00" content="2016-10-13">
+              2016-10-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/架构/" itemprop="url" rel="index">
+                    <span itemprop="name">架构</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/13/大型网站技术架构剖析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/13/大型网站技术架构剖析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><img src="http://n.sinaimg.cn/games/3ece443e/20161013/DaXingWangZhanJiShuJiaGouPouXi.jpg" alt="大型网站技术架构剖析"></p>
+<h2 id="大型网站系统特点"><a href="#大型网站系统特点" class="headerlink" title="大型网站系统特点"></a>大型网站系统特点</h2><ul>
+<li>高并发，大流量</li>
+<li>高可用</li>
+<li>海量数据</li>
+<li>用户分布广泛，网络情况复杂</li>
+<li>安全环境恶略</li>
+<li>需求快速变更，发布频繁</li>
+<li>渐进式发展</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/13/大型网站技术架构剖析/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/12/PHP的MVC设计与实现/" itemprop="url">
+                  PHP魔术方法小结
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-12T22:30:00+08:00" content="2016-10-12">
+              2016-10-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/12/PHP的MVC设计与实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/12/PHP的MVC设计与实现/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>MVC模式，即模型-试图-控制器模式，是将应用程序划分成不同层次的一种方式。</p>
+<p>即，</p>
+<table>
+<thead>
+<tr>
+<th>C</th>
+<th>Control</th>
+<th>控制器层</th>
+<th>负责业务逻辑的处理。根据用户的请求确定用户可以做什么。之后，调用模型执行操作获得数据。最后调用视图将操作结果呈现给用户。</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>M</td>
+<td>Model</td>
+<td>模型层</td>
+<td>负责加工处理数据 返回结果。</td>
+</tr>
+<tr>
+<td>V</td>
+<td>View</td>
+<td>视图层</td>
+<td>负责接收信息和显示信息。</td>
+</tr>
+</tbody>
+</table>
+<p>一个典型MVC应用程序流程图</p>
+<p><img src="http://n.sinaimg.cn/games/3ece443e/20161013/mvcYingYongChengXuLiuChengTu.png" alt="典型MVC应用程序流程图"></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/12/PHP的MVC设计与实现/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/12/PHP扩展与应用库(PEAR)/" itemprop="url">
+                  PHP扩展与应用库(PEAR)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-12T20:30:00+08:00" content="2016-10-12">
+              2016-10-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/12/PHP扩展与应用库(PEAR)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/12/PHP扩展与应用库(PEAR)/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>PEAR（the PHP Extension and Application Repository），PHP扩展与应用库。它是一个PHP扩展及应用的一个代码仓库。所有的扩展均以PHP代码的形式出现，功能强大，安装简单，甚至可以改改就用。使用的时候，要在代码中进行Include才能够使用。</p>
+<p>官网：</p>
+<p><a href="http://pear.php.net">http://pear.php.net</a></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/12/PHP扩展与应用库(PEAR)/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/08/Linux常用工具命令之rsync/" itemprop="url">
                   Linux常用工具命令之rsync
                 </a>
@@ -678,8 +1088,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/10/06/Linux中的用户和用户组管理/" itemprop="url">
-                  Linux中的用户和用户组管理
+                <a class="post-title-link" href="/2016/10/06/Linux常用命令/" itemprop="url">
+                  Linux常用命令
                 </a>
               
             
@@ -722,8 +1132,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/10/06/Linux中的用户和用户组管理/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/06/Linux中的用户和用户组管理/" itemprop="commentsCount"></span>
+                <a href="/2016/10/06/Linux常用命令/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/06/Linux常用命令/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -749,9 +1159,26 @@
 
       
         
-          <p>用户账号的管理主要涉及到用户账号的添加、删除和修改。<br>添加用户账号就是在系统中创建一个新账号，然后为新账号分配用户号、用户组、主目录和登录Shell等。</p>
+          <h2 id="Linux命令格式"><a href="#Linux命令格式" class="headerlink" title="Linux命令格式"></a>Linux命令格式</h2><p>格式：命令    [选项]    [参数]</p>
+<p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#ls 	-list 	显示目录下内容</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>命令操作的对象（文件、目录、用户、进程）<br>Linux中以”.”开头的文件是隐藏文件</p>
+</blockquote>
+<p>提示符：[root@localhost src]#</p>
+<blockquote>
+<p>[当前登录用户@主机名 当前所在目录]#</p>
+<h1 id="超级用户"><a href="#超级用户" class="headerlink" title="超级用户"></a>超级用户</h1><p>$    普通用户</p>
+</blockquote>
+<p>当前所在目录：    用户家目录</p>
+<blockquote>
+<p>   管理员        /root<br>   普通用户        /home/用户名</p>
+</blockquote>
+<p><strong>tips：</strong></p>
+<blockquote>
+<p>ctrl +  c        强制终止<br>ctrl+l            清屏<br>ctrl+u        光标删除到行首<br>ctrl+a        光标移动到行首<br>ctrl+e        光标移动到行尾</p>
+</blockquote>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/06/Linux中的用户和用户组管理/#more" rel="contents">
+            <a class="btn" href="/2016/10/06/Linux常用命令/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -802,8 +1229,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/10/06/Linux网络配置/" itemprop="url">
-                  Linux网络配置
+                <a class="post-title-link" href="/2016/10/06/Linux简介/" itemprop="url">
+                  Linux系统的简介和安装
                 </a>
               
             
@@ -846,8 +1273,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/10/06/Linux网络配置/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/06/Linux网络配置/" itemprop="commentsCount"></span>
+                <a href="/2016/10/06/Linux简介/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/06/Linux简介/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -873,9 +1300,11 @@
 
       
         
-          <p><img src="http://n.sinaimg.cn/games/3ece443e/20161007/ifconfig.png" alt="Linux网络配置"></p>
+          <h2 id="Linux简介"><a href="#Linux简介" class="headerlink" title="Linux简介"></a>Linux简介</h2><h3 id="Unix发展史"><a href="#Unix发展史" class="headerlink" title="Unix发展史"></a>Unix发展史</h3><p>1965年，美国麻省理工学院（MIT）、通用电气公司（GE）及AT&amp;T的贝尔实验室联合开发Multics工程计划，其目标是开发一种交互式的具有多道程序处理能力的分时操作系统，但因Multics追求的目标过于庞大复杂，项目进度远远落后于计划，最后贝尔实验室宣布退出。</p>
+<p>1969年，美国贝尔实验室的肯.汤普森在DEC PDP-7机器上开发出了UNIX系统</p>
+<p>1971年，肯.汤普森的同事丹尼斯.里奇发明了C语言；1973年，UNIX系统的绝大部分源代码用C语言重写，这为提高UNIX系统的可移植性打下基础</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/06/Linux网络配置/#more" rel="contents">
+            <a class="btn" href="/2016/10/06/Linux简介/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1053,8 +1482,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/10/06/Linux目录结构介绍/" itemprop="url">
-                  Linux目录结构介绍
+                <a class="post-title-link" href="/2016/10/06/Linux中的用户和用户组管理/" itemprop="url">
+                  Linux中的用户和用户组管理
                 </a>
               
             
@@ -1097,8 +1526,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/10/06/Linux目录结构介绍/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/06/Linux目录结构介绍/" itemprop="commentsCount"></span>
+                <a href="/2016/10/06/Linux中的用户和用户组管理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/06/Linux中的用户和用户组管理/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1124,400 +1553,9 @@
 
       
         
-          <p><img src="http://www.centoscn.com/uploads/allimg58981378314368.jpg" alt="Linux目录结构"></p>
+          <p>用户账号的管理主要涉及到用户账号的添加、删除和修改。<br>添加用户账号就是在系统中创建一个新账号，然后为新账号分配用户号、用户组、主目录和登录Shell等。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/06/Linux目录结构介绍/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/06/Linux简介/" itemprop="url">
-                  Linux系统的简介和安装
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-06T22:30:00+08:00" content="2016-10-06">
-              2016-10-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/06/Linux简介/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/06/Linux简介/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-            
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Linux简介"><a href="#Linux简介" class="headerlink" title="Linux简介"></a>Linux简介</h2><h3 id="Unix发展史"><a href="#Unix发展史" class="headerlink" title="Unix发展史"></a>Unix发展史</h3><p>1965年，美国麻省理工学院（MIT）、通用电气公司（GE）及AT&amp;T的贝尔实验室联合开发Multics工程计划，其目标是开发一种交互式的具有多道程序处理能力的分时操作系统，但因Multics追求的目标过于庞大复杂，项目进度远远落后于计划，最后贝尔实验室宣布退出。</p>
-<p>1969年，美国贝尔实验室的肯.汤普森在DEC PDP-7机器上开发出了UNIX系统</p>
-<p>1971年，肯.汤普森的同事丹尼斯.里奇发明了C语言；1973年，UNIX系统的绝大部分源代码用C语言重写，这为提高UNIX系统的可移植性打下基础</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/06/Linux简介/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/06/Linux常用命令/" itemprop="url">
-                  Linux常用命令
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-06T22:30:00+08:00" content="2016-10-06">
-              2016-10-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/06/Linux常用命令/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/06/Linux常用命令/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-            
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="Linux命令格式"><a href="#Linux命令格式" class="headerlink" title="Linux命令格式"></a>Linux命令格式</h2><p>格式：命令    [选项]    [参数]</p>
-<p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#ls 	-list 	显示目录下内容</div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>命令操作的对象（文件、目录、用户、进程）<br>Linux中以”.”开头的文件是隐藏文件</p>
-</blockquote>
-<p>提示符：[root@localhost src]#</p>
-<blockquote>
-<p>[当前登录用户@主机名 当前所在目录]#</p>
-<h1 id="超级用户"><a href="#超级用户" class="headerlink" title="超级用户"></a>超级用户</h1><p>$    普通用户</p>
-</blockquote>
-<p>当前所在目录：    用户家目录</p>
-<blockquote>
-<p>   管理员        /root<br>   普通用户        /home/用户名</p>
-</blockquote>
-<p><strong>tips：</strong></p>
-<blockquote>
-<p>ctrl +  c        强制终止<br>ctrl+l            清屏<br>ctrl+u        光标删除到行首<br>ctrl+a        光标移动到行首<br>ctrl+e        光标移动到行尾</p>
-</blockquote>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/06/Linux常用命令/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/06/Linux文件和目录权限小结/" itemprop="url">
-                  Linux文件和目录权限小结
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-06T22:30:00+08:00" content="2016-10-06">
-              2016-10-06
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/06/Linux文件和目录权限小结/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/06/Linux文件和目录权限小结/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-            
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="普通权限"><a href="#普通权限" class="headerlink" title="普通权限"></a>普通权限</h2><p>文件的权限：    - r  w  -  -  w  x  r  -  x<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">第一位：文件的类型</div><div class="line">    -：文件</div><div class="line">    d：文件夹</div><div class="line">    l：连接</div><div class="line">    c：字符设备文件</div><div class="line">    b：块设备</div><div class="line">    s：套接口文件</div><div class="line">第二位：所有者读权限</div><div class="line">第三位：所有者写权限</div><div class="line">第四位：所有者执行权限</div><div class="line">第五位：所有者组读权限</div><div class="line">第六位：所有者组写权限</div><div class="line">第七位：所有者组执行权限</div><div class="line">第八位：其他组读权限</div><div class="line">第九位：其他组写权限</div><div class="line">第十位：其他组执行权限</div><div class="line">r		4</div><div class="line">w		2</div><div class="line">x		1</div></pre></td></tr></table></figure></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/06/Linux文件和目录权限小结/#more" rel="contents">
+            <a class="btn" href="/2016/10/06/Linux中的用户和用户组管理/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1551,7 +1589,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1592,7 +1630,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">50</span>
+              <span class="site-state-item-count">53</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1600,7 +1638,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1609,7 +1647,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">50</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
