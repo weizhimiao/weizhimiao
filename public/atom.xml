@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://weizhimiao.github.io/"/>
-  <updated>2016-10-13T09:25:46.000Z</updated>
+  <updated>2016-10-14T09:41:06.000Z</updated>
   <id>https://weizhimiao.github.io/</id>
   
   <author>
@@ -14,6 +14,157 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHP常见设计模式之工厂模式</title>
+    <link href="https://weizhimiao.github.io/2016/10/14/PHP%E5%B8%B8%E8%A7%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://weizhimiao.github.io/2016/10/14/PHP常见设计模式之工厂模式/</id>
+    <published>2016-10-14T13:00:00.000Z</published>
+    <updated>2016-10-14T09:41:06.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="什么是工厂模式"><a href="#什么是工厂模式" class="headerlink" title="什么是工厂模式"></a>什么是工厂模式</h2><p>工厂模式是我们最常用的实例化对象模式了，顾名思义工厂设计模式，就是用于制造对象的一种设计模式，是一种用来代替new操作的一种模式。</p>
+<p>其的最大价值在于它可以将多个对象设置封装成单一、简单的方法调用。</p>
+<p>对外提供获取某个对象的新实例的接口，同时使调用代码避免确定实际实例化基类的步骤。</p>
+<a id="more"></a>
+<h2 id="工厂模式的应用和使用场景"><a href="#工厂模式的应用和使用场景" class="headerlink" title="工厂模式的应用和使用场景"></a>工厂模式的应用和使用场景</h2><p>通常情况下，虽然我们很少使用工厂模式，但它仍然最适合初始化基于驱动安装的许多变种中的一种。例如，不同的配置、会话或缓存存储引擎。例如，当我们设置一个日志对象时，我们需要设置日志类型（如，基于文本、MySQL或者其他）、日志的位置、以及类似于凭证条目。</p>
+<h2 id="工厂模式的实现"><a href="#工厂模式的实现" class="headerlink" title="工厂模式的实现"></a>工厂模式的实现</h2><h3 id="UML设计"><a href="#UML设计" class="headerlink" title="UML设计"></a>UML设计</h3><p><img src="http://n.sinaimg.cn/games/3ece443e/20161014/GongChangMoShiUMLTu.png" alt="UML设计图"></p>
+<p>说明：</p>
+<ul>
+<li>三个基类Log_File、Log_Mysql、Log_Sqlite,都具有名为dosomething()的公用方法，该方法采用他们各自独特的方式执行具体的逻辑。且其返回类型也应该完全相同。</li>
+<li>Log_factory类用于创建下面三个任意一个基类的实例，并将其返回至代码流。</li>
+</ul>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>工厂类Log_factory实现<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Log_factory</span></span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getLog</span><span class="params">($type = <span class="string">'file'</span>, array $options)</span></span>&#123;</div><div class="line">    $type = strtolower($type);</div><div class="line"></div><div class="line">    $class = <span class="string">"Log_"</span>.unfirst($type);</div><div class="line">    <span class="keyword">require_once</span> str_replace(<span class="string">'_'</span>, DIRECTORY_SEPARATOR, $class).<span class="string">'.php'</span>;</div><div class="line"></div><div class="line">    $log = <span class="keyword">new</span> $class($options);</div><div class="line">    <span class="keyword">switch</span>($type)&#123;</div><div class="line">      <span class="keyword">case</span> <span class="string">'file'</span>:</div><div class="line">        $log-&gt;setPath($options[<span class="string">'location'</span>]);</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">      <span class="keyword">case</span> <span class="string">'mysql'</span>:</div><div class="line">        $log-&gt;setUser($options[<span class="string">'username'</span>]);</div><div class="line">        $log-&gt;setPassword($options[<span class="string">'password'</span>]);</div><div class="line">        $log-&gt;setDBname($options[<span class="string">'location'</span>]);</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">      <span class="keyword">case</span> <span class="string">'sqlite'</span>:</div><div class="line">        $log-&gt;setDBPath($options[<span class="string">'location'</span>]);</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> $log;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>Tips:</strong><br>在实际应用中，我们可以把getLog()方法生成的对象添加到Registry，这样就不用一遍又一遍的实例化这些对象。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;什么是工厂模式&quot;&gt;&lt;a href=&quot;#什么是工厂模式&quot; class=&quot;headerlink&quot; title=&quot;什么是工厂模式&quot;&gt;&lt;/a&gt;什么是工厂模式&lt;/h2&gt;&lt;p&gt;工厂模式是我们最常用的实例化对象模式了，顾名思义工厂设计模式，就是用于制造对象的一种设计模式，是一种用来代替new操作的一种模式。&lt;/p&gt;
+&lt;p&gt;其的最大价值在于它可以将多个对象设置封装成单一、简单的方法调用。&lt;/p&gt;
+&lt;p&gt;对外提供获取某个对象的新实例的接口，同时使调用代码避免确定实际实例化基类的步骤。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
+    
+    
+      <category term="设计模式" scheme="https://weizhimiao.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="工厂模式" scheme="https://weizhimiao.github.io/tags/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PHP常见设计模式之注册表模式</title>
+    <link href="https://weizhimiao.github.io/2016/10/14/PHP%E5%B8%B8%E8%A7%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%B3%A8%E5%86%8C%E8%A1%A8%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://weizhimiao.github.io/2016/10/14/PHP常见设计模式之注册表模式/</id>
+    <published>2016-10-14T12:40:00.000Z</published>
+    <updated>2016-10-14T08:03:27.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="什么是注册表模式"><a href="#什么是注册表模式" class="headerlink" title="什么是注册表模式"></a>什么是注册表模式</h2><p>注册表（registry）模式仅是一个单独的全局类，在我们需要时允许代码检索一个对象的相同实例，也可以在我们需要的时候创建另一个实例。</p>
+<p>注册表就像是一个对象库，只要我们随时签入或者签出对象，而不必担心因为将这些对象保留太久而引起功能障碍。</p>
+<p>我们认为注册表模式中最简单的方式就是键/值存储，键作为一个对象的实例，而值就是实例本身。当我们需要管理键/值对的数组时，这个模式便开始发挥功效，存储最早实例化的实例，并且返回一个引用到请求中的同一个实例。</p>
+<h2 id="注册表模式和单例模式的关系"><a href="#注册表模式和单例模式的关系" class="headerlink" title="注册表模式和单例模式的关系"></a>注册表模式和单例模式的关系</h2><p>相同点：</p>
+<blockquote>
+<p>和单例模式一样，注册表模式也是用于访问全局可重用的对象；</p>
+</blockquote>
+<p>区别：</p>
+<blockquote>
+<p>注册表模式不负责创建对象，纯粹用于保持全局存储，可以容纳任何数量的相同类的实例。这使得它非常适合类似于数据库连接和配置对象等的采用单例模式满足不了其需求的情况。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="注册表模式的实现"><a href="#注册表模式的实现" class="headerlink" title="注册表模式的实现"></a>注册表模式的实现</h2><p>示例，<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Registry</span></span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> $_store = <span class="keyword">array</span>();</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">add</span><span class="params">($object, $name = null)</span></span>&#123;</div><div class="line">    $name = (!is_null($name)) ? $name : get_class($object);</div><div class="line">    $name = strtolower($name);</div><div class="line"></div><div class="line">    $return = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="keyword">self</span>::$_store[$name]))&#123;</div><div class="line">      $return = <span class="keyword">self</span>::$_store[$name];</div><div class="line">    &#125; <span class="keyword">else</span>&#123;</div><div class="line">      <span class="keyword">self</span>::$_store[$name] = $object;</div><div class="line">      $return = <span class="keyword">self</span>::$_store[$name];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> $return;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">get</span><span class="params">($name)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(!<span class="keyword">self</span>::contains($name))&#123;</div><div class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="keyword">Exception</span>(<span class="string">"object does not exist in registry"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>::$_store[$name];</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">contains</span><span class="params">($name)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="keyword">self</span>::$_store[$name]))&#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">remove</span><span class="params">($name)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">self</span>::contains($name))&#123;</div><div class="line">      <span class="keyword">unset</span>(<span class="keyword">self</span>::$_store[$name]);</div><div class="line">    &#125;</div><div class="line">  &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>注册表模式的4个实现方法：</p>
+<ul>
+<li>Registry::set(),添加一个对象到注册表，你可以指定一个名称（为多个实例）或者使用默认的类名（为单例，与行为类似）</li>
+<li>Registry::get(),从注册表的名字中检索一个对象</li>
+<li>Registry::contains(),在注册表中检查一个对象是否存在</li>
+<li>Registry::unset(),通过对象名在注册表中删除一个对象</li>
+</ul>
+<h2 id="注册表模式的应用"><a href="#注册表模式的应用" class="headerlink" title="注册表模式的应用"></a>注册表模式的应用</h2><p>创建了Registry类之后，我们可以通过两种方式来使用它。</p>
+<ul>
+<li>外部</li>
+<li>内部</li>
+</ul>
+<p>示例，两种方式的数据库连接代码。</p>
+<h3 id="外部"><a href="#外部" class="headerlink" title="外部"></a>外部</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  $read = <span class="keyword">new</span> DBReadConnection();</div><div class="line">  Registry::add($read);</div><div class="line"></div><div class="line">  $write = <span class="keyword">new</span> DBWriteConnection();</div><div class="line">  Registry::add($wite);</div><div class="line"></div><div class="line">  <span class="comment">//在之后的任何代码中，我们可以通过以下方式获得对应实例</span></div><div class="line">  $read = Registry::get(<span class="string">'DBReadConnection'</span>);</div><div class="line">  $write = Registry::get(<span class="string">'DBWriteConnection'</span>);</div></pre></td></tr></table></figure>
+<p>在这个示例中，我们没有传入实例名称，而是通过使用类名从注册表中提取对象。<br>在Registry类能访问到的任何地方该对象都可用。</p>
+<h3 id="内部"><a href="#内部" class="headerlink" title="内部"></a>内部</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">DBConnection</span> <span class="title">extend</span> <span class="title">PDO</span></span>&#123;</div><div class="line">  <span class="keyword">public</span> statuc <span class="function"><span class="keyword">function</span> <span class="title">getInstance</span><span class="params">($name = null)</span></span>&#123;</div><div class="line">    $class = get_called_class();</div><div class="line"></div><div class="line">    $name = (!is_null($name)) ? $name : $class;</div><div class="line">    $name = strtolower($name);</div><div class="line">    <span class="keyword">if</span>(!Registry::contains($name))&#123;</div><div class="line">      $instance = <span class="keyword">new</span> $class();</div><div class="line">      Registry::add($instance, $name);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> Registry::get($name);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DBWriteConnection</span> <span class="title">extend</span> <span class="title">DBConnection</span></span>&#123;</div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__contruct</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">parent</span>::_contruct(APP_DB_DSN, APP_DB_USER, APP_DB_PWD);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DBReadConnection</span> <span class="title">extend</span> <span class="title">DBConnection</span></span>&#123;</div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__contruct</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">parent</span>::_contruct(APP_DB_DSN, APP_DB_USER, APP_DB_PWD);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>要使用这些代码，我们只需在任一读或者写连接类中调用DBConnection::getInstance()即可，就像<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  <span class="comment">//获得一个读实例</span></div><div class="line">  $read_db = DBReadConnection::getInstance();</div><div class="line">  <span class="comment">//获得一个写实例</span></div><div class="line">  $write_db  = DBWriteConnection::getInstance();</div><div class="line"></div><div class="line">  <span class="comment">//获得另一个读实例</span></div><div class="line">  $another_read_db = DBReadConnection::getInstance(<span class="string">"another_db"</span>);</div></pre></td></tr></table></figure></p>
+<p>在某些方面，这是一个单例模式和工厂模式的混合物。</p>
+<h2 id="注册的若干问题"><a href="#注册的若干问题" class="headerlink" title="注册的若干问题"></a>注册的若干问题</h2><p>对于外部注册表，你不能延迟加载；也就是说，在我们使用之前，必须初始化注册表中的每一个对象。如果操作顺序变得更为复杂，我们可能就会错过某个对象而产生预料之外的错误。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;什么是注册表模式&quot;&gt;&lt;a href=&quot;#什么是注册表模式&quot; class=&quot;headerlink&quot; title=&quot;什么是注册表模式&quot;&gt;&lt;/a&gt;什么是注册表模式&lt;/h2&gt;&lt;p&gt;注册表（registry）模式仅是一个单独的全局类，在我们需要时允许代码检索一个对象的相同实例，也可以在我们需要的时候创建另一个实例。&lt;/p&gt;
+&lt;p&gt;注册表就像是一个对象库，只要我们随时签入或者签出对象，而不必担心因为将这些对象保留太久而引起功能障碍。&lt;/p&gt;
+&lt;p&gt;我们认为注册表模式中最简单的方式就是键/值存储，键作为一个对象的实例，而值就是实例本身。当我们需要管理键/值对的数组时，这个模式便开始发挥功效，存储最早实例化的实例，并且返回一个引用到请求中的同一个实例。&lt;/p&gt;
+&lt;h2 id=&quot;注册表模式和单例模式的关系&quot;&gt;&lt;a href=&quot;#注册表模式和单例模式的关系&quot; class=&quot;headerlink&quot; title=&quot;注册表模式和单例模式的关系&quot;&gt;&lt;/a&gt;注册表模式和单例模式的关系&lt;/h2&gt;&lt;p&gt;相同点：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;和单例模式一样，注册表模式也是用于访问全局可重用的对象；&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;区别：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注册表模式不负责创建对象，纯粹用于保持全局存储，可以容纳任何数量的相同类的实例。这使得它非常适合类似于数据库连接和配置对象等的采用单例模式满足不了其需求的情况。&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
+    
+    
+      <category term="设计模式" scheme="https://weizhimiao.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="注册表模式" scheme="https://weizhimiao.github.io/tags/%E6%B3%A8%E5%86%8C%E8%A1%A8%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>PHP常见设计模式之单例模式</title>
+    <link href="https://weizhimiao.github.io/2016/10/14/PHP%E5%B8%B8%E8%A7%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://weizhimiao.github.io/2016/10/14/PHP常见设计模式之单例模式/</id>
+    <published>2016-10-14T12:00:00.000Z</published>
+    <updated>2016-10-14T08:02:28.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="什么是单例模式"><a href="#什么是单例模式" class="headerlink" title="什么是单例模式"></a>什么是单例模式</h2><p>当我们实例化一个对象时，他可以确保我们实例化的这个类将仅有一个实例，并且我们在我们的代码中的任何地方都可以轻易的召回相同的对象。</p>
+<p>就是说，当我们使用单例模式第一次调用对象时，他就会被实例化，之后每一次调用都将会返回同一个对象。</p>
+<p>单例模式通常用于对象，它代表在应用程序不同部分被再三使用的资源，而且始终为同一对象。</p>
+<p>常见的示例包括数据库连接和配置信息。</p>
+<a id="more"></a>
+<h2 id="为什么要使用单例模式"><a href="#为什么要使用单例模式" class="headerlink" title="为什么要使用单例模式"></a>为什么要使用单例模式</h2><p>单例模式最重要的方面就是在于对创建示例的限制能力。如果不这样做的话，应用程序中同一个对象可能会被创建多个实例，可能会造成资源的浪费。</p>
+<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><p>通过创建私有的构造器来实现限制对象创建实例的能力。示例，<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Database</span> <span class="title">extend</span> <span class="title">PDO</span></span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">//私有静态变量，用来保存单例实例</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> $_instance = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">  <span class="comment">//私有构造函数，保证这个类只能被本省的静态发放实例化</span></div><div class="line">  <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">_contruct</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">//调用PDO的构造函数</span></div><div class="line">    <span class="keyword">parent</span>::_contruct(APP_DB_DSN, APP_DB_USER, APP_DB_PWD);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">//获得单例实例的方法。如果实例已经存在，则直接返回；否则先构造一个，然后返回；</span></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getInstance</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(!(<span class="keyword">self</span>::$_instance <span class="keyword">instanceof</span> Database))&#123;</div><div class="line">      <span class="keyword">self</span>::$_instance = <span class="keyword">new</span> Database();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>::$_instance;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>实现单例的三个关键点：</p>
+<ul>
+<li>使用一个静态成员来保持一个单例实例。在这个例子中，我们有一个私有的DB::$_instance属性。</li>
+<li>然后，一个私有的构造函数将决定这个类只能被本身所包含的静态方法实例化。</li>
+<li>DB::getInstance()静态方法将用于数据库类。当他被调用时，DB::getInstance()将实例化一个Database类的对象并将这个对象指定给DB::$_instance属性，然后返回这个对象，或只返回先前已经实例化的对象。</li>
+</ul>
+<p>我们之所以使用单例模式，是因为静态方法可以在全局范围内被访问，无论哪里，当我们需要一个数据库连接时，只需要调用DB::getInstance()即可。</p>
+<h2 id="使用单例模式的问题"><a href="#使用单例模式的问题" class="headerlink" title="使用单例模式的问题"></a>使用单例模式的问题</h2><p><strong>尽管单例思想很伟大，但当我们确实需要多个实例的时候，其局限性就显而易见。</strong></p>
+<blockquote>
+<p>比如，我们拆分了数据库之后，就需要在不同的服务器上进行读写操作。而这时单例就满足不了我们的需求了。</p>
+</blockquote>
+<p>所以单例模式不恰当的使用就会抑制自身的发展和重用。所以当想通过一个类创建两个实例，我们可以考虑通过注册表模式来实现。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;什么是单例模式&quot;&gt;&lt;a href=&quot;#什么是单例模式&quot; class=&quot;headerlink&quot; title=&quot;什么是单例模式&quot;&gt;&lt;/a&gt;什么是单例模式&lt;/h2&gt;&lt;p&gt;当我们实例化一个对象时，他可以确保我们实例化的这个类将仅有一个实例，并且我们在我们的代码中的任何地方都可以轻易的召回相同的对象。&lt;/p&gt;
+&lt;p&gt;就是说，当我们使用单例模式第一次调用对象时，他就会被实例化，之后每一次调用都将会返回同一个对象。&lt;/p&gt;
+&lt;p&gt;单例模式通常用于对象，它代表在应用程序不同部分被再三使用的资源，而且始终为同一对象。&lt;/p&gt;
+&lt;p&gt;常见的示例包括数据库连接和配置信息。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
+    
+    
+      <category term="设计模式" scheme="https://weizhimiao.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+      <category term="单例模式" scheme="https://weizhimiao.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>大话MySQL性能优化</title>
@@ -1026,6 +1177,197 @@
   </entry>
   
   <entry>
+    <title>PHP魔术方法小结</title>
+    <link href="https://weizhimiao.github.io/2016/10/06/PHP%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%B0%8F%E7%BB%93/"/>
+    <id>https://weizhimiao.github.io/2016/10/06/PHP魔术方法小结/</id>
+    <published>2016-10-06T14:30:00.000Z</published>
+    <updated>2016-10-07T13:24:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>魔术方法：</p>
+<blockquote>
+<p>一种特殊的函数</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="构造方法：-construct-或者和类名同名的方法"><a href="#构造方法：-construct-或者和类名同名的方法" class="headerlink" title="构造方法： __construct()  或者和类名同名的方法"></a>构造方法： __construct()  或者和类名同名的方法</h2><p>触发时机：在对象实例化的时候自动触发。</p>
+<p>作用：初始化成员属性</p>
+<p>参数：可以有，可以没有，取决于设定和逻辑</p>
+<p>返回值：没有</p>
+<p>注意：如果构造方法具有参数，且参数没有默认值，在实例化对象时，必须在类名()内添加对应的实参值。</p>
+<h2 id="析构方法-destruct"><a href="#析构方法-destruct" class="headerlink" title="析构方法 __destruct()"></a>析构方法 __destruct()</h2><p>触发时机： 在销毁对象的时候自动触发(unset或者页面执行完毕)</p>
+<p>作用：回收对象使用过程中的资源。</p>
+<p>参数：没有</p>
+<p>返回值：没有</p>
+<h2 id="get"><a href="#get" class="headerlink" title="__get()"></a>__get()</h2><p>触发时机：访问私有成员属性的时候自动触发</p>
+<p>功能：1.防止报错  2.为私有属性访问提供后门</p>
+<p>参数：1个    访问的私有属性名称</p>
+<p>返回值：可以有，可以没有</p>
+<h2 id="set"><a href="#set" class="headerlink" title="__set()"></a>__set()</h2><p>触发时机: 对私有成员属性进行设置值的时候自动触发</p>
+<p>功能:1.屏蔽错误  2.为私有成员属性设置</p>
+<p>参数: 2个   1私有成员属性名  2 要设置的值</p>
+<p>返回值:无</p>
+<h2 id="isset"><a href="#isset" class="headerlink" title="__isset()"></a>__isset()</h2><p>触发时机:对私有成员属性进行isset检测时自动触发</p>
+<p>功能: 1.代替对象外部的isset检测，返回结果</p>
+<p>参数: 1个   1私有成员属性名</p>
+<p>返回值:有  一般返回 isset(属性)结果</p>
+<h2 id="unset"><a href="#unset" class="headerlink" title="__unset()"></a>__unset()</h2><p>触发时机:在对象外部对私有成员属性进行unset操作时自动触发</p>
+<p>功能: 1.代替对象外部的unset操作，返回结果</p>
+<p>参数: 1个   1私有成员属性名</p>
+<p>返回值:无</p>
+<h2 id="sleep"><a href="#sleep" class="headerlink" title="__sleep()"></a>__sleep()</h2><p>触发时机：在对象进行串行化操作时触发.</p>
+<p>功能：指定需要串行化的成员属性.</p>
+<p>参数:无</p>
+<p>返回值: 需要返回一个数组类型，每个元素都是需要串行化的成员属性名.</p>
+<h2 id="wakeup"><a href="#wakeup" class="headerlink" title="__wakeup()"></a>__wakeup()</h2><p>触发时机：.在对象进行反串行化时自动触发</p>
+<p>功能：.反串行化时自动修改部分成员属性值.</p>
+<p>参数:无</p>
+<p>返回值: 无</p>
+<h2 id="tostring"><a href="#tostring" class="headerlink" title="__tostring()"></a>__tostring()</h2><p>触发时机：对一个对象进行echo操作时 自动触发</p>
+<p>功能：简化操作或者为对象输出值</p>
+<p>参数:无</p>
+<p>返回值:必须有且必须为字符串类型.</p>
+<h2 id="clone"><a href="#clone" class="headerlink" title="__clone()"></a>__clone()</h2><p>触发时机:对对象进行克隆操作时自动触发</p>
+<p>功能：修改克隆之后的对象的部分属性值.</p>
+<p>参数:无</p>
+<p>返回值:无</p>
+<p>注意：对象的赋值默认就是引用赋值，不能通过赋值操作获取一个新的对象，获取新对象的操作应该使用克隆操作</p>
+<p>格式： 变量=clone 对象变量</p>
+<h2 id="call（）"><a href="#call（）" class="headerlink" title="__call（）"></a>__call（）</h2><p>触发时机:    调用了类中不存在的方法时自动触发</p>
+<p>功能：1.屏蔽错误  2.为不存在的方法定义个一个功能.</p>
+<p>参数:2个   1 不存在的方法名   2所有的实参组成的数组</p>
+<p>返回值:可有可无(根据实际功能来看)</p>
+<h2 id="autoload-唯一一个类外部的魔术方法"><a href="#autoload-唯一一个类外部的魔术方法" class="headerlink" title="__autoload()(唯一一个类外部的魔术方法)"></a>__autoload()(唯一一个类外部的魔术方法)</h2><p>触发时机:    当页面中需要一个 类而该类不存在时自动触发</p>
+<p>功能：实现类的自动加载.</p>
+<p>参数1个 不存在的类名</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;魔术方法：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;一种特殊的函数&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Linux文件和目录权限小结</title>
+    <link href="https://weizhimiao.github.io/2016/10/06/Linux%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90%E5%B0%8F%E7%BB%93/"/>
+    <id>https://weizhimiao.github.io/2016/10/06/Linux文件和目录权限小结/</id>
+    <published>2016-10-06T14:30:00.000Z</published>
+    <updated>2016-10-07T14:55:11.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="普通权限"><a href="#普通权限" class="headerlink" title="普通权限"></a>普通权限</h2><p>文件的权限：    - r  w  -  -  w  x  r  -  x<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">第一位：文件的类型</div><div class="line">    -：文件</div><div class="line">    d：文件夹</div><div class="line">    l：连接</div><div class="line">    c：字符设备文件</div><div class="line">    b：块设备</div><div class="line">    s：套接口文件</div><div class="line">第二位：所有者读权限</div><div class="line">第三位：所有者写权限</div><div class="line">第四位：所有者执行权限</div><div class="line">第五位：所有者组读权限</div><div class="line">第六位：所有者组写权限</div><div class="line">第七位：所有者组执行权限</div><div class="line">第八位：其他组读权限</div><div class="line">第九位：其他组写权限</div><div class="line">第十位：其他组执行权限</div><div class="line">r		4</div><div class="line">w		2</div><div class="line">x		1</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h2 id="特殊权限（SUID-SGID-SBIT）"><a href="#特殊权限（SUID-SGID-SBIT）" class="headerlink" title="特殊权限（SUID/SGID/SBIT）"></a>特殊权限（SUID/SGID/SBIT）</h2><p>先来看看两个特殊的文件与目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@yufei ~]# ls -l /usr/bin/passwd</div><div class="line">-rwsr-xr-x. 1 root root 26968 Jan 29  2010 /usr/bin/passwd</div><div class="line">[root@yufei ~]# ls -l /usr/bin/wall</div><div class="line">-r-xr-sr-x. 1 root tty 10932 Apr 27  2010 /usr/bin/wall</div><div class="line">[root@yufei ~]# ls -ld /tmp/</div><div class="line">drwxrwxrwt. 7 root root 4096 Jan 20 11:00 /tmp/</div></pre></td></tr></table></figure></p>
+<p>第一个passwd命令在所有者的地方多了一个s，<br>第二个wall命令在用户组的位置多了一个s，<br>第三个tmp目录，多了一个t。</p>
+<p>这是为什么呢？下面我们就来具体看看，这些特殊的权限是什么意思？如何设置？</p>
+<h3 id="特殊权限的介绍Set-UID"><a href="#特殊权限的介绍Set-UID" class="headerlink" title="特殊权限的介绍Set UID**"></a>特殊权限的介绍Set UID**</h3><p>当s这个标志出现在文件所有者的x权限上时，如/usr/bin/passwd这个文件的权限状态：“-rwsr-xr-x.”，此时就被称为Set UID，简称为SUID。那么这个特殊权限的特殊性的作用是什么呢？</p>
+<ul>
+<li>1、SUID权限仅对二进制程序(binary program)有效；</li>
+<li>2、执行者对于该程序需要具有x的可执行权限；</li>
+<li>3、本权限仅在执行该程序的过程中有效(run-time)；</li>
+<li>4、执行者将具有该程序拥有者(owner)的权限。</li>
+</ul>
+<p>SUID的目的就是：让本来没有相应权限的用户运行这个程序时，可以访问他没有权限访问的资源。passwd就是一个很鲜明的例子，下面我们就来了解一下这相passwd执行的过程。</p>
+<p>我们知道，系统中的用户密码是保存在/etc/shadow中的，而这个文件的权限是———-. （这个权限和以前版本的RHEL也有差别，以前的是-r——–）。其实有没有r权限不重要，因为我们的root用户是拥有最高的权限，什么都能干了。关键是要把密码写入到/etc/shadow中。我们知道，除了root用户能修改密码外，用户自己同样也能修改密码，为什么没有写入权限，还能修改密码，就是因为这个SUID功能。</p>
+<p>下面就是passwd这个命令的执行过程</p>
+<ul>
+<li>1、因为/usr/bin/passwd的权限对任何的用户都是可以执行的，所以系统中每个用户都可以执行此命令。</li>
+<li>2、而/usr/bin/passwd这个文件的权限是属于root的。</li>
+<li>3、当某个用户执行/usr/bin/passwd命令的时候，就拥有了root的权限了。</li>
+<li>4、于是某个用户就可以借助root用户的权力，来修改了/etc/shadow文件了。</li>
+<li>5、最后，把密码修改成功。</li>
+</ul>
+<p>注：这个SUID只能运行在二进制的程序上（系统中的一些命令），不能用在脚本上（script），因为脚本还是把很多的程序集合到一起来执行，而不是脚本自身在执行。同样，这个SUID也不能放到目录上，放上也是无效的。</p>
+<h3 id="Set-GID"><a href="#Set-GID" class="headerlink" title="Set GID"></a>Set GID</h3><p>我们前面讲过，当s这个标志出现在文件所有者的x权限上时，则就被称为Set UID。那么把这个s放到文件的所属用户组x位置上的话，就是SGID。如开头的/usr/bin/wall命令。<br>那么SGID的功能是什么呢？和SUID一样，只是SGID是获得该程序所属用户组的权限。</p>
+<p>这相SGID有几点需要我们注意：</p>
+<ul>
+<li>1、SGID对二进制程序有用；</li>
+<li>2、程序执行者对于该程序来说，需具备x的权限；</li>
+<li>3、SGID主要用在目录上；<br>理解了SUID，我想SGID也很容易理解。如果用户在此目录下具有w权限的话，若使用者在此目录下建立新文件，则新文件的群组与此目录的群组相同。</li>
+</ul>
+<h3 id="Sticky-Bit"><a href="#Sticky-Bit" class="headerlink" title="Sticky Bit"></a>Sticky Bit</h3><p>这个就是针对others来设置的了，和上面两个一样，只是功能不同而已。</p>
+<p>SBIT（Sticky Bit）目前只针对目录有效，对于目录的作用是：当用户在该目录下建立文件或目录时，仅有自己与 root才有权力删除。</p>
+<p>最具有代表的就是/tmp目录，任何人都可以在/tmp内增加、修改文件（因为权限全是rwx），但仅有该文件/目录建立者与 root能够删除自己的目录或文件。</p>
+<p><strong>注：这个SBIT对文件不起作用。</strong></p>
+<h3 id="SUID-SGID-SBIT权限设置"><a href="#SUID-SGID-SBIT权限设置" class="headerlink" title="SUID/SGID/SBIT权限设置"></a>SUID/SGID/SBIT权限设置</h3><p>和我们前面说的rwx差不多，也有两种方式，一种是以字符，一种是以数字。</p>
+<ul>
+<li>4 为 SUID ＝ u+s</li>
+<li>2 为 SGID ＝ g+s</li>
+<li>1 为 SBIT ＝ o+t</li>
+</ul>
+<p>下面我们就来看看如何设置，并看看达到的效果。</p>
+<h4 id="先看SUID的作用及设置"><a href="#先看SUID的作用及设置" class="headerlink" title="先看SUID的作用及设置"></a>先看SUID的作用及设置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@yufei ~]# cd /tmp/</div><div class="line">[root@yufei tmp]# cp /usr/bin/passwd ./</div><div class="line">[root@yufei tmp]# mkdir testdir</div></pre></td></tr></table></figure>
+<p>上面两步是在/tmp目录下创建passwd文件和testdir目录</p>
+<p>下面看看这两个的权限<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# ls -l passwd ; ls -ld testdir/</div><div class="line">-rwxr-xr-x. 1 root root 26968 Jan 20 23:27 passwd</div><div class="line">drwxr-xr-x. 2 root root 4096 Jan 20 19:25 testdir/</div></pre></td></tr></table></figure></p>
+<p>我们切换到yufei用户，然后修改自己的密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# su yufei</div><div class="line">[yufei@yufei tmp]$ ./passwd</div><div class="line">Changing password for user yufei.</div><div class="line">Changing password for yufei.</div><div class="line">(current) UNIX password:</div><div class="line">New password:           </div><div class="line">Retype new password:</div><div class="line">passwd: Authentication token manipulation error</div></pre></td></tr></table></figure></p>
+<p>发现上面的yufei改不了自己的密码，为什么呢？就是因为没有权限把密码写入到/etc/shadow中。想让普通用户能修改/etc/shadow的话，那就需要用到SUID了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[yufei@yufei tmp]$ su root</div><div class="line">Password:</div><div class="line">[root@yufei tmp]# chmod u+s passwd</div><div class="line">[root@yufei tmp]# ls -l passwd</div><div class="line">-rwsr-xr-x. 1 root root 26968 Jan 20 23:27 passwd</div></pre></td></tr></table></figure></p>
+<p>看到有SUID权限了，下面再来修改yufei自己的密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[yufei@yufei tmp]$ ./passwd</div><div class="line">Changing password for user yufei.</div><div class="line">Changing password for yufei.</div><div class="line">(current) UNIX password:</div><div class="line">New password:</div><div class="line">Retype new password:</div><div class="line">passwd: all authentication tokens updated successfully.</div></pre></td></tr></table></figure></p>
+<p>我们发现已经成功了。</p>
+<p>我想这一下，你对SUID的作用已经了解了吧。</p>
+<p>如果想把这个改回来（就是把SUID的权限去掉），我们用数字方式来设置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# chmod 0755 passwd</div><div class="line">[root@yufei tmp]# ls -l passwd</div><div class="line">-rwxr-xr-x. 1 root root 26968 Jan 20 23:27 passwd</div></pre></td></tr></table></figure></p>
+<p>OK这样就改过来了，这个数字的原理和我们前面讲的rwx是一样的，只是在最前面设置相应的数字而已。</p>
+<p><strong>注：在普通用户修改自己的密码是，密码要设置的复杂点，否则的话，通过不了认证，普通用户和root用户的权限是不同的。</strong></p>
+<h4 id="再看SGID的作用及设置"><a href="#再看SGID的作用及设置" class="headerlink" title="再看SGID的作用及设置"></a>再看SGID的作用及设置</h4><p>我们以前面建立的/tmp/testdir为例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# ls -ld testdir/</div><div class="line">[root@yufei tmp]# chmod 757 testdir/</div><div class="line">[root@yufei tmp]# ls -ld testdir/</div><div class="line">drwxr-xrwx. 2 root root 4096 Jan 20 19:25 testdir/</div></pre></td></tr></table></figure></p>
+<p>这时候，任何用户对此目录都有写入权限，那么我们就在这个目录里面创建文件与目录，并看看他们的权限如何<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# su yufei</div><div class="line">[yufei@yufei tmp]$ touch testdir/file1</div><div class="line">[yufei@yufei tmp]$ mkdir testdir/dir1</div><div class="line">[yufei@yufei tmp]$ ls -l testdir</div><div class="line">total 0</div><div class="line">drw-rw-r–. 1 yufei yufei 0 Jan 21 10:33 dir1</div><div class="line">-rw-rw-r–. 1 yufei yufei 0 Jan 21 10:33 file1</div></pre></td></tr></table></figure></p>
+<p>这时候的文件与目录权限都是创建者的本身<br>下面我们就来看看，把这个目录加上SGID权限后，再创建文件与目录，会是什么样的效果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">[yufei@yufei tmp]$ su root</div><div class="line">Password:</div><div class="line">[root@yufei tmp]# chmod g+s testdir/</div><div class="line">[root@yufei tmp]# ls -ld testdir/</div><div class="line">drwxr-srwx. 2 root root 4096 Jan 21 10:33 testdir/</div><div class="line">[root@yufei tmp]# su yufei</div><div class="line">[yufei@yufei tmp]$ touch testdir/file2</div><div class="line">[yufei@yufei tmp]$ mkdir testdir/dir2</div><div class="line">[yufei@yufei tmp]$ ls -l testdir/</div><div class="line">total 0</div><div class="line">drw-rw-r–. 1 yufei yufei 0 Jan 21 10:33 dir1</div><div class="line">drw-rw-r–. 1 yufei root  0 Jan 21 10:36 dir2</div><div class="line">-rw-rw-r–. 1 yufei yufei 0 Jan 21 10:33 file1</div><div class="line">-rw-rw-r–. 1 yufei root  0 Jan 21 10:35 file2</div><div class="line">[yufei@yufei tmp]$ ls -ld testdir/</div><div class="line">drwxr-srwx. 2 root root 4096 Jan 21 10:36 testdir/</div></pre></td></tr></table></figure></p>
+<p>这时候我们就发现，file2和dir2的用户组变成了root了，也就是他们上层目录testdir这个目录的所属用户组。<br>这个应用，应用在一个项目的共同开发上，是很方便的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[yufei@yufei tmp]$ su root</div><div class="line">Password:</div><div class="line">[root@yufei tmp]# chmod g-s testdir/</div><div class="line">[yufei@yufei tmp]$ ls -ld testdir/</div><div class="line">drwxr-xrwx. 2 root root 4096 Jan 21 10:36 testdir/</div></pre></td></tr></table></figure></p>
+<p>这样就还原了</p>
+<h4 id="最后我们来看SBIT的作用及设置"><a href="#最后我们来看SBIT的作用及设置" class="headerlink" title="最后我们来看SBIT的作用及设置"></a>最后我们来看SBIT的作用及设置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# rm -fr testdir/*</div><div class="line">[root@yufei tmp]# ls -ld testdir/</div><div class="line">drwxr-xrwx. 2 root root 4096 Jan 21 11:42 testdir/</div></pre></td></tr></table></figure>
+<p>清空/tmp/testdir/目录里面的全部内容。</p>
+<p>我们切换成普通用户，然后再里面创建文件，至少需要两个普通用户来测试这个，如果没有的话，就自己建立。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# su yufei</div><div class="line">[yufei@yufei tmp]$ touch testdir/yufei_file</div><div class="line">[yufei@yufei tmp]$ ls -l testdir/</div><div class="line">total 0</div><div class="line">-rw-rw-r– 1 yufei yufei 0 Jan 21 11:45 yufei_file</div></pre></td></tr></table></figure></p>
+<p>这时候我们建立了一个文件，我们换成另外一个用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[yufei@yufei tmp]$ suopsers</div><div class="line">Password:</div><div class="line">[opsers@yufei tmp]$ ls -ld testdir/</div><div class="line">drwxr-xrwx. 2 root root 4096 Jan 21 11:45 testdir/</div></pre></td></tr></table></figure></p>
+<p>我们看到，虽然其他用户对yufei_file只有只读权限，但由于yufei_file所在的目录，对其他人是全部的权限，所以，我们换其他用户还是可以删除这个文件的，看操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[opsers@yufei tmp]$ rm -f testdir/yufei_file</div><div class="line">[opsers@yufei tmp]$ ls testdir/</div></pre></td></tr></table></figure></p>
+<p>发现我们已经删除了这个不属于我们的权限。<br>下面我们就给这个目录加上SBIT权限，再来看看效果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[opsers@yufei tmp]$ su root</div><div class="line">Password:</div><div class="line">[root@yufei tmp]# chmod o+t testdir</div><div class="line">[root@yufei tmp]# ls -ld testdir/</div><div class="line">drwxr-xrwt. 2 root root 4096 Jan 21 11:49 testdir/</div></pre></td></tr></table></figure></p>
+<p>再一次切换普通用户，创建文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# su yufei</div><div class="line">[yufei@yufei tmp]$ touch testdir/yufei_file</div><div class="line">[yufei@yufei tmp]$ ls -l testdir/yufei_file</div><div class="line">-rw-rw-r– 1 yufei yufei 0 Jan 21 11:51 testdir/yufei_file</div></pre></td></tr></table></figure></p>
+<p>这个文件的权限还是和第一次创建的时候是一样的，我们再换成其他的用户，看看能不能再次删除这个文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[yufei@yufei tmp]$ su opsers</div><div class="line">Password:</div><div class="line">[opsers@yufei tmp]$ rm -f testdir/yufei_file</div><div class="line">rm: cannot remove `testdir/yufei_file’: Operation not permitted</div></pre></td></tr></table></figure></p>
+<p>看到提示，说权限不够了，只能由这个文件的创建者或root用户才能删除。这个我们就不演示了。<br>如果要还原权限的话，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[opsers@yufei tmp]$ su root</div><div class="line">Password:</div><div class="line">[root@yufei tmp]# chmod o-t testdir</div><div class="line">[root@yufei tmp]# ls -ld testdir/</div><div class="line">drwxr-xrwx. 2 root root 4096 Jan 21 11:51 testdir/</div></pre></td></tr></table></figure></p>
+<p>两个需要注意的问题</p>
+<p>OK，关于SUID/SGID/SBIT这些特殊权限的应用和作用我们已经完了。但如果你仔细一点的话，会发现，我并没有用数字方式来更改这个特殊的权限，为什么呢？且看下面的分析。</p>
+<h3 id="question"><a href="#question" class="headerlink" title="question"></a>question</h3><h4 id="问题1：用数字改变目录的特殊权限，不起作用。"><a href="#问题1：用数字改变目录的特殊权限，不起作用。" class="headerlink" title="问题1：用数字改变目录的特殊权限，不起作用。**"></a>问题1：用数字改变目录的特殊权限，不起作用。**</h4><p>我们把/tmp/下面，我们自己建立的实验文件删除<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# rm -fr testdir/</div><div class="line">[root@yufei tmp]# rm -fr passwd</div></pre></td></tr></table></figure></p>
+<p>然后再重新创建一个文件和目录，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# cp /usr/bin/passwd ./</div><div class="line">[root@yufei tmp]# mkdir testdir</div><div class="line">[root@yufei tmp]# ls -l passwd ;ls -ld testdir/</div><div class="line">-rwxr-xr-x 1 root root 26968 Jan 21 12:00 passwd</div><div class="line">drwxr-xr-x 2 root root 4096 Jan 21 12:00 testdir/</div></pre></td></tr></table></figure></p>
+<p>下面我们就来用数字方式来更改这三个特殊的权限，看看会有什么样的结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# chmod 4755 passwd</div><div class="line">[root@yufei tmp]# chmod 3755 testdir/</div><div class="line">[root@yufei tmp]# ls -l passwd ;ls -ld testdir/</div><div class="line">-rwsr-xr-x 1 root root 26968 Jan 21 12:00 passwd</div><div class="line">drwxr-sr-x 2 root root 4096 Jan 21 12:00 testdir/</div></pre></td></tr></table></figure></p>
+<p>发现用这种方式增加这三个特殊权限没有问题，那么我们再把权限改回去看看<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# chmod 0755 passwd</div><div class="line">[root@yufei tmp]# chmod 0755 testdir/</div><div class="line">[root@yufei tmp]# ls -l passwd ;ls -ld testdir/</div><div class="line">-rwxr-xr-x 1 root root 26968 Jan 21 12:00 passwd</div><div class="line">drwxr-sr-x 2 root root 4096 Jan 21 12:00 testdir/</div></pre></td></tr></table></figure></p>
+<p>我们发现，对文件，权限是改回去了，而对于目录，只改回去了SBIT的权限，对SUID和SGID改不回去。这是RHEL6上的实验结果，可能是出于安全性的考虑吗？这个我就不清楚了，也找不到相关的资料。</p>
+<p>所以说，建议大家还是用最明了的方式，直接用+-来更改，无论方法如何，最终能得到结果就OK了。哈哈……</p>
+<h4 id="问题2：为什么会有大写的S和T。"><a href="#问题2：为什么会有大写的S和T。" class="headerlink" title="问题2：为什么会有大写的S和T。"></a>问题2：为什么会有大写的S和T。</h4><p>还是用上面的文件和目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# ls -l passwd ;ls -ld testdir/</div><div class="line">-rwxr-xr-x 1 root root 26968 Jan 21 12:00 passwd</div><div class="line">drwxr-sr-x 2 root root 4096 Jan 21 12:00 testdir/</div></pre></td></tr></table></figure></p>
+<p>我们把passwd和testdir的x权限去掉<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# chmod u-x passwd</div><div class="line">[root@yufei tmp]# chmod o-x testdir/</div><div class="line">[root@yufei tmp]# ls -l passwd ;ls -ld testdir/</div><div class="line">-rw-r-xr-x 1 root root 26968 Jan 21 12:00 passwd</div><div class="line">drwxr-sr– 2 root root 4096 Jan 21 12:00 testdir/</div></pre></td></tr></table></figure></p>
+<p>再给他们加上SUID和SBIT权限<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# chmod u+s passwd</div><div class="line">[root@yufei tmp]# chmod o+t testdir/</div><div class="line">[root@yufei tmp]# ls -l passwd ;ls -ld testdir/</div><div class="line">-rwSr-xr-x 1 root root 26968 Jan 21 12:00 passwd</div><div class="line">drwxr-sr-T 2 root root 4096 Jan 21 12:00 testdir/</div></pre></td></tr></table></figure></p>
+<p>我们看到，这时候的小s和小t已经变成了大S和大T了，为什么呢？因为他们这个位置没有了x权限，如果没有了x权限，根据我们上面讲的内容，其实，这个特殊的权限就相当于一个空的权限，没有意义。也就是说，如果你看到特殊权限位置上变成了大写的了，那么，就说明，这里有问题，需要排除。</p>
+<h2 id="ACL权限（用来解决用户权限身份不足的问题）"><a href="#ACL权限（用来解决用户权限身份不足的问题）" class="headerlink" title="ACL权限（用来解决用户权限身份不足的问题）"></a>ACL权限（用来解决用户权限身份不足的问题）</h2><p>问题：只要使用ACL权限递归赋予权限，就很有可能出现权限溢出的危险（应为文件和目录的wrx权限含义是不同的）</p>
+<p>举例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/www</div><div class="line">	sc --&gt; root</div><div class="line">	61 --&gt;  fgroup</div><div class="line">	o</div><div class="line">	770</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# mkdir /www</div><div class="line">[root@localhost ~]# chmod 770 /www/</div><div class="line">[root@localhost ~]# groupadd fgroup</div><div class="line">[root@localhost ~]# gpasswd -a sc fgroup</div></pre></td></tr></table></figure>
+<p>正在将用户“sc”加入到“fgroup”组中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# gpasswd -a aa fgroup</div></pre></td></tr></table></figure></p>
+<p>正在将用户“aa”加入到“fgroup”组中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# chown root:fgroup  /www</div><div class="line">[root@localhost ~]# ll -d  /www/</div><div class="line">drwxrwx--- 2 root fgroup 4096 04-25 14:56 /www/</div></pre></td></tr></table></figure></p>
+<h3 id="getfacl-文件名-查询文件的acl权限"><a href="#getfacl-文件名-查询文件的acl权限" class="headerlink" title="getfacl  文件名        查询文件的acl权限"></a>getfacl  文件名        查询文件的acl权限</h3><h3 id="setfacl-选项-文件名-设定acl权限"><a href="#setfacl-选项-文件名-设定acl权限" class="headerlink" title="setfacl  选项  文件名        设定acl权限"></a>setfacl  选项  文件名        设定acl权限</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">	-m			设定权限</div><div class="line">	-b			删除权限</div><div class="line">setfacl  -m  u:用户名:权限   文件名</div><div class="line">setfacl  -m  g:组名：权限   文件名</div><div class="line">setfacl  -m u:aa:rwx  /test		给test目录赋予aa是读写执行的acl权限</div><div class="line"></div><div class="line">setfacl -m u:cc:rx -R soft/		赋予递归acl权限，只能赋予目录</div><div class="line">		-R  递归</div><div class="line">setfacl  -b  /test		删除acl权限</div></pre></td></tr></table></figure>
+<h3 id="setfacl-m-d-u-aa-rwx-R-test-acl默认权限。"><a href="#setfacl-m-d-u-aa-rwx-R-test-acl默认权限。" class="headerlink" title="setfacl  -m d:u:aa:rwx -R /test    acl默认权限。"></a>setfacl  -m d:u:aa:rwx -R /test    acl默认权限。</h3><blockquote>
+<p>注意：默认权限只能赋予目录</p>
+<p>注意：如果给目录赋予acl权限，两条命令都要输入</p>
+</blockquote>
+<ul>
+<li>-R 递归</li>
+<li>-m  u:用户名：-R 权限        只对已经存在的文件生效</li>
+<li>-m  d:u:用户名：-R 权限        只对未来要新建的文件生效</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;普通权限&quot;&gt;&lt;a href=&quot;#普通权限&quot; class=&quot;headerlink&quot; title=&quot;普通权限&quot;&gt;&lt;/a&gt;普通权限&lt;/h2&gt;&lt;p&gt;文件的权限：    - r  w  -  -  w  x  r  -  x&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;第一位：文件的类型&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    -：文件&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    d：文件夹&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    l：连接&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    c：字符设备文件&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    b：块设备&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    s：套接口文件&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第二位：所有者读权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第三位：所有者写权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第四位：所有者执行权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第五位：所有者组读权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第六位：所有者组写权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第七位：所有者组执行权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第八位：其他组读权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第九位：其他组写权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第十位：其他组执行权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;r		4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;w		2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;x		1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Linux常用命令</title>
     <link href="https://weizhimiao.github.io/2016/10/06/Linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"/>
     <id>https://weizhimiao.github.io/2016/10/06/Linux常用命令/</id>
@@ -1209,6 +1551,84 @@
   </entry>
   
   <entry>
+    <title>Linux目录结构介绍</title>
+    <link href="https://weizhimiao.github.io/2016/10/06/Linux%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E4%BB%8B%E7%BB%8D/"/>
+    <id>https://weizhimiao.github.io/2016/10/06/Linux目录结构介绍/</id>
+    <published>2016-10-06T14:30:00.000Z</published>
+    <updated>2016-10-07T14:50:52.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://www.centoscn.com/uploads/allimg58981378314368.jpg" alt="Linux目录结构"></p>
+<a id="more"></a>
+<h2 id="Linux常见目录"><a href="#Linux常见目录" class="headerlink" title="Linux常见目录"></a>Linux常见目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">/		根目录</div><div class="line">/bin		命令保存目录（普通用户就可以读取的命令）</div><div class="line">/boot		启动目录，启动相关文件</div><div class="line">/dev		设备文件保存目录</div><div class="line">/etc		配置文件保存目录</div><div class="line">/etc/rc.d		主要在记录一些开关机过程中的 scripts 档案， scripts 有点像是 DOS 下的批次档（.bat檔名）</div><div class="line">/etc/rc.d/init.d	所以服务预设的启动 scripts 都是放在这里的，例如要启动与关闭 iptables 的话，可以：</div><div class="line">/etc/rc.d/init.d/iptables start</div><div class="line">/etc/rc.d/init.d/iptables stop</div><div class="line">/etc/xinetd.d		这个路径在较新的 Linux distribution 当中才有，由于早期的版本用来开启服务的档案是 inetd.conf ，但是在较新的版本中，开启服务的项目已经变成使用 xinetd.conf 这个档案，因此，你若需要启动一些额外的服务的话，在 Mandrake 9.0 或者是 Red Hat 7.0 以后就要到 /etc/xinetd.d 这个目录下了。</div><div class="line">/etc/X11	这是与 X windows 有关的设定文件所在的目录，尤其里面的 XF86Config-4 更是重要呢！</div><div class="line">/etc/opt/		/opt/的配置文件</div><div class="line">/etc/sgml/		SGML的配置文件</div><div class="line">/etc/xml/		XML的配置文件</div><div class="line">/home		普通用户的家目录</div><div class="line">/lib		系统库保存目录</div><div class="line">/mnt		系统挂载目录（空目录）（一般建议将光盘、U盘等都关在在此目录下）</div><div class="line">/media		挂载目录（空目录）</div><div class="line">/root		超级用户的家目录</div><div class="line">/tmp		临时目录</div><div class="line">/sbin		命令保存目录（超级用户才能使用的目录）</div><div class="line">/proc		直接写入内存的</div><div class="line">/proc/cpuinfo		关于处理器的信息，如类型、厂家、型号和性能等</div><div class="line">/proc/devices		当前运行内核所配置的所有设备清单</div><div class="line">/proc/dma		当前正在使用的DMA通道。/proc/filesystems 当前运行内核所配置的文件系统</div><div class="line">/proc/interrupts		正在使用的中断，和曾经有多少个中断</div><div class="line">/proc/ioports		当前正在使用的I/O端口</div><div class="line">/sys		同上</div><div class="line">/usr		系统软件资源目录</div><div class="line">/usr/bin/		系统命令（普通用户）</div><div class="line">/usr/sbin/		系统命令（超级用户）</div><div class="line">/usr/locate/		源码包安装的软件存放目录</div><div class="line">/usr/X11		同/usr/X11R6 （/usr/X11R6的符号连接）</div><div class="line">/usr/X11R6		X Window System存放相关档案的目录</div><div class="line">/usr/X11R6/bin		大量的小X-WINDOWS应用程序（也可能是一些在其它子目录下大执行文件的符号连接）</div><div class="line">/usr/include		一些套件的header檔。基本上，当我们在以 tarball 方式（ *.tar.gz 的方式安装软件）安装某些数据时，会使用到的一些函式库都在这个目录底下喔！</div><div class="line">/usr/lib		内含许多程序与子程序所需的函式库。</div><div class="line">/usr/local		在你安装完了 Linux 之后，基本上所有的配备你都有了，但是软件总是可以升级的，例如你要升级你的 proxy 服务，则通常软件预设的安装地方就是在 /usr/local 中（ local 是『当地』的意思），同时，安装完毕之后所得到的执行文件，为了与系统原先的执行文件有分别，因此升级后的执行档通常摆在 /usr/local/bin 这个地方。</div><div class="line">/usr/local/bin		可能是用户安装的小的应用程序，和一些在/usr/local目录下大应用程序的符号连接</div><div class="line">/usr/share/doc		放置一些系统说明文件的地方，例如你安装了 lilo 了，那么在该目录底下找一找，就可以查到 lilo 的说明文件了！很是便利！</div><div class="line">/usr/share/man		放置一些程序的说明文件的地方，那是什么？呵呵！就是你使用 man 的时候，会去查询的路径呀！例如你使用 man ls 这个指令时，就会查出 /usr/share/man/man1/ls.1.bz2 这个说明档的内容啰！</div><div class="line">/usr/src		这是放置核心原始码的预设目录，未来我们要编译核心的时候，就必须到这个目录底下呦！</div><div class="line">/var		系统相关文档内容</div><div class="line">/var/log/	系统日志位置</div><div class="line">/var/spool/mail/		系统默认邮箱位置</div><div class="line">/var/lib/mysql/		默认安装的mysql的库文件目录</div><div class="line">/ost+found /		分区的复目录（当系统非正常关机时，可以进行恢复，每个分区都会有这样一个lost+found目录）系统不正常产生错误时，会将一些遗失的片段放置于此目录下，通常这个目录会自动出现在装置目录下。例如你加装一棵硬盘于 /disk 中，那在这个目录下就会自动产生一个这样的目录 /disk/lost+found</div></pre></td></tr></table></figure>
+<h2 id="etc-目录"><a href="#etc-目录" class="headerlink" title="/etc/目录"></a>/etc/目录</h2><p>特定主机系统范围内的配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">/etc/rc /etc/rc.d		启动、或改变运行级时运行的scripts或scripts的目录.</div><div class="line">/etc/rc*.d</div><div class="line">/etc/hosts			本地域名解析文件</div><div class="line">/etc/sysconfig/network	IP、掩码、网关、主机名配置</div><div class="line">/etc/resolv.conf		DNS服务器配置</div><div class="line">/etc/fstab			开机自动挂载系统，所有分区开机都会自动挂载</div><div class="line">/etc/inittab	设定系统启动时Init进程将把系统设置成什么样的runlevel及加载相关的启动文件配置</div><div class="line">/etc/exports			设置NFS系统用的配置文件路径</div><div class="line">/etc/init.d			这个目录来存放系统启动脚本</div><div class="line">/etc/profile,</div><div class="line">/etc/csh.login,</div><div class="line">/etc/csh.cshrc		全局系统环境配置变量</div><div class="line">/etc/issue			认证前的输出信息，默认输出版本内核信息</div><div class="line">/etc/motd			设置认证后的输出信息，</div><div class="line">/etc/mtab		当前安装的文件系统列表.由scripts初始化，并由mount 命令自动更新.需要一个当前安装的文件系统的列表时使用，例如df 命令</div><div class="line">/etc/group			类似/etc/passwd ，但说明的不是用户而是组.</div><div class="line">/etc/passwd		用户数据库，其中的域给出了用户名、真实姓名、家目录、加密的口令和用户的其他信息.</div><div class="line">/etc/shadow		在安装了影子口令软件的系统上的影子口令文件.影子口令文件将</div><div class="line">/etc/passwd 		文件中的加密口令移动到/etc/shadow 中，而后者只对root可读.这使破译口令更困难.</div><div class="line">/etc/sudoers			可以sudo命令的配置文件</div><div class="line">/etc/syslog.conf		系统日志参数配置</div><div class="line">/etc/login.defs		设置用户帐号限制的文件</div><div class="line">/etc/securetty		确认安全终端，即哪个终端允许root登录.一般只列出虚拟控制台，这样就不可能(至少很困难)通过modem或网络闯入系统并得到超级用户特权.</div><div class="line">/etc/printcap			类似/etc/termcap ，但针对打印机.语法不同.</div><div class="line">/etc/shells		列出可信任的shell.chsh 命令允许用户在本文件指定范围内改变登录shell.提供一台机器FTP服务的服务进程ftpd 检查用户shell是否列在 /etc/shells 文件中，如果不是将不允许该用户登录.</div><div class="line">/etc/xinetd.d		如果服务器是通过xinetd模式运行的，它的脚本要放在这个目录下。有些系统没有这个目录，比如Slackware，有些老的版本也没有。在Redhat Fedora中比较新的版本中存在。</div><div class="line">/etc/opt/			/opt/的配置文件</div><div class="line">/etc/X11/			X_Window系统(版本11)的配置文件</div><div class="line">/etc/sgml/			SGML的配置文件</div><div class="line">/etc/xml/			XML的配置文件</div><div class="line">/etc/skel/			默认创建用户时，把该目录拷贝到家目录下</div></pre></td></tr></table></figure>
+<h2 id="usr-目录"><a href="#usr-目录" class="headerlink" title="/usr/目录"></a>/usr/目录</h2><p>默认软件都会存于该目录下。用于存储只读用户数据的第二层次；包含绝大多数的用户工具和应用程序。</p>
+<h2 id="var-目录"><a href="#var-目录" class="headerlink" title="/var/目录"></a>/var/目录</h2><p>/var 包括系统一般运行时要改变的数据.每个系统是特定的，即不通过网络与其他计算机共享.</p>
+<h2 id="proc-目录"><a href="#proc-目录" class="headerlink" title="/proc/目录"></a>/proc/目录</h2><p>虚拟文件系统，将内核与进程状态归档为文本文件（系统信息都存放这目录下）。</p>
+<p>例如：uptime、 network。在Linux中，对应Procfs格式挂载。该目录下文件只能看不能改（包括root）</p>
+<h2 id="dev-目录"><a href="#dev-目录" class="headerlink" title="/dev/目录"></a>/dev/目录</h2><p>设备文件分为两种：</p>
+<ul>
+<li>块设备文件(b)</li>
+<li>字符设备文件(c)</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;http://www.centoscn.com/uploads/allimg58981378314368.jpg&quot; alt=&quot;Linux目录结构&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Linux中的用户和用户组管理</title>
+    <link href="https://weizhimiao.github.io/2016/10/06/Linux%E4%B8%AD%E7%9A%84%E7%94%A8%E6%88%B7%E5%92%8C%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86/"/>
+    <id>https://weizhimiao.github.io/2016/10/06/Linux中的用户和用户组管理/</id>
+    <published>2016-10-06T14:30:00.000Z</published>
+    <updated>2016-10-07T14:41:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>用户账号的管理主要涉及到用户账号的添加、删除和修改。<br>添加用户账号就是在系统中创建一个新账号，然后为新账号分配用户号、用户组、主目录和登录Shell等。</p>
+<a id="more"></a>
+<h2 id="关于用户管理的配置文件说明"><a href="#关于用户管理的配置文件说明" class="headerlink" title="关于用户管理的配置文件说明"></a>关于用户管理的配置文件说明</h2><h3 id="用户信息文件："><a href="#用户信息文件：" class="headerlink" title="用户信息文件："></a>用户信息文件：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/passwd</div></pre></td></tr></table></figure>
+<p>文件内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">root:x:0:0:root:/root:/bin/bash</div><div class="line"></div><div class="line">第一位：用户名</div><div class="line">第二位：密码位（只是一个密码标志，真实密码并不是存在这）</div><div class="line">第三位：UID	用户ID</div><div class="line">		0	超级管理员</div><div class="line">		1-499	系统用户（伪用户）</div><div class="line">		&gt;500	普通用户</div><div class="line">第四位：GID	初始组ID</div><div class="line">第五位：用户说明</div><div class="line">第六位：家目录</div><div class="line">第七位：用户登录之后的权限</div></pre></td></tr></table></figure>
+<h3 id="影子文件："><a href="#影子文件：" class="headerlink" title="影子文件："></a>影子文件：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/shadow</div></pre></td></tr></table></figure>
+<p>文件内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root:$6$w5RBeFe7Y1bixrQR$tp0zHL1bMmAVv0SAS56LsCOyZ4KUj3V0GI0dRZ4KSlf.ggisV7dwiQ8s5xebcZghVDxwlYTjN6qKGU9zRc.En1:16247:0:99999:7:::</div></pre></td></tr></table></figure>
+<p>说明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">#</div><div class="line"># 第一字段：用户名（也被称为登录名），在/etc/shadow中，用户名和/etc/passwd 是相同的，</div><div class="line"># 这样就把passwd 和shadow中用的用户记录联系在一起；这个字段是非空的；</div><div class="line">#</div><div class="line"># 第二字段：密码（已被加密），如果是有些用户在这段是x，表示这个用户不能登录到系统；这个字段是非空的；</div><div class="line">#</div><div class="line"># 第三字段：上次修改口令的时间；这个时间是从1970年01月01日算起到最近一次修改口令的时间间隔（天数），</div><div class="line"># 您可以通过passwd 来修改用户的密码，然后查看/etc/shadow中此字段的变化；</div><div class="line">#</div><div class="line"># 第四字段：两次修改口令间隔最少的天数；如果设置为0,则禁用此功能；也就是说用户必须经过多少天才能修改其口令；</div><div class="line"># 此项功能用处不是太大；默认值是通过/etc/login.defs文件定义中获取，PASS_MIN_DAYS 中有定义；</div><div class="line">#</div><div class="line"># 第五字段：两次修改口令间隔最多的天数；这个能增强管理员管理用户口令的时效性，应该说在增强了系统的安全性；</div><div class="line"># 如果是系统默认值，是在添加用户时由/etc/login.defs文件定义中获取，在PASS_MAX_DAYS 中定义；</div><div class="line">#</div><div class="line"># 第六字段：提前多少天警告用户口令将过期；当用户登录系统后，系统登录程序提醒用户口令将要作废；</div><div class="line"># 如果是系统默认值，是在添加用户时由/etc/login.defs文件定义中获取，在PASS_WARN_AGE 中定义；</div><div class="line">#</div><div class="line"># 第七字段：在口令过期之后多少天禁用此用户；此字段表示用户口令作废多少天后，系统会禁用此用户，</div><div class="line"># 也就是说系统会不能再让此用户登录，也不会提示用户过期，是完全禁用；</div><div class="line">#</div><div class="line"># 第八字段：用户过期日期；此字段指定了用户作废的天数（从1970年的1月1日开始的天数），</div><div class="line"># 如果这个字段的值为空，帐号永久可用；</div><div class="line">#</div><div class="line"># 第九字段：保留字段，目前为空，以备将来Linux发展之用；</div></pre></td></tr></table></figure>
+<h3 id="组信息文件："><a href="#组信息文件：" class="headerlink" title="组信息文件："></a>组信息文件：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/group</div></pre></td></tr></table></figure>
+<p>文件内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">bin:x:1:bin,daemon</div><div class="line">组名：组密码位：组ID：组中的附加用户</div><div class="line">初始组：每个用户初始组只能有一个，初始组只能有一个，一般都是和用户名相同的组作为初始组</div><div class="line">附加组：每个用户可以属于多个附加组。要把用户加入组，都是加入附加组</div></pre></td></tr></table></figure>
+<h2 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">useradd	用户名</div><div class="line">useradd  选项    用户名		</div><div class="line">		-g	组名		指定初始组（但最好不要手动指定）</div><div class="line">		-G	组名		指定附加组（把用户加入组，使用附加组）</div><div class="line">		-c	说明		添加说明</div><div class="line">		-d	目录		手工指定家目录</div><div class="line">		-s	/bin/bash	手工指定用户登录后之后的权限</div></pre></td></tr></table></figure>
+<p>例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">useradd  -g  aa  bb   		添加bb用户，同时指定初始组aa</div><div class="line">useradd   -G   user1   aa		添加用户aa，指定附加组为user1</div></pre></td></tr></table></figure>
+<h2 id="设定密码"><a href="#设定密码" class="headerlink" title="设定密码"></a>设定密码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">passwd	用户名</div><div class="line">passwd		改变当前用户密码（普通用户只能通过这种方式来更改自己的密码）</div><div class="line">passwd	root	更改root的密码</div></pre></td></tr></table></figure>
+<h2 id="删除密码"><a href="#删除密码" class="headerlink" title="删除密码"></a>删除密码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">userdel	-r  用户名</div><div class="line">		    -r 	连带家目录一起删除</div></pre></td></tr></table></figure>
+<h2 id="添加组"><a href="#添加组" class="headerlink" title="添加组"></a>添加组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">groupadd	组名</div></pre></td></tr></table></figure>
+<h2 id="删除组"><a href="#删除组" class="headerlink" title="删除组"></a>删除组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">groupdel	组名		注意：组中没有初始用户</div></pre></td></tr></table></figure>
+<h2 id="把已经存在的用户加入组"><a href="#把已经存在的用户加入组" class="headerlink" title="把已经存在的用户加入组"></a>把已经存在的用户加入组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gpasswd	-a  用户名   组名	用户加入组</div><div class="line">gpasswd	-d  用户名  组名	把用户从组中删除</div></pre></td></tr></table></figure>
+<h2 id="查看用户相关信息"><a href="#查看用户相关信息" class="headerlink" title="查看用户相关信息"></a>查看用户相关信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id   用户名		显示用户的UID，初始组，和附加组</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">例#id   sc   </div><div class="line">uid=0(root) gid=0(root) 组=0(root)</div></pre></td></tr></table></figure>
+<h2 id="用户间的相互切换"><a href="#用户间的相互切换" class="headerlink" title="用户间的相互切换"></a>用户间的相互切换</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">su  -  用户名		切换用户身份</div><div class="line">  	-	连带环境变量一起切换</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;用户账号的管理主要涉及到用户账号的添加、删除和修改。&lt;br&gt;添加用户账号就是在系统中创建一个新账号，然后为新账号分配用户号、用户组、主目录和登录Shell等。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Linux网络配置</title>
     <link href="https://weizhimiao.github.io/2016/10/06/Linux%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/"/>
     <id>https://weizhimiao.github.io/2016/10/06/Linux网络配置/</id>
@@ -1287,40 +1707,6 @@
     <summary type="html">
     
       &lt;p&gt;&lt;img src=&quot;http://n.sinaimg.cn/games/3ece443e/20161007/ifconfig.png&quot; alt=&quot;Linux网络配置&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Linux目录结构介绍</title>
-    <link href="https://weizhimiao.github.io/2016/10/06/Linux%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E4%BB%8B%E7%BB%8D/"/>
-    <id>https://weizhimiao.github.io/2016/10/06/Linux目录结构介绍/</id>
-    <published>2016-10-06T14:30:00.000Z</published>
-    <updated>2016-10-07T14:50:52.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="http://www.centoscn.com/uploads/allimg58981378314368.jpg" alt="Linux目录结构"></p>
-<a id="more"></a>
-<h2 id="Linux常见目录"><a href="#Linux常见目录" class="headerlink" title="Linux常见目录"></a>Linux常见目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">/		根目录</div><div class="line">/bin		命令保存目录（普通用户就可以读取的命令）</div><div class="line">/boot		启动目录，启动相关文件</div><div class="line">/dev		设备文件保存目录</div><div class="line">/etc		配置文件保存目录</div><div class="line">/etc/rc.d		主要在记录一些开关机过程中的 scripts 档案， scripts 有点像是 DOS 下的批次档（.bat檔名）</div><div class="line">/etc/rc.d/init.d	所以服务预设的启动 scripts 都是放在这里的，例如要启动与关闭 iptables 的话，可以：</div><div class="line">/etc/rc.d/init.d/iptables start</div><div class="line">/etc/rc.d/init.d/iptables stop</div><div class="line">/etc/xinetd.d		这个路径在较新的 Linux distribution 当中才有，由于早期的版本用来开启服务的档案是 inetd.conf ，但是在较新的版本中，开启服务的项目已经变成使用 xinetd.conf 这个档案，因此，你若需要启动一些额外的服务的话，在 Mandrake 9.0 或者是 Red Hat 7.0 以后就要到 /etc/xinetd.d 这个目录下了。</div><div class="line">/etc/X11	这是与 X windows 有关的设定文件所在的目录，尤其里面的 XF86Config-4 更是重要呢！</div><div class="line">/etc/opt/		/opt/的配置文件</div><div class="line">/etc/sgml/		SGML的配置文件</div><div class="line">/etc/xml/		XML的配置文件</div><div class="line">/home		普通用户的家目录</div><div class="line">/lib		系统库保存目录</div><div class="line">/mnt		系统挂载目录（空目录）（一般建议将光盘、U盘等都关在在此目录下）</div><div class="line">/media		挂载目录（空目录）</div><div class="line">/root		超级用户的家目录</div><div class="line">/tmp		临时目录</div><div class="line">/sbin		命令保存目录（超级用户才能使用的目录）</div><div class="line">/proc		直接写入内存的</div><div class="line">/proc/cpuinfo		关于处理器的信息，如类型、厂家、型号和性能等</div><div class="line">/proc/devices		当前运行内核所配置的所有设备清单</div><div class="line">/proc/dma		当前正在使用的DMA通道。/proc/filesystems 当前运行内核所配置的文件系统</div><div class="line">/proc/interrupts		正在使用的中断，和曾经有多少个中断</div><div class="line">/proc/ioports		当前正在使用的I/O端口</div><div class="line">/sys		同上</div><div class="line">/usr		系统软件资源目录</div><div class="line">/usr/bin/		系统命令（普通用户）</div><div class="line">/usr/sbin/		系统命令（超级用户）</div><div class="line">/usr/locate/		源码包安装的软件存放目录</div><div class="line">/usr/X11		同/usr/X11R6 （/usr/X11R6的符号连接）</div><div class="line">/usr/X11R6		X Window System存放相关档案的目录</div><div class="line">/usr/X11R6/bin		大量的小X-WINDOWS应用程序（也可能是一些在其它子目录下大执行文件的符号连接）</div><div class="line">/usr/include		一些套件的header檔。基本上，当我们在以 tarball 方式（ *.tar.gz 的方式安装软件）安装某些数据时，会使用到的一些函式库都在这个目录底下喔！</div><div class="line">/usr/lib		内含许多程序与子程序所需的函式库。</div><div class="line">/usr/local		在你安装完了 Linux 之后，基本上所有的配备你都有了，但是软件总是可以升级的，例如你要升级你的 proxy 服务，则通常软件预设的安装地方就是在 /usr/local 中（ local 是『当地』的意思），同时，安装完毕之后所得到的执行文件，为了与系统原先的执行文件有分别，因此升级后的执行档通常摆在 /usr/local/bin 这个地方。</div><div class="line">/usr/local/bin		可能是用户安装的小的应用程序，和一些在/usr/local目录下大应用程序的符号连接</div><div class="line">/usr/share/doc		放置一些系统说明文件的地方，例如你安装了 lilo 了，那么在该目录底下找一找，就可以查到 lilo 的说明文件了！很是便利！</div><div class="line">/usr/share/man		放置一些程序的说明文件的地方，那是什么？呵呵！就是你使用 man 的时候，会去查询的路径呀！例如你使用 man ls 这个指令时，就会查出 /usr/share/man/man1/ls.1.bz2 这个说明档的内容啰！</div><div class="line">/usr/src		这是放置核心原始码的预设目录，未来我们要编译核心的时候，就必须到这个目录底下呦！</div><div class="line">/var		系统相关文档内容</div><div class="line">/var/log/	系统日志位置</div><div class="line">/var/spool/mail/		系统默认邮箱位置</div><div class="line">/var/lib/mysql/		默认安装的mysql的库文件目录</div><div class="line">/ost+found /		分区的复目录（当系统非正常关机时，可以进行恢复，每个分区都会有这样一个lost+found目录）系统不正常产生错误时，会将一些遗失的片段放置于此目录下，通常这个目录会自动出现在装置目录下。例如你加装一棵硬盘于 /disk 中，那在这个目录下就会自动产生一个这样的目录 /disk/lost+found</div></pre></td></tr></table></figure>
-<h2 id="etc-目录"><a href="#etc-目录" class="headerlink" title="/etc/目录"></a>/etc/目录</h2><p>特定主机系统范围内的配置文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">/etc/rc /etc/rc.d		启动、或改变运行级时运行的scripts或scripts的目录.</div><div class="line">/etc/rc*.d</div><div class="line">/etc/hosts			本地域名解析文件</div><div class="line">/etc/sysconfig/network	IP、掩码、网关、主机名配置</div><div class="line">/etc/resolv.conf		DNS服务器配置</div><div class="line">/etc/fstab			开机自动挂载系统，所有分区开机都会自动挂载</div><div class="line">/etc/inittab	设定系统启动时Init进程将把系统设置成什么样的runlevel及加载相关的启动文件配置</div><div class="line">/etc/exports			设置NFS系统用的配置文件路径</div><div class="line">/etc/init.d			这个目录来存放系统启动脚本</div><div class="line">/etc/profile,</div><div class="line">/etc/csh.login,</div><div class="line">/etc/csh.cshrc		全局系统环境配置变量</div><div class="line">/etc/issue			认证前的输出信息，默认输出版本内核信息</div><div class="line">/etc/motd			设置认证后的输出信息，</div><div class="line">/etc/mtab		当前安装的文件系统列表.由scripts初始化，并由mount 命令自动更新.需要一个当前安装的文件系统的列表时使用，例如df 命令</div><div class="line">/etc/group			类似/etc/passwd ，但说明的不是用户而是组.</div><div class="line">/etc/passwd		用户数据库，其中的域给出了用户名、真实姓名、家目录、加密的口令和用户的其他信息.</div><div class="line">/etc/shadow		在安装了影子口令软件的系统上的影子口令文件.影子口令文件将</div><div class="line">/etc/passwd 		文件中的加密口令移动到/etc/shadow 中，而后者只对root可读.这使破译口令更困难.</div><div class="line">/etc/sudoers			可以sudo命令的配置文件</div><div class="line">/etc/syslog.conf		系统日志参数配置</div><div class="line">/etc/login.defs		设置用户帐号限制的文件</div><div class="line">/etc/securetty		确认安全终端，即哪个终端允许root登录.一般只列出虚拟控制台，这样就不可能(至少很困难)通过modem或网络闯入系统并得到超级用户特权.</div><div class="line">/etc/printcap			类似/etc/termcap ，但针对打印机.语法不同.</div><div class="line">/etc/shells		列出可信任的shell.chsh 命令允许用户在本文件指定范围内改变登录shell.提供一台机器FTP服务的服务进程ftpd 检查用户shell是否列在 /etc/shells 文件中，如果不是将不允许该用户登录.</div><div class="line">/etc/xinetd.d		如果服务器是通过xinetd模式运行的，它的脚本要放在这个目录下。有些系统没有这个目录，比如Slackware，有些老的版本也没有。在Redhat Fedora中比较新的版本中存在。</div><div class="line">/etc/opt/			/opt/的配置文件</div><div class="line">/etc/X11/			X_Window系统(版本11)的配置文件</div><div class="line">/etc/sgml/			SGML的配置文件</div><div class="line">/etc/xml/			XML的配置文件</div><div class="line">/etc/skel/			默认创建用户时，把该目录拷贝到家目录下</div></pre></td></tr></table></figure>
-<h2 id="usr-目录"><a href="#usr-目录" class="headerlink" title="/usr/目录"></a>/usr/目录</h2><p>默认软件都会存于该目录下。用于存储只读用户数据的第二层次；包含绝大多数的用户工具和应用程序。</p>
-<h2 id="var-目录"><a href="#var-目录" class="headerlink" title="/var/目录"></a>/var/目录</h2><p>/var 包括系统一般运行时要改变的数据.每个系统是特定的，即不通过网络与其他计算机共享.</p>
-<h2 id="proc-目录"><a href="#proc-目录" class="headerlink" title="/proc/目录"></a>/proc/目录</h2><p>虚拟文件系统，将内核与进程状态归档为文本文件（系统信息都存放这目录下）。</p>
-<p>例如：uptime、 network。在Linux中，对应Procfs格式挂载。该目录下文件只能看不能改（包括root）</p>
-<h2 id="dev-目录"><a href="#dev-目录" class="headerlink" title="/dev/目录"></a>/dev/目录</h2><p>设备文件分为两种：</p>
-<ul>
-<li>块设备文件(b)</li>
-<li>字符设备文件(c)</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;http://www.centoscn.com/uploads/allimg58981378314368.jpg&quot; alt=&quot;Linux目录结构&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -1425,241 +1811,6 @@
     </summary>
     
       <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Linux中的用户和用户组管理</title>
-    <link href="https://weizhimiao.github.io/2016/10/06/Linux%E4%B8%AD%E7%9A%84%E7%94%A8%E6%88%B7%E5%92%8C%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86/"/>
-    <id>https://weizhimiao.github.io/2016/10/06/Linux中的用户和用户组管理/</id>
-    <published>2016-10-06T14:30:00.000Z</published>
-    <updated>2016-10-07T14:41:03.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>用户账号的管理主要涉及到用户账号的添加、删除和修改。<br>添加用户账号就是在系统中创建一个新账号，然后为新账号分配用户号、用户组、主目录和登录Shell等。</p>
-<a id="more"></a>
-<h2 id="关于用户管理的配置文件说明"><a href="#关于用户管理的配置文件说明" class="headerlink" title="关于用户管理的配置文件说明"></a>关于用户管理的配置文件说明</h2><h3 id="用户信息文件："><a href="#用户信息文件：" class="headerlink" title="用户信息文件："></a>用户信息文件：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/passwd</div></pre></td></tr></table></figure>
-<p>文件内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">root:x:0:0:root:/root:/bin/bash</div><div class="line"></div><div class="line">第一位：用户名</div><div class="line">第二位：密码位（只是一个密码标志，真实密码并不是存在这）</div><div class="line">第三位：UID	用户ID</div><div class="line">		0	超级管理员</div><div class="line">		1-499	系统用户（伪用户）</div><div class="line">		&gt;500	普通用户</div><div class="line">第四位：GID	初始组ID</div><div class="line">第五位：用户说明</div><div class="line">第六位：家目录</div><div class="line">第七位：用户登录之后的权限</div></pre></td></tr></table></figure>
-<h3 id="影子文件："><a href="#影子文件：" class="headerlink" title="影子文件："></a>影子文件：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/shadow</div></pre></td></tr></table></figure>
-<p>文件内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root:$6$w5RBeFe7Y1bixrQR$tp0zHL1bMmAVv0SAS56LsCOyZ4KUj3V0GI0dRZ4KSlf.ggisV7dwiQ8s5xebcZghVDxwlYTjN6qKGU9zRc.En1:16247:0:99999:7:::</div></pre></td></tr></table></figure>
-<p>说明：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">#</div><div class="line"># 第一字段：用户名（也被称为登录名），在/etc/shadow中，用户名和/etc/passwd 是相同的，</div><div class="line"># 这样就把passwd 和shadow中用的用户记录联系在一起；这个字段是非空的；</div><div class="line">#</div><div class="line"># 第二字段：密码（已被加密），如果是有些用户在这段是x，表示这个用户不能登录到系统；这个字段是非空的；</div><div class="line">#</div><div class="line"># 第三字段：上次修改口令的时间；这个时间是从1970年01月01日算起到最近一次修改口令的时间间隔（天数），</div><div class="line"># 您可以通过passwd 来修改用户的密码，然后查看/etc/shadow中此字段的变化；</div><div class="line">#</div><div class="line"># 第四字段：两次修改口令间隔最少的天数；如果设置为0,则禁用此功能；也就是说用户必须经过多少天才能修改其口令；</div><div class="line"># 此项功能用处不是太大；默认值是通过/etc/login.defs文件定义中获取，PASS_MIN_DAYS 中有定义；</div><div class="line">#</div><div class="line"># 第五字段：两次修改口令间隔最多的天数；这个能增强管理员管理用户口令的时效性，应该说在增强了系统的安全性；</div><div class="line"># 如果是系统默认值，是在添加用户时由/etc/login.defs文件定义中获取，在PASS_MAX_DAYS 中定义；</div><div class="line">#</div><div class="line"># 第六字段：提前多少天警告用户口令将过期；当用户登录系统后，系统登录程序提醒用户口令将要作废；</div><div class="line"># 如果是系统默认值，是在添加用户时由/etc/login.defs文件定义中获取，在PASS_WARN_AGE 中定义；</div><div class="line">#</div><div class="line"># 第七字段：在口令过期之后多少天禁用此用户；此字段表示用户口令作废多少天后，系统会禁用此用户，</div><div class="line"># 也就是说系统会不能再让此用户登录，也不会提示用户过期，是完全禁用；</div><div class="line">#</div><div class="line"># 第八字段：用户过期日期；此字段指定了用户作废的天数（从1970年的1月1日开始的天数），</div><div class="line"># 如果这个字段的值为空，帐号永久可用；</div><div class="line">#</div><div class="line"># 第九字段：保留字段，目前为空，以备将来Linux发展之用；</div></pre></td></tr></table></figure>
-<h3 id="组信息文件："><a href="#组信息文件：" class="headerlink" title="组信息文件："></a>组信息文件：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/group</div></pre></td></tr></table></figure>
-<p>文件内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">bin:x:1:bin,daemon</div><div class="line">组名：组密码位：组ID：组中的附加用户</div><div class="line">初始组：每个用户初始组只能有一个，初始组只能有一个，一般都是和用户名相同的组作为初始组</div><div class="line">附加组：每个用户可以属于多个附加组。要把用户加入组，都是加入附加组</div></pre></td></tr></table></figure>
-<h2 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">useradd	用户名</div><div class="line">useradd  选项    用户名		</div><div class="line">		-g	组名		指定初始组（但最好不要手动指定）</div><div class="line">		-G	组名		指定附加组（把用户加入组，使用附加组）</div><div class="line">		-c	说明		添加说明</div><div class="line">		-d	目录		手工指定家目录</div><div class="line">		-s	/bin/bash	手工指定用户登录后之后的权限</div></pre></td></tr></table></figure>
-<p>例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">useradd  -g  aa  bb   		添加bb用户，同时指定初始组aa</div><div class="line">useradd   -G   user1   aa		添加用户aa，指定附加组为user1</div></pre></td></tr></table></figure>
-<h2 id="设定密码"><a href="#设定密码" class="headerlink" title="设定密码"></a>设定密码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">passwd	用户名</div><div class="line">passwd		改变当前用户密码（普通用户只能通过这种方式来更改自己的密码）</div><div class="line">passwd	root	更改root的密码</div></pre></td></tr></table></figure>
-<h2 id="删除密码"><a href="#删除密码" class="headerlink" title="删除密码"></a>删除密码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">userdel	-r  用户名</div><div class="line">		    -r 	连带家目录一起删除</div></pre></td></tr></table></figure>
-<h2 id="添加组"><a href="#添加组" class="headerlink" title="添加组"></a>添加组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">groupadd	组名</div></pre></td></tr></table></figure>
-<h2 id="删除组"><a href="#删除组" class="headerlink" title="删除组"></a>删除组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">groupdel	组名		注意：组中没有初始用户</div></pre></td></tr></table></figure>
-<h2 id="把已经存在的用户加入组"><a href="#把已经存在的用户加入组" class="headerlink" title="把已经存在的用户加入组"></a>把已经存在的用户加入组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gpasswd	-a  用户名   组名	用户加入组</div><div class="line">gpasswd	-d  用户名  组名	把用户从组中删除</div></pre></td></tr></table></figure>
-<h2 id="查看用户相关信息"><a href="#查看用户相关信息" class="headerlink" title="查看用户相关信息"></a>查看用户相关信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id   用户名		显示用户的UID，初始组，和附加组</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">例#id   sc   </div><div class="line">uid=0(root) gid=0(root) 组=0(root)</div></pre></td></tr></table></figure>
-<h2 id="用户间的相互切换"><a href="#用户间的相互切换" class="headerlink" title="用户间的相互切换"></a>用户间的相互切换</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">su  -  用户名		切换用户身份</div><div class="line">  	-	连带环境变量一起切换</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;用户账号的管理主要涉及到用户账号的添加、删除和修改。&lt;br&gt;添加用户账号就是在系统中创建一个新账号，然后为新账号分配用户号、用户组、主目录和登录Shell等。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Linux文件和目录权限小结</title>
-    <link href="https://weizhimiao.github.io/2016/10/06/Linux%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90%E5%B0%8F%E7%BB%93/"/>
-    <id>https://weizhimiao.github.io/2016/10/06/Linux文件和目录权限小结/</id>
-    <published>2016-10-06T14:30:00.000Z</published>
-    <updated>2016-10-07T14:55:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="普通权限"><a href="#普通权限" class="headerlink" title="普通权限"></a>普通权限</h2><p>文件的权限：    - r  w  -  -  w  x  r  -  x<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">第一位：文件的类型</div><div class="line">    -：文件</div><div class="line">    d：文件夹</div><div class="line">    l：连接</div><div class="line">    c：字符设备文件</div><div class="line">    b：块设备</div><div class="line">    s：套接口文件</div><div class="line">第二位：所有者读权限</div><div class="line">第三位：所有者写权限</div><div class="line">第四位：所有者执行权限</div><div class="line">第五位：所有者组读权限</div><div class="line">第六位：所有者组写权限</div><div class="line">第七位：所有者组执行权限</div><div class="line">第八位：其他组读权限</div><div class="line">第九位：其他组写权限</div><div class="line">第十位：其他组执行权限</div><div class="line">r		4</div><div class="line">w		2</div><div class="line">x		1</div></pre></td></tr></table></figure></p>
-<a id="more"></a>
-<h2 id="特殊权限（SUID-SGID-SBIT）"><a href="#特殊权限（SUID-SGID-SBIT）" class="headerlink" title="特殊权限（SUID/SGID/SBIT）"></a>特殊权限（SUID/SGID/SBIT）</h2><p>先来看看两个特殊的文件与目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@yufei ~]# ls -l /usr/bin/passwd</div><div class="line">-rwsr-xr-x. 1 root root 26968 Jan 29  2010 /usr/bin/passwd</div><div class="line">[root@yufei ~]# ls -l /usr/bin/wall</div><div class="line">-r-xr-sr-x. 1 root tty 10932 Apr 27  2010 /usr/bin/wall</div><div class="line">[root@yufei ~]# ls -ld /tmp/</div><div class="line">drwxrwxrwt. 7 root root 4096 Jan 20 11:00 /tmp/</div></pre></td></tr></table></figure></p>
-<p>第一个passwd命令在所有者的地方多了一个s，<br>第二个wall命令在用户组的位置多了一个s，<br>第三个tmp目录，多了一个t。</p>
-<p>这是为什么呢？下面我们就来具体看看，这些特殊的权限是什么意思？如何设置？</p>
-<h3 id="特殊权限的介绍Set-UID"><a href="#特殊权限的介绍Set-UID" class="headerlink" title="特殊权限的介绍Set UID**"></a>特殊权限的介绍Set UID**</h3><p>当s这个标志出现在文件所有者的x权限上时，如/usr/bin/passwd这个文件的权限状态：“-rwsr-xr-x.”，此时就被称为Set UID，简称为SUID。那么这个特殊权限的特殊性的作用是什么呢？</p>
-<ul>
-<li>1、SUID权限仅对二进制程序(binary program)有效；</li>
-<li>2、执行者对于该程序需要具有x的可执行权限；</li>
-<li>3、本权限仅在执行该程序的过程中有效(run-time)；</li>
-<li>4、执行者将具有该程序拥有者(owner)的权限。</li>
-</ul>
-<p>SUID的目的就是：让本来没有相应权限的用户运行这个程序时，可以访问他没有权限访问的资源。passwd就是一个很鲜明的例子，下面我们就来了解一下这相passwd执行的过程。</p>
-<p>我们知道，系统中的用户密码是保存在/etc/shadow中的，而这个文件的权限是———-. （这个权限和以前版本的RHEL也有差别，以前的是-r——–）。其实有没有r权限不重要，因为我们的root用户是拥有最高的权限，什么都能干了。关键是要把密码写入到/etc/shadow中。我们知道，除了root用户能修改密码外，用户自己同样也能修改密码，为什么没有写入权限，还能修改密码，就是因为这个SUID功能。</p>
-<p>下面就是passwd这个命令的执行过程</p>
-<ul>
-<li>1、因为/usr/bin/passwd的权限对任何的用户都是可以执行的，所以系统中每个用户都可以执行此命令。</li>
-<li>2、而/usr/bin/passwd这个文件的权限是属于root的。</li>
-<li>3、当某个用户执行/usr/bin/passwd命令的时候，就拥有了root的权限了。</li>
-<li>4、于是某个用户就可以借助root用户的权力，来修改了/etc/shadow文件了。</li>
-<li>5、最后，把密码修改成功。</li>
-</ul>
-<p>注：这个SUID只能运行在二进制的程序上（系统中的一些命令），不能用在脚本上（script），因为脚本还是把很多的程序集合到一起来执行，而不是脚本自身在执行。同样，这个SUID也不能放到目录上，放上也是无效的。</p>
-<h3 id="Set-GID"><a href="#Set-GID" class="headerlink" title="Set GID"></a>Set GID</h3><p>我们前面讲过，当s这个标志出现在文件所有者的x权限上时，则就被称为Set UID。那么把这个s放到文件的所属用户组x位置上的话，就是SGID。如开头的/usr/bin/wall命令。<br>那么SGID的功能是什么呢？和SUID一样，只是SGID是获得该程序所属用户组的权限。</p>
-<p>这相SGID有几点需要我们注意：</p>
-<ul>
-<li>1、SGID对二进制程序有用；</li>
-<li>2、程序执行者对于该程序来说，需具备x的权限；</li>
-<li>3、SGID主要用在目录上；<br>理解了SUID，我想SGID也很容易理解。如果用户在此目录下具有w权限的话，若使用者在此目录下建立新文件，则新文件的群组与此目录的群组相同。</li>
-</ul>
-<h3 id="Sticky-Bit"><a href="#Sticky-Bit" class="headerlink" title="Sticky Bit"></a>Sticky Bit</h3><p>这个就是针对others来设置的了，和上面两个一样，只是功能不同而已。</p>
-<p>SBIT（Sticky Bit）目前只针对目录有效，对于目录的作用是：当用户在该目录下建立文件或目录时，仅有自己与 root才有权力删除。</p>
-<p>最具有代表的就是/tmp目录，任何人都可以在/tmp内增加、修改文件（因为权限全是rwx），但仅有该文件/目录建立者与 root能够删除自己的目录或文件。</p>
-<p><strong>注：这个SBIT对文件不起作用。</strong></p>
-<h3 id="SUID-SGID-SBIT权限设置"><a href="#SUID-SGID-SBIT权限设置" class="headerlink" title="SUID/SGID/SBIT权限设置"></a>SUID/SGID/SBIT权限设置</h3><p>和我们前面说的rwx差不多，也有两种方式，一种是以字符，一种是以数字。</p>
-<ul>
-<li>4 为 SUID ＝ u+s</li>
-<li>2 为 SGID ＝ g+s</li>
-<li>1 为 SBIT ＝ o+t</li>
-</ul>
-<p>下面我们就来看看如何设置，并看看达到的效果。</p>
-<h4 id="先看SUID的作用及设置"><a href="#先看SUID的作用及设置" class="headerlink" title="先看SUID的作用及设置"></a>先看SUID的作用及设置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@yufei ~]# cd /tmp/</div><div class="line">[root@yufei tmp]# cp /usr/bin/passwd ./</div><div class="line">[root@yufei tmp]# mkdir testdir</div></pre></td></tr></table></figure>
-<p>上面两步是在/tmp目录下创建passwd文件和testdir目录</p>
-<p>下面看看这两个的权限<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# ls -l passwd ; ls -ld testdir/</div><div class="line">-rwxr-xr-x. 1 root root 26968 Jan 20 23:27 passwd</div><div class="line">drwxr-xr-x. 2 root root 4096 Jan 20 19:25 testdir/</div></pre></td></tr></table></figure></p>
-<p>我们切换到yufei用户，然后修改自己的密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# su yufei</div><div class="line">[yufei@yufei tmp]$ ./passwd</div><div class="line">Changing password for user yufei.</div><div class="line">Changing password for yufei.</div><div class="line">(current) UNIX password:</div><div class="line">New password:           </div><div class="line">Retype new password:</div><div class="line">passwd: Authentication token manipulation error</div></pre></td></tr></table></figure></p>
-<p>发现上面的yufei改不了自己的密码，为什么呢？就是因为没有权限把密码写入到/etc/shadow中。想让普通用户能修改/etc/shadow的话，那就需要用到SUID了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[yufei@yufei tmp]$ su root</div><div class="line">Password:</div><div class="line">[root@yufei tmp]# chmod u+s passwd</div><div class="line">[root@yufei tmp]# ls -l passwd</div><div class="line">-rwsr-xr-x. 1 root root 26968 Jan 20 23:27 passwd</div></pre></td></tr></table></figure></p>
-<p>看到有SUID权限了，下面再来修改yufei自己的密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[yufei@yufei tmp]$ ./passwd</div><div class="line">Changing password for user yufei.</div><div class="line">Changing password for yufei.</div><div class="line">(current) UNIX password:</div><div class="line">New password:</div><div class="line">Retype new password:</div><div class="line">passwd: all authentication tokens updated successfully.</div></pre></td></tr></table></figure></p>
-<p>我们发现已经成功了。</p>
-<p>我想这一下，你对SUID的作用已经了解了吧。</p>
-<p>如果想把这个改回来（就是把SUID的权限去掉），我们用数字方式来设置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# chmod 0755 passwd</div><div class="line">[root@yufei tmp]# ls -l passwd</div><div class="line">-rwxr-xr-x. 1 root root 26968 Jan 20 23:27 passwd</div></pre></td></tr></table></figure></p>
-<p>OK这样就改过来了，这个数字的原理和我们前面讲的rwx是一样的，只是在最前面设置相应的数字而已。</p>
-<p><strong>注：在普通用户修改自己的密码是，密码要设置的复杂点，否则的话，通过不了认证，普通用户和root用户的权限是不同的。</strong></p>
-<h4 id="再看SGID的作用及设置"><a href="#再看SGID的作用及设置" class="headerlink" title="再看SGID的作用及设置"></a>再看SGID的作用及设置</h4><p>我们以前面建立的/tmp/testdir为例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# ls -ld testdir/</div><div class="line">[root@yufei tmp]# chmod 757 testdir/</div><div class="line">[root@yufei tmp]# ls -ld testdir/</div><div class="line">drwxr-xrwx. 2 root root 4096 Jan 20 19:25 testdir/</div></pre></td></tr></table></figure></p>
-<p>这时候，任何用户对此目录都有写入权限，那么我们就在这个目录里面创建文件与目录，并看看他们的权限如何<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# su yufei</div><div class="line">[yufei@yufei tmp]$ touch testdir/file1</div><div class="line">[yufei@yufei tmp]$ mkdir testdir/dir1</div><div class="line">[yufei@yufei tmp]$ ls -l testdir</div><div class="line">total 0</div><div class="line">drw-rw-r–. 1 yufei yufei 0 Jan 21 10:33 dir1</div><div class="line">-rw-rw-r–. 1 yufei yufei 0 Jan 21 10:33 file1</div></pre></td></tr></table></figure></p>
-<p>这时候的文件与目录权限都是创建者的本身<br>下面我们就来看看，把这个目录加上SGID权限后，再创建文件与目录，会是什么样的效果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">[yufei@yufei tmp]$ su root</div><div class="line">Password:</div><div class="line">[root@yufei tmp]# chmod g+s testdir/</div><div class="line">[root@yufei tmp]# ls -ld testdir/</div><div class="line">drwxr-srwx. 2 root root 4096 Jan 21 10:33 testdir/</div><div class="line">[root@yufei tmp]# su yufei</div><div class="line">[yufei@yufei tmp]$ touch testdir/file2</div><div class="line">[yufei@yufei tmp]$ mkdir testdir/dir2</div><div class="line">[yufei@yufei tmp]$ ls -l testdir/</div><div class="line">total 0</div><div class="line">drw-rw-r–. 1 yufei yufei 0 Jan 21 10:33 dir1</div><div class="line">drw-rw-r–. 1 yufei root  0 Jan 21 10:36 dir2</div><div class="line">-rw-rw-r–. 1 yufei yufei 0 Jan 21 10:33 file1</div><div class="line">-rw-rw-r–. 1 yufei root  0 Jan 21 10:35 file2</div><div class="line">[yufei@yufei tmp]$ ls -ld testdir/</div><div class="line">drwxr-srwx. 2 root root 4096 Jan 21 10:36 testdir/</div></pre></td></tr></table></figure></p>
-<p>这时候我们就发现，file2和dir2的用户组变成了root了，也就是他们上层目录testdir这个目录的所属用户组。<br>这个应用，应用在一个项目的共同开发上，是很方便的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[yufei@yufei tmp]$ su root</div><div class="line">Password:</div><div class="line">[root@yufei tmp]# chmod g-s testdir/</div><div class="line">[yufei@yufei tmp]$ ls -ld testdir/</div><div class="line">drwxr-xrwx. 2 root root 4096 Jan 21 10:36 testdir/</div></pre></td></tr></table></figure></p>
-<p>这样就还原了</p>
-<h4 id="最后我们来看SBIT的作用及设置"><a href="#最后我们来看SBIT的作用及设置" class="headerlink" title="最后我们来看SBIT的作用及设置"></a>最后我们来看SBIT的作用及设置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# rm -fr testdir/*</div><div class="line">[root@yufei tmp]# ls -ld testdir/</div><div class="line">drwxr-xrwx. 2 root root 4096 Jan 21 11:42 testdir/</div></pre></td></tr></table></figure>
-<p>清空/tmp/testdir/目录里面的全部内容。</p>
-<p>我们切换成普通用户，然后再里面创建文件，至少需要两个普通用户来测试这个，如果没有的话，就自己建立。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# su yufei</div><div class="line">[yufei@yufei tmp]$ touch testdir/yufei_file</div><div class="line">[yufei@yufei tmp]$ ls -l testdir/</div><div class="line">total 0</div><div class="line">-rw-rw-r– 1 yufei yufei 0 Jan 21 11:45 yufei_file</div></pre></td></tr></table></figure></p>
-<p>这时候我们建立了一个文件，我们换成另外一个用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[yufei@yufei tmp]$ suopsers</div><div class="line">Password:</div><div class="line">[opsers@yufei tmp]$ ls -ld testdir/</div><div class="line">drwxr-xrwx. 2 root root 4096 Jan 21 11:45 testdir/</div></pre></td></tr></table></figure></p>
-<p>我们看到，虽然其他用户对yufei_file只有只读权限，但由于yufei_file所在的目录，对其他人是全部的权限，所以，我们换其他用户还是可以删除这个文件的，看操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[opsers@yufei tmp]$ rm -f testdir/yufei_file</div><div class="line">[opsers@yufei tmp]$ ls testdir/</div></pre></td></tr></table></figure></p>
-<p>发现我们已经删除了这个不属于我们的权限。<br>下面我们就给这个目录加上SBIT权限，再来看看效果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[opsers@yufei tmp]$ su root</div><div class="line">Password:</div><div class="line">[root@yufei tmp]# chmod o+t testdir</div><div class="line">[root@yufei tmp]# ls -ld testdir/</div><div class="line">drwxr-xrwt. 2 root root 4096 Jan 21 11:49 testdir/</div></pre></td></tr></table></figure></p>
-<p>再一次切换普通用户，创建文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# su yufei</div><div class="line">[yufei@yufei tmp]$ touch testdir/yufei_file</div><div class="line">[yufei@yufei tmp]$ ls -l testdir/yufei_file</div><div class="line">-rw-rw-r– 1 yufei yufei 0 Jan 21 11:51 testdir/yufei_file</div></pre></td></tr></table></figure></p>
-<p>这个文件的权限还是和第一次创建的时候是一样的，我们再换成其他的用户，看看能不能再次删除这个文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[yufei@yufei tmp]$ su opsers</div><div class="line">Password:</div><div class="line">[opsers@yufei tmp]$ rm -f testdir/yufei_file</div><div class="line">rm: cannot remove `testdir/yufei_file’: Operation not permitted</div></pre></td></tr></table></figure></p>
-<p>看到提示，说权限不够了，只能由这个文件的创建者或root用户才能删除。这个我们就不演示了。<br>如果要还原权限的话，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[opsers@yufei tmp]$ su root</div><div class="line">Password:</div><div class="line">[root@yufei tmp]# chmod o-t testdir</div><div class="line">[root@yufei tmp]# ls -ld testdir/</div><div class="line">drwxr-xrwx. 2 root root 4096 Jan 21 11:51 testdir/</div></pre></td></tr></table></figure></p>
-<p>两个需要注意的问题</p>
-<p>OK，关于SUID/SGID/SBIT这些特殊权限的应用和作用我们已经完了。但如果你仔细一点的话，会发现，我并没有用数字方式来更改这个特殊的权限，为什么呢？且看下面的分析。</p>
-<h3 id="question"><a href="#question" class="headerlink" title="question"></a>question</h3><h4 id="问题1：用数字改变目录的特殊权限，不起作用。"><a href="#问题1：用数字改变目录的特殊权限，不起作用。" class="headerlink" title="问题1：用数字改变目录的特殊权限，不起作用。**"></a>问题1：用数字改变目录的特殊权限，不起作用。**</h4><p>我们把/tmp/下面，我们自己建立的实验文件删除<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# rm -fr testdir/</div><div class="line">[root@yufei tmp]# rm -fr passwd</div></pre></td></tr></table></figure></p>
-<p>然后再重新创建一个文件和目录，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# cp /usr/bin/passwd ./</div><div class="line">[root@yufei tmp]# mkdir testdir</div><div class="line">[root@yufei tmp]# ls -l passwd ;ls -ld testdir/</div><div class="line">-rwxr-xr-x 1 root root 26968 Jan 21 12:00 passwd</div><div class="line">drwxr-xr-x 2 root root 4096 Jan 21 12:00 testdir/</div></pre></td></tr></table></figure></p>
-<p>下面我们就来用数字方式来更改这三个特殊的权限，看看会有什么样的结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# chmod 4755 passwd</div><div class="line">[root@yufei tmp]# chmod 3755 testdir/</div><div class="line">[root@yufei tmp]# ls -l passwd ;ls -ld testdir/</div><div class="line">-rwsr-xr-x 1 root root 26968 Jan 21 12:00 passwd</div><div class="line">drwxr-sr-x 2 root root 4096 Jan 21 12:00 testdir/</div></pre></td></tr></table></figure></p>
-<p>发现用这种方式增加这三个特殊权限没有问题，那么我们再把权限改回去看看<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# chmod 0755 passwd</div><div class="line">[root@yufei tmp]# chmod 0755 testdir/</div><div class="line">[root@yufei tmp]# ls -l passwd ;ls -ld testdir/</div><div class="line">-rwxr-xr-x 1 root root 26968 Jan 21 12:00 passwd</div><div class="line">drwxr-sr-x 2 root root 4096 Jan 21 12:00 testdir/</div></pre></td></tr></table></figure></p>
-<p>我们发现，对文件，权限是改回去了，而对于目录，只改回去了SBIT的权限，对SUID和SGID改不回去。这是RHEL6上的实验结果，可能是出于安全性的考虑吗？这个我就不清楚了，也找不到相关的资料。</p>
-<p>所以说，建议大家还是用最明了的方式，直接用+-来更改，无论方法如何，最终能得到结果就OK了。哈哈……</p>
-<h4 id="问题2：为什么会有大写的S和T。"><a href="#问题2：为什么会有大写的S和T。" class="headerlink" title="问题2：为什么会有大写的S和T。"></a>问题2：为什么会有大写的S和T。</h4><p>还是用上面的文件和目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# ls -l passwd ;ls -ld testdir/</div><div class="line">-rwxr-xr-x 1 root root 26968 Jan 21 12:00 passwd</div><div class="line">drwxr-sr-x 2 root root 4096 Jan 21 12:00 testdir/</div></pre></td></tr></table></figure></p>
-<p>我们把passwd和testdir的x权限去掉<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# chmod u-x passwd</div><div class="line">[root@yufei tmp]# chmod o-x testdir/</div><div class="line">[root@yufei tmp]# ls -l passwd ;ls -ld testdir/</div><div class="line">-rw-r-xr-x 1 root root 26968 Jan 21 12:00 passwd</div><div class="line">drwxr-sr– 2 root root 4096 Jan 21 12:00 testdir/</div></pre></td></tr></table></figure></p>
-<p>再给他们加上SUID和SBIT权限<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[root@yufei tmp]# chmod u+s passwd</div><div class="line">[root@yufei tmp]# chmod o+t testdir/</div><div class="line">[root@yufei tmp]# ls -l passwd ;ls -ld testdir/</div><div class="line">-rwSr-xr-x 1 root root 26968 Jan 21 12:00 passwd</div><div class="line">drwxr-sr-T 2 root root 4096 Jan 21 12:00 testdir/</div></pre></td></tr></table></figure></p>
-<p>我们看到，这时候的小s和小t已经变成了大S和大T了，为什么呢？因为他们这个位置没有了x权限，如果没有了x权限，根据我们上面讲的内容，其实，这个特殊的权限就相当于一个空的权限，没有意义。也就是说，如果你看到特殊权限位置上变成了大写的了，那么，就说明，这里有问题，需要排除。</p>
-<h2 id="ACL权限（用来解决用户权限身份不足的问题）"><a href="#ACL权限（用来解决用户权限身份不足的问题）" class="headerlink" title="ACL权限（用来解决用户权限身份不足的问题）"></a>ACL权限（用来解决用户权限身份不足的问题）</h2><p>问题：只要使用ACL权限递归赋予权限，就很有可能出现权限溢出的危险（应为文件和目录的wrx权限含义是不同的）</p>
-<p>举例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">/www</div><div class="line">	sc --&gt; root</div><div class="line">	61 --&gt;  fgroup</div><div class="line">	o</div><div class="line">	770</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# mkdir /www</div><div class="line">[root@localhost ~]# chmod 770 /www/</div><div class="line">[root@localhost ~]# groupadd fgroup</div><div class="line">[root@localhost ~]# gpasswd -a sc fgroup</div></pre></td></tr></table></figure>
-<p>正在将用户“sc”加入到“fgroup”组中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# gpasswd -a aa fgroup</div></pre></td></tr></table></figure></p>
-<p>正在将用户“aa”加入到“fgroup”组中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# chown root:fgroup  /www</div><div class="line">[root@localhost ~]# ll -d  /www/</div><div class="line">drwxrwx--- 2 root fgroup 4096 04-25 14:56 /www/</div></pre></td></tr></table></figure></p>
-<h3 id="getfacl-文件名-查询文件的acl权限"><a href="#getfacl-文件名-查询文件的acl权限" class="headerlink" title="getfacl  文件名        查询文件的acl权限"></a>getfacl  文件名        查询文件的acl权限</h3><h3 id="setfacl-选项-文件名-设定acl权限"><a href="#setfacl-选项-文件名-设定acl权限" class="headerlink" title="setfacl  选项  文件名        设定acl权限"></a>setfacl  选项  文件名        设定acl权限</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">	-m			设定权限</div><div class="line">	-b			删除权限</div><div class="line">setfacl  -m  u:用户名:权限   文件名</div><div class="line">setfacl  -m  g:组名：权限   文件名</div><div class="line">setfacl  -m u:aa:rwx  /test		给test目录赋予aa是读写执行的acl权限</div><div class="line"></div><div class="line">setfacl -m u:cc:rx -R soft/		赋予递归acl权限，只能赋予目录</div><div class="line">		-R  递归</div><div class="line">setfacl  -b  /test		删除acl权限</div></pre></td></tr></table></figure>
-<h3 id="setfacl-m-d-u-aa-rwx-R-test-acl默认权限。"><a href="#setfacl-m-d-u-aa-rwx-R-test-acl默认权限。" class="headerlink" title="setfacl  -m d:u:aa:rwx -R /test    acl默认权限。"></a>setfacl  -m d:u:aa:rwx -R /test    acl默认权限。</h3><blockquote>
-<p>注意：默认权限只能赋予目录</p>
-<p>注意：如果给目录赋予acl权限，两条命令都要输入</p>
-</blockquote>
-<ul>
-<li>-R 递归</li>
-<li>-m  u:用户名：-R 权限        只对已经存在的文件生效</li>
-<li>-m  d:u:用户名：-R 权限        只对未来要新建的文件生效</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;普通权限&quot;&gt;&lt;a href=&quot;#普通权限&quot; class=&quot;headerlink&quot; title=&quot;普通权限&quot;&gt;&lt;/a&gt;普通权限&lt;/h2&gt;&lt;p&gt;文件的权限：    - r  w  -  -  w  x  r  -  x&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;10&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;11&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;12&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;13&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;14&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;15&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;16&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;17&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;18&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;19&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;第一位：文件的类型&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    -：文件&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    d：文件夹&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    l：连接&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    c：字符设备文件&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    b：块设备&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    s：套接口文件&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第二位：所有者读权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第三位：所有者写权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第四位：所有者执行权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第五位：所有者组读权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第六位：所有者组写权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第七位：所有者组执行权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第八位：其他组读权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第九位：其他组写权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;第十位：其他组执行权限&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;r		4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;w		2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;x		1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>PHP魔术方法小结</title>
-    <link href="https://weizhimiao.github.io/2016/10/06/PHP%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%B0%8F%E7%BB%93/"/>
-    <id>https://weizhimiao.github.io/2016/10/06/PHP魔术方法小结/</id>
-    <published>2016-10-06T14:30:00.000Z</published>
-    <updated>2016-10-07T13:24:03.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>魔术方法：</p>
-<blockquote>
-<p>一种特殊的函数</p>
-</blockquote>
-<a id="more"></a>
-<h2 id="构造方法：-construct-或者和类名同名的方法"><a href="#构造方法：-construct-或者和类名同名的方法" class="headerlink" title="构造方法： __construct()  或者和类名同名的方法"></a>构造方法： __construct()  或者和类名同名的方法</h2><p>触发时机：在对象实例化的时候自动触发。</p>
-<p>作用：初始化成员属性</p>
-<p>参数：可以有，可以没有，取决于设定和逻辑</p>
-<p>返回值：没有</p>
-<p>注意：如果构造方法具有参数，且参数没有默认值，在实例化对象时，必须在类名()内添加对应的实参值。</p>
-<h2 id="析构方法-destruct"><a href="#析构方法-destruct" class="headerlink" title="析构方法 __destruct()"></a>析构方法 __destruct()</h2><p>触发时机： 在销毁对象的时候自动触发(unset或者页面执行完毕)</p>
-<p>作用：回收对象使用过程中的资源。</p>
-<p>参数：没有</p>
-<p>返回值：没有</p>
-<h2 id="get"><a href="#get" class="headerlink" title="__get()"></a>__get()</h2><p>触发时机：访问私有成员属性的时候自动触发</p>
-<p>功能：1.防止报错  2.为私有属性访问提供后门</p>
-<p>参数：1个    访问的私有属性名称</p>
-<p>返回值：可以有，可以没有</p>
-<h2 id="set"><a href="#set" class="headerlink" title="__set()"></a>__set()</h2><p>触发时机: 对私有成员属性进行设置值的时候自动触发</p>
-<p>功能:1.屏蔽错误  2.为私有成员属性设置</p>
-<p>参数: 2个   1私有成员属性名  2 要设置的值</p>
-<p>返回值:无</p>
-<h2 id="isset"><a href="#isset" class="headerlink" title="__isset()"></a>__isset()</h2><p>触发时机:对私有成员属性进行isset检测时自动触发</p>
-<p>功能: 1.代替对象外部的isset检测，返回结果</p>
-<p>参数: 1个   1私有成员属性名</p>
-<p>返回值:有  一般返回 isset(属性)结果</p>
-<h2 id="unset"><a href="#unset" class="headerlink" title="__unset()"></a>__unset()</h2><p>触发时机:在对象外部对私有成员属性进行unset操作时自动触发</p>
-<p>功能: 1.代替对象外部的unset操作，返回结果</p>
-<p>参数: 1个   1私有成员属性名</p>
-<p>返回值:无</p>
-<h2 id="sleep"><a href="#sleep" class="headerlink" title="__sleep()"></a>__sleep()</h2><p>触发时机：在对象进行串行化操作时触发.</p>
-<p>功能：指定需要串行化的成员属性.</p>
-<p>参数:无</p>
-<p>返回值: 需要返回一个数组类型，每个元素都是需要串行化的成员属性名.</p>
-<h2 id="wakeup"><a href="#wakeup" class="headerlink" title="__wakeup()"></a>__wakeup()</h2><p>触发时机：.在对象进行反串行化时自动触发</p>
-<p>功能：.反串行化时自动修改部分成员属性值.</p>
-<p>参数:无</p>
-<p>返回值: 无</p>
-<h2 id="tostring"><a href="#tostring" class="headerlink" title="__tostring()"></a>__tostring()</h2><p>触发时机：对一个对象进行echo操作时 自动触发</p>
-<p>功能：简化操作或者为对象输出值</p>
-<p>参数:无</p>
-<p>返回值:必须有且必须为字符串类型.</p>
-<h2 id="clone"><a href="#clone" class="headerlink" title="__clone()"></a>__clone()</h2><p>触发时机:对对象进行克隆操作时自动触发</p>
-<p>功能：修改克隆之后的对象的部分属性值.</p>
-<p>参数:无</p>
-<p>返回值:无</p>
-<p>注意：对象的赋值默认就是引用赋值，不能通过赋值操作获取一个新的对象，获取新对象的操作应该使用克隆操作</p>
-<p>格式： 变量=clone 对象变量</p>
-<h2 id="call（）"><a href="#call（）" class="headerlink" title="__call（）"></a>__call（）</h2><p>触发时机:    调用了类中不存在的方法时自动触发</p>
-<p>功能：1.屏蔽错误  2.为不存在的方法定义个一个功能.</p>
-<p>参数:2个   1 不存在的方法名   2所有的实参组成的数组</p>
-<p>返回值:可有可无(根据实际功能来看)</p>
-<h2 id="autoload-唯一一个类外部的魔术方法"><a href="#autoload-唯一一个类外部的魔术方法" class="headerlink" title="__autoload()(唯一一个类外部的魔术方法)"></a>__autoload()(唯一一个类外部的魔术方法)</h2><p>触发时机:    当页面中需要一个 类而该类不存在时自动触发</p>
-<p>功能：实现类的自动加载.</p>
-<p>参数1个 不存在的类名</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;魔术方法：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;一种特殊的函数&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
     
     
   </entry>
@@ -2067,506 +2218,6 @@
     
     
       <category term="负载均衡" scheme="https://weizhimiao.github.io/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Nginx服务器https配置</title>
-    <link href="https://weizhimiao.github.io/2016/10/04/Nginx%E6%9C%8D%E5%8A%A1%E5%99%A8https%E9%85%8D%E7%BD%AE/"/>
-    <id>https://weizhimiao.github.io/2016/10/04/Nginx服务器https配置/</id>
-    <published>2016-10-04T13:30:00.000Z</published>
-    <updated>2016-10-04T14:38:23.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="http://n.sinaimg.cn/games/3ece443e/20161004/https.png" alt="Nginx服务器https配置"></p>
-<a id="more"></a>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>Linux：Linux version 3.10.0-123.9.3.el7.x86_64<br>Nginx：nginx/1.6.3<br>openssl：1.0.1e</p>
-<h2 id="申请证书"><a href="#申请证书" class="headerlink" title="申请证书"></a>申请证书</h2><p>目前网上有不少机构提供个人免费 ssl 证书，有效期几个月到几年不等。以 <a href="https://www.startssl.com" target="_blank" rel="external">StartSSL :https://www.startssl.com</a> 为例, 申请成功后有效期 3 年，到期后可免费续租。<br>具体申请过程也很简单。<br>注册登录以后选择 Certificates Wizard &gt;&gt;     DV SSL Certificate 申请一个免费的 ssl 证书。</p>
-<p>通过邮件验证域名之后，然后在自己服务器中生成 SSL 证书的 csr ，<strong>记住生成输入的秘密</strong>，之后要用到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">openssl req -newkey rsa:2048 -keyout weizhimiao.cn.key -out weizhimiao.cn.csr</div></pre></td></tr></table></figure></p>
-<p>将生成的证书，放到指定的存放证书的目录，如 <code>/data/secret/</code> 。查看证书 <code>weizhimiao.csr</code> 内容，将内容复制到页面中的 Certificate Signing Request (CSR)部分，提交页面。</p>
-<p>下载生成好的证书,选择对应的web服务器（Nginx，1_weizhimiao.cn_bundle.crt），这样私钥和公钥我们就都有了。</p>
-<ul>
-<li>1_weizhimiao.cn_bundle.crt（公钥）</li>
-<li>weizhimiao.cn.key（私钥）</li>
-</ul>
-<h2 id="nginx配置（为指定域名增加https）"><a href="#nginx配置（为指定域名增加https）" class="headerlink" title="nginx配置（为指定域名增加https）"></a>nginx配置（为指定域名增加https）</h2><p>nginx.conf当前配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">http &#123;</div><div class="line">    ...</div><div class="line">    include /etc/nginx/conf.d/*.conf;</div><div class="line"></div><div class="line">    server &#123;</div><div class="line">        ...</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>./conf.d/weizhimiao.cn.conf中加入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">server&#123;</div><div class="line">    listen 443 ssl;</div><div class="line">    server_name weizhimiao.cn;</div><div class="line"></div><div class="line">    ssl_certificate /data/secret/1_weizhimiao.cn_bundle.crt;</div><div class="line">    ssl_certificate_key /data/secret/weizhimiao.cn.key;</div><div class="line">    ssl_prefer_server_ciphers on;</div><div class="line">    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</div><div class="line"></div><div class="line">    ssl_ciphers &apos;kEECDH+ECDSA+AES128 kEECDH+ECDSA+AES256 kEECDH+AES128 kEECDH+AES256 kEDH+AES128 kEDH+AES256 DES-CBC3-SHA +SHA !aNULL !eNULL !LOW !MD5 !EXP !DSS !PSK !SRP !kECDH !CAMELLIA !RC4 !SEED&apos;;</div><div class="line"></div><div class="line">    add_header Strict-Transport-Security &apos;max-age=31536000; preload&apos;;</div><div class="line">    add_header X-Frame-Options DENY;</div><div class="line">    ssl_session_cache   shared:SSL:10m;</div><div class="line">    ssl_session_timeout 10m;</div><div class="line">    keepalive_timeout 70;</div><div class="line">    ssl_dhparam /data/secret/dhparam.pem;</div><div class="line"></div><div class="line">    add_header X-Content-Type-Options nosniff;</div><div class="line"></div><div class="line">    add_header X-Xss-Protection 1;</div><div class="line"></div><div class="line">    root /data/www/weizhimiao.cn;</div><div class="line">    index index.html;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>注：</strong><br>配置中用到一个 <code>/data/secret/dhparam.pem</code> 文件，该文件是一个PEM格式的密钥文件，用于TLS会话中。用来加强ssl的安全性。生成该文件方法，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /data/secret/</div><div class="line">openssl dhparam 2048 -out dhparam.pem</div></pre></td></tr></table></figure></p>
-<p>将原来80端口的访问，重定向。./conf.d/weizhimiao.cn.conf中加入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">server&#123;</div><div class="line">    listen 80;</div><div class="line">    server_name  weizhimiao.cn;</div><div class="line">    return 301 https://weizhimiao.cn$request_uri;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>检测配置文件是否有语法错误，需要输入之前生成公钥时输入的密码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">nginx -t</div><div class="line">Enter PEM pass phrase:</div><div class="line">nginx: the configuration file /etc/nginx/nginx.conf syntax is ok</div><div class="line">nginx: configuration file /etc/nginx/nginx.conf test is successful</div></pre></td></tr></table></figure></p>
-<p>重启Nginx(切记，reload不起作用)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">nginx -s stop</div><div class="line">Enter PEM pass phrase:</div><div class="line">nginx</div><div class="line">Enter PEM pass phrase:</div></pre></td></tr></table></figure></p>
-<p>浏览器访问 weizhimiao.cn ,是否生效。</p>
-<p>另，Nginx配置了安全证书之后，nginx每次的reload、stop等操作都需要输入密码。<br>可以通过生成一个解密的key文件，替代原来key文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /data/secret/</div><div class="line">openssl rsa -in weizhimiao.cn.key -out weizhimiao.cn.key.unsecure</div></pre></td></tr></table></figure></p>
-<p>替换 <code>weizhimiao.cn.conf</code> 中的 <code>weizhimiao.cn.key</code> 文件.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">  ...</div><div class="line">  ssl_certificate /data/secret/1_weizhimiao.cn_bundle.crt;</div><div class="line">  ssl_certificate_key /data/secret/weizhimiao.cn.key.unsecure;</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>之后每次在reload时，就不需要在输入密码了。</p>
-<p>最后，用 <a href="https://www.ssllabs.com/ssltest/index.html" target="_blank" rel="external">SSLLABS</a> 来进行一下测试。<br><img src="http://n.sinaimg.cn/games/3ece443e/20161004/ssllabs.png" alt="ssllabs"><br>结果<br><img src="http://n.sinaimg.cn/games/3ece443e/20161004/ssllabsres.png" alt="ssllabs"></p>
-<p>over~</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;http://n.sinaimg.cn/games/3ece443e/20161004/https.png&quot; alt=&quot;Nginx服务器https配置&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Nginx" scheme="https://weizhimiao.github.io/categories/Nginx/"/>
-    
-    
-      <category term="https" scheme="https://weizhimiao.github.io/tags/https/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Nginx虚拟主机配置</title>
-    <link href="https://weizhimiao.github.io/2016/10/04/Nginx%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA%E8%AE%BE%E7%BD%AE/"/>
-    <id>https://weizhimiao.github.io/2016/10/04/Nginx虚拟主机设置/</id>
-    <published>2016-10-04T12:30:00.000Z</published>
-    <updated>2016-10-04T14:46:59.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="http://n.sinaimg.cn/games/3ece443e/20161004/VirtualHost.png" alt="virtual Host"></p>
-<a id="more"></a>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>Linux：Linux version 3.10.0-123.9.3.el7.x86_64</p>
-<p>Nginx: nginx/1.6.3</p>
-<p>配置文件目录结构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">$ tree</div><div class="line">.</div><div class="line">├── conf.d</div><div class="line">├── default.d</div><div class="line">├── fastcgi.conf</div><div class="line">├── fastcgi.conf.default</div><div class="line">├── fastcgi_params</div><div class="line">├── fastcgi_params.default</div><div class="line">├── koi-utf</div><div class="line">├── koi-win</div><div class="line">├── mime.types</div><div class="line">├── mime.types.default</div><div class="line">├── nginx.conf</div><div class="line">├── nginx.conf.default</div><div class="line">├── scgi_params</div><div class="line">├── scgi_params.default</div><div class="line">├── uwsgi_params</div><div class="line">├── uwsgi_params.default</div><div class="line">└── win-utf</div></pre></td></tr></table></figure></p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>将 site1.cn 和site2.cn基于域名进行配置</p>
-<h3 id="准备-1"><a href="#准备-1" class="headerlink" title="准备"></a>准备</h3><p>分别创建两个域名的配置文件和web根目录。</p>
-<p>./conf.d/下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd conf.d/</div><div class="line">touch site1.cn.conf</div><div class="line">touch site2.cn.conf</div></pre></td></tr></table></figure></p>
-<p>分别创建web根目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mkdri -p /data/www</div><div class="line">cd  /data/www</div><div class="line">mkdir site1.cn</div><div class="line">mkdir site2.cn</div></pre></td></tr></table></figure></p>
-<h3 id="修改主配置文件nginx-conf"><a href="#修改主配置文件nginx-conf" class="headerlink" title="修改主配置文件nginx.conf"></a>修改主配置文件nginx.conf</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">user nginx;</div><div class="line">worker_processes auto;</div><div class="line">error_log /var/log/nginx/error.log;</div><div class="line">pid /run/nginx.pid;</div><div class="line"></div><div class="line">events &#123;</div><div class="line">    worker_connections 1024;</div><div class="line">&#125;</div><div class="line"></div><div class="line">http &#123;</div><div class="line">    log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</div><div class="line">                      &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</div><div class="line">                      &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</div><div class="line"></div><div class="line">    access_log  /var/log/nginx/access.log  main;</div><div class="line"></div><div class="line">    sendfile            on;</div><div class="line">    tcp_nopush          on;</div><div class="line">    tcp_nodelay         on;</div><div class="line">    keepalive_timeout   65;</div><div class="line">    types_hash_max_size 2048;</div><div class="line"></div><div class="line">    include             /etc/nginx/mime.types;</div><div class="line">    default_type        application/octet-stream;</div><div class="line"></div><div class="line">    # Load modular configuration files from the /etc/nginx/conf.d directory.</div><div class="line">    # See http://nginx.org/en/docs/ngx_core_module.html#include</div><div class="line">    # for more information.</div><div class="line">    include /etc/nginx/conf.d/*.conf;</div><div class="line"></div><div class="line">    server &#123;</div><div class="line">        listen       80 default_server;</div><div class="line">        listen       [::]:80 default_server;</div><div class="line">        server_name  _;</div><div class="line">        root         /usr/share/nginx/html;</div><div class="line"></div><div class="line">        # Load configuration files for the default server block.</div><div class="line">        include /etc/nginx/default.d/*.conf;</div><div class="line"></div><div class="line">        location / &#123;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        error_page 404 /404.html;</div><div class="line">            location = /40x.html &#123;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        error_page 500 502 503 504 /50x.html;</div><div class="line">            location = /50x.html &#123;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>确保在http的context中的server部分前面要有<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">include /etc/nginx/conf.d/*.conf;</div></pre></td></tr></table></figure></p>
-<p>通常情况下主配置文件中的server部分，将会是默认的server（通过添加default_server来声明），当一个请求过来，目录/etc/nginx/conf.d/中的所有server部分都匹配不了，那么这个请求将会被猪配置文件中的server来进行处理.</p>
-<h3 id="site1-cn"><a href="#site1-cn" class="headerlink" title="site1.cn"></a>site1.cn</h3><p>修改配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi ./conf.d/site1.cn.conf</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">	listen		80;</div><div class="line">	server_name	site1.cn;</div><div class="line"></div><div class="line">	error_page  404  /404.html;</div><div class="line"></div><div class="line">	error_page   500 503 504  /50x.html;</div><div class="line">	error_log	/var/log/nginx/debug.log debug;</div><div class="line">	index	index.html index.htm;</div><div class="line">	root /data/www/site1.cn;</div><div class="line"></div><div class="line">	location / &#123;</div><div class="line">		index index.html;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">  location = /favicon.ico &#123;</div><div class="line">  	try_files $uri $uri/favicon.ico /data/www/site1.cn/favicon.ico =404;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  # Deny all attempts to access hidden files such as .htaccess, .htpasswd, .DS_Store(Mac).</div><div class="line">  location ~ /\. &#123;</div><div class="line">      deny all;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">	location = /50x.html &#123;</div><div class="line">		root   /usr/share/nginx/html;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	location = /404.html &#123;</div><div class="line">		root   /usr/share/nginx/html;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>添加测试页面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /data/www/site1.cn</div><div class="line">echo &quot;site1.cn index.html&quot; &gt;&gt; index.html</div></pre></td></tr></table></figure></p>
-<h3 id="site2-cn"><a href="#site2-cn" class="headerlink" title="site2.cn"></a>site2.cn</h3><p>修改配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi ./conf.d/site2.cn.conf</div></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">	listen		80;</div><div class="line">	server_name	site2.cn;</div><div class="line"></div><div class="line">	error_page  404  /404.html;</div><div class="line"></div><div class="line">	error_page   500 503 504  /50x.html;</div><div class="line">	error_log	/var/log/nginx/debug.log debug;</div><div class="line">	index	index.html index.htm;</div><div class="line">	root /data/www/site2.cn;</div><div class="line"></div><div class="line">	location / &#123;</div><div class="line">		index index.html;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">  location = /favicon.ico &#123;</div><div class="line">  	try_files $uri $uri/favicon.ico /data/www/site2.cn/favicon.ico =404;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  # Deny all attempts to access hidden files such as .htaccess, .htpasswd, .DS_Store(Mac).</div><div class="line">  location ~ /\. &#123;</div><div class="line">      deny all;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">	location = /50x.html &#123;</div><div class="line">		root   /usr/share/nginx/html;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	location = /404.html &#123;</div><div class="line">		root   /usr/share/nginx/html;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>添加测试页面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /data/www/site2.cn</div><div class="line">echo &quot;site2.cn index.html&quot; &gt;&gt; index.html</div></pre></td></tr></table></figure></p>
-<h3 id="重启Nginx"><a href="#重启Nginx" class="headerlink" title="重启Nginx"></a>重启Nginx</h3><p>重启之前，需要先进行配置文件语法检测<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">nginx -t</div><div class="line">nginx: the configuration file /etc/nginx/nginx.conf syntax is ok</div><div class="line">nginx: configuration file /etc/nginx/nginx.conf test is successful</div></pre></td></tr></table></figure></p>
-<p>确定语法无问题之后，重启Nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nginx -s reload</div></pre></td></tr></table></figure></p>
-<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>vi /etc/hosts<br>添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">site1.cn 127.0.0.1</div><div class="line">site2.cn 127.0.0.1</div></pre></td></tr></table></figure></p>
-<p>分别访问 site1.cn和site2.cn ,查看是否输出对应内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">wget  site1.cn</div><div class="line">cat index.html</div><div class="line">#site1.cn index.html</div><div class="line"></div><div class="line">wget site2.cn</div><div class="line">cat index.html.2</div><div class="line">#site2.cn index.html</div></pre></td></tr></table></figure></p>
-<p>关于nginx学习的一个网站:<a href="http://nglua.com" target="_blank" rel="external">http://nglua.com</a></p>
-<p>over~</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;http://n.sinaimg.cn/games/3ece443e/20161004/VirtualHost.png&quot; alt=&quot;virtual Host&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Nginx" scheme="https://weizhimiao.github.io/categories/Nginx/"/>
-    
-    
-      <category term="虚拟主机" scheme="https://weizhimiao.github.io/tags/%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Nginx配置整理</title>
-    <link href="https://weizhimiao.github.io/2016/10/03/Nginx%E9%85%8D%E7%BD%AE%E6%95%B4%E7%90%86/"/>
-    <id>https://weizhimiao.github.io/2016/10/03/Nginx配置整理/</id>
-    <published>2016-10-03T14:30:00.000Z</published>
-    <updated>2016-10-04T10:36:46.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Nginx配置主要分成四部分：main、server、upstream 和 location，每部分包含若干个指令。<br>main(全局设置)</p>
-<blockquote>
-<p>该部分设置的指令将影响其它所有部分的设置；</p>
-</blockquote>
-<p>server(主机设置)</p>
-<blockquote>
-<p>该部分的指令主要用于指定虚拟主机域名、IP和端口；</p>
-</blockquote>
-<p>upstream(上游服务器设置)</p>
-<blockquote>
-<p>该部分的指令用于设置一系列的后端服务器，设置反向代理及后端服务器的负载均衡；</p>
-</blockquote>
-<p>location(URL匹配特定位置后的设置)</p>
-<blockquote>
-<p>该部分用于匹配网页位置（比如，根目录“/”,“/images”,等等）。</p>
-</blockquote>
-<p>Nginx本身是模块化设计。全局的配置区段负责全局的各个方面，对于不同的协议可以单独划分成一个部分。我们可以通过在这些单独的协议配置中（http或mail）指定server来定义每一个请求应该被如何处理，以便请求被路由到特定的IP地址或端口上。在http区段中，使用location来匹配URI请求，这些location又可以嵌套使用或者按照一定顺序使用，以确保请求被路由到正确的文件系统区域或者其他地方。</p>
-<p><strong>他们之间的关系式：</strong> server继承main，location继承server；upstream既不会继承指令也不会被继承。它有自己的特殊指令，不需要在其他地方的应用。</p>
-<a id="more"></a>
-<h2 id="基本配置格式"><a href="#基本配置格式" class="headerlink" title="基本配置格式"></a>基本配置格式</h2><p>Nginx的配置文件由若干部分组成。但每一部分都是通过下列的方法定义。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;section&gt; &#123;</div><div class="line">  &lt;directive&gt;&lt;parameters&gt;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>Tips:</strong></p>
-<ul>
-<li>每一个指令行都由分号结束（;），这标志着一行结束。</li>
-<li>大括号（{}）实际上表示一个新上下文（context），常称为『节，部分（section）』</li>
-</ul>
-<h2 id="Nginx的全局配置"><a href="#Nginx的全局配置" class="headerlink" title="Nginx的全局配置"></a>Nginx的全局配置</h2><p>全局配置顾名思义就是对整个server都有效的参数。全局配置部分可能包含配置指令（如，user、worker_processes），也包括『节、部分（section）（如，events）』。这部分配置一般放在 nginx.conf 文件的顶部。</p>
-<p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">user nginx;</div><div class="line">worker_processes auto;</div><div class="line">error_log /var/log/nginx/error.log;</div><div class="line">pid /run/nginx.pid;</div><div class="line"></div><div class="line">events &#123;</div><div class="line">    use epoll   #使用网络IO模型，epoll模型比select模型效率高很多</div><div class="line">    worker_connections 1024;    #每个worker能够处理的最大连接数，最大值取决于ulimit -n的值</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>主要配置指令及含义</p>
-<table>
-<thead>
-<tr>
-<th>配置指令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>user</td>
-<td>配置worker进程运行的用户和用户组，第一个参数为user，第二个为group（如果忽略了group，那么group与user同名）</td>
-</tr>
-<tr>
-<td>worker_processes</td>
-<td>指定worker进程启动的数量。这些进程用于处理客户的连接。通常该值会设置成CPU处理器核心数相同的数量。默认值是”auto”，也是按照这样去设置数量</td>
-</tr>
-<tr>
-<td>error_log</td>
-<td>设置错误日志文件位置。如果在其他的区段中没有设置其他的error_log,那么这个日志文件将会记录所有的错误。该指令的第二个参数指定了被记录的错误信息级别（debug[注，debug级别的错误只有在nginx编译的时候配置了 –with-debug选项才可以使用]、info、notice、warn、error、crit、alert、emsg）</td>
-</tr>
-<tr>
-<td>pid</td>
-<td>设置记录主进程ID的文件地址。通常设置该值来方便我们对nginx的管理</td>
-</tr>
-<tr>
-<td>use</td>
-<td>该指令指示我们使用什么样的连接方式。该指令需要写在 events 区段里面。</td>
-</tr>
-<tr>
-<td>worker_connections</td>
-<td>配置一个工作进程能够接受并发连接的最大数。这个连接包括，客户连接和向上游服务器的连接，但也不仅限于此。通常该配置同use一样写在events里面</td>
-</tr>
-</tbody>
-</table>
-<h2 id="include指令"><a href="#include指令" class="headerlink" title="include指令"></a>include指令</h2><p>在Nginx配置文件中可以使用include指令将其他位置存放的配置文件加载进来，来方便配置管理和增强配置文件的可读性。</p>
-<p><strong>Tips：</strong><br>使用include文件，要确保被包含的文件自身符合nginx配置语法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">include /etc/nginx/default.d/*.conf;</div></pre></td></tr></table></figure></p>
-<p>路径中出现通配符表示可以匹配多个文件。<br>nginx配置文件的语法错误可以通过nginx的 -t 选项来进行测试。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/path/to/nginx -t -c &lt;path-to-nginx.conf&gt;</div></pre></td></tr></table></figure></p>
-<p><strong>注：</strong> 该命令只能检查语法错误，具体到某个功能性的测试还需要我们自己有针对性的去测。</p>
-<h2 id="Http的server部分"><a href="#Http的server部分" class="headerlink" title="Http的server部分"></a>Http的server部分</h2><p>通常我们提到的server部分，具体指的是Http的server部分。所以，其在Http配置的context是可用的。该部分用于处理http连接，因此该模块下提供了相当数量的指令。</p>
-<h3 id="客户端指令"><a href="#客户端指令" class="headerlink" title="客户端指令"></a>客户端指令</h3><blockquote>
-<p>用于处理客户端连接本身的各个方面，以及不同类型的客户端</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>指令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>chunked_transfer_encoding</td>
-<td>在发给客户端的响应中允许禁用http/1.1标准的块传输编码</td>
-</tr>
-<tr>
-<td>client_body_buffer_size</td>
-<td>为了阻止临时文件写到磁盘，可以通过该指令为客户端请求体设置缓存大小，默认的缓存大小为两个内存页面</td>
-</tr>
-<tr>
-<td>client_body_in_file_only</td>
-<td>用于调试或者是进一步处理客户端请求体。该指令能够将客户端请求体强制写入到磁盘文件</td>
-</tr>
-<tr>
-<td>client_body_in_single_buffer</td>
-<td>为了减少拷贝的操作，使用该指令强制Nginx将整个客户端请求体保存到单个缓存中</td>
-</tr>
-<tr>
-<td>client_body_temp_path</td>
-<td>定义一个命令路径用于保存客户端请求体</td>
-</tr>
-<tr>
-<td>clent_body_timeout</td>
-<td>指定客户端成功读取的两个操作之间的时间间隔</td>
-</tr>
-<tr>
-<td>client_header_buffer_size</td>
-<td>为客户端请求头指定一个缓存大小，当请求头大于1kB时会用到这个设置。</td>
-</tr>
-<tr>
-<td>client_header_timeout</td>
-<td>读取整个客户端头的超时时间</td>
-</tr>
-<tr>
-<td>client_max_body_size</td>
-<td>定义允许最大的客户端请求头，如果大于该值，那么客户端将会是413（request entity too large）错误</td>
-</tr>
-<tr>
-<td>keepalive_disable</td>
-<td>对某些类型的客户端禁用keep-alive请求功能。</td>
-</tr>
-<tr>
-<td>keepalive_requests</td>
-<td>定义在一个keep-alive关闭之前可以接收多少个请求</td>
-</tr>
-<tr>
-<td>keepalive_timeout</td>
-<td>指定keep-alive连接持续多久。第二个参数用于在响应头中这只”Keep-Alive”头</td>
-</tr>
-<tr>
-<td>large_client_header_buffers</td>
-<td>定义最大数量和最大客户端请求头的大小</td>
-</tr>
-<tr>
-<td>msie_padding</td>
-<td>为了填充响应的大小至512字节，对于MSIE客户端，大于400的状态码会被添加注释以便满足512字节，通过启用该命令可以阻止这种行为</td>
-</tr>
-<tr>
-<td>msie_refresh</td>
-<td>对于MSIE客户端，可启用发送一个refresh头</td>
-</tr>
-</tbody>
-</table>
-<h3 id="文件I-O指令"><a href="#文件I-O指令" class="headerlink" title="文件I/O指令"></a>文件I/O指令</h3><blockquote>
-<p>用于控制Nginx如何投递静态文件。</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>指令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>aio</td>
-<td>启用异步文件I/O。FreeBSD系统下，该值可能被用于sendfile预加载数据。Linux下需要directio指令，自动禁用sendfile</td>
-</tr>
-<tr>
-<td>directio</td>
-<td>用于启用操作系统特定的标识或者功能提供大于给定参数的文件。Linux下使用aio时需要使用该指令。</td>
-</tr>
-<tr>
-<td>directio_alignment</td>
-<td>设置directio算法。默认值是512，通常已经足够，但是在Linux的XFS下推荐增加至4K</td>
-</tr>
-<tr>
-<td>open_file_cache</td>
-<td>配置一个缓存用于存放打开的文件描述符、目录查询和文件查询错误</td>
-</tr>
-<tr>
-<td>open_file_cache_errors</td>
-<td>按照open_file_cache，启用文件查询错误缓存</td>
-</tr>
-<tr>
-<td>open_file_cache_min_uses</td>
-<td>open_file_cache缓存的文件描述符保留在缓存中，使用该指令配置最少使用文件描述符的次数</td>
-</tr>
-<tr>
-<td>open_file_cache_valid</td>
-<td>指定对open_file_cache缓存有效性检查的时间间隔</td>
-</tr>
-<tr>
-<td>postpone_output</td>
-<td>指定Nginx发送给客户端最小的数值，如果可能的话，没有数据会发送，直到达到此值</td>
-</tr>
-<tr>
-<td>read_ahead</td>
-<td>如果可能的话，内核将预读文件到设定的参数大小</td>
-</tr>
-<tr>
-<td>sendfile</td>
-<td>使用sendfile（2）直接复制数据从一个到另一个文件描述符</td>
-</tr>
-<tr>
-<td>sendfile_max_chunk</td>
-<td>设置在一个sendfile(2)拷贝中最大数据的大小，这是为了阻止worker”贪婪”</td>
-</tr>
-</tbody>
-</table>
-<h3 id="Hash指令"><a href="#Hash指令" class="headerlink" title="Hash指令"></a>Hash指令</h3><blockquote>
-<p>控制Nginx 分配给某些变量多大的静态文件</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>指令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>server_names_hash_bucket_size</td>
-<td>指定用于保存server_name哈希表大小的”桶”</td>
-</tr>
-<tr>
-<td>server_names_hash_max_size</td>
-<td>指定的server_name哈希表的最大值的大小</td>
-</tr>
-<tr>
-<td>types_hash_bucket_size</td>
-<td>指定用于存放哈希表的”桶”的大小</td>
-</tr>
-<tr>
-<td>types_hash_max_size</td>
-<td>指定哈希类型表的最大值的大小</td>
-</tr>
-<tr>
-<td>variables_hash_bucket_size</td>
-<td>指定用于存放保留变量”桶”的大小</td>
-</tr>
-<tr>
-<td>variables_hash_max_size</td>
-<td>指定存放保留变量最大哈希值的大小</td>
-</tr>
-</tbody>
-</table>
-<h3 id="Socket指令"><a href="#Socket指令" class="headerlink" title="Socket指令"></a>Socket指令</h3><blockquote>
-<p>描述Nginx如何设置创建TCP套接字的变量选项</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>指令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>lingering_close</td>
-<td>指定如何保持客户端的连接，以便用于更多数据的传输</td>
-</tr>
-<tr>
-<td>lingering_time</td>
-<td>在使用lingering_close指令的连接中，使用该指令指定客户端连接为了处理更多的数据需要保持打开连接的时间</td>
-</tr>
-<tr>
-<td>lingering_timeout</td>
-<td>结合lingering_close，该指令显示Nginx在关闭客户端连接之前，为获得更多数据会等待多久</td>
-</tr>
-<tr>
-<td>reset_timeout_connection</td>
-<td>使用这个指令之后，超时的连接会被立即关闭，释放相关的内存。默认的状态是处于FIN_WAIT1，这种状态将会一直保持连接</td>
-</tr>
-<tr>
-<td>send_lowat</td>
-<td>如果非零，Nginx将会在客户端套接字尝试减少发送操作</td>
-</tr>
-<tr>
-<td>send_timeout</td>
-<td>在两次成功的客户端接收响应的写操作之间设置一个超时时间</td>
-</tr>
-<tr>
-<td>tcp_nodelay</td>
-<td>启用或禁用TCP_NODELAY选项，用于keep-alive连接</td>
-</tr>
-<tr>
-<td>tcp_nopush</td>
-<td>仅依赖于sendfile的使用。它能够使Nginx在一个数据包中尝试发送响应头，以及在数据包中发送一个完整的文件</td>
-</tr>
-</tbody>
-</table>
-<h3 id="server部分"><a href="#server部分" class="headerlink" title="server部分"></a>server部分</h3><p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">http &#123;</div><div class="line">    ...</div><div class="line">    server &#123;</div><div class="line">        listen       80 default_server;</div><div class="line">        server_name  _;</div><div class="line">        root         /usr/share/nginx/html;</div><div class="line"></div><div class="line">        # Load configuration files for the default server block.</div><div class="line">        include /etc/nginx/default.d/*.conf;</div><div class="line"></div><div class="line">        location / &#123;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        error_page 404 /404.html;</div><div class="line">            location = /40x.html &#123;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        error_page 500 502 503 504 /50x.html;</div><div class="line">            location = /50x.html &#123;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>一个虚拟服务器由listen和server_name指令组合定义。</p>
-<p><strong>listen</strong></p>
-<blockquote>
-<p>指令定义一个IP地址/端口组合或者UNIX套接字路径。示例</p>
-<ul>
-<li>listen address[:port];</li>
-<li>listen port;</li>
-<li>listen unix:path;</li>
-</ul>
-</blockquote>
-<p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">listen     127.0.0.1:80;</div><div class="line">listen     localhost:80;</div><div class="line">listen     127.0.0.1:8080;</div><div class="line">listen     localhost:8080;</div><div class="line">listen     192.168.3.105:80;</div><div class="line">listen     192.168.3.105:8080;</div><div class="line">listen     80;</div><div class="line">listen     *:80;</div><div class="line">listen     8080;</div><div class="line">listen     *:8080;</div><div class="line">listen     12.34.56.77:80;</div><div class="line">listen     12.34.56.78:80;</div><div class="line">listen     12.34.56.79:80;</div></pre></td></tr></table></figure></p>
-<p>另外，listen还有其他的一些可选参数。常用到的有<br>default_server，表示定义这样的一个组合：（address:port）默认的请求被绑定于此<br>ssl，表明该端口仅接受Https的连接</p>
-<p><strong>server_name</strong></p>
-<blockquote>
-<p>用来指定域名。</p>
-</blockquote>
-<p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">server_name   nginx.cn;</div><div class="line">server_name   nginx.cn www.nginx.cn;</div><div class="line">server_name   *.nginx.cn;</div><div class="line">server_name   .nginx.cn;</div><div class="line">server_name   nginx.*;</div><div class="line">server_name   nginx.cng bucknell.net brackley.org;</div><div class="line">server_name   localhost litchfield bleddington;</div><div class="line">server_name   &quot;&quot;;</div></pre></td></tr></table></figure></p>
-<p>除了普通字符串外，Nginx也接受通配符作为Server_name的参数。</p>
-<ul>
-<li>使用通配符替代部分子域名： *.example.com</li>
-<li>代替顶级域部分： www.example.*</li>
-<li>匹配子域和域本身： .example.com 能匹配 *.example.com 和example.com</li>
-</ul>
-<p>另外，在域名前加上（~），正则表达式也可应用于 server_name.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">server_name ~^www\.example\.com$</div><div class="line">server_name ~^www(\d+).example\.(com)$</div></pre></td></tr></table></figure></p>
-<p>对于后一种方式是利用捕获，可以在以后的引用中进一步配置（用$1,$2等）指令中使用。</p>
-<h2 id="location部分"><a href="#location部分" class="headerlink" title="location部分"></a>location部分</h2><p>location指令可以用在虚拟服务器server部分，并且意味着提供来自客户端的URI或者内部的重定向访问。</p>
-<p>location定义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">location [modifier] uri &#123;...&#125;</div></pre></td></tr></table></figure></p>
-<p>或者是命名location<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">location @name &#123;...&#125;</div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>命名location仅对内部访问重定向，在进入一个location之前他会保留被请求的URI部分。且命名location只能存在与server级别的定义。</p>
-</blockquote>
-<p>示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">location / &#123; &#125;</div><div class="line">location /images/ &#123; &#125;</div><div class="line">location /blog/ &#123; &#125;</div><div class="line">location /planet/ &#123; &#125;</div><div class="line">location /planet/blog/ &#123; &#125;</div><div class="line"></div><div class="line">location ~ IndexPage.php$ &#123; &#125;</div><div class="line">location ~ ^/BlogPlanet(/|/index.php)$ &#123; &#125;</div><div class="line"></div><div class="line">location ~* .(pl|cgi|perl|prl)$ &#123; &#125;</div><div class="line">location ~* .(md|mdwn|txt|mkdn)$ &#123; &#125;</div><div class="line"></div><div class="line">location ^~ /images/IndexPage/ &#123; &#125;</div><div class="line">location ^~ /blog/BlogPlanet/ &#123; &#125;</div><div class="line"></div><div class="line">location = / &#123; &#125;</div></pre></td></tr></table></figure></p>
-<p>当一个请求进入时，URI将会被检测匹配一个最佳的location。</p>
-<ul>
-<li>没有正则表达式的location被认为是最佳的匹配，独立于含有正则表达式的location。</li>
-<li>在配置文件中按照查找顺序进行正则匹配，在查到第一个正则表达式匹配时结束查找，将请求交由这个location处理。<br><strong>Tips：</strong><br>这里匹配的解码URI，如在URL中的”%20”,将会匹配location中的””(空格)。</li>
-</ul>
-<p>location常见的修饰符</p>
-<table>
-<thead>
-<tr>
-<th>修饰符</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>=</td>
-<td>使用精确匹配并且终止搜索</td>
-</tr>
-<tr>
-<td>~</td>
-<td>区分大小写的正则表达式匹配</td>
-</tr>
-<tr>
-<td>~*</td>
-<td>不去分大小写的正则表达式匹配</td>
-</tr>
-<tr>
-<td>^~</td>
-<td>如果该location是最佳的匹配，那么对于匹配这个location的字符串不在进行正则表达式检测。</td>
-</tr>
-</tbody>
-</table>
-<p>仅用于location中的指令</p>
-<table>
-<thead>
-<tr>
-<th>指令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>alias</td>
-<td>定义location的其他名字，在文件系统中能够找到。</td>
-</tr>
-<tr>
-<td>internal</td>
-<td>指定一个仅用于内部请求的location（其他指定定义的重定向，rewrite请求，error请求等）</td>
-</tr>
-<tr>
-<td>limit_except</td>
-<td>限定一个location可以执行的Http操作（如，GET或HEAD）</td>
-</tr>
-</tbody>
-</table>
-<p>命名location的使用（一般与try_files配合使用）<br>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">location / &#123;</div><div class="line">  try_files $uri $uri/ $mongrel;</div><div class="line">&#125;</div><div class="line"></div><div class="line">location @mongrel &#123;</div><div class="line">  proxy_pass http://appserver;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>上面一段配置表示，如果给定的URI作为一个文件没有被找到，那么处理将会通过代理被传递到appserver</p>
-<p>location的嵌套使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">root /var/www</div><div class="line"></div><div class="line">location / &#123;</div><div class="line">  location ^~ /css &#123;</div><div class="line">    location ~* /css.*\.css$ &#123;</div><div class="line">      ...</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">  &#125;</div><div class="line">  ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>实践表明正则表达式location被嵌套在基于字符串的location是最佳的配置方式</strong></p>
-<h2 id="完整的配置文件示例"><a href="#完整的配置文件示例" class="headerlink" title="完整的配置文件示例"></a>完整的配置文件示例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"># For more information on configuration, see:</div><div class="line">#   * Official English Documentation: http://nginx.org/en/docs/</div><div class="line">#   * Official Russian Documentation: http://nginx.org/ru/docs/</div><div class="line"></div><div class="line">user nginx;</div><div class="line">worker_processes auto;</div><div class="line">error_log /var/log/nginx/error.log;</div><div class="line">pid /run/nginx.pid;</div><div class="line"></div><div class="line">events &#123;</div><div class="line">    worker_connections 1024;</div><div class="line">&#125;</div><div class="line"></div><div class="line">http &#123;</div><div class="line">    log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</div><div class="line">                      &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</div><div class="line">                      &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</div><div class="line"></div><div class="line">    access_log  /var/log/nginx/access.log  main;</div><div class="line"></div><div class="line">    sendfile            on;</div><div class="line">    tcp_nopush          on;</div><div class="line">    tcp_nodelay         on;</div><div class="line">    keepalive_timeout   65;</div><div class="line">    types_hash_max_size 2048;</div><div class="line"></div><div class="line">    include             /etc/nginx/mime.types;</div><div class="line">    default_type        application/octet-stream;</div><div class="line"></div><div class="line">    # Load modular configuration files from the /etc/nginx/conf.d directory.</div><div class="line">    # See http://nginx.org/en/docs/ngx_core_module.html#include</div><div class="line">    # for more information.</div><div class="line">    include /etc/nginx/conf.d/*.conf;</div><div class="line"></div><div class="line">    server &#123;</div><div class="line">        listen       80 default_server;</div><div class="line">        listen       [::]:80 default_server;</div><div class="line">        server_name  _;</div><div class="line">        root         /usr/share/nginx/html;</div><div class="line"></div><div class="line">        # Load configuration files for the default server block.</div><div class="line">        include /etc/nginx/default.d/*.conf;</div><div class="line"></div><div class="line">        location / &#123;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        error_page 404 /404.html;</div><div class="line">            location = /40x.html &#123;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        error_page 500 502 503 504 /50x.html;</div><div class="line">            location = /50x.html &#123;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Nginx配置主要分成四部分：main、server、upstream 和 location，每部分包含若干个指令。&lt;br&gt;main(全局设置)&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;该部分设置的指令将影响其它所有部分的设置；&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;server(主机设置)&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;该部分的指令主要用于指定虚拟主机域名、IP和端口；&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;upstream(上游服务器设置)&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;该部分的指令用于设置一系列的后端服务器，设置反向代理及后端服务器的负载均衡；&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;location(URL匹配特定位置后的设置)&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;该部分用于匹配网页位置（比如，根目录“/”,“/images”,等等）。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Nginx本身是模块化设计。全局的配置区段负责全局的各个方面，对于不同的协议可以单独划分成一个部分。我们可以通过在这些单独的协议配置中（http或mail）指定server来定义每一个请求应该被如何处理，以便请求被路由到特定的IP地址或端口上。在http区段中，使用location来匹配URI请求，这些location又可以嵌套使用或者按照一定顺序使用，以确保请求被路由到正确的文件系统区域或者其他地方。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;他们之间的关系式：&lt;/strong&gt; server继承main，location继承server；upstream既不会继承指令也不会被继承。它有自己的特殊指令，不需要在其他地方的应用。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Nginx" scheme="https://weizhimiao.github.io/categories/Nginx/"/>
-    
     
   </entry>
   
