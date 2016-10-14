@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://weizhimiao.github.io/"/>
-  <updated>2016-10-13T03:02:10.000Z</updated>
+  <updated>2016-10-13T09:25:46.000Z</updated>
   <id>https://weizhimiao.github.io/</id>
   
   <author>
@@ -14,6 +14,272 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>大话MySQL性能优化</title>
+    <link href="https://weizhimiao.github.io/2016/10/13/%E5%A4%A7%E8%AF%9DMySQL%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    <id>https://weizhimiao.github.io/2016/10/13/大话MySQL性能优化/</id>
+    <published>2016-10-13T10:30:00.000Z</published>
+    <updated>2016-10-13T09:25:46.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://n.sinaimg.cn/games/3ece443e/20161013/MySQLXingNenDiaoYou.jpg" alt="MYSQL性能优化"></p>
+<p>性能是MySQL一直引以为豪的一点。在性能和功能两个方面，MySQL第一考虑的还是性能。</p>
+<a id="more"></a>
+<h2 id="影响MySQL性能的相关因素"><a href="#影响MySQL性能的相关因素" class="headerlink" title="影响MySQL性能的相关因素"></a>影响MySQL性能的相关因素</h2><h3 id="商业需求对性能的影响"><a href="#商业需求对性能的影响" class="headerlink" title="商业需求对性能的影响"></a>商业需求对性能的影响</h3><p>对于某一些功能在整个系统中是画蛇添足的，那么这些需求就可能会影响系统性能。比如，一个论坛要求对在线人数进行实时统计。</p>
+<h3 id="系统架构及实现对性能的影响"><a href="#系统架构及实现对性能的影响" class="headerlink" title="系统架构及实现对性能的影响"></a>系统架构及实现对性能的影响</h3><p>服务器调优</p>
+<p>应用程序调优</p>
+<ul>
+<li>不可是存储到数据库的数据<ul>
+<li>二进制多媒体数据</li>
+<li>流水队列数据</li>
+<li>超大文本数据</li>
+</ul>
+</li>
+<li>合理的利用应用层Cache（适合Cache的数据有：）<ul>
+<li>系统的各种配置和规则数据</li>
+<li>活跃用户的基本信息数据</li>
+<li>活跃用户的个性化定制信息数据</li>
+<li>准实时的统计信息</li>
+<li>其他一些访问频繁但变更很少的数据</li>
+</ul>
+</li>
+<li>数据层实现精简</li>
+<li>过度依赖数据库SQL语句功能</li>
+<li>常见的架构设计不当带来的性能问题和资源浪费<ul>
+<li>Cache系统设计不合理，导致Cache命中率低下</li>
+<li>过度依赖面向对象</li>
+<li>对可扩展性的过度追求（促使系统设计的时候对象拆分的过于分散，造成系统中出现大量的join语句）</li>
+<li>对数据库的过于依赖（将不适合存储在数据库中的数据存储在数据库中）</li>
+<li>过度理想化系统的用户体验（使大量非核心业务消耗大量系统资源）</li>
+</ul>
+</li>
+</ul>
+<h3 id="Query语句对性能的影响"><a href="#Query语句对性能的影响" class="headerlink" title="Query语句对性能的影响"></a>Query语句对性能的影响</h3><h4 id="分析手段"><a href="#分析手段" class="headerlink" title="分析手段"></a>分析手段</h4><ul>
+<li><p>explain</p>
+<blockquote>
+<p>分析选项：</p>
+<ul>
+<li>索引（key），query语句中是用到的索引</li>
+<li>row中的rows，查找的记录数</li>
+</ul>
+</blockquote>
+</li>
+<li><p>profiling</p>
+<blockquote>
+<p>先打开profiling；set profiling=1；</p>
+<p>查看profiling信息：show profiling \G;</p>
+<p>show profile CPU,BLOCK IO FOR query 1(2);</p>
+<p>分析选项</p>
+<ul>
+<li>CPU IO消耗</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<h4 id="MySQL的锁机制"><a href="#MySQL的锁机制" class="headerlink" title="MySQL的锁机制"></a>MySQL的锁机制</h4><blockquote>
+<p><strong>锁机制的目的：</strong> 保证数据的一致完整性</p>
+<p><strong>锁机制的影响：</strong> 直接影响一个数据库系统的并发处理能力和性能</p>
+</blockquote>
+<ul>
+<li><p>行级锁（row-level）</p>
+<blockquote>
+<p><strong>优点：</strong> 锁定对象的粒度最小，发生锁定资源争用的概率就最小，能给予最大可能的并发处理能力。</p>
+<p><strong>缺点：</strong> 由于粒度最小，所以每次获得锁和释放锁需要做的工作也最多。带来的消耗也就最大。另外，容易发生死锁。</p>
+</blockquote>
+</li>
+<li><p>表级锁（table-level）</p>
+<blockquote>
+<p><strong>优点：</strong> 最大粒度的锁定机制。所以逻辑简单，实现也较为容易。获得锁和释放锁的速度也很快。而且能很好的避免死锁问题。</p>
+<p><strong>缺点：</strong> 出现锁定资源争用的概率会提高，导致并发处理能力大打折扣。</p>
+</blockquote>
+</li>
+<li><p>页级锁（page-level）</p>
+<blockquote>
+<p>介于row-level和table-level二者之间。</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="合理的应用锁机制"><a href="#合理的应用锁机制" class="headerlink" title="合理的应用锁机制"></a>合理的应用锁机制</h4><p>MyISAM表锁优化</p>
+<blockquote>
+<p>关键：提高并发度</p>
+</blockquote>
+<ul>
+<li>缩短锁定时间，即query的执行时间要尽可能的短<ul>
+<li>尽量减少大的、复杂的query，将复杂的query拆分</li>
+<li>尽可能的建立高效索引，使数据的检索更加迅速</li>
+<li>尽量让MySQL的表只存放必要的信息，控制字段类型</li>
+</ul>
+</li>
+<li>分离能并行的操作<ul>
+<li>关键：Concurrent insert（并发插入特性）</li>
+<li>打开 Concurrent_insert功能，选项有0，1和2。具体说明如下：</li>
+<li>concurrent_insert=2,无论MyISAM表数据文件中间部分是否存在因删除而留下的空闲空间，都允许在尾部进行concurrent insert操作。</li>
+<li>concurrent_insert=1,当MyISAM表数据文件中间部分不存在因删除而留下的空闲空间，可以在尾部进行concurrent insert操作。</li>
+<li>concurrent_insert=0,无论MyISAM表数据文件中间部分是否存在因删除而留下的空闲空间，都不允许在尾部进行concurrent insert操作。</li>
+<li>建议：如果数据删除的肯呢个性很小，则建议将concurrent_insert设置成1，如不在乎浪费少量空间设置成2也可以。但当有少量删除时，设置成1更合适。</li>
+</ul>
+</li>
+<li>读写优先级设置<ul>
+<li>默认，写的优先级大于读的优先级</li>
+<li>参数选项，low_priority_updates=1(将写的优先级调低)</li>
+</ul>
+</li>
+</ul>
+<p>InnoDB行锁优化</p>
+<ul>
+<li>尽可能让所有的数据检索都通过索引来完成，避免InnoDB因为无法通过索引键加锁升级成为表级锁定</li>
+<li>合理设计索引，让InnoDB加锁是尽可能准确，尽可能缩小锁定范围</li>
+<li>尽可能的减少基于范围的数据检索过滤条件</li>
+<li>尽量控制事务的大小，尽量减少锁定的资源量和锁定的时间长度</li>
+<li>尽量使用级别低的事务隔离级别，减少MySQL因为事务隔离带来的附加成本</li>
+<li>尽可能减少死锁产生的概率<ul>
+<li>类似业务模块中，尽可能用相同的访问顺序来访问，防止产生死锁</li>
+<li>同一事务中，尽可能一次锁定所有需要的资源</li>
+<li>对于非常容易产生死锁的业务部分，可以尝试升级锁定粒度，通过表级锁定减少死锁产生的概率</li>
+</ul>
+</li>
+<li><p>系统锁定争用情况的查询</p>
+<ul>
+<li><p>标记锁定争用状态变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show status like &apos;table%&apos;</div><div class="line">variable_name value</div><div class="line">table_lock_immediate 100  //产生标记锁定次数</div><div class="line">table_lock_waited 0       //出现标记锁定争用出现的等待的次数</div></pre></td></tr></table></figure>
+</li>
+<li><p>行级锁定争用状态变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">mysql&gt; show status like &apos;innodb_row_lock%&apos;</div><div class="line">innodb_row_lock_current_waits 0   //当前正在等待锁定的数量</div><div class="line">innodb_row_lock_time 3999999      //从系统启动到现在锁定的总时间长度</div><div class="line">innodb_row_lock_time_avg 36666    //每次等待所花费平均时间</div><div class="line">innodb_row_lock_time_max 122222   //从启动到现在等待最长一次所花时间长度</div><div class="line">innodb_row_lock_waits 20          //从启动到现在共等待的次数</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="垂直和水平联合切分的使用"><a href="#垂直和水平联合切分的使用" class="headerlink" title="垂直和水平联合切分的使用"></a>垂直和水平联合切分的使用</h2><p>优点：</p>
+<ul>
+<li>充分利用垂直切分和水平切分各自的优势，而避免各自的缺陷</li>
+<li>让系统扩展性得到最大提升</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>数据库系统架构比较复杂，使维护难度更大</li>
+<li>应用程序架构也相对更复杂</li>
+</ul>
+<h2 id="合理的设计并利用索引"><a href="#合理的设计并利用索引" class="headerlink" title="合理的设计并利用索引"></a>合理的设计并利用索引</h2><h3 id="MySQL常用的四种索引类型"><a href="#MySQL常用的四种索引类型" class="headerlink" title="MySQL常用的四种索引类型"></a>MySQL常用的四种索引类型</h3><ul>
+<li>B-tree索引</li>
+<li>Hash索引</li>
+<li>Fulltext索引</li>
+<li>Rtree索引</li>
+</ul>
+<h3 id="索引的弊端"><a href="#索引的弊端" class="headerlink" title="索引的弊端"></a>索引的弊端</h3><ul>
+<li>增加了更新所带来的IO量，和调整索引导致的计算量</li>
+<li>占用存储空间，并会跟数据量的增加而增加</li>
+</ul>
+<h3 id="如何判断是否需要索引"><a href="#如何判断是否需要索引" class="headerlink" title="如何判断是否需要索引"></a>如何判断是否需要索引</h3><ul>
+<li>较频繁作为查询条件的字段应该创建索引</li>
+<li>唯一性太差的字段不适合做单独的索引，即使它频繁作为查询条件</li>
+<li>更新非常频繁的字段不适合做索引</li>
+<li>不会出现在where子句中的字段不适合做索引</li>
+</ul>
+<h3 id="MySQL索引的限制"><a href="#MySQL索引的限制" class="headerlink" title="MySQL索引的限制"></a>MySQL索引的限制</h3><ul>
+<li>MyISAM存储引擎索引键长度总和长度不能超过1000字节</li>
+<li>Text和Blob类型的字段只能创建前缀索引</li>
+<li>使用不等于（!= 或 &lt;&gt; ）的时候MySQL无法使用索引</li>
+<li>过滤字段使用了函数运算后（如，abs（culumn）），MySQL无法使用索引</li>
+<li>join语句中join条件字段类型不一致不能使用索引</li>
+<li>使用LIKE操作的时候，如果条件以通配符开始（如，’%abc’）MySQL无法使用索引</li>
+<li>使用非等值查询时，MySQL无法使用索引</li>
+</ul>
+<h2 id="Query的优化"><a href="#Query的优化" class="headerlink" title="Query的优化"></a>Query的优化</h2><h3 id="优化更需要优化的query"><a href="#优化更需要优化的query" class="headerlink" title="优化更需要优化的query"></a>优化更需要优化的query</h3><p>高并发低消耗的query（相对）对整个系统的影响远比低并发高消耗的query要大。</p>
+<h3 id="定位优化对象的性能瓶颈（profiling）"><a href="#定位优化对象的性能瓶颈（profiling）" class="headerlink" title="定位优化对象的性能瓶颈（profiling）"></a>定位优化对象的性能瓶颈（profiling）</h3><ul>
+<li>IO，数据访问方面</li>
+<li>CPU，数据运算（如分组、排序）</li>
+</ul>
+<h3 id="明确优化手段"><a href="#明确优化手段" class="headerlink" title="明确优化手段"></a>明确优化手段</h3><p>优化更偏向与对系统功能比较重要的query</p>
+<h3 id="从explain入手"><a href="#从explain入手" class="headerlink" title="从explain入手"></a>从explain入手</h3><p>获取一个query在当前状态的数据库中的执行计划</p>
+<h3 id="多用profile"><a href="#多用profile" class="headerlink" title="多用profile"></a>多用profile</h3><h3 id="永远用小结果集驱动大结果集"><a href="#永远用小结果集驱动大结果集" class="headerlink" title="永远用小结果集驱动大结果集"></a>永远用小结果集驱动大结果集</h3><h3 id="尽可能在索引中完成排序"><a href="#尽可能在索引中完成排序" class="headerlink" title="尽可能在索引中完成排序"></a>尽可能在索引中完成排序</h3><h3 id="只需取出自己需要的column"><a href="#只需取出自己需要的column" class="headerlink" title="只需取出自己需要的column"></a>只需取出自己需要的column</h3><h3 id="仅适用最有效的过滤条件"><a href="#仅适用最有效的过滤条件" class="headerlink" title="仅适用最有效的过滤条件"></a>仅适用最有效的过滤条件</h3><p>where字句中的条件并非越多越好</p>
+<h3 id="尽可能的避免复杂的join查询和子查询"><a href="#尽可能的避免复杂的join查询和子查询" class="headerlink" title="尽可能的避免复杂的join查询和子查询"></a>尽可能的避免复杂的join查询和子查询</h3><p>query语句涉及的表越多，需要锁定的资源就越多，所阻塞的其他线程也就越多。</p>
+<h3 id="其他优化"><a href="#其他优化" class="headerlink" title="其他优化"></a>其他优化</h3><h4 id="join的实现与优化"><a href="#join的实现与优化" class="headerlink" title="join的实现与优化"></a>join的实现与优化</h4><p>join是一种算法，即大名鼎鼎的Nested Loop Join。它是通过驱动表的结果集作为循环基础数据，然后一条一条的通过该结果集中的数据作为过滤条件到下一个表中查询数据，然后合并结果。</p>
+<ul>
+<li><p>尽可能的Join语句中的Nested Loop的循环次数</p>
+<blockquote>
+<p>最有效的方法只有一个：让驱动表的结果集尽可能的小。即『永远用小结果集驱动大结果集』</p>
+</blockquote>
+</li>
+<li><p>优先优化Nested Loop的内层循环</p>
+</li>
+<li>保证Join语句中被驱动表上的join字段已经被索引</li>
+<li>当无法保证被驱动表join字段被索引且内存充足的前提下，不要太吝啬joinBuffer的设置</li>
+</ul>
+<h4 id="order-by的优化"><a href="#order-by的优化" class="headerlink" title="order by的优化"></a>order by的优化</h4><ul>
+<li>加大max_length_for_sort_data参数的设置</li>
+<li>去掉不必要的返回字段</li>
+<li>增大sort_buffer_size参数设置</li>
+</ul>
+<h4 id="Schema设计优化"><a href="#Schema设计优化" class="headerlink" title="Schema设计优化"></a>Schema设计优化</h4><ul>
+<li>范式理论</li>
+<li>十度冗余，尽量减少join</li>
+</ul>
+<h4 id="大字段垂直拆分"><a href="#大字段垂直拆分" class="headerlink" title="大字段垂直拆分"></a>大字段垂直拆分</h4><p>什么样的字段适合</p>
+<ul>
+<li>大字段（比如，文章内容、帖子内容、产品的介绍、小说内容等）</li>
+<li>表中和其他字段比较，访问明显要少的字段</li>
+</ul>
+<p>优点</p>
+<ul>
+<li>数据库拆分简单明了，拆分规则明确</li>
+<li>应用程序模块清晰明了，整合容易</li>
+<li>数据维护方便易行，容易定位</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>部分表关联无法在数据库级别完成，需要在程序中完成</li>
+<li>对于访问极其频繁且数据量超大的表任然存在性能瓶颈，不一定满足要求</li>
+<li>事务处理相对更为复杂</li>
+<li>切分达到一定程度后，扩展性会收到限制</li>
+<li>过度切分可能会带来系统过度复杂而难以维护</li>
+</ul>
+<h4 id="大表水平拆分"><a href="#大表水平拆分" class="headerlink" title="大表水平拆分"></a>大表水平拆分</h4><p>基于类型的分拆优化</p>
+<p>优点</p>
+<ul>
+<li>表关联基本能在数据库端完成</li>
+<li>不会存在某些超大型数据量和高负载的表遇到的瓶颈问题</li>
+<li>应用程序端整体架构改动相对较少</li>
+<li>事务处理相对简单</li>
+<li>只要切分规则能够定义好，基本上较难遇到扩展性限制</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>切分规则相对更为复杂，很难抽象出一个能够满足整个数据库的切分规则</li>
+<li>后期数据的维护难度有所增加，人为手工定位数据更困难</li>
+<li>应用系统各模块耦合度较高，可能会对后面数据的迁移、拆分造成一定困难</li>
+</ul>
+<h2 id="MySQL的备份与恢复"><a href="#MySQL的备份与恢复" class="headerlink" title="MySQL的备份与恢复"></a>MySQL的备份与恢复</h2><p>备份使用场景</p>
+<ul>
+<li>数据丢失应用场景<ul>
+<li>人为操作事务造成的某些数据丢失</li>
+<li>如那件Bug造成的数据部分丢失或者全部丢失</li>
+<li>硬件故障造成的数据部分或者全部丢失</li>
+<li>安全漏洞被入侵数据被恶意破坏</li>
+</ul>
+</li>
+<li>非数据丢失应用场景<ul>
+<li>特殊应用场景下基于时间点恢复</li>
+<li>开发测试环境数据库搭建</li>
+<li>相同数据库的新环境搭建</li>
+<li>数据库或者数据迁移</li>
+</ul>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;http://n.sinaimg.cn/games/3ece443e/20161013/MySQLXingNenDiaoYou.jpg&quot; alt=&quot;MYSQL性能优化&quot;&gt;&lt;/p&gt;
+&lt;p&gt;性能是MySQL一直引以为豪的一点。在性能和功能两个方面，MySQL第一考虑的还是性能。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="MySQL" scheme="https://weizhimiao.github.io/categories/MySQL/"/>
+    
+    
+      <category term="性能优化" scheme="https://weizhimiao.github.io/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
   
   <entry>
     <title>大型网站技术架构剖析</title>
@@ -943,228 +1209,6 @@
   </entry>
   
   <entry>
-    <title>Linux系统的简介和安装</title>
-    <link href="https://weizhimiao.github.io/2016/10/06/Linux%E7%AE%80%E4%BB%8B/"/>
-    <id>https://weizhimiao.github.io/2016/10/06/Linux简介/</id>
-    <published>2016-10-06T14:30:00.000Z</published>
-    <updated>2016-10-07T13:39:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="Linux简介"><a href="#Linux简介" class="headerlink" title="Linux简介"></a>Linux简介</h2><h3 id="Unix发展史"><a href="#Unix发展史" class="headerlink" title="Unix发展史"></a>Unix发展史</h3><p>1965年，美国麻省理工学院（MIT）、通用电气公司（GE）及AT&amp;T的贝尔实验室联合开发Multics工程计划，其目标是开发一种交互式的具有多道程序处理能力的分时操作系统，但因Multics追求的目标过于庞大复杂，项目进度远远落后于计划，最后贝尔实验室宣布退出。</p>
-<p>1969年，美国贝尔实验室的肯.汤普森在DEC PDP-7机器上开发出了UNIX系统</p>
-<p>1971年，肯.汤普森的同事丹尼斯.里奇发明了C语言；1973年，UNIX系统的绝大部分源代码用C语言重写，这为提高UNIX系统的可移植性打下基础</p>
-<a id="more"></a>
-<h3 id="常见的Unix"><a href="#常见的Unix" class="headerlink" title="常见的Unix"></a>常见的Unix</h3><ul>
-<li>AIX        IBM</li>
-<li>HP-UX        HP</li>
-<li>Solaris        SUN</li>
-</ul>
-<h3 id="Linux的发展史"><a href="#Linux的发展史" class="headerlink" title="Linux的发展史"></a>Linux的发展史</h3><p>由Andrew S. Tanenbaum（谭宁邦）发明。MINIX最初发布于1987年，开放全部源代码给大学教学和研究工作。2000年重新改为BSD授权，成为自由和开放源码软件。<br>Linus Torvalds（李纳斯.托瓦兹），1991年，他在芬兰的赫尔辛基大学用Minix操作平台建立了一个新的操作系统的内核，他把它叫做Linux。</p>
-<h3 id="常见的Linux"><a href="#常见的Linux" class="headerlink" title="常见的Linux"></a>常见的Linux</h3><p>Linux的各种版本多大上千种，主要可以分为两大类：</p>
-<ul>
-<li><p>一类是Red Hat系列，主要有Fedora、RHEL、CentOS、SUSE、gentoo、红旗、Mandriva、turboLinux、REHL enterprise。</p>
-</li>
-<li><p>还有一类是以debian和ubuntu为代表的系列</p>
-</li>
-</ul>
-<h3 id="Linux特点"><a href="#Linux特点" class="headerlink" title="Linux特点"></a>Linux特点</h3><ul>
-<li>开源、免费</li>
-<li>稳定</li>
-<li>安全</li>
-</ul>
-<h3 id="Linux的应用领域："><a href="#Linux的应用领域：" class="headerlink" title="Linux的应用领域："></a>Linux的应用领域：</h3><ul>
-<li>基于Linux的网站服务器</li>
-<li>电影娱乐业（特别是在特效制作上）</li>
-<li>嵌入式领域</li>
-<li>手机、平板电脑</li>
-<li>其他嵌入式领域</li>
-</ul>
-<h2 id="Linux安装"><a href="#Linux安装" class="headerlink" title="Linux安装"></a>Linux安装</h2><p>Linux安装步骤：</p>
-<blockquote>
-<ul>
-<li><p>分区：把大硬盘分为小的逻辑分区</p>
-</li>
-<li><p>格式化：写入文件系统</p>
-</li>
-<li><p>分区设备文件名：给每个分区定义设备文件名</p>
-</li>
-<li><p>挂载：给每个分区分配挂载点</p>
-</li>
-</ul>
-</blockquote>
-<h3 id="Linux磁盘分区："><a href="#Linux磁盘分区：" class="headerlink" title="Linux磁盘分区："></a>Linux磁盘分区：</h3><p>分区类型</p>
-<ul>
-<li>主分区，由于硬盘的限制，一个硬盘最多只能有4个主分区。</li>
-<li>扩展分区，一个硬盘上最多只能有一个扩展分区，主分区和扩展分区加起来一个硬盘也最多有4个，且扩展分区当中不能直接写入数据，只能包含逻辑分区。</li>
-<li>逻辑分区，逻辑分区只能建立在扩展分区之上。逻辑分区可以有多个。</li>
-</ul>
-<p>Linux分区表示：</p>
-<ul>
-<li>/dev/hda1<blockquote>
-<p>   hd:    IDE硬盘    sd：    SCSI硬盘或者SATA硬盘<br>   a：    第一块硬盘<br>   1：    第一个分区</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="Linux分区格式化（写入文件系统）"><a href="#Linux分区格式化（写入文件系统）" class="headerlink" title="Linux分区格式化（写入文件系统）"></a>Linux分区格式化（写入文件系统）</h3><p>文件系统类型</p>
-<ul>
-<li>Windows系统一般有一下文件系统：<ul>
-<li>FAT16</li>
-<li>FAT32</li>
-<li>NTFS</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>Linux系统有一下几种文件系统：<ul>
-<li>EXT2</li>
-<li>EXT3</li>
-<li>EXT4</li>
-</ul>
-</li>
-</ul>
-<p>Inode        i节点（每个文件都有一个唯一的数字标识来唯一标识该文件）</p>
-<blockquote>
-<p>注意：每个i节点可以表示的硬盘空间的大小有限，一个小文件可能用一个i节点就可表示，但当一个文件非常大时，就可能对应着好多个i节点。</p>
-</blockquote>
-<p>Block        数据存储的最小单元（一般大小为4Kb）</p>
-<p>格式化又称为逻辑格式化，它是指根据用户选定的文件系统，在磁盘的特定区域写入特定数据，在分区中画出一片用于存放文件分配表、目录表等用于文件管理的磁盘空间。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;Linux简介&quot;&gt;&lt;a href=&quot;#Linux简介&quot; class=&quot;headerlink&quot; title=&quot;Linux简介&quot;&gt;&lt;/a&gt;Linux简介&lt;/h2&gt;&lt;h3 id=&quot;Unix发展史&quot;&gt;&lt;a href=&quot;#Unix发展史&quot; class=&quot;headerlink&quot; title=&quot;Unix发展史&quot;&gt;&lt;/a&gt;Unix发展史&lt;/h3&gt;&lt;p&gt;1965年，美国麻省理工学院（MIT）、通用电气公司（GE）及AT&amp;amp;T的贝尔实验室联合开发Multics工程计划，其目标是开发一种交互式的具有多道程序处理能力的分时操作系统，但因Multics追求的目标过于庞大复杂，项目进度远远落后于计划，最后贝尔实验室宣布退出。&lt;/p&gt;
-&lt;p&gt;1969年，美国贝尔实验室的肯.汤普森在DEC PDP-7机器上开发出了UNIX系统&lt;/p&gt;
-&lt;p&gt;1971年，肯.汤普森的同事丹尼斯.里奇发明了C语言；1973年，UNIX系统的绝大部分源代码用C语言重写，这为提高UNIX系统的可移植性打下基础&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>PHP魔术方法小结</title>
-    <link href="https://weizhimiao.github.io/2016/10/06/PHP%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%B0%8F%E7%BB%93/"/>
-    <id>https://weizhimiao.github.io/2016/10/06/PHP魔术方法小结/</id>
-    <published>2016-10-06T14:30:00.000Z</published>
-    <updated>2016-10-07T13:24:03.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>魔术方法：</p>
-<blockquote>
-<p>一种特殊的函数</p>
-</blockquote>
-<a id="more"></a>
-<h2 id="构造方法：-construct-或者和类名同名的方法"><a href="#构造方法：-construct-或者和类名同名的方法" class="headerlink" title="构造方法： __construct()  或者和类名同名的方法"></a>构造方法： __construct()  或者和类名同名的方法</h2><p>触发时机：在对象实例化的时候自动触发。</p>
-<p>作用：初始化成员属性</p>
-<p>参数：可以有，可以没有，取决于设定和逻辑</p>
-<p>返回值：没有</p>
-<p>注意：如果构造方法具有参数，且参数没有默认值，在实例化对象时，必须在类名()内添加对应的实参值。</p>
-<h2 id="析构方法-destruct"><a href="#析构方法-destruct" class="headerlink" title="析构方法 __destruct()"></a>析构方法 __destruct()</h2><p>触发时机： 在销毁对象的时候自动触发(unset或者页面执行完毕)</p>
-<p>作用：回收对象使用过程中的资源。</p>
-<p>参数：没有</p>
-<p>返回值：没有</p>
-<h2 id="get"><a href="#get" class="headerlink" title="__get()"></a>__get()</h2><p>触发时机：访问私有成员属性的时候自动触发</p>
-<p>功能：1.防止报错  2.为私有属性访问提供后门</p>
-<p>参数：1个    访问的私有属性名称</p>
-<p>返回值：可以有，可以没有</p>
-<h2 id="set"><a href="#set" class="headerlink" title="__set()"></a>__set()</h2><p>触发时机: 对私有成员属性进行设置值的时候自动触发</p>
-<p>功能:1.屏蔽错误  2.为私有成员属性设置</p>
-<p>参数: 2个   1私有成员属性名  2 要设置的值</p>
-<p>返回值:无</p>
-<h2 id="isset"><a href="#isset" class="headerlink" title="__isset()"></a>__isset()</h2><p>触发时机:对私有成员属性进行isset检测时自动触发</p>
-<p>功能: 1.代替对象外部的isset检测，返回结果</p>
-<p>参数: 1个   1私有成员属性名</p>
-<p>返回值:有  一般返回 isset(属性)结果</p>
-<h2 id="unset"><a href="#unset" class="headerlink" title="__unset()"></a>__unset()</h2><p>触发时机:在对象外部对私有成员属性进行unset操作时自动触发</p>
-<p>功能: 1.代替对象外部的unset操作，返回结果</p>
-<p>参数: 1个   1私有成员属性名</p>
-<p>返回值:无</p>
-<h2 id="sleep"><a href="#sleep" class="headerlink" title="__sleep()"></a>__sleep()</h2><p>触发时机：在对象进行串行化操作时触发.</p>
-<p>功能：指定需要串行化的成员属性.</p>
-<p>参数:无</p>
-<p>返回值: 需要返回一个数组类型，每个元素都是需要串行化的成员属性名.</p>
-<h2 id="wakeup"><a href="#wakeup" class="headerlink" title="__wakeup()"></a>__wakeup()</h2><p>触发时机：.在对象进行反串行化时自动触发</p>
-<p>功能：.反串行化时自动修改部分成员属性值.</p>
-<p>参数:无</p>
-<p>返回值: 无</p>
-<h2 id="tostring"><a href="#tostring" class="headerlink" title="__tostring()"></a>__tostring()</h2><p>触发时机：对一个对象进行echo操作时 自动触发</p>
-<p>功能：简化操作或者为对象输出值</p>
-<p>参数:无</p>
-<p>返回值:必须有且必须为字符串类型.</p>
-<h2 id="clone"><a href="#clone" class="headerlink" title="__clone()"></a>__clone()</h2><p>触发时机:对对象进行克隆操作时自动触发</p>
-<p>功能：修改克隆之后的对象的部分属性值.</p>
-<p>参数:无</p>
-<p>返回值:无</p>
-<p>注意：对象的赋值默认就是引用赋值，不能通过赋值操作获取一个新的对象，获取新对象的操作应该使用克隆操作</p>
-<p>格式： 变量=clone 对象变量</p>
-<h2 id="call（）"><a href="#call（）" class="headerlink" title="__call（）"></a>__call（）</h2><p>触发时机:    调用了类中不存在的方法时自动触发</p>
-<p>功能：1.屏蔽错误  2.为不存在的方法定义个一个功能.</p>
-<p>参数:2个   1 不存在的方法名   2所有的实参组成的数组</p>
-<p>返回值:可有可无(根据实际功能来看)</p>
-<h2 id="autoload-唯一一个类外部的魔术方法"><a href="#autoload-唯一一个类外部的魔术方法" class="headerlink" title="__autoload()(唯一一个类外部的魔术方法)"></a>__autoload()(唯一一个类外部的魔术方法)</h2><p>触发时机:    当页面中需要一个 类而该类不存在时自动触发</p>
-<p>功能：实现类的自动加载.</p>
-<p>参数1个 不存在的类名</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;魔术方法：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;一种特殊的函数&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Linux中的用户和用户组管理</title>
-    <link href="https://weizhimiao.github.io/2016/10/06/Linux%E4%B8%AD%E7%9A%84%E7%94%A8%E6%88%B7%E5%92%8C%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86/"/>
-    <id>https://weizhimiao.github.io/2016/10/06/Linux中的用户和用户组管理/</id>
-    <published>2016-10-06T14:30:00.000Z</published>
-    <updated>2016-10-07T14:41:03.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>用户账号的管理主要涉及到用户账号的添加、删除和修改。<br>添加用户账号就是在系统中创建一个新账号，然后为新账号分配用户号、用户组、主目录和登录Shell等。</p>
-<a id="more"></a>
-<h2 id="关于用户管理的配置文件说明"><a href="#关于用户管理的配置文件说明" class="headerlink" title="关于用户管理的配置文件说明"></a>关于用户管理的配置文件说明</h2><h3 id="用户信息文件："><a href="#用户信息文件：" class="headerlink" title="用户信息文件："></a>用户信息文件：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/passwd</div></pre></td></tr></table></figure>
-<p>文件内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">root:x:0:0:root:/root:/bin/bash</div><div class="line"></div><div class="line">第一位：用户名</div><div class="line">第二位：密码位（只是一个密码标志，真实密码并不是存在这）</div><div class="line">第三位：UID	用户ID</div><div class="line">		0	超级管理员</div><div class="line">		1-499	系统用户（伪用户）</div><div class="line">		&gt;500	普通用户</div><div class="line">第四位：GID	初始组ID</div><div class="line">第五位：用户说明</div><div class="line">第六位：家目录</div><div class="line">第七位：用户登录之后的权限</div></pre></td></tr></table></figure>
-<h3 id="影子文件："><a href="#影子文件：" class="headerlink" title="影子文件："></a>影子文件：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/shadow</div></pre></td></tr></table></figure>
-<p>文件内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root:$6$w5RBeFe7Y1bixrQR$tp0zHL1bMmAVv0SAS56LsCOyZ4KUj3V0GI0dRZ4KSlf.ggisV7dwiQ8s5xebcZghVDxwlYTjN6qKGU9zRc.En1:16247:0:99999:7:::</div></pre></td></tr></table></figure>
-<p>说明：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">#</div><div class="line"># 第一字段：用户名（也被称为登录名），在/etc/shadow中，用户名和/etc/passwd 是相同的，</div><div class="line"># 这样就把passwd 和shadow中用的用户记录联系在一起；这个字段是非空的；</div><div class="line">#</div><div class="line"># 第二字段：密码（已被加密），如果是有些用户在这段是x，表示这个用户不能登录到系统；这个字段是非空的；</div><div class="line">#</div><div class="line"># 第三字段：上次修改口令的时间；这个时间是从1970年01月01日算起到最近一次修改口令的时间间隔（天数），</div><div class="line"># 您可以通过passwd 来修改用户的密码，然后查看/etc/shadow中此字段的变化；</div><div class="line">#</div><div class="line"># 第四字段：两次修改口令间隔最少的天数；如果设置为0,则禁用此功能；也就是说用户必须经过多少天才能修改其口令；</div><div class="line"># 此项功能用处不是太大；默认值是通过/etc/login.defs文件定义中获取，PASS_MIN_DAYS 中有定义；</div><div class="line">#</div><div class="line"># 第五字段：两次修改口令间隔最多的天数；这个能增强管理员管理用户口令的时效性，应该说在增强了系统的安全性；</div><div class="line"># 如果是系统默认值，是在添加用户时由/etc/login.defs文件定义中获取，在PASS_MAX_DAYS 中定义；</div><div class="line">#</div><div class="line"># 第六字段：提前多少天警告用户口令将过期；当用户登录系统后，系统登录程序提醒用户口令将要作废；</div><div class="line"># 如果是系统默认值，是在添加用户时由/etc/login.defs文件定义中获取，在PASS_WARN_AGE 中定义；</div><div class="line">#</div><div class="line"># 第七字段：在口令过期之后多少天禁用此用户；此字段表示用户口令作废多少天后，系统会禁用此用户，</div><div class="line"># 也就是说系统会不能再让此用户登录，也不会提示用户过期，是完全禁用；</div><div class="line">#</div><div class="line"># 第八字段：用户过期日期；此字段指定了用户作废的天数（从1970年的1月1日开始的天数），</div><div class="line"># 如果这个字段的值为空，帐号永久可用；</div><div class="line">#</div><div class="line"># 第九字段：保留字段，目前为空，以备将来Linux发展之用；</div></pre></td></tr></table></figure>
-<h3 id="组信息文件："><a href="#组信息文件：" class="headerlink" title="组信息文件："></a>组信息文件：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/group</div></pre></td></tr></table></figure>
-<p>文件内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">bin:x:1:bin,daemon</div><div class="line">组名：组密码位：组ID：组中的附加用户</div><div class="line">初始组：每个用户初始组只能有一个，初始组只能有一个，一般都是和用户名相同的组作为初始组</div><div class="line">附加组：每个用户可以属于多个附加组。要把用户加入组，都是加入附加组</div></pre></td></tr></table></figure>
-<h2 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">useradd	用户名</div><div class="line">useradd  选项    用户名		</div><div class="line">		-g	组名		指定初始组（但最好不要手动指定）</div><div class="line">		-G	组名		指定附加组（把用户加入组，使用附加组）</div><div class="line">		-c	说明		添加说明</div><div class="line">		-d	目录		手工指定家目录</div><div class="line">		-s	/bin/bash	手工指定用户登录后之后的权限</div></pre></td></tr></table></figure>
-<p>例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">useradd  -g  aa  bb   		添加bb用户，同时指定初始组aa</div><div class="line">useradd   -G   user1   aa		添加用户aa，指定附加组为user1</div></pre></td></tr></table></figure>
-<h2 id="设定密码"><a href="#设定密码" class="headerlink" title="设定密码"></a>设定密码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">passwd	用户名</div><div class="line">passwd		改变当前用户密码（普通用户只能通过这种方式来更改自己的密码）</div><div class="line">passwd	root	更改root的密码</div></pre></td></tr></table></figure>
-<h2 id="删除密码"><a href="#删除密码" class="headerlink" title="删除密码"></a>删除密码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">userdel	-r  用户名</div><div class="line">		    -r 	连带家目录一起删除</div></pre></td></tr></table></figure>
-<h2 id="添加组"><a href="#添加组" class="headerlink" title="添加组"></a>添加组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">groupadd	组名</div></pre></td></tr></table></figure>
-<h2 id="删除组"><a href="#删除组" class="headerlink" title="删除组"></a>删除组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">groupdel	组名		注意：组中没有初始用户</div></pre></td></tr></table></figure>
-<h2 id="把已经存在的用户加入组"><a href="#把已经存在的用户加入组" class="headerlink" title="把已经存在的用户加入组"></a>把已经存在的用户加入组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gpasswd	-a  用户名   组名	用户加入组</div><div class="line">gpasswd	-d  用户名  组名	把用户从组中删除</div></pre></td></tr></table></figure>
-<h2 id="查看用户相关信息"><a href="#查看用户相关信息" class="headerlink" title="查看用户相关信息"></a>查看用户相关信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id   用户名		显示用户的UID，初始组，和附加组</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">例#id   sc   </div><div class="line">uid=0(root) gid=0(root) 组=0(root)</div></pre></td></tr></table></figure>
-<h2 id="用户间的相互切换"><a href="#用户间的相互切换" class="headerlink" title="用户间的相互切换"></a>用户间的相互切换</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">su  -  用户名		切换用户身份</div><div class="line">  	-	连带环境变量一起切换</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;用户账号的管理主要涉及到用户账号的添加、删除和修改。&lt;br&gt;添加用户账号就是在系统中创建一个新账号，然后为新账号分配用户号、用户组、主目录和登录Shell等。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
-    
-    
-  </entry>
-  
-  <entry>
     <title>Linux网络配置</title>
     <link href="https://weizhimiao.github.io/2016/10/06/Linux%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/"/>
     <id>https://weizhimiao.github.io/2016/10/06/Linux网络配置/</id>
@@ -1286,6 +1330,150 @@
   </entry>
   
   <entry>
+    <title>Linux系统的简介和安装</title>
+    <link href="https://weizhimiao.github.io/2016/10/06/Linux%E7%AE%80%E4%BB%8B/"/>
+    <id>https://weizhimiao.github.io/2016/10/06/Linux简介/</id>
+    <published>2016-10-06T14:30:00.000Z</published>
+    <updated>2016-10-07T13:39:11.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Linux简介"><a href="#Linux简介" class="headerlink" title="Linux简介"></a>Linux简介</h2><h3 id="Unix发展史"><a href="#Unix发展史" class="headerlink" title="Unix发展史"></a>Unix发展史</h3><p>1965年，美国麻省理工学院（MIT）、通用电气公司（GE）及AT&amp;T的贝尔实验室联合开发Multics工程计划，其目标是开发一种交互式的具有多道程序处理能力的分时操作系统，但因Multics追求的目标过于庞大复杂，项目进度远远落后于计划，最后贝尔实验室宣布退出。</p>
+<p>1969年，美国贝尔实验室的肯.汤普森在DEC PDP-7机器上开发出了UNIX系统</p>
+<p>1971年，肯.汤普森的同事丹尼斯.里奇发明了C语言；1973年，UNIX系统的绝大部分源代码用C语言重写，这为提高UNIX系统的可移植性打下基础</p>
+<a id="more"></a>
+<h3 id="常见的Unix"><a href="#常见的Unix" class="headerlink" title="常见的Unix"></a>常见的Unix</h3><ul>
+<li>AIX        IBM</li>
+<li>HP-UX        HP</li>
+<li>Solaris        SUN</li>
+</ul>
+<h3 id="Linux的发展史"><a href="#Linux的发展史" class="headerlink" title="Linux的发展史"></a>Linux的发展史</h3><p>由Andrew S. Tanenbaum（谭宁邦）发明。MINIX最初发布于1987年，开放全部源代码给大学教学和研究工作。2000年重新改为BSD授权，成为自由和开放源码软件。<br>Linus Torvalds（李纳斯.托瓦兹），1991年，他在芬兰的赫尔辛基大学用Minix操作平台建立了一个新的操作系统的内核，他把它叫做Linux。</p>
+<h3 id="常见的Linux"><a href="#常见的Linux" class="headerlink" title="常见的Linux"></a>常见的Linux</h3><p>Linux的各种版本多大上千种，主要可以分为两大类：</p>
+<ul>
+<li><p>一类是Red Hat系列，主要有Fedora、RHEL、CentOS、SUSE、gentoo、红旗、Mandriva、turboLinux、REHL enterprise。</p>
+</li>
+<li><p>还有一类是以debian和ubuntu为代表的系列</p>
+</li>
+</ul>
+<h3 id="Linux特点"><a href="#Linux特点" class="headerlink" title="Linux特点"></a>Linux特点</h3><ul>
+<li>开源、免费</li>
+<li>稳定</li>
+<li>安全</li>
+</ul>
+<h3 id="Linux的应用领域："><a href="#Linux的应用领域：" class="headerlink" title="Linux的应用领域："></a>Linux的应用领域：</h3><ul>
+<li>基于Linux的网站服务器</li>
+<li>电影娱乐业（特别是在特效制作上）</li>
+<li>嵌入式领域</li>
+<li>手机、平板电脑</li>
+<li>其他嵌入式领域</li>
+</ul>
+<h2 id="Linux安装"><a href="#Linux安装" class="headerlink" title="Linux安装"></a>Linux安装</h2><p>Linux安装步骤：</p>
+<blockquote>
+<ul>
+<li><p>分区：把大硬盘分为小的逻辑分区</p>
+</li>
+<li><p>格式化：写入文件系统</p>
+</li>
+<li><p>分区设备文件名：给每个分区定义设备文件名</p>
+</li>
+<li><p>挂载：给每个分区分配挂载点</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="Linux磁盘分区："><a href="#Linux磁盘分区：" class="headerlink" title="Linux磁盘分区："></a>Linux磁盘分区：</h3><p>分区类型</p>
+<ul>
+<li>主分区，由于硬盘的限制，一个硬盘最多只能有4个主分区。</li>
+<li>扩展分区，一个硬盘上最多只能有一个扩展分区，主分区和扩展分区加起来一个硬盘也最多有4个，且扩展分区当中不能直接写入数据，只能包含逻辑分区。</li>
+<li>逻辑分区，逻辑分区只能建立在扩展分区之上。逻辑分区可以有多个。</li>
+</ul>
+<p>Linux分区表示：</p>
+<ul>
+<li>/dev/hda1<blockquote>
+<p>   hd:    IDE硬盘    sd：    SCSI硬盘或者SATA硬盘<br>   a：    第一块硬盘<br>   1：    第一个分区</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="Linux分区格式化（写入文件系统）"><a href="#Linux分区格式化（写入文件系统）" class="headerlink" title="Linux分区格式化（写入文件系统）"></a>Linux分区格式化（写入文件系统）</h3><p>文件系统类型</p>
+<ul>
+<li>Windows系统一般有一下文件系统：<ul>
+<li>FAT16</li>
+<li>FAT32</li>
+<li>NTFS</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Linux系统有一下几种文件系统：<ul>
+<li>EXT2</li>
+<li>EXT3</li>
+<li>EXT4</li>
+</ul>
+</li>
+</ul>
+<p>Inode        i节点（每个文件都有一个唯一的数字标识来唯一标识该文件）</p>
+<blockquote>
+<p>注意：每个i节点可以表示的硬盘空间的大小有限，一个小文件可能用一个i节点就可表示，但当一个文件非常大时，就可能对应着好多个i节点。</p>
+</blockquote>
+<p>Block        数据存储的最小单元（一般大小为4Kb）</p>
+<p>格式化又称为逻辑格式化，它是指根据用户选定的文件系统，在磁盘的特定区域写入特定数据，在分区中画出一片用于存放文件分配表、目录表等用于文件管理的磁盘空间。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;Linux简介&quot;&gt;&lt;a href=&quot;#Linux简介&quot; class=&quot;headerlink&quot; title=&quot;Linux简介&quot;&gt;&lt;/a&gt;Linux简介&lt;/h2&gt;&lt;h3 id=&quot;Unix发展史&quot;&gt;&lt;a href=&quot;#Unix发展史&quot; class=&quot;headerlink&quot; title=&quot;Unix发展史&quot;&gt;&lt;/a&gt;Unix发展史&lt;/h3&gt;&lt;p&gt;1965年，美国麻省理工学院（MIT）、通用电气公司（GE）及AT&amp;amp;T的贝尔实验室联合开发Multics工程计划，其目标是开发一种交互式的具有多道程序处理能力的分时操作系统，但因Multics追求的目标过于庞大复杂，项目进度远远落后于计划，最后贝尔实验室宣布退出。&lt;/p&gt;
+&lt;p&gt;1969年，美国贝尔实验室的肯.汤普森在DEC PDP-7机器上开发出了UNIX系统&lt;/p&gt;
+&lt;p&gt;1971年，肯.汤普森的同事丹尼斯.里奇发明了C语言；1973年，UNIX系统的绝大部分源代码用C语言重写，这为提高UNIX系统的可移植性打下基础&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Linux中的用户和用户组管理</title>
+    <link href="https://weizhimiao.github.io/2016/10/06/Linux%E4%B8%AD%E7%9A%84%E7%94%A8%E6%88%B7%E5%92%8C%E7%94%A8%E6%88%B7%E7%BB%84%E7%AE%A1%E7%90%86/"/>
+    <id>https://weizhimiao.github.io/2016/10/06/Linux中的用户和用户组管理/</id>
+    <published>2016-10-06T14:30:00.000Z</published>
+    <updated>2016-10-07T14:41:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>用户账号的管理主要涉及到用户账号的添加、删除和修改。<br>添加用户账号就是在系统中创建一个新账号，然后为新账号分配用户号、用户组、主目录和登录Shell等。</p>
+<a id="more"></a>
+<h2 id="关于用户管理的配置文件说明"><a href="#关于用户管理的配置文件说明" class="headerlink" title="关于用户管理的配置文件说明"></a>关于用户管理的配置文件说明</h2><h3 id="用户信息文件："><a href="#用户信息文件：" class="headerlink" title="用户信息文件："></a>用户信息文件：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/passwd</div></pre></td></tr></table></figure>
+<p>文件内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">root:x:0:0:root:/root:/bin/bash</div><div class="line"></div><div class="line">第一位：用户名</div><div class="line">第二位：密码位（只是一个密码标志，真实密码并不是存在这）</div><div class="line">第三位：UID	用户ID</div><div class="line">		0	超级管理员</div><div class="line">		1-499	系统用户（伪用户）</div><div class="line">		&gt;500	普通用户</div><div class="line">第四位：GID	初始组ID</div><div class="line">第五位：用户说明</div><div class="line">第六位：家目录</div><div class="line">第七位：用户登录之后的权限</div></pre></td></tr></table></figure>
+<h3 id="影子文件："><a href="#影子文件：" class="headerlink" title="影子文件："></a>影子文件：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/shadow</div></pre></td></tr></table></figure>
+<p>文件内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root:$6$w5RBeFe7Y1bixrQR$tp0zHL1bMmAVv0SAS56LsCOyZ4KUj3V0GI0dRZ4KSlf.ggisV7dwiQ8s5xebcZghVDxwlYTjN6qKGU9zRc.En1:16247:0:99999:7:::</div></pre></td></tr></table></figure>
+<p>说明：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">#</div><div class="line"># 第一字段：用户名（也被称为登录名），在/etc/shadow中，用户名和/etc/passwd 是相同的，</div><div class="line"># 这样就把passwd 和shadow中用的用户记录联系在一起；这个字段是非空的；</div><div class="line">#</div><div class="line"># 第二字段：密码（已被加密），如果是有些用户在这段是x，表示这个用户不能登录到系统；这个字段是非空的；</div><div class="line">#</div><div class="line"># 第三字段：上次修改口令的时间；这个时间是从1970年01月01日算起到最近一次修改口令的时间间隔（天数），</div><div class="line"># 您可以通过passwd 来修改用户的密码，然后查看/etc/shadow中此字段的变化；</div><div class="line">#</div><div class="line"># 第四字段：两次修改口令间隔最少的天数；如果设置为0,则禁用此功能；也就是说用户必须经过多少天才能修改其口令；</div><div class="line"># 此项功能用处不是太大；默认值是通过/etc/login.defs文件定义中获取，PASS_MIN_DAYS 中有定义；</div><div class="line">#</div><div class="line"># 第五字段：两次修改口令间隔最多的天数；这个能增强管理员管理用户口令的时效性，应该说在增强了系统的安全性；</div><div class="line"># 如果是系统默认值，是在添加用户时由/etc/login.defs文件定义中获取，在PASS_MAX_DAYS 中定义；</div><div class="line">#</div><div class="line"># 第六字段：提前多少天警告用户口令将过期；当用户登录系统后，系统登录程序提醒用户口令将要作废；</div><div class="line"># 如果是系统默认值，是在添加用户时由/etc/login.defs文件定义中获取，在PASS_WARN_AGE 中定义；</div><div class="line">#</div><div class="line"># 第七字段：在口令过期之后多少天禁用此用户；此字段表示用户口令作废多少天后，系统会禁用此用户，</div><div class="line"># 也就是说系统会不能再让此用户登录，也不会提示用户过期，是完全禁用；</div><div class="line">#</div><div class="line"># 第八字段：用户过期日期；此字段指定了用户作废的天数（从1970年的1月1日开始的天数），</div><div class="line"># 如果这个字段的值为空，帐号永久可用；</div><div class="line">#</div><div class="line"># 第九字段：保留字段，目前为空，以备将来Linux发展之用；</div></pre></td></tr></table></figure>
+<h3 id="组信息文件："><a href="#组信息文件：" class="headerlink" title="组信息文件："></a>组信息文件：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/group</div></pre></td></tr></table></figure>
+<p>文件内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">bin:x:1:bin,daemon</div><div class="line">组名：组密码位：组ID：组中的附加用户</div><div class="line">初始组：每个用户初始组只能有一个，初始组只能有一个，一般都是和用户名相同的组作为初始组</div><div class="line">附加组：每个用户可以属于多个附加组。要把用户加入组，都是加入附加组</div></pre></td></tr></table></figure>
+<h2 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">useradd	用户名</div><div class="line">useradd  选项    用户名		</div><div class="line">		-g	组名		指定初始组（但最好不要手动指定）</div><div class="line">		-G	组名		指定附加组（把用户加入组，使用附加组）</div><div class="line">		-c	说明		添加说明</div><div class="line">		-d	目录		手工指定家目录</div><div class="line">		-s	/bin/bash	手工指定用户登录后之后的权限</div></pre></td></tr></table></figure>
+<p>例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">useradd  -g  aa  bb   		添加bb用户，同时指定初始组aa</div><div class="line">useradd   -G   user1   aa		添加用户aa，指定附加组为user1</div></pre></td></tr></table></figure>
+<h2 id="设定密码"><a href="#设定密码" class="headerlink" title="设定密码"></a>设定密码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">passwd	用户名</div><div class="line">passwd		改变当前用户密码（普通用户只能通过这种方式来更改自己的密码）</div><div class="line">passwd	root	更改root的密码</div></pre></td></tr></table></figure>
+<h2 id="删除密码"><a href="#删除密码" class="headerlink" title="删除密码"></a>删除密码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">userdel	-r  用户名</div><div class="line">		    -r 	连带家目录一起删除</div></pre></td></tr></table></figure>
+<h2 id="添加组"><a href="#添加组" class="headerlink" title="添加组"></a>添加组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">groupadd	组名</div></pre></td></tr></table></figure>
+<h2 id="删除组"><a href="#删除组" class="headerlink" title="删除组"></a>删除组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">groupdel	组名		注意：组中没有初始用户</div></pre></td></tr></table></figure>
+<h2 id="把已经存在的用户加入组"><a href="#把已经存在的用户加入组" class="headerlink" title="把已经存在的用户加入组"></a>把已经存在的用户加入组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gpasswd	-a  用户名   组名	用户加入组</div><div class="line">gpasswd	-d  用户名  组名	把用户从组中删除</div></pre></td></tr></table></figure>
+<h2 id="查看用户相关信息"><a href="#查看用户相关信息" class="headerlink" title="查看用户相关信息"></a>查看用户相关信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id   用户名		显示用户的UID，初始组，和附加组</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">例#id   sc   </div><div class="line">uid=0(root) gid=0(root) 组=0(root)</div></pre></td></tr></table></figure>
+<h2 id="用户间的相互切换"><a href="#用户间的相互切换" class="headerlink" title="用户间的相互切换"></a>用户间的相互切换</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">su  -  用户名		切换用户身份</div><div class="line">  	-	连带环境变量一起切换</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;用户账号的管理主要涉及到用户账号的添加、删除和修改。&lt;br&gt;添加用户账号就是在系统中创建一个新账号，然后为新账号分配用户号、用户组、主目录和登录Shell等。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Linux文件和目录权限小结</title>
     <link href="https://weizhimiao.github.io/2016/10/06/Linux%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95%E6%9D%83%E9%99%90%E5%B0%8F%E7%BB%93/"/>
     <id>https://weizhimiao.github.io/2016/10/06/Linux文件和目录权限小结/</id>
@@ -1394,6 +1582,84 @@
     </summary>
     
       <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>PHP魔术方法小结</title>
+    <link href="https://weizhimiao.github.io/2016/10/06/PHP%E9%AD%94%E6%9C%AF%E6%96%B9%E6%B3%95%E5%B0%8F%E7%BB%93/"/>
+    <id>https://weizhimiao.github.io/2016/10/06/PHP魔术方法小结/</id>
+    <published>2016-10-06T14:30:00.000Z</published>
+    <updated>2016-10-07T13:24:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>魔术方法：</p>
+<blockquote>
+<p>一种特殊的函数</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="构造方法：-construct-或者和类名同名的方法"><a href="#构造方法：-construct-或者和类名同名的方法" class="headerlink" title="构造方法： __construct()  或者和类名同名的方法"></a>构造方法： __construct()  或者和类名同名的方法</h2><p>触发时机：在对象实例化的时候自动触发。</p>
+<p>作用：初始化成员属性</p>
+<p>参数：可以有，可以没有，取决于设定和逻辑</p>
+<p>返回值：没有</p>
+<p>注意：如果构造方法具有参数，且参数没有默认值，在实例化对象时，必须在类名()内添加对应的实参值。</p>
+<h2 id="析构方法-destruct"><a href="#析构方法-destruct" class="headerlink" title="析构方法 __destruct()"></a>析构方法 __destruct()</h2><p>触发时机： 在销毁对象的时候自动触发(unset或者页面执行完毕)</p>
+<p>作用：回收对象使用过程中的资源。</p>
+<p>参数：没有</p>
+<p>返回值：没有</p>
+<h2 id="get"><a href="#get" class="headerlink" title="__get()"></a>__get()</h2><p>触发时机：访问私有成员属性的时候自动触发</p>
+<p>功能：1.防止报错  2.为私有属性访问提供后门</p>
+<p>参数：1个    访问的私有属性名称</p>
+<p>返回值：可以有，可以没有</p>
+<h2 id="set"><a href="#set" class="headerlink" title="__set()"></a>__set()</h2><p>触发时机: 对私有成员属性进行设置值的时候自动触发</p>
+<p>功能:1.屏蔽错误  2.为私有成员属性设置</p>
+<p>参数: 2个   1私有成员属性名  2 要设置的值</p>
+<p>返回值:无</p>
+<h2 id="isset"><a href="#isset" class="headerlink" title="__isset()"></a>__isset()</h2><p>触发时机:对私有成员属性进行isset检测时自动触发</p>
+<p>功能: 1.代替对象外部的isset检测，返回结果</p>
+<p>参数: 1个   1私有成员属性名</p>
+<p>返回值:有  一般返回 isset(属性)结果</p>
+<h2 id="unset"><a href="#unset" class="headerlink" title="__unset()"></a>__unset()</h2><p>触发时机:在对象外部对私有成员属性进行unset操作时自动触发</p>
+<p>功能: 1.代替对象外部的unset操作，返回结果</p>
+<p>参数: 1个   1私有成员属性名</p>
+<p>返回值:无</p>
+<h2 id="sleep"><a href="#sleep" class="headerlink" title="__sleep()"></a>__sleep()</h2><p>触发时机：在对象进行串行化操作时触发.</p>
+<p>功能：指定需要串行化的成员属性.</p>
+<p>参数:无</p>
+<p>返回值: 需要返回一个数组类型，每个元素都是需要串行化的成员属性名.</p>
+<h2 id="wakeup"><a href="#wakeup" class="headerlink" title="__wakeup()"></a>__wakeup()</h2><p>触发时机：.在对象进行反串行化时自动触发</p>
+<p>功能：.反串行化时自动修改部分成员属性值.</p>
+<p>参数:无</p>
+<p>返回值: 无</p>
+<h2 id="tostring"><a href="#tostring" class="headerlink" title="__tostring()"></a>__tostring()</h2><p>触发时机：对一个对象进行echo操作时 自动触发</p>
+<p>功能：简化操作或者为对象输出值</p>
+<p>参数:无</p>
+<p>返回值:必须有且必须为字符串类型.</p>
+<h2 id="clone"><a href="#clone" class="headerlink" title="__clone()"></a>__clone()</h2><p>触发时机:对对象进行克隆操作时自动触发</p>
+<p>功能：修改克隆之后的对象的部分属性值.</p>
+<p>参数:无</p>
+<p>返回值:无</p>
+<p>注意：对象的赋值默认就是引用赋值，不能通过赋值操作获取一个新的对象，获取新对象的操作应该使用克隆操作</p>
+<p>格式： 变量=clone 对象变量</p>
+<h2 id="call（）"><a href="#call（）" class="headerlink" title="__call（）"></a>__call（）</h2><p>触发时机:    调用了类中不存在的方法时自动触发</p>
+<p>功能：1.屏蔽错误  2.为不存在的方法定义个一个功能.</p>
+<p>参数:2个   1 不存在的方法名   2所有的实参组成的数组</p>
+<p>返回值:可有可无(根据实际功能来看)</p>
+<h2 id="autoload-唯一一个类外部的魔术方法"><a href="#autoload-唯一一个类外部的魔术方法" class="headerlink" title="__autoload()(唯一一个类外部的魔术方法)"></a>__autoload()(唯一一个类外部的魔术方法)</h2><p>触发时机:    当页面中需要一个 类而该类不存在时自动触发</p>
+<p>功能：实现类的自动加载.</p>
+<p>参数1个 不存在的类名</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;魔术方法：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;一种特殊的函数&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
     
     
   </entry>
@@ -2301,113 +2567,6 @@
     
       <category term="Nginx" scheme="https://weizhimiao.github.io/categories/Nginx/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>Memcached分布式部署算法整理</title>
-    <link href="https://weizhimiao.github.io/2016/10/01/Memcached%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2%E7%AE%97%E6%B3%95%E6%95%B4%E7%90%86/"/>
-    <id>https://weizhimiao.github.io/2016/10/01/Memcached分布式部署算法整理/</id>
-    <published>2016-10-01T12:00:00.000Z</published>
-    <updated>2016-10-01T10:05:08.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>虽然memcached是一个高性能的缓存服务器，但是单台服务器对于目前大型的web应用来说还是满足不了需求的。那么就需要布置多台的memcached服务器进行分布式部署。那么一个数据应该存储到哪一台服务器就需要一个分布算法来确定。</p>
-<p>常见的分布方案有两种，</p>
-<blockquote>
-<ul>
-<li>普通Hash分布</li>
-<li>一致性Hash分布</li>
-</ul>
-</blockquote>
-<a id="more"></a>
-<h2 id="普通Hash分布"><a href="#普通Hash分布" class="headerlink" title="普通Hash分布"></a>普通Hash分布</h2><blockquote>
-<p>俗称哈希取模法，优点是实现简单，但缺点是缺乏灵活性（比如增加一台服务器，那么之前存储的数据的键值和具体的物理机之间的关系就被完全打乱了，即之前存储的数据就完全失效了）。</p>
-</blockquote>
-<h3 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h3><p>H(key) = hash(key)mod K;</p>
-<blockquote>
-<p>假设有K台物理机，对于key为键值的记录，H(key)值即为存储数据的物理机编号。通过这种方式，就将全部数据分配到K台物理机上，而查找某条记录时，使用同样的Hash函数就可以找到对应的物理机。</p>
-</blockquote>
-<h3 id="实现-PHP-："><a href="#实现-PHP-：" class="headerlink" title="实现(PHP)："></a>实现(PHP)：</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  $servers = <span class="keyword">array</span>(</div><div class="line">    <span class="keyword">array</span>(<span class="string">"host"</span> =&gt; <span class="string">"192.168.1.1"</span>,<span class="string">"port"</span> =&gt; <span class="string">"11211"</span>),</div><div class="line">    <span class="keyword">array</span>(<span class="string">"host"</span> =&gt; <span class="string">"192.168.1.2"</span>,<span class="string">"port"</span> =&gt; <span class="string">"11211"</span>),</div><div class="line">  );</div><div class="line">  $key = <span class="string">"userDatakey"</span>;</div><div class="line">  $value = <span class="string">"userDataValue"</span>;</div><div class="line">  $mc_ser = <span class="keyword">new</span> $servers[mhash($key)%<span class="number">2</span>];</div><div class="line">  $mc = <span class="keyword">new</span> Memcache($servers);</div><div class="line">  $mc-&gt;set($key, $value);</div><div class="line">  var_dump($mc-&gt;get($key));</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * [mhash 首先通过md5把key处理成一个32位的字符串，取其前8个字符。在经过hash算法处理成一个整数并返回。]</div><div class="line">   * <span class="doctag">@param</span>  &#123;[type]&#125; $key [description]</div><div class="line">   * <span class="doctag">@return</span> &#123;[type]&#125;      [description]</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">mhash</span><span class="params">($key)</span></span>&#123;</div><div class="line">    $md5 = substr(md5($key), <span class="number">0</span>, <span class="number">8</span>);</div><div class="line">    $seed = <span class="number">31</span>;</div><div class="line">    $hash = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;<span class="number">8</span>;$i++)&#123;</div><div class="line">      $hash = $hash*$seed + ord($md5&#123;$i&#125;);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> $hash &amp; <span class="number">0x7FFFFFFF</span>;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-<p>通过Hash函数把key转化成整数后，利用这个整数与服务器数量取模，得到其中一台的服务器配置。然后利用这个配置完成memcached服务器的连接操作。这样就完成了对数据的分布式存储。</p>
-<h2 id="一致性Hash分布"><a href="#一致性Hash分布" class="headerlink" title="一致性Hash分布"></a>一致性Hash分布</h2><blockquote>
-<p>一致性hash分布是算法，是P2P网络和分布式存储中常用到一项技术。是一种当服务器有增删时，对数据影响最小的一种部署方案。</p>
-</blockquote>
-<p>一致性Hash算法实现：</p>
-<h3 id="将一个32位整数（0-2-32-1）想象成一个闭环。"><a href="#将一个32位整数（0-2-32-1）想象成一个闭环。" class="headerlink" title="将一个32位整数（0~2^32-1）想象成一个闭环。"></a>将一个32位整数（0~2^32-1）想象成一个闭环。</h3><p>如图，<br><img src="http://n.sinaimg.cn/games/3ece443e/20161001/hash_1.png" alt="将32位整数想象成一个闭环"></p>
-<h3 id="通过Hash函数将key处理成整数"><a href="#通过Hash函数将key处理成整数" class="headerlink" title="通过Hash函数将key处理成整数"></a>通过Hash函数将key处理成整数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$key1 = mhash(&quot;key1&quot;);</div><div class="line">$key2 = mhash(&quot;key2&quot;);</div><div class="line">$key3 = mhash(&quot;key3&quot;);</div><div class="line">$key4 = mhash(&quot;key4&quot;);</div></pre></td></tr></table></figure>
-<p>将key通过mhash函数处理成整数，让后就可以将之对应到闭环上。如图，<br><img src="http://n.sinaimg.cn/games/3ece443e/20161001/hash_2.png" alt="4个key通过mhash处理成整数对应到闭环上"></p>
-<h3 id="将memcached服务器，通过hash服务器所使用的IP地址，也对应到闭环上。"><a href="#将memcached服务器，通过hash服务器所使用的IP地址，也对应到闭环上。" class="headerlink" title="将memcached服务器，通过hash服务器所使用的IP地址，也对应到闭环上。"></a>将memcached服务器，通过hash服务器所使用的IP地址，也对应到闭环上。</h3><p>例如，有三台服务器，IP分别是192.168.1.1、192.168.1.2、192.168.1.3<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$server1 = mhash(&quot;192.168.1.1&quot;);</div><div class="line">$server2 = mhash(&quot;192.168.1.2&quot;);</div><div class="line">$server3 = mhash(&quot;192.168.1.3&quot;);</div></pre></td></tr></table></figure></p>
-<p>如图，<br><img src="http://n.sinaimg.cn/games/3ece443e/20161001/hash_server.png" alt="将服务器也映射到环上"></p>
-<h3 id="把数据映射到服务器上"><a href="#把数据映射到服务器上" class="headerlink" title="把数据映射到服务器上"></a>把数据映射到服务器上</h3><p><strong>映射方法：</strong><br>沿着圆环的顺时针方向的key出发，直到遇上一个服务器，将key对应的数据存储到这个服务器上。</p>
-<p>如图，<br><img src="http://n.sinaimg.cn/games/3ece443e/20161001/hash_3.png" alt="把数据映射到服务器上"></p>
-<h3 id="移除服务器"><a href="#移除服务器" class="headerlink" title="移除服务器"></a>移除服务器</h3><p>假设服务器 server2 崩溃了，那么受影响的仅是哪些hash映射值在server1到server2的值。</p>
-<p>如图，受影响的只有key2，它将会重新映射到server3服务器上。<br><img src="http://n.sinaimg.cn/games/3ece443e/20161001/hash_4.png" alt="移除服务器"></p>
-<h3 id="添加服务器"><a href="#添加服务器" class="headerlink" title="添加服务器"></a>添加服务器</h3><p>如果现在需要新添加一台服务器，其IP地址为（192.168.1.4）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$server4 = mhash(&quot;192.168.1.4&quot;);</div></pre></td></tr></table></figure></p>
-<p>其在闭环上的映射位置位于如图的位置，那么受影响是hash映射值在其当前的位置和server2的位置之间的key。</p>
-<p>如图，受影响的仅为key3，其将会重新映射到server4上。<br><img src="http://n.sinaimg.cn/games/3ece443e/20161001/hash_5.png" alt="添加服务器"></p>
-<h3 id="实现（PHP）"><a href="#实现（PHP）" class="headerlink" title="实现（PHP）"></a>实现（PHP）</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">FlexiHash</span></span>&#123;</div><div class="line">  <span class="keyword">private</span> $serverList = <span class="keyword">array</span>();</div><div class="line">  <span class="keyword">private</span> $isSorted = <span class="keyword">false</span>;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * [addServer 通过hash函数计算除服务器的Hash值，通过此hash值定位服务器列表的某个位置，然后将服务器排序标识置为false]</div><div class="line">   * <span class="doctag">@param</span> &#123;[type]&#125; $server [description]</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">addServer</span><span class="params">($server)</span></span>&#123;</div><div class="line">    $hash = <span class="keyword">$this</span>-&gt;mhash($server);</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;serverList[$hash]))&#123;</div><div class="line">      <span class="keyword">$this</span>-&gt;serverList[$hash] = $server;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">$this</span>-&gt;isSorted = <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * [removeServer 跟addServer实现差不多，将server删除，并将排序标识置为false]</div><div class="line">   * <span class="doctag">@param</span>  &#123;[type]&#125; $server [description]</div><div class="line">   * <span class="doctag">@return</span> &#123;[type]&#125;         [description]</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">removeServer</span><span class="params">($server)</span></span>&#123;</div><div class="line">    $hash = <span class="keyword">$this</span>-&gt;mhash($server);</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="keyword">$this</span>-&gt;serverList[$hash]))&#123;</div><div class="line">      <span class="keyword">unset</span>(<span class="keyword">$this</span>-&gt;serverList[$hash]);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">$this</span>-&gt;isSorted = <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * [lookup 先计算除key的hash值，然后判断serverList是排序过，如果没有，就先对服务器列表进行倒序排序操作。倒序排序的作用是把服务器列表转换成一个逆时针的圆环。然后遍历服务器列表，找到一个合适的服务器返回]</div><div class="line">   * <span class="doctag">@param</span>  &#123;[type]&#125; $key [description]</div><div class="line">   * <span class="doctag">@return</span> &#123;[type]&#125;      [description]</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">lookup</span><span class="params">($key)</span></span>&#123;</div><div class="line">    $hash = <span class="keyword">$this</span>-&gt;mhash($key);</div><div class="line"></div><div class="line">    <span class="keyword">if</span>(!<span class="keyword">$this</span>-&gt;isSorted)&#123;</div><div class="line">      ksort(<span class="keyword">$this</span>-&gt;serverList, SORT_NUMERIC);</div><div class="line">      <span class="keyword">$this</span>-&gt;isSorted = <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">foreach</span>(<span class="keyword">$this</span>-&gt;serverList <span class="keyword">as</span> $pos =&gt; $server)&#123;</div><div class="line">      <span class="keyword">if</span>($hash &gt;= $pos)&#123;</div><div class="line">        <span class="keyword">return</span> $server;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;serverList[count(<span class="keyword">$this</span>-&gt;serverList) - <span class="number">1</span>];</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * [mhash 首先通过md5把key处理成一个32位的字符串，取其前8个字符。在经过hash算法处理成一个整数并返回。]</div><div class="line">   * <span class="doctag">@param</span>  &#123;[type]&#125; $key [description]</div><div class="line">   * <span class="doctag">@return</span> &#123;[type]&#125;      [description]</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">mhash</span><span class="params">($key)</span></span>&#123;</div><div class="line">    $md5 = substr(md5($key), <span class="number">0</span>, <span class="number">8</span>);</div><div class="line">    $seed = <span class="number">31</span>;</div><div class="line">    $hash = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;<span class="number">8</span>;$i++)&#123;</div><div class="line">      $hash = $hash*$seed + ord($md5&#123;$i&#125;);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> $hash &amp; <span class="number">0x7FFFFFFF</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>测试<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  $hserver = <span class="keyword">new</span> FlexiHash();</div><div class="line"></div><div class="line">  $hserver-&gt;addServer(<span class="string">"192.168.1.1"</span>);</div><div class="line">  $hserver-&gt;addServer(<span class="string">"192.168.1.2"</span>);</div><div class="line">  $hserver-&gt;addServer(<span class="string">"192.168.1.3"</span>);</div><div class="line">  $hserver-&gt;addServer(<span class="string">"192.168.1.4"</span>);</div><div class="line">  $hserver-&gt;addServer(<span class="string">"192.168.1.5"</span>);</div><div class="line"></div><div class="line">  <span class="keyword">echo</span> <span class="string">"save key1 in server:"</span>.$hserver-&gt;lookup(<span class="string">"key1"</span>);</div><div class="line">  <span class="keyword">echo</span> <span class="string">"save key2 in server:"</span>.$hserver-&gt;lookup(<span class="string">"key2"</span>);</div><div class="line">  <span class="keyword">echo</span> <span class="string">"==============================================;</span></div><div class="line"></div><div class="line">  $hserver-&gt;removeServer("<span class="number">192.168</span><span class="number">.1</span><span class="number">.4</span><span class="string">");</span></div><div class="line">  echo "save key1 in server:<span class="string">".$hserver-&gt;lookup("</span>key1<span class="string">");</span></div><div class="line">  echo "save key2 in server:<span class="string">".$hserver-&gt;lookup("</span>key2<span class="string">");</span></div><div class="line">  echo "==============================================;</div><div class="line"></div><div class="line">  $hserver-&gt;addServer(<span class="string">"192.168.1.6"</span>);</div><div class="line">  <span class="keyword">echo</span> <span class="string">"save key1 in server:"</span>.$hserver-&gt;lookup(<span class="string">"key1"</span>);</div><div class="line">  <span class="keyword">echo</span> <span class="string">"save key2 in server:"</span>.$hserver-&gt;lookup(<span class="string">"key2"</span>);</div><div class="line">  <span class="keyword">echo</span> <span class="string">"==============================================;  </span></div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-<p>通过测试结果可以看出，在增加或者减少memcached服务器的时候，一致性hash算法只会改变很少的一部分数据的存储服务器，从而能够实现最大限度的减少数据丢失的情况。</p>
-<h2 id="实际应用（PHP）"><a href="#实际应用（PHP）" class="headerlink" title="实际应用（PHP）"></a>实际应用（PHP）</h2><p>在实际应用当中，PHP提供了两种的关于Memcached的扩展，memcache和memcached。两种扩展中都可以设置采用哪种分布方式，我们只需要选择我们要采用的策略并修改配置即可，而不需要我们自己来实现具体的分布算法。</p>
-<p><strong>memcache扩展配置</strong></p>
-<p>控制key到服务器的映射（分布式）策略。 php.ini 配置<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">[Memcache]</div><div class="line">Memcache.allow_failover = 1</div><div class="line">memcache.max_failover_attempts = 2</div><div class="line">Memcache.hash_strategy =consistent</div><div class="line">Memcache.hash_function =crc32</div></pre></td></tr></table></figure></p>
-<p>Memcache.allow_failover</p>
-<blockquote>
-<p>是否在发生错误时（对用户）透明的转移到其他服务器。</p>
-</blockquote>
-<p>memcache.max_failover_attempts</p>
-<blockquote>
-<p>定义在写入和获取数据时最多尝试的服务器次数（即：故障转移最大尝试数），仅和 memcache.allow_failover结合使用。</p>
-</blockquote>
-<p>Memcache.hash_strategy</p>
-<blockquote>
-<p>控制key到服务器的映射（分布式）策略。</p>
-</blockquote>
-<ul>
-<li>consistent，采用一致性hash分布策略实现映射</li>
-<li>standard，采用普通hash分布策略实现映射</li>
-</ul>
-<p>memcache.hash_function</p>
-<blockquote>
-<p>控制在key-server映射时使用哪个hash函数crc32 标明使用标准CRC32进行hash，fnv则说明使用FNV-1a。</p>
-</blockquote>
-<p><strong>memcached扩展配置</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">  $mem = new memcached();</div><div class="line">  $mem-&gt;setOption(Memcached::OPT_DISTRIBUTION,Memcached::DISTRIBUTION_CONSISTENT);</div><div class="line">  $mem-&gt;setOption(Memcached::OPT_LIBKETAMA_COMPATIBLE,true);</div></pre></td></tr></table></figure></p>
-<p>Memcached::OPT_DISTRIBUTION</p>
-<blockquote>
-<p>指定元素key分布到各个服务器的方法。当前支持的方法有余数分步法合一致性hash算法两种。一致性hash算法提供 了更好的分配策略并且在添加服务器到集群时可以最小化缓存丢失。<br>类型: integer, 默认: Memcached::DISTRIBUTION_MODULA.</p>
-</blockquote>
-<p>Memcached::DISTRIBUTION_MODULA</p>
-<blockquote>
-<p>余数分布算法。</p>
-</blockquote>
-<p>Memcached::DISTRIBUTION_CONSISTENT</p>
-<blockquote>
-<p>一致性分布算法(基于libketama).</p>
-</blockquote>
-<p>Memcached::OPT_LIBKETAMA_COMPATIBLE</p>
-<blockquote>
-<p>开启或关闭兼容的libketama类行为。当开启此选项后，元素key的hash算法将会被设置为md5并且分布算法将会 采用带有权重的一致性hash分布。这一点非常有用因为其他基于libketama的客户端（比如python，urby）在同样 的服务端配置下可以透明的访问key。</p>
-<p><strong>Note:</strong><br>如果你要使用一致性hash算法强烈建议开启此选项，并且这个选项可能在未来的发布版中被设置为默认开启。<br>类型: boolean, 默认: FALSE.</p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;虽然memcached是一个高性能的缓存服务器，但是单台服务器对于目前大型的web应用来说还是满足不了需求的。那么就需要布置多台的memcached服务器进行分布式部署。那么一个数据应该存储到哪一台服务器就需要一个分布算法来确定。&lt;/p&gt;
-&lt;p&gt;常见的分布方案有两种，&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;普通Hash分布&lt;/li&gt;
-&lt;li&gt;一致性Hash分布&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
-    
-    
-      <category term="分布式部署算法" scheme="https://weizhimiao.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E9%83%A8%E7%BD%B2%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
