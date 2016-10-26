@@ -273,6 +273,3324 @@
             
               
                 
+                <a class="post-title-link" href="/2016/10/26/Logstash学习七/" itemprop="url">
+                  Logstash学习七
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-26T21:30:00+08:00" content="2016-10-26">
+              2016-10-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Logstash/" itemprop="url" rel="index">
+                    <span itemprop="name">Logstash</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/26/Logstash学习七/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/26/Logstash学习七/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <ul>
+<li>贡献Logstash</li>
+<li>专业术语</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/26/Logstash学习七/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/26/Logstash学习五/" itemprop="url">
+                  Logstash学习五
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-26T20:30:00+08:00" content="2016-10-26">
+              2016-10-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Logstash/" itemprop="url" rel="index">
+                    <span itemprop="name">Logstash</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/26/Logstash学习五/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/26/Logstash学习五/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="过滤插件"><a href="#过滤插件" class="headerlink" title="过滤插件"></a>过滤插件</h2><p>过滤器插件对事件执行中间处理。 过滤器通常根据事件的特征有条件地应用。</p>
+<p>以下过滤器插件可用：</p>
+<p><strong>aggregate</strong></p>
+<blockquote>
+<p>聚合来自单个任务的多个事件的信息</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-aggregate" target="_blank" rel="external">logstash-filter-aggregate</a></p>
+<p><strong>alter</strong></p>
+<blockquote>
+<p>对mutate过滤器不处理的字段执行常规更改</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-alter" target="_blank" rel="external">logstash-filter-alter</a></p>
+<p><strong>anonymize</strong></p>
+<blockquote>
+<p>将字段值替换为一致的散列</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-anonymize" target="_blank" rel="external">logstash-filter-anonymize</a></p>
+<p><strong>collate</strong></p>
+<blockquote>
+<p>按时间或计数整理事件</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-collate" target="_blank" rel="external">logstash-filter-collate</a></p>
+<p><strong>csv</strong></p>
+<blockquote>
+<p>将逗号分隔的值数据解析为单个字段</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-csv" target="_blank" rel="external">logstash-filter-csv</a></p>
+<p><strong>cidr</strong></p>
+<blockquote>
+<p>根据网络块列表检查IP地址</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-cidr" target="_blank" rel="external">logstash-filter-cidr</a></p>
+<p><strong>clone</strong></p>
+<blockquote>
+<p>复制事件</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-clone" target="_blank" rel="external">logstash-filter-clone</a></p>
+<p><strong>cipher</strong></p>
+<blockquote>
+<p>应用或删除事件的密码</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-cipher" target="_blank" rel="external">logstash-filter-cipher</a></p>
+<p><strong>checksum</strong></p>
+<blockquote>
+<p>基于事件中的字段创建校验和</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-checksum" target="_blank" rel="external">logstash-filter-checksum</a></p>
+<p><strong>date</strong></p>
+<blockquote>
+<p>解析从用作事件的Logstash时间戳的字段开始</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-date" target="_blank" rel="external">logstash-filter-date</a></p>
+<p><strong>de_dot</strong></p>
+<blockquote>
+<p>计算上昂贵的过滤器，从字段名称中删除点</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-de_dot" target="_blank" rel="external">logstash-filter-de_dot</a></p>
+<p><strong>dns</strong></p>
+<blockquote>
+<p>执行标准或反向DNS查找</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-dns" target="_blank" rel="external">logstash-filter-dns</a></p>
+<p><strong>drop</strong></p>
+<blockquote>
+<p>删除所有事件</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-drop" target="_blank" rel="external">logstash-filter-drop</a></p>
+<p><strong>elasticsearch</strong></p>
+<blockquote>
+<p>将字段从Elasticsearch中的先前日志事件复制到当前事件</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-elasticsearch" target="_blank" rel="external">logstash-filter-elasticsearch</a></p>
+<p><strong>extractnumbers</strong></p>
+<blockquote>
+<p>从字符串中提取数字</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-extractnumbers" target="_blank" rel="external">logstash-filter-extractnumbers</a></p>
+<p><strong>environment</strong></p>
+<blockquote>
+<p>将环境变量存储为元数据子字段</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-environment" target="_blank" rel="external">logstash-filter-environment</a></p>
+<p><strong>elapsed</strong></p>
+<blockquote>
+<p>计算一对事件之间经过的时间</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-elapsed" target="_blank" rel="external">logstash-filter-elapsed</a></p>
+<p><strong>fingerprint</strong></p>
+<blockquote>
+<p>通过用一致的哈希替换值来指纹字段</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-fingerprint" target="_blank" rel="external">logstash-filter-fingerprint</a></p>
+<p><strong>geoip</strong></p>
+<blockquote>
+<p>添加有关IP地址的地理信息</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-geoip" target="_blank" rel="external">logstash-filter-geoip</a></p>
+<p><strong>grok</strong></p>
+<blockquote>
+<p>将非结构化事件数据解析到字段中</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-grok" target="_blank" rel="external">logstash-filter-grok</a></p>
+<p><strong>i18n</strong></p>
+<blockquote>
+<p>从字段中删除特殊字符</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-i18n" target="_blank" rel="external">logstash-filter-i18n</a></p>
+<p><strong>json</strong></p>
+<blockquote>
+<p>将字段序列化为JSON</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-json" target="_blank" rel="external">logstash-filter-json</a></p>
+<p><strong>json_encode</strong></p>
+<blockquote>
+<p>将字段序列化为JSON</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-json_encode" target="_blank" rel="external">logstash-filter-json_encode</a></p>
+<p><strong>kv</strong></p>
+<blockquote>
+<p>解析键值对</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-kv" target="_blank" rel="external">logstash-filter-kv</a></p>
+<p><strong>mutate</strong></p>
+<blockquote>
+<p>在字段上执行突变</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-mutate" target="_blank" rel="external">logstash-filter-mutate</a></p>
+<p><strong>metrics</strong></p>
+<blockquote>
+<p>汇总指标</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-metrics" target="_blank" rel="external">logstash-filter-metrics</a></p>
+<p><strong>multiline</strong></p>
+<blockquote>
+<p>将多行合并成一个事件</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-multiline" target="_blank" rel="external">logstash-filter-multiline</a></p>
+<p><strong>metaevent</strong></p>
+<blockquote>
+<p>将任意字段添加到事件</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-metaevent" target="_blank" rel="external">logstash-filter-metaevent</a></p>
+<p><strong>prune</strong></p>
+<blockquote>
+<p>将基于字段列表的事件数据修剪为黑名单或白名单</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-prune" target="_blank" rel="external">logstash-filter-prune</a></p>
+<p><strong>punct</strong></p>
+<blockquote>
+<p>从字段中删除所有非标点符号内容</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-punct" target="_blank" rel="external">logstash-filter-punct</a></p>
+<p><strong>ruby</strong></p>
+<blockquote>
+<p>执行任意Ruby代码</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-ruby" target="_blank" rel="external">logstash-filter-ruby</a></p>
+<p><strong>range</strong></p>
+<blockquote>
+<p>检查指定的字段是否保持在给定的大小或长度限制内</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-range" target="_blank" rel="external">logstash-filter-range</a></p>
+<p><strong>syslog_pri</strong></p>
+<blockquote>
+<p>解析系统日志消息的PRI（优先级）字段</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-syslog_pri" target="_blank" rel="external">logstash-filter-syslog_pri</a></p>
+<p><strong>sleep</strong></p>
+<blockquote>
+<p>睡眠指定的时间跨度</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-sleep" target="_blank" rel="external">logstash-filter-sleep</a></p>
+<p><strong>split</strong></p>
+<blockquote>
+<p>将多行消息拆分为不同的事件</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-split" target="_blank" rel="external">logstash-filter-split</a></p>
+<p><strong>throttle</strong></p>
+<blockquote>
+<p>调节事件数</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-throttle" target="_blank" rel="external">logstash-filter-throttle</a></p>
+<p><strong>translate</strong></p>
+<blockquote>
+<p>基于散列或YAML文件替换字段内容</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-translate" target="_blank" rel="external">logstash-filter-translate</a></p>
+<p><strong>uuid</strong></p>
+<blockquote>
+<p>向事件添加UUID</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-uuid" target="_blank" rel="external">logstash-filter-uuid</a></p>
+<p><strong>urldecode</strong></p>
+<blockquote>
+<p>解码网址编码字段</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-urldecode" target="_blank" rel="external">logstash-filter-urldecode</a></p>
+<p><strong>useragent</strong></p>
+<blockquote>
+<p>将用户代理字符串解析为字段</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-useragent" target="_blank" rel="external">logstash-filter-useragent</a></p>
+<p><strong>xml</strong></p>
+<blockquote>
+<p>将XML解析成字段</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-xml" target="_blank" rel="external">logstash-filter-xml</a></p>
+<p><strong>zeromq</strong></p>
+<blockquote>
+<p>将事件发送到ZeroMQ</p>
+</blockquote>
+<p><a href="https://github.com/logstash-plugins/logstash-filter-zeromq" target="_blank" rel="external">logstash-filter-zeromq</a></p>
+<h3 id="csv"><a href="#csv" class="headerlink" title="csv"></a>csv</h3><p>CSV过滤器接收包含CSV数据的事件字段，对其进行解析，并将其存储为单个字段（可以选择指定名称）。 此过滤器还可以使用任何分隔符解析数据，而不仅仅是逗号。</p>
+<h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>此插件支持以下配置选项：</p>
+<p>所需的配置选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">csv &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可用配置选项：</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Input type</th>
+<th>Required</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_field</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>add_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>autogenerate_column_names</td>
+<td>boolean</td>
+<td>No</td>
+<td>true</td>
+</tr>
+<tr>
+<td>columns</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>convert</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>periodic_flush</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>quote_char</td>
+<td>string</td>
+<td>No</td>
+<td>“\””</td>
+</tr>
+<tr>
+<td>remove_field</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>remove_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>separator</td>
+<td>string</td>
+<td>No</td>
+<td>“,”</td>
+</tr>
+<tr>
+<td>skip_empty_columns</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>source</td>
+<td>string</td>
+<td>No</td>
+<td>“message”</td>
+</tr>
+<tr>
+<td>target</td>
+<td>string</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<h4 id="详情"><a href="#详情" class="headerlink" title="详情"></a>详情</h4><p><strong>add_field</strong></p>
+<ul>
+<li>值类型是哈希</li>
+<li>默认值为{}</li>
+</ul>
+<p>如果此过滤器成功，请将任意字段添加到此事件。字段名称可以是动态的，并使用<code>％{field}</code>包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  csv &#123;</div><div class="line">    add_field =&gt; &#123; &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  csv &#123;</div><div class="line">    add_field =&gt; &#123;</div><div class="line">      &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot;</div><div class="line">      &quot;new_field&quot; =&gt; &quot;new_static_value&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将添加字段foo_hello，如果它存在，与上面的值和％{host}块替换的事件中的值。第二个例子也将添加一个硬编码字段。</p>
+<p><strong>add_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请向事件中添加任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  csv &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  csv &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;taggedy_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”这个过滤器，在成功时，将添加一个标签foo_hello（第二个例子当然会添加一个taggedy_tag标签）。</p>
+<p><strong>autogenerate_column_names</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为true</li>
+</ul>
+<p>定义列名称是否应自动生成。默认为true。如果设置为false，将不会解析不具有指定的头的列。</p>
+<p><strong>columns</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>定义列名称列表（按照它们在CSV中显示的顺序，就像它是标题行一样）。如果未配置列，或没有指定足够的列，则默认列名称为“column1”，“column2”等。如果数据中的列超过此列列表中指定的列数，自动编号：（例如，“user_defined_1”，“user_defined_2”，“column3”，“column4”等）</p>
+<p><strong>convert</strong></p>
+<ul>
+<li>值类型是哈希</li>
+<li>默认值为{}</li>
+</ul>
+<p>定义要应用于列的一组数据类型转换。可能的转换是整数，浮点，日期，date_time，布尔值</p>
+<p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  csv &#123;</div><div class="line">    convert =&gt; &#123; &quot;column1&quot; =&gt; &quot;integer&quot;, &quot;column2&quot; =&gt; &quot;boolean&quot; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>periodic_flush</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>定期调用过滤器flush方法。可选的。</p>
+<p><strong>quote_char</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>默认值为“<code>\</code>”“</li>
+</ul>
+<p>定义用于报告CSV字段的字符。如果未指定此属性，则默认值为双引号“。可选。</p>
+<p><strong>remove_field</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从此事件中删除任意字段。例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  csv &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  csv &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;my_extraneous_field&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除名为foo_hello的字段（如果存在）。第二个示例将删除一个附加的非动态字段。</p>
+<p><strong>remove_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从事件中删除任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  csv &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  csv &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;sad_unwanted_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除标签foo_hello如果它存在。第二个例子也会删除一个悲伤的，不需要的标签。</p>
+<p><strong>separator</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>默认值为“，”</li>
+</ul>
+<p>定义列分隔符值。如果未指定此选项，则默认值为逗号，。可选的。</p>
+<p><strong>skip_empty_columns</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>定义是否应跳过空列。默认为false。如果设置为true，将不会设置不包含值的列。</p>
+<p><strong>source</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>默认值为“message”</li>
+</ul>
+<p>源字段值中的CSV数据将扩展为数据结构。</p>
+<p><strong>target</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>定义用于放置数据的目标字段。默认为写入事件的根。</p>
+<h3 id="alter"><a href="#alter" class="headerlink" title="alter"></a>alter</h3><blockquote>
+<p>这是一个社区维护的插件！ 它默认不随Logstash一起提供，但它很容易安装通过运行bin / logstash-plugin install logstash-filter-alter。</p>
+</blockquote>
+<p>alter过滤器允许您对不包括在正常mutate过滤器中的字段进行常规更改。</p>
+<blockquote>
+<p>注意: 此插件提供的功能可能会在未来版本中合并到mutate过滤器中。</p>
+</blockquote>
+<h4 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h4><p>此插件支持以下配置选项：</p>
+<p>所需的配置选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alter &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可用配置选项：</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Input type</th>
+<th>Required</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_field</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>add_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>coalesce</td>
+<td>array</td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td>condrewrite</td>
+<td>array</td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td>condrewriteother</td>
+<td>array</td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td>periodic_flush</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>remove_field</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>remove_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+</tbody>
+</table>
+<h4 id="详情-1"><a href="#详情-1" class="headerlink" title="详情"></a>详情</h4><p><strong>add_field</strong></p>
+<ul>
+<li>值类型是哈希</li>
+<li>默认值为{}</li>
+</ul>
+<p>如果此过滤器成功，请将任意字段添加到此事件。字段名称可以是动态的，并使用％{field}包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  alter &#123;</div><div class="line">    add_field =&gt; &#123; &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  alter &#123;</div><div class="line">    add_field =&gt; &#123;</div><div class="line">      &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot;</div><div class="line">      &quot;new_field&quot; =&gt; &quot;new_static_value&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将添加字段foo_hello，如果它存在，与上面的值和％{host}块替换的事件中的值。第二个例子也将添加一个硬编码字段。</p>
+<p><strong>add_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请向事件中添加任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  alter &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  alter &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;taggedy_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”这个过滤器，在成功时，将添加一个标签foo_hello（第二个例子当然会添加一个taggedy_tag标签）。</p>
+<p><strong>coalesce</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>将field_name的值设置为其参数中的第一个非空表达式。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  alter &#123;</div><div class="line">    coalesce =&gt; [</div><div class="line">         &quot;field_name&quot;, &quot;value1&quot;, &quot;value2&quot;, &quot;value3&quot;, ...</div><div class="line">    ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>condrewrite</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>如果实际内容等于预期值，请将字段的内容更改为指定值。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  alter &#123;</div><div class="line">    condrewrite =&gt; [</div><div class="line">         &quot;field_name&quot;, &quot;expected_value&quot;, &quot;new_value&quot;,</div><div class="line">         &quot;field_name2&quot;, &quot;expected_value2, &quot;new_value2&quot;,</div><div class="line">         ....</div><div class="line">       ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>condrewriteother</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>如果另一个字段的内容等于预期值，请将字段的内容更改为指定的值。</p>
+<p>例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  alter &#123;</div><div class="line">    condrewriteother =&gt; [</div><div class="line">         &quot;field_name&quot;, &quot;expected_value&quot;, &quot;field_name_to_change&quot;, &quot;value&quot;,</div><div class="line">         &quot;field_name2&quot;, &quot;expected_value2, &quot;field_name_to_change2&quot;, &quot;value2&quot;,</div><div class="line">         ....</div><div class="line">    ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>periodic_flush</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>定期调用过滤器flush方法。可选的。</p>
+<p><strong>remove_field</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从此事件中删除任意字段。例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  alter &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  alter &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;my_extraneous_field&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除名为foo_hello的字段（如果存在）。第二个示例将删除一个附加的非动态字段。</p>
+<p><strong>remove_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从事件中删除任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  alter &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  alter &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;sad_unwanted_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除标签foo_hello如果它存在。第二个例子也会删除一个悲伤的，不需要的标签。</p>
+<h3 id="date"><a href="#date" class="headerlink" title="date"></a>date</h3><p>日期过滤器用于解析字段中的日期，然后使用该日期或时间戳作为事件的logstash时间戳。</p>
+<p>例如，syslog事件通常具有如下所示的时间戳：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">“Apr 17 09:32:01”</div></pre></td></tr></table></figure></p>
+<p>您将使用日期格式MMM dd HH：mm：ss解析此。</p>
+<p>日期过滤器对排序事件和回填旧数据尤为重要。 如果您在活动中没有得到正确的日期，那么稍后再搜索这些日期可能会出现乱序。</p>
+<p>在没有此过滤器的情况下，如果时间戳尚未在事件中设置，则logstash将基于第一次看到事件（在输入时间）时选择时间戳。 例如，对于文件输入，时间戳设置为每次读取的时间。</p>
+<h4 id="概述-2"><a href="#概述-2" class="headerlink" title="概述"></a>概述</h4><p>此插件支持以下配置选项：</p>
+<p>所需的配置选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">date &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可用配置选项：</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Input type</th>
+<th>Required</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_field</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>add_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>locale</td>
+<td>string</td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td>match</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>periodic_flush</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>remove_field</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>remove_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>tag_on_failure</td>
+<td>array</td>
+<td>No</td>
+<td><code>[&quot;_dateparsefailure&quot;]</code></td>
+</tr>
+<tr>
+<td>target</td>
+<td>string</td>
+<td>No</td>
+<td>“<code>@timestamp</code>“</td>
+</tr>
+<tr>
+<td>timezone</td>
+<td>string</td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="详情-2"><a href="#详情-2" class="headerlink" title="详情"></a>详情</h4><p><strong>add_field</strong></p>
+<ul>
+<li>值类型是哈希</li>
+<li>默认值为{}</li>
+</ul>
+<p>如果此过滤器成功，请将任意字段添加到此事件。字段名称可以是动态的，并使用％{field}包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  date &#123;</div><div class="line">    add_field =&gt; &#123; &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  date &#123;</div><div class="line">    add_field =&gt; &#123;</div><div class="line">      &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot;</div><div class="line">      &quot;new_field&quot; =&gt; &quot;new_static_value&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将添加字段foo_hello，如果它存在，与上面的值和％{host}块替换的事件中的值。第二个例子也将添加一个硬编码字段。</p>
+<p><strong>add_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请向事件中添加任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  date &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  date &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;taggedy_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”这个过滤器，在成功时，将添加一个标签foo_hello（第二个例子当然会添加一个taggedy_tag标签）。</p>
+<p><strong>locale</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>使用IETF-BCP47或POSIX语言标记指定用于日期解析的区域设置。简单示例是en，en-US for BCP47或en_US for POSIX。</p>
+<p>对于解析月份名称（使用MMM的模式）和工作日名称（使用EEE的模式），区域设置几乎是必需的。</p>
+<p>如果未指定，则将使用平台默认值，但对于非英语平台默认值，英语解析器也将用作回退机制。</p>
+<p><strong>match</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>允许的日期格式是Joda-Time允许的任何日期格式（java时间库）。您可以在此处查看此格式的文档：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">joda.time.format.DateTimeFormat</div></pre></td></tr></table></figure></p>
+<p>一个字段名称为first的数组，其后面的格式类型为[field，formats …]</p>
+<p>如果您的时间字段有多种可能的格式，您可以这样做：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">match =&gt; [ &quot;logdate&quot;, &quot;MMM dd YYY HH:mm:ss&quot;,</div><div class="line">          &quot;MMM  d YYY HH:mm:ss&quot;, &quot;ISO8601&quot; ]</div></pre></td></tr></table></figure>
+<p>以上将匹配syslog（rfc3164）或iso8601时间戳。</p>
+<p>有一些特殊的例外。存在以下格式字面值以帮助您节省时间并确保日期解析的正确性。</p>
+<ul>
+<li>ISO8601 - 应解析任何有效的ISO8601时间戳，例如2011-04-19T03：44：01.103Z</li>
+<li>UNIX - 将解析float或int值，表示自从时代以来的以秒为单位的unix时间，如1326149001.132以及1326149001</li>
+<li>UNIX_MS - 将解析int值表示自从纪元以来的毫秒数的unix时间，如1366125117000</li>
+<li>TAI64N - 将解析tai64n时间值</li>
+</ul>
+<p>例如，如果您有一个字段logdate，其值类似于Aug 13 2010 00:03:44，您将使用此配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  date &#123;</div><div class="line">    match =&gt; [ &quot;logdate&quot;, &quot;MMM dd YYYY HH:mm:ss&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果您的字段嵌套在您的结构中，则可以使用嵌套语法[foo] [bar]来匹配其值。有关详细信息，请参阅“字段引用”一节，</p>
+<p>有关语法的更多详细信息</p>
+<p>用于解析日期和时间文本的语法使用字母表示时间值（月，分钟等）的类型，以及重复的字母以指示该值的形式（2位数月份，完整月份名称等） 。</p>
+<p>以下是您可以用来解析日期和时间：</p>
+<ul>
+<li><p>y,year</p>
+<ul>
+<li>yyyy,full year number. Example: 2015.</li>
+<li>yy,two-digit year. Example: 15 for the year 2015.</li>
+</ul>
+</li>
+<li><p>M,month of the year</p>
+<ul>
+<li>M,minimal-digit month. Example: 1 for January and 12 for December.</li>
+<li>MM,two-digit month. zero-padded if needed. Example: 01 for January and 12 for December</li>
+<li>MMM,abbreviated month text. Example: Jan for January. Note: The language used depends on your locale. See the locale setting for how to change the language.</li>
+<li>MMMM,full month text, Example: January. Note: The language used depends on your locale.</li>
+</ul>
+</li>
+<li><p>d,day of the month</p>
+<ul>
+<li>d,minimal-digit day. Example: 1 for the 1st of the month.</li>
+<li>dd,two-digit day, zero-padded if needed. Example: 01 for the 1st of the month.</li>
+</ul>
+</li>
+<li><p>H,hour of the day (24-hour clock)</p>
+<ul>
+<li>H,minimal-digit hour. Example: 0 for midnight.</li>
+<li>HH,two-digit hour, zero-padded if needed. Example: 00 for midnight.</li>
+</ul>
+</li>
+<li><p>m,minutes of the hour (60 minutes per hour)</p>
+<ul>
+<li>m,minimal-digit minutes. Example: 0.</li>
+<li>mm,two-digit minutes, zero-padded if needed. Example: 00.</li>
+</ul>
+</li>
+<li><p>s,seconds of the minute (60 seconds per minute)</p>
+<ul>
+<li>s,minimal-digit seconds. Example: 0.</li>
+<li>ss,two-digit seconds, zero-padded if needed. Example: 00.</li>
+</ul>
+</li>
+<li><p>S,fraction of a second Maximum precision is milliseconds (SSS). Beyond that, zeroes are appended.</p>
+<ul>
+<li>S,tenths of a second. Example: 0 for a subsecond value 012</li>
+<li>SS,hundredths of a second. Example: 01 for a subsecond value 01</li>
+<li>SSS,thousandths of a second. Example: 012 for a subsecond value 012</li>
+</ul>
+</li>
+<li><p>Z,time zone offset or identity</p>
+<ul>
+<li>Z,Timezone offset structured as HHmm (hour and minutes offset from Zulu/UTC). Example: -0700.</li>
+<li>ZZ,Timezone offset structured as HH:mm (colon in between hour and minute offsets). Example: -07:00.</li>
+<li>ZZZ,Timezone identity. Example: America/Los_Angeles. Note: Valid IDs are listed on the Joda.org available time zones page.</li>
+</ul>
+</li>
+<li><p>z,time zone names. Time zone names (z) cannot be parsed.</p>
+</li>
+<li><p>w,week of the year</p>
+<ul>
+<li>w,minimal-digit week. Example: 1.</li>
+<li>ww,two-digit week, zero-padded if needed. Example: 01.</li>
+</ul>
+</li>
+<li><p>D,day of the year</p>
+</li>
+<li><p>e,day of the week (number)</p>
+</li>
+<li><p>E,day of the week (text)</p>
+<ul>
+<li>E, EE, EEE,    Abbreviated day of the week. Example: Mon, Tue, Wed, Thu, Fri, Sat, Sun. Note: The actual language of this will depend on your locale.</li>
+<li>EEEE, The full text day of the week. Example: Monday, Tuesday, … Note: The actual language of this will depend on your locale.</li>
+</ul>
+</li>
+</ul>
+<p>对于非格式化语法，您需要在值周围加上单引号字符。 例如，如果您正在解析ISO8601时间，“2015-01-01T01：12：23”，小的“T”不是有效的时间格式，并且您想说“字面上，一个T”，您的格式将是 这个：“yyyy-MM-dd’T’HH：mm：ss”</p>
+<p>其他不太常见的日期单位，如时代（G），世纪（C），上午/下午（a）和＃更多，可以了解关于<a href="http://www.joda.org/joda-time/key_format.html" target="_blank" rel="external">joda时间文档</a>。</p>
+<p><strong>periodic_flush</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>定期调用过滤器flush方法。可选的。</p>
+<p><strong>remove_field</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从此事件中删除任意字段。例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  date &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  date &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;my_extraneous_field&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除名为foo_hello的字段（如果存在）。第二个示例将删除一个附加的非动态字段。</p>
+<p><strong>remove_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从事件中删除任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  date &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  date &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;sad_unwanted_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除标签foo_hello如果它存在。第二个例子也会删除一个悲伤的，不需要的标签。</p>
+<p><strong>tag_on_failure</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[“<code>_dateparsefailure</code>”]</li>
+</ul>
+<p>当没有成功匹配时，将值附加到标记字段</p>
+<p><strong>target</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>默认值为“@timestamp”</li>
+</ul>
+<p>将匹配的时间戳存储到给定的目标字段中。如果未提供，则默认更新事件的@timestamp字段。</p>
+<p><strong>timezone</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>指定要用于日期解析的时区标准ID。有效ID列在Joda.org可用时区页上。这在时区无法从值中提取，而不是平台默认值的情况下非常有用。如果未指定，将使用平台默认值。规范ID是好的，因为它照顾夏令时您例如，美洲/ Los_Angeles或欧洲/巴黎是有效的ID。此字段可以是动态的，并使用％{字段}语法包括事件的部分</p>
+<h3 id="drop"><a href="#drop" class="headerlink" title="drop"></a>drop</h3><p>丢弃过滤器。</p>
+<p>丢弃所有到这个过滤器的东西。</p>
+<p>这最好与条件组合使用，例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  if [loglevel] == &quot;debug&quot; &#123;</div><div class="line">    drop &#123; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果loglevel字段是debug，上述操作只会将事件传递给drop过滤器。 这将导致所有匹配的事件被删除。</p>
+<h4 id="概述-3"><a href="#概述-3" class="headerlink" title="概述"></a>概述</h4><p>此插件支持以下配置选项：</p>
+<p>所需的配置选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">drop &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可用配置选项：</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Input type</th>
+<th>Required</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_field</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>add_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>percentage</td>
+<td>number</td>
+<td>No</td>
+<td>100</td>
+</tr>
+<tr>
+<td>periodic_flush</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>remove_field</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>remove_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+</tbody>
+</table>
+<h4 id="详情-3"><a href="#详情-3" class="headerlink" title="详情"></a>详情</h4><p><strong>add_field</strong></p>
+<ul>
+<li>值类型是哈希</li>
+<li>默认值为{}</li>
+</ul>
+<p>如果此过滤器成功，请将任意字段添加到此事件。字段名称可以是动态的，并使用％{field}包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  drop &#123;</div><div class="line">    add_field =&gt; &#123; &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  drop &#123;</div><div class="line">    add_field =&gt; &#123;</div><div class="line">      &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot;</div><div class="line">      &quot;new_field&quot; =&gt; &quot;new_static_value&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将添加字段foo_hello，如果它存在，与上面的值和％{host}块替换的事件中的值。第二个例子也将添加一个硬编码字段。</p>
+<p><strong>add_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请向事件中添加任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  drop &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  drop &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;taggedy_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”这个过滤器，在成功时，将添加一个标签foo_hello（第二个例子当然会添加一个taggedy_tag标签）。</p>
+<p><strong>percentage</strong></p>
+<ul>
+<li>值类型是数字</li>
+<li>默认值为100</li>
+</ul>
+<p>删除预配置百分比内的所有事件。</p>
+<p>这是有用的，如果你只需要一个百分比，但不是整体。</p>
+<p>例如，只有大约40％的具有字段loglevel值为“debug”的事件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  if [loglevel] == &quot;debug&quot; &#123;</div><div class="line">    drop &#123;</div><div class="line">      percentage =&gt; 40</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>periodic_flush</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>定期调用过滤器flush方法。可选的。</p>
+<p><strong>remove_field</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从此事件中删除任意字段。例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  drop &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  drop &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;my_extraneous_field&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除名为foo_hello的字段（如果存在）。第二个示例将删除一个附加的非动态字段。</p>
+<p><strong>remove_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从事件中删除任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  drop &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  drop &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;sad_unwanted_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除标签foo_hello如果它存在。第二个例子也会删除一个悲伤的，不需要的标签。</p>
+<h3 id="geoip"><a href="#geoip" class="headerlink" title="geoip"></a>geoip</h3><p>GeoIP过滤器根据Maxmind数据库中的数据添加有关IP地址的地理位置的信息。</p>
+<p>从Logstash的1.3.0版本开始，如果GeoIP查询返回纬度和经度，则会创建一个[geoip] [location]字段。 该字段存储为GeoJSON格式。 此外，弹性搜索输出提供的默认Elasticsearch模板将[geoip] [location]字段映射到Elasticsearch geo_point。</p>
+<p>由于此字段是geo_point，它仍然有效GeoJSON，您将获得Elasticsearch的地理空间查询，构面和过滤器功能的强大功能，以及为所有其他应用程序（如Kibana的地图可视化）使用GeoJSON的灵活性。</p>
+<p>Logstash发行版随附带有CCA-ShareAlike 3.0许可证的Maxmind提供的GeoLiteCity数据库。 有关GeoLite的更多详细信息，请参见<a href="http://www.maxmind.com/en/geolite。" target="_blank" rel="external">http://www.maxmind.com/en/geolite。</a></p>
+<h4 id="概述-4"><a href="#概述-4" class="headerlink" title="概述"></a>概述</h4><p>此插件支持以下配置选项：</p>
+<p>所需的配置选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">geoip &#123;</div><div class="line">    source =&gt; ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可用配置选项：</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Input type</th>
+<th>Required</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_field</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>add_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>database</td>
+<td>a valid filesystem path</td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td>fields</td>
+<td>array</td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td>lru_cache_size</td>
+<td>number</td>
+<td>No</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>periodic_flush</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>remove_field</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>remove_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>source</td>
+<td>string</td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td>target</td>
+<td>string</td>
+<td>No</td>
+<td>“geoip”</td>
+</tr>
+</tbody>
+</table>
+<h4 id="详情-4"><a href="#详情-4" class="headerlink" title="详情"></a>详情</h4><p><strong>add_field</strong></p>
+<ul>
+<li>值类型是哈希</li>
+<li>默认值为{}</li>
+</ul>
+<p>如果此过滤器成功，请将任意字段添加到此事件。字段名称可以是动态的，并使用％{field}包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  geoip &#123;</div><div class="line">    add_field =&gt; &#123; &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  geoip &#123;</div><div class="line">    add_field =&gt; &#123;</div><div class="line">      &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot;</div><div class="line">      &quot;new_field&quot; =&gt; &quot;new_static_value&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将添加字段foo_hello，如果它存在，与上面的值和％{host}块替换的事件中的值。第二个例子也将添加一个硬编码字段。</p>
+<p><strong>add_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请向事件中添加任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  geoip &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  geoip &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;taggedy_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”这个过滤器，在成功时，将添加一个标签foo_hello（第二个例子当然会添加一个taggedy_tag标签）。</p>
+<p><strong>database</strong></p>
+<ul>
+<li>值类型为路径</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>查找缓存的地图，由geoip_type锁定LogStash应使用的GeoIP数据库文件的路径。支持国家，城市，ASN，ISP和组织数据库。</p>
+<p>如果未指定，这将默认为LogStash附带的GeoLiteCity数据库。可以从这里下载最新的数据库：<a href="https://dev.maxmind.com/geoip/legacy/geolite/请务必下载旧版格式数据库。" target="_blank" rel="external">https://dev.maxmind.com/geoip/legacy/geolite/请务必下载旧版格式数据库。</a></p>
+<p><strong>fields</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>要包含在事件中的geoip字段数组。</p>
+<p>可能的字段取决于数据库类型。默认情况下，所有地理位置字段都包含在事件中。</p>
+<p>对于内置的GeoLiteCity数据库，以下是可用的： city_name, continent_code, country_code2, country_code3, country_name, dma_code, ip, latitude, longitude, postal_code, region_name and timezone.</p>
+<p><strong>lru_cache_size</strong></p>
+<ul>
+<li>值类型是数字</li>
+<li>默认值为1000</li>
+</ul>
+<p>GeoIP查找令人惊讶的昂贵。此过滤器使用LRU缓存来利用IP代理经常在日志文件中彼此相邻并且很少具有随机分布的事实。设置的越高，项目在缓存中的可能性越大，并且此过滤器运行的速度越快。但是，如果您设置太高，您可以使用比所需的更多的内存。</p>
+<p>为此选项尝试不同的值，以便为数据集找到最佳性能。</p>
+<p>这必须设置为值&gt; 0。真的没有理由不想要这种行为，开销是最小的，速度增益很大。</p>
+<p>请注意，此配置值对geoip_type是全局的。也就是说，同一geoip_type的geoip过滤器的所有实例共享相同的缓存。最后声明的缓存大小将赢。这样做的原因是，对于在流水线中的不同点处的不同实例具有多个高速缓存将没有益处，这只会增加高速缓存未命中和浪费存储器的数量。</p>
+<p><strong>periodic_flush</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>定期调用过滤器flush方法。可选的。</p>
+<p><strong>remove_field</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从此事件中删除任意字段。例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  geoip &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  geoip &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;my_extraneous_field&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除名为foo_hello的字段（如果存在）。第二个示例将删除一个附加的非动态字段。</p>
+<p><strong>remove_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从事件中删除任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  geoip &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  geoip &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;sad_unwanted_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除标签foo_hello如果它存在。第二个例子也会删除一个悲伤的，不需要的标签。</p>
+<p><strong>source</strong></p>
+<ul>
+<li>这是必需的设置。</li>
+<li>值类型是字符串</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>包含要通过geoip映射的IP地址或主机名的字段。如果此字段是数组，则仅使用第一个值。</p>
+<p><strong>target</strong><br>值类型是字符串<br>默认值为“geoip”<br>指定Logstash应存储geoip数据的字段。这可能很有用，例如，如果您有<code>src\_ip</code>和<code>dst\_ip</code>字段，并且想要两个IP的GeoIP信息。</p>
+<p>如果将数据保存到除geoip以外的目标字段，并且希望使用Elasticsearch中的<code>geo\_point</code>相关函数，则需要更改Elasticsearch输出提供的模板，并将输出配置为使用新模板。</p>
+<p>即使您不使用<code>geo\_point</code>映射，[target] [location]字段仍然有效GeoJSON。</p>
+<h3 id="grok"><a href="#grok" class="headerlink" title="grok"></a>grok</h3><p>解析任意文本和结构。</p>
+<p>Grok是目前在logstash中将糟糕的非结构化日志数据解析为结构化和可查询的最佳方式。</p>
+<p>这个工具是完美的syslog日志，apache和其他webserver日志，mysql日志，一般，任何日志格式，一般为人而不是计算机消费。</p>
+<p>默认情况下，Logstash附带约120个模式。 你可以在这里找到他们：https：//github.com/logst-plugins/logstash-patterns-core/tree/master/patterns。 你可以添加自己的trivially。 （请参阅patterns_dir设置）</p>
+<p>如果您需要帮助构建模式以匹配您的日志，您会发现<a href="http://grokdebug.herokuapp.com和http://grokconstructor.appspot.com/应用程序非常有用！" target="_blank" rel="external">http://grokdebug.herokuapp.com和http://grokconstructor.appspot.com/应用程序非常有用！</a></p>
+<h4 id="Grok基础"><a href="#Grok基础" class="headerlink" title="Grok基础"></a>Grok基础</h4><p>Grok通过将文本模式组合成与您的日志匹配的东西。</p>
+<p>grok模式的语法为％{SYNTAX：SEMANTIC}</p>
+<p>SYNTAX是将匹配您的文本的模式的名称。 例如，3.44将匹配NUMBER模式，55.3.244.1将匹配IP模式。 语法是如何匹配。</p>
+<p>SEMANTIC是您给匹配的文本片段的标识符。 例如，3.44可以是事件的持续时间，因此您可以将其称为持续时间。 此外，字符串55.3.244.1可以标识发出请求的客户端。</p>
+<p>对于上面的例子，你的grok过滤器看起来像这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">%&#123;NUMBER:duration&#125; %&#123;IP:client&#125;</div></pre></td></tr></table></figure></p>
+<p>或者，您可以向grok模式添加数据类型转换。 默认情况下，所有语义都保存为字符串。 如果希望转换语义的数据类型，例如将字符串更改为整数，然后使用目标数据类型进行后缀。 例如％{NUMBER：num：int}，它将num语义从字符串转换为整数。 目前唯一支持的转换是int和float。</p>
+<p>示例：有了语法和语义的想法，我们可以从示例日志中提取有用的字段，就像这个虚构的http请求日志：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">55.3.244.1 GET /index.html 15824 0.043</div></pre></td></tr></table></figure></p>
+<p>这种模式可以是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">%&#123;IP:client&#125; %&#123;WORD:method&#125; %&#123;URIPATHPARAM:request&#125; %&#123;NUMBER:bytes&#125; %&#123;NUMBER:duration&#125;</div></pre></td></tr></table></figure></p>
+<p>一个更现实的例子，让我们从文件中读取这些日志：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">input &#123;</div><div class="line">  file &#123;</div><div class="line">    path =&gt; &quot;/var/log/http.log&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">filter &#123;</div><div class="line">  grok &#123;</div><div class="line">    match =&gt; &#123; &quot;message&quot; =&gt; &quot;%&#123;IP:client&#125; %&#123;WORD:method&#125; %&#123;URIPATHPARAM:request&#125; %&#123;NUMBER:bytes&#125; %&#123;NUMBER:duration&#125;&quot; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在grok过滤器之后，事件将有一些额外的字段：</p>
+<ul>
+<li>client: 55.3.244.1</li>
+<li>method: GET</li>
+<li>request: /index.html</li>
+<li>bytes: 15824</li>
+<li>duration: 0.043</li>
+</ul>
+<h4 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h4><p>Grok位于正则表达式的顶部，因此任何正则表达式在grok中都有效。 正则表达式库是Oniguruma，您可以在Oniguruma站点上看到完整支持的regexp语法。</p>
+<p>自定义Patternsedit<br>有时logstash没有你需要的模式。 为此，您有几个选项。</p>
+<p>首先，您可以使用Oniguruma语法进行命名捕获，它将让您匹配一段文本并将其保存为字段：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(?&lt;field_name&gt;the pattern here)</div></pre></td></tr></table></figure></p>
+<p>例如，后缀日志具有为10或11个字符的十六进制值的队列ID。 我可以很容易地捕捉到这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(?&lt;queue_id&gt;[0-9A-F]&#123;10,11&#125;)</div></pre></td></tr></table></figure></p>
+<p>或者，您可以创建自定义模式文件。</p>
+<p>创建一个名为patterns的模式，其中包含一个名为extra的文件（文件名不重要，但为自己命名）<br>在该文件中，写所需的模式作为模式名称，一个空格，然后是该模式的正则表达式。<br>例如，执行postfix队列id示例如上：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># contents of ./patterns/postfix:</div><div class="line">POSTFIX_QUEUEID [0-9A-F]&#123;10,11&#125;</div></pre></td></tr></table></figure></p>
+<p>然后使用这个插件中的patterns_dir设置告诉logstash您的自定义模式目录在哪里。 这里有一个示例日志的完整示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Jan  1 06:25:43 mailserver14 postfix/cleanup[21403]: BEF25A72965: message-id=&lt;20130101142543.5828399CCAF@mailserver14.example.com&gt;</div><div class="line">filter &#123;</div><div class="line">  grok &#123;</div><div class="line">    patterns_dir =&gt; [&quot;./patterns&quot;]</div><div class="line">    match =&gt; &#123; &quot;message&quot; =&gt; &quot;%&#123;SYSLOGBASE&#125; %&#123;POSTFIX_QUEUEID:queue_id&#125;: %&#123;GREEDYDATA:syslog_message&#125;&quot; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>以上将匹配并导致以下字段：</p>
+<ul>
+<li>timestamp: Jan 1 06:25:43</li>
+<li>logsource: mailserver14</li>
+<li>program: postfix/cleanup</li>
+<li>pid: 21403</li>
+<li>queue_id: BEF25A72965</li>
+<li>syslog_message: message-id=<a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#x32;&#48;&#x31;&#51;&#x30;&#x31;&#48;&#x31;&#49;&#52;&#x32;&#53;&#52;&#x33;&#x2e;&#x35;&#56;&#x32;&#56;&#51;&#x39;&#57;&#67;&#x43;&#65;&#x46;&#64;&#109;&#97;&#105;&#108;&#x73;&#x65;&#x72;&#118;&#x65;&#x72;&#x31;&#x34;&#x2e;&#x65;&#120;&#x61;&#109;&#x70;&#x6c;&#x65;&#x2e;&#x63;&#x6f;&#109;">&#x32;&#48;&#x31;&#51;&#x30;&#x31;&#48;&#x31;&#49;&#52;&#x32;&#53;&#52;&#x33;&#x2e;&#x35;&#56;&#x32;&#56;&#51;&#x39;&#57;&#67;&#x43;&#65;&#x46;&#64;&#109;&#97;&#105;&#108;&#x73;&#x65;&#x72;&#118;&#x65;&#x72;&#x31;&#x34;&#x2e;&#x65;&#120;&#x61;&#109;&#x70;&#x6c;&#x65;&#x2e;&#x63;&#x6f;&#109;</a></li>
+</ul>
+<p>The timestamp, logsource, program, and pid 字段来自SYSLOGBASE模式，该模式本身由其他模式定义。</p>
+<h4 id="概述-5"><a href="#概述-5" class="headerlink" title="概述"></a>概述</h4><p>此插件支持以下配置选项：</p>
+<p>所需的配置选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">grok &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可用配置选项：</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Input type</th>
+<th>Required</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_field</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>add_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>break_on_match</td>
+<td>boolean</td>
+<td>No</td>
+<td>true</td>
+</tr>
+<tr>
+<td>keep_empty_captures</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>match</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>named_captures_only</td>
+<td>boolean</td>
+<td>No</td>
+<td>true</td>
+</tr>
+<tr>
+<td>overwrite</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>patterns_dir</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>patterns_files_glob</td>
+<td>string</td>
+<td>No</td>
+<td>“<code>*</code>“</td>
+</tr>
+<tr>
+<td>periodic_flush</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>remove_field</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>remove_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>tag_on_failure</td>
+<td>array</td>
+<td>No</td>
+<td>[“<code>_grokparsefailure</code>“]</td>
+</tr>
+</tbody>
+</table>
+<h4 id="详情-5"><a href="#详情-5" class="headerlink" title="详情"></a>详情</h4><p><strong>add_field</strong></p>
+<ul>
+<li>值类型是哈希</li>
+<li>默认值为{}</li>
+</ul>
+<p>如果此过滤器成功，请将任意字段添加到此事件。字段名称可以是动态的，并使用％{field}包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  grok &#123;</div><div class="line">    add_field =&gt; &#123; &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  grok &#123;</div><div class="line">    add_field =&gt; &#123;</div><div class="line">      &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot;</div><div class="line">      &quot;new_field&quot; =&gt; &quot;new_static_value&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将添加字段foo_hello，如果它存在，与上面的值和％{host}块替换的事件中的值。第二个例子也将添加一个硬编码字段。</p>
+<p><strong>add_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请向事件中添加任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  grok &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  grok &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;taggedy_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”这个过滤器，在成功时，将添加一个标签foo_hello（第二个例子当然会添加一个taggedy_tag标签）。</p>
+<p><strong>break_on_match</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为true</li>
+</ul>
+<p>打破第一场比赛。 grok的第一次成功匹配将导致过滤器完成。如果你想让grok尝试所有的模式（也许你正在解析不同的东西），然后设置为false。</p>
+<p><strong>keep_empty_captures</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>如果为true，请将空捕获保留为事件字段。</p>
+<p><strong>match</strong></p>
+<ul>
+<li>值类型是哈希</li>
+<li>默认值为{}</li>
+</ul>
+<p>field ⇒ value 的匹配散列</p>
+<p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  grok &#123; match =&gt; &#123; &quot;message&quot; =&gt; &quot;Duration: %&#123;NUMBER:duration&#125;&quot; &#125; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果您需要针对单个字段匹配多个模式，则该值可以是模式数组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  grok &#123; match =&gt; &#123; &quot;message&quot; =&gt; [ &quot;Duration: %&#123;NUMBER:duration&#125;&quot;, &quot;Speed: %&#123;NUMBER:speed&#125;&quot; ] &#125; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>named_captures_only</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为true</li>
+</ul>
+<p>如果为true，则只存储从grok命名的捕获。</p>
+<p><strong>overwrite</strong><br>值类型是数组<br>默认值为[]<br>要覆盖的字段。</p>
+<p>这允许您覆盖已存在的字段中的值。</p>
+<p>例如，如果消息字段中有syslog行，则可以使用部分匹配覆盖消息字段，如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  grok &#123;</div><div class="line">    match =&gt; &#123; &quot;message&quot; =&gt; &quot;%&#123;SYSLOGBASE&#125; %&#123;DATA:message&#125;&quot; &#125;</div><div class="line">    overwrite =&gt; [ &quot;message&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这种情况下，一行像May 29 16:37:11悲伤日志：hello world将被解析，hello world将覆盖原始消息。</p>
+<p><strong>pattern (DEPRECATED)</strong></p>
+<ul>
+<li>DEPRECATED WARNING：此配置项目已弃用，并且可能在将来的版本中不可用。</li>
+<li>值类型是数组</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>指定要解析的模式。这将匹配消息字段。</p>
+<p>如果要匹配消息之外的其他字段，请使用匹配设置。多种模式是好的。</p>
+<p><strong>patterns_dir</strong><br>值类型是数组<br>默认值为[]<br>Logstash默认带有一堆模式，所以你不一定需要自己定义，除非你添加额外的模式。您可以使用此设置指向多个模式目录请注意，Grok将读取与patterns_files_glob匹配的目录中的所有文件，并假定其模式文件（包括任何波形字符备份文件）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">patterns_dir =&gt; [&quot;/opt/logstash/patterns&quot;, &quot;/opt/logstash/extra_patterns&quot;]</div></pre></td></tr></table></figure></p>
+<p>模式文件是带有格式的纯文本：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NAME PATTERN</div></pre></td></tr></table></figure></p>
+<p>示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NUMBER \d+</div></pre></td></tr></table></figure></p>
+<p><strong>patterns_files_glob</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>默认值为“<code>*</code>”</li>
+</ul>
+<p>Glob模式，用于选择patterns_dir指定的目录中的模式文件</p>
+<p><strong>periodic_flush</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>定期调用过滤器flush方法。可选的。</p>
+<p><strong>remove_field</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从此事件中删除任意字段。例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  grok &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  grok &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;my_extraneous_field&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除名为foo_hello的字段（如果存在）。第二个示例将删除一个附加的非动态字段。</p>
+<p><strong>remove_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从事件中删除任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  grok &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  grok &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;sad_unwanted_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除标签foo_hello如果它存在。第二个例子也会删除一个悲伤的，不需要的标签。</p>
+<p><strong>singles (DEPRECATED)</strong></p>
+<ul>
+<li>DEPRECATED WARNING：此配置项目已弃用，并且可能在将来的版本中不可用。</li>
+<li>值类型是布尔值</li>
+<li>默认值为true</li>
+</ul>
+<p>如果为true，则将单值字段设置为该值，而不是包含该值的数组。</p>
+<p><strong>tag_on_failure</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[“<code>_grokparsefailure</code>”]</li>
+</ul>
+<p>当没有成功匹配时，将值附加到标记字段</p>
+<h3 id="json"><a href="#json" class="headerlink" title="json"></a>json</h3><p>这是一个JSON解析过滤器。 它需要一个包含JSON的现有字段，并在Logstash事件中将其扩展为实际的数据结构。</p>
+<p>默认情况下，它会将解析的JSON放在Logstash事件的根（顶级）中，但是可以配置此过滤器以使用目标配置将JSON放入任意事件字段。</p>
+<h4 id="概述-6"><a href="#概述-6" class="headerlink" title="概述"></a>概述</h4><p>此插件支持以下配置选项：</p>
+<p>所需的配置选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">json &#123;</div><div class="line">    source =&gt; ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可用配置选项：</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Input type</th>
+<th>Required</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_field</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>add_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>periodic_flush</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>remove_field</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>remove_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>source</td>
+<td>string</td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td>target</td>
+<td>string</td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="详情-6"><a href="#详情-6" class="headerlink" title="详情"></a>详情</h4><p><strong>add_field</strong></p>
+<ul>
+<li>值类型是哈希</li>
+<li>默认值为{}</li>
+</ul>
+<p>如果此过滤器成功，请将任意字段添加到此事件。字段名称可以是动态的，并使用％{field}包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  json &#123;</div><div class="line">    add_field =&gt; &#123; &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  json &#123;</div><div class="line">    add_field =&gt; &#123;</div><div class="line">      &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot;</div><div class="line">      &quot;new_field&quot; =&gt; &quot;new_static_value&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将添加字段foo_hello，如果它存在，与上面的值和％{host}块替换的事件中的值。第二个例子也将添加一个硬编码字段。</p>
+<p><strong>add_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请向事件中添加任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  json &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  json &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;taggedy_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”这个过滤器，在成功时，将添加一个标签foo_hello（第二个例子当然会添加一个taggedy_tag标签）。</p>
+<p><strong>periodic_flush</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>定期调用过滤器flush方法。可选的。</p>
+<p><strong>remove_field</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从此事件中删除任意字段。例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  json &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  json &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;my_extraneous_field&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除名为foo_hello的字段（如果存在）。第二个示例将删除一个附加的非动态字段。</p>
+<p><strong>remove_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从事件中删除任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  json &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  json &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;sad_unwanted_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除标签foo_hello如果它存在。第二个例子也会删除一个悲伤的，不需要的标签。</p>
+<p><strong>source</strong></p>
+<ul>
+<li>这是必需的设置。</li>
+<li>值类型是字符串</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>JSON过滤器的配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source =&gt; source_field</div></pre></td></tr></table></figure>
+<p>例如，如果您在消息字段中有JSON数据：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  json &#123;</div><div class="line">    source =&gt; &quot;message&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面将解析从消息字段的json</p>
+<p><strong>target</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>定义放置解析数据的目标字段。如果省略此设置，JSON数据将存储在事件的根（顶级）。</p>
+<p>例如，如果您想将数据放在doc字段中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  json &#123;</div><div class="line">    target =&gt; &quot;doc&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在源字段的值中的JSON将在目标字段中展开为数据结构。</p>
+<blockquote>
+<p>注意: 如果目标字段已经存在，它将被覆盖！</p>
+</blockquote>
+<h3 id="json-encode"><a href="#json-encode" class="headerlink" title="json_encode"></a>json_encode</h3><p>这是一个社区维护的插件！ 它默认不随Logstash一起提供，但它很容易安装通过运行bin / logstash-plugin install logstash-filter-json_encode。</p>
+<p>JSON编码过滤器。 获取字段并将其序列化为JSON</p>
+<p>如果未指定目标，源字段将被JSON文本覆盖。</p>
+<p>例如，如果您有一个名为foo的字段，并且您想要在bar中存储JSON编码的字符串，请执行以下操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  json_encode &#123;</div><div class="line">    source =&gt; &quot;foo&quot;</div><div class="line">    target =&gt; &quot;bar&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="概述-7"><a href="#概述-7" class="headerlink" title="概述"></a>概述</h4><p>此插件支持以下配置选项：</p>
+<p>所需的配置选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">json_encode &#123;</div><div class="line">    source =&gt; ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可用配置选项：</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Input type</th>
+<th>Required</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_field</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>add_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>periodic_flush</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>remove_field</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>remove_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>source</td>
+<td>string</td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td>target</td>
+<td>string</td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="详情-7"><a href="#详情-7" class="headerlink" title="详情"></a>详情</h4><p><strong>add_field</strong></p>
+<ul>
+<li>值类型是哈希</li>
+<li>默认值为{}</li>
+</ul>
+<p>如果此过滤器成功，请将任意字段添加到此事件。字段名称可以是动态的，并使用％{field}包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  json_encode &#123;</div><div class="line">    add_field =&gt; &#123; &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  json_encode &#123;</div><div class="line">    add_field =&gt; &#123;</div><div class="line">      &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot;</div><div class="line">      &quot;new_field&quot; =&gt; &quot;new_static_value&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将添加字段foo_hello，如果它存在，与上面的值和％{host}块替换的事件中的值。第二个例子也将添加一个硬编码字段。</p>
+<p><strong>add_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请向事件中添加任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  json_encode &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  json_encode &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;taggedy_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”这个过滤器，在成功时，将添加一个标签foo_hello（第二个例子当然会添加一个taggedy_tag标签）。</p>
+<p><strong>periodic_flush</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>定期调用过滤器flush方法。可选的。</p>
+<p><strong>remove_field</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从此事件中删除任意字段。例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  json_encode &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  json_encode &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;my_extraneous_field&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除名为foo_hello的字段（如果存在）。第二个示例将删除一个附加的非动态字段。</p>
+<p><strong>remove_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从事件中删除任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  json_encode &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  json_encode &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;sad_unwanted_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除标签foo_hello如果它存在。第二个例子也会删除一个悲伤的，不需要的标签。</p>
+<p><strong>source</strong></p>
+<ul>
+<li>这是必需的设置。</li>
+<li>值类型是字符串</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>要转换为JSON的字段。</p>
+<p><strong>target</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>将JSON写入的字段。如果未指定，源字段将被覆盖。</p>
+<h3 id="ruby"><a href="#ruby" class="headerlink" title="ruby"></a>ruby</h3><p>执行ruby代码。</p>
+<p>例如，要取消90％的事件，您可以执行以下操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  ruby &#123;</div><div class="line">    # Cancel 90% of events</div><div class="line">    code =&gt; &quot;event.cancel if rand &lt;= 0.90&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="概述-8"><a href="#概述-8" class="headerlink" title="概述"></a>概述</h4><p>此插件支持以下配置选项：</p>
+<p>所需的配置选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ruby &#123;</div><div class="line">    code =&gt; ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可用配置选项：</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Input type</th>
+<th>Required</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_field</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>add_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>code</td>
+<td>string</td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td>init</td>
+<td>string</td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td>periodic_flush</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>remove_field</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>remove_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+</tbody>
+</table>
+<h4 id="详情-8"><a href="#详情-8" class="headerlink" title="详情"></a>详情</h4><p><strong>add_field</strong></p>
+<ul>
+<li>值类型是哈希</li>
+<li>默认值为{}</li>
+</ul>
+<p>如果此过滤器成功，请将任意字段添加到此事件。字段名称可以是动态的，并使用％{field}包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  ruby &#123;</div><div class="line">    add_field =&gt; &#123; &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  ruby &#123;</div><div class="line">    add_field =&gt; &#123;</div><div class="line">      &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot;</div><div class="line">      &quot;new_field&quot; =&gt; &quot;new_static_value&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将添加字段foo_hello，如果它存在，与上面的值和％{host}块替换的事件中的值。第二个例子也将添加一个硬编码字段。</p>
+<p><strong>add_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请向事件中添加任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  ruby &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  ruby &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;taggedy_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”这个过滤器，在成功时，将添加一个标签foo_hello（第二个例子当然会添加一个taggedy_tag标签）。</p>
+<p><strong>code</strong></p>
+<ul>
+<li>这是必需的设置。</li>
+<li>值类型是字符串</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>为每个事件执行的代码。您将有一个事件变量可用，它是事件本身。</p>
+<p><strong>init</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>在logstash启动时执行的任何代码</p>
+<p><strong>periodic_flush</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>定期调用过滤器flush方法。可选的。</p>
+<p><strong>remove_field</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从此事件中删除任意字段。例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  ruby &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  ruby &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;my_extraneous_field&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除名为foo_hello的字段（如果存在）。第二个示例将删除一个附加的非动态字段。</p>
+<p><strong>remove_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从事件中删除任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  ruby &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  ruby &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;sad_unwanted_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除标签foo_hello如果它存在。第二个例子也会删除一个悲伤的，不需要的标签。</p>
+<h3 id="split"><a href="#split" class="headerlink" title="split"></a>split</h3><p>分割过滤器通过拆分其中一个字段并将分割后的每个值放入原始事件的克隆中来克隆事件。 要分割的字段可以是字符串或数组。</p>
+<p>此过滤器的一个示例用例是从exec输入插件获取输出，该输出为命令的整个输出发出一个事件，并通过换行分割该输出 - 使每行成为事件。</p>
+<p>每个拆分的最终结果是事件的完整副本，只有给定字段的当前拆分部分已更改。</p>
+<h4 id="概述-9"><a href="#概述-9" class="headerlink" title="概述"></a>概述</h4><p>此插件支持以下配置选项：</p>
+<p>所需的配置选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">split &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可用配置选项：</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Input type</th>
+<th>Required</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_field</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>add_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>field</td>
+<td>string</td>
+<td>No</td>
+<td>“message”</td>
+</tr>
+<tr>
+<td>periodic_flush</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>remove_field</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>remove_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>target</td>
+<td>string</td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td>terminator</td>
+<td>string</td>
+<td>No</td>
+<td>“\n”</td>
+</tr>
+</tbody>
+</table>
+<h4 id="详情-9"><a href="#详情-9" class="headerlink" title="详情"></a>详情</h4><p><strong>add_field</strong></p>
+<ul>
+<li>值类型是哈希</li>
+<li>默认值为{}</li>
+</ul>
+<p>如果此过滤器成功，请将任意字段添加到此事件。字段名称可以是动态的，并使用％{field}包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  split &#123;</div><div class="line">    add_field =&gt; &#123; &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  split &#123;</div><div class="line">    add_field =&gt; &#123;</div><div class="line">      &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot;</div><div class="line">      &quot;new_field&quot; =&gt; &quot;new_static_value&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将添加字段foo_hello，如果它存在，与上面的值和％{host}块替换的事件中的值。第二个例子也将添加一个硬编码字段。</p>
+<p><strong>add_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请向事件中添加任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  split &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  split &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;taggedy_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”这个过滤器，在成功时，将添加一个标签foo_hello（第二个例子当然会添加一个taggedy_tag标签）。</p>
+<p><strong>field</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>默认值为“message”</li>
+</ul>
+<p>其值由终止符拆分的字段。</p>
+<p><strong>periodic_flush</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>定期调用过滤器flush方法。可选的。</p>
+<p><strong>remove_field</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从此事件中删除任意字段。例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  split &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  split &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;my_extraneous_field&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除名为foo_hello的字段（如果存在）。第二个示例将删除一个附加的非动态字段。</p>
+<p><strong>remove_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从事件中删除任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  split &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  split &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;sad_unwanted_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除标签foo_hello如果它存在。第二个例子也会删除一个悲伤的，不需要的标签。</p>
+<p><strong>target</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>新事件中的值将被分割为的字段。如果未设置，目标字段默认为拆分字段名称。</p>
+<p><strong>terminator</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>默认值为“<code>\n</code>”</li>
+</ul>
+<p>要拆分的字符串。这通常是行终止符，但可以是任何字符串。</p>
+<h3 id="uuid"><a href="#uuid" class="headerlink" title="uuid"></a>uuid</h3><p>uuid过滤器允许您生成UUID，并将其作为字段添加到每个已处理的事件。</p>
+<p>如果您需要生成每个事件唯一的字符串，即使同一个输入被处理多次，这也很有用。 如果要生成每次处理具有给定内容的事件（即哈希）时相同的字符串，则应使用指纹过滤器。</p>
+<p>生成的UUID遵循RFC 4122中的版本4定义），并且将被表示为标准十六进制字符串格式，例如。 “e08806fe-02af-406c-bbde-8a5ae4475e57”。</p>
+<h4 id="概述-10"><a href="#概述-10" class="headerlink" title="概述"></a>概述</h4><p>此插件支持以下配置选项：</p>
+<p>所需的配置选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">uuid &#123;</div><div class="line">    target =&gt; ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可用配置选项：</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Input type</th>
+<th>Required</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_field</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>add_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>overwrite</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>periodic_flush</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>remove_field</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>remove_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>target</td>
+<td>string</td>
+<td>Yes</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="详情-10"><a href="#详情-10" class="headerlink" title="详情"></a>详情</h4><p><strong>add_field</strong></p>
+<ul>
+<li>值类型是哈希</li>
+<li>默认值为{}</li>
+</ul>
+<p>如果此过滤器成功，请将任意字段添加到此事件。字段名称可以是动态的，并使用％{field}包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  uuid &#123;</div><div class="line">    add_field =&gt; &#123; &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>您也可以一次添加多个字段：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  uuid &#123;</div><div class="line">    add_field =&gt; &#123;</div><div class="line">      &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot;</div><div class="line">      &quot;new_field&quot; =&gt; &quot;new_static_value&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将添加字段foo_hello，如果它存在，与上面的值和％{host}块替换的事件中的值。第二个例子也将添加一个硬编码字段。</p>
+<p><strong>add_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请向事件中添加任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  uuid &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>您也可以一次添加多个代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  uuid &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;taggedy_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果事件有字段“somefield”==“hello”这个过滤器，在成功时，将添加一个标签foo_hello（第二个例子当然会添加一个taggedy_tag标签）。</p>
+<p><strong>overwrite</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>如果当前字段中的值（如果有）应该被生成的UUID覆盖。默认为false（即，如果字段存在，具有ANY值，则不会被覆盖）</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">   uuid &#123;</div><div class="line">     target    =&gt; &quot;@uuid&quot;</div><div class="line">     overwrite =&gt; true</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>periodic_flush</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>定期调用过滤器flush方法。可选的。</p>
+<p><strong>remove_field</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从此事件中删除任意字段。例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  uuid &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>您也可以一次删除多个字段：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  uuid &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;my_extraneous_field&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除名为foo_hello的字段（如果存在）。第二个示例将删除一个附加的非动态字段。</p>
+<p><strong>remove_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从事件中删除任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  uuid &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>您也可以一次移除多个标记：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  uuid &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;sad_unwanted_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除标签foo_hello如果它存在。第二个例子也会删除一个悲伤的，不需要的标签。</p>
+<p><strong>target</strong></p>
+<ul>
+<li>这是必需的设置。</li>
+<li>值类型是字符串</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>向字段添加UUID。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  uuid &#123;</div><div class="line">    target =&gt; &quot;@uuid&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="urldecode"><a href="#urldecode" class="headerlink" title="urldecode"></a>urldecode</h3><p>urldecode过滤器用于解码被urlencoded的字段。</p>
+<h4 id="概述-11"><a href="#概述-11" class="headerlink" title="概述"></a>概述</h4><p>此插件支持以下配置选项：</p>
+<p>所需的配置选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">urldecode &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可用配置选项：</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Input type</th>
+<th>Required</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_field</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>add_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>all_fields</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>charset</td>
+<td>string, one of [“ASCII-8BIT”, “Big5”, “Big5-HKSCS”, “Big5-UAO”, “CP949”, “Emacs-Mule”, “EUC-JP”, “EUC-KR”, “EUC-TW”, “GB18030”, “GBK”, “ISO-8859-1”, “ISO-8859-2”, “ISO-8859-3”, “ISO-8859-4”, “ISO-8859-5”, “ISO-8859-6”, “ISO-8859-7”, “ISO-8859-8”, “ISO-8859-9”, “ISO-8859-10”, “ISO-8859-11”, “ISO-8859-13”, “ISO-8859-14”, “ISO-8859-15”, “ISO-8859-16”, “KOI8-R”, “KOI8-U”, “Shift_JIS”, “US-ASCII”, “UTF-8”, “UTF-16BE”, “UTF-16LE”, “UTF-32BE”, “UTF-32LE”, “Windows-1251”, “GB2312”, “Windows-31J”, “IBM437”, “IBM737”, “IBM775”, “CP850”, “IBM852”, “CP852”, “IBM855”, “CP855”, “IBM857”, “IBM860”, “IBM861”, “IBM862”, “IBM863”, “IBM864”, “IBM865”, “IBM866”, “IBM869”, “Windows-1258”, “GB1988”, “macCentEuro”, “macCroatian”, “macCyrillic”, “macGreek”, “macIceland”, “macRoman”, “macRomania”, “macThai”, “macTurkish”, “macUkraine”, “CP950”, “CP951”, “stateless-ISO-2022-JP”, “eucJP-ms”, “CP51932”, “EUC-JIS-2004”, “GB12345”, “ISO-2022-JP”, “ISO-2022-JP-2”, “CP50220”, “CP50221”, “Windows-1252”, “Windows-1250”, “Windows-1256”, “Windows-1253”, “Windows-1255”, “Windows-1254”, “TIS-620”, “Windows-874”, “Windows-1257”, “MacJapanese”, “UTF-7”, “UTF8-MAC”, “UTF-16”, “UTF-32”, “UTF8-DoCoMo”, “SJIS-DoCoMo”, “UTF8-KDDI”, “SJIS-KDDI”, “ISO-2022-JP-KDDI”, “stateless-ISO-2022-JP-KDDI”, “UTF8-SoftBank”, “SJIS-SoftBank”, “BINARY”, “CP437”, “CP737”, “CP775”, “IBM850”, “CP857”, “CP860”, “CP861”, “CP862”, “CP863”, “CP864”, “CP865”, “CP866”, “CP869”, “CP1258”, “Big5-HKSCS:2008”, “eucJP”, “euc-jp-ms”, “EUC-JISX0213”, “eucKR”, “eucTW”, “EUC-CN”, “eucCN”, “CP936”, “ISO2022-JP”, “ISO2022-JP2”, “ISO8859-1”, “CP1252”, “ISO8859-2”, “CP1250”, “ISO8859-3”, “ISO8859-4”, “ISO8859-5”, “ISO8859-6”, “CP1256”, “ISO8859-7”, “CP1253”, “ISO8859-8”, “CP1255”, “ISO8859-9”, “CP1254”, “ISO8859-10”, “ISO8859-11”, “CP874”, “ISO8859-13”, “CP1257”, “ISO8859-14”, “ISO8859-15”, “ISO8859-16”, “CP878”, “MacJapan”, “ASCII”, “ANSI_X3.4-1968”, “646”, “CP65000”, “CP65001”, “UTF-8-MAC”, “UTF-8-HFS”, “UCS-2BE”, “UCS-4BE”, “UCS-4LE”, “CP932”, “csWindows31J”, “SJIS”, “PCK”, “CP1251”, “external”, “locale”]</td>
+<td>No</td>
+<td>“UTF-8”</td>
+</tr>
+<tr>
+<td>field</td>
+<td>string</td>
+<td>No</td>
+<td>“message”</td>
+</tr>
+<tr>
+<td>periodic_flush</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>remove_field</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>remove_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+</tbody>
+</table>
+<h4 id="详情-11"><a href="#详情-11" class="headerlink" title="详情"></a>详情</h4><p><strong>add_field</strong></p>
+<ul>
+<li>值类型是哈希</li>
+<li>默认值为{}</li>
+</ul>
+<p>如果此过滤器成功，请将任意字段添加到此事件。字段名称可以是动态的，并使用％{field}包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  urldecode &#123;</div><div class="line">    add_field =&gt; &#123; &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 您也可以一次添加多个字段</div><div class="line">filter &#123;</div><div class="line">  urldecode &#123;</div><div class="line">    add_field =&gt; &#123;</div><div class="line">      &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot;</div><div class="line">      &quot;new_field&quot; =&gt; &quot;new_static_value&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将添加字段foo_hello，如果它存在，与上面的值和％{host}块替换的事件中的值。第二个例子也将添加一个硬编码字段。</p>
+<p><strong>add_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请向事件中添加任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  urldecode &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  urldecode &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;taggedy_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”这个过滤器，在成功时，将添加一个标签foo_hello（第二个例子当然会添加一个taggedy_tag标签）。</p>
+<p><strong>all_fields</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>Urldecode所有字段</p>
+<p><strong>charset</strong></p>
+<ul>
+<li>值可以是以下任何一个：ASCII-8BIT，Big5，Big5-HKSCS，Big5-UAO，CP949，Emacs-Mule，EUC-JP，EUC-KR，EUC-TW，GB18030，GBK，ISO-8859-1，ISO- ISO-8859-3，ISO-8859-4，ISO-8859-5，ISO-8859-6，ISO-8859-7，ISO-8859-8，ISO-8859-9，ISO- 10，ISO-8859-11，ISO-8859-13，ISO-8859-14，ISO-8859-15，ISO-8859-16，KOI8-R，KOI8-U，Shift_JIS，US-ASCII，UTF- UT85，IBM855，IBM855，IBM857，IBM860，IBM861，IBM862，IBM853，UT86，UTF-16BE，UTF-16LE，UTF-32BE，UTF-32LE，Windows-1251，GB2312，Windows-31J，IBM437，IBM737，IBM775， IBM863，IBM864，IBM865，IBM866，IBM869，Windows-1258，GB1988，macCentEuro，macCroatian，macCyrillic，macGreek，macIlandland，macRoman，macRomania，macThai，macTurkish，macUkraine，CP950，CP951，stateless-ISO-2022-JP，eucJP- ms，CP51932，EUC-JIS-2004，GB12345，ISO-2022-JP，ISO-2022-JP-2，CP50220，CP50221，Windows-1252，Windows-1250，Windows-1256，Windows-1253， Windows-1254，TIS-620，Windows-874，Windows-1257，MacJapanese，UTF-7，UTF8-MAC，UTF-16，UTF-32，UTF8-DoCoMo，SJIS-DoCoMo，UTF8-KDDI，SJIS- ISO-2022-JP-KDDI，无状态ISO-2022-JP-KDDI，UTF8-软银行，SJIS-软银行，BINARY，CP437，CP737，CP775，IBM850，CP857，CP860，CP861，CP862，CP863，CP864，CP865， CP866，CP869，CP1258，Big5-HKSCS：2008，eucJP，euc-jp-ms，EUC-JISX0213，eucKR，eucTW，EUC-CN，eucCN，CP936，ISO2022-JP，ISO2022-JP2，ISO8859-1， ISO8859-3，ISO8859-4，ISO8859-5，ISO8859-6，CP1256，ISO8859-7，CP1253，ISO8859-8，CP1255，ISO8859-9，CP1254，ISO8859-10，ISO8859-11， CP874，ISO8859-13，CP1257，ISO8859-14，ISO8859-15，ISO8859-16，CP878，MacJapan，ASCII，ANSI_X3.4-1968,646，CP65000，CP65001，UTF-8-MAC，UTF-8-HFS， UCS-2BE，UCS-4BE，UCS-4LE，CP932，csWindows31J，SJIS，PCK，CP1251，external，locale</li>
+<li>默认值为“UTF-8”</li>
+</ul>
+<p>此过滤器中使用的字符编码。例子包括UTF-8和cp1252</p>
+<p>如果您的url已解码的字符串是Latin-1（又名cp1252）或除UTF-8之外的其他字符集，此设置很有用。</p>
+<p><strong>field</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>默认值为“message”</li>
+</ul>
+<p>值被urldecoded的字段</p>
+<p><strong>periodic_flush</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>定期调用过滤器flush方法。可选的。</p>
+<p><strong>remove_field</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从此事件中删除任意字段。例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  urldecode &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  urldecode &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;my_extraneous_field&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除名为foo_hello的字段（如果存在）。第二个示例将删除一个附加的非动态字段。</p>
+<p><strong>remove_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从事件中删除任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  urldecode &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  urldecode &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;sad_unwanted_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除标签foo_hello如果它存在。第二个例子也会删除一个悲伤的，不需要的标签。</p>
+<h3 id="useragent"><a href="#useragent" class="headerlink" title="useragent"></a>useragent</h3><p>基于BrowserScope数据将用户代理字符串解析为结构化数据</p>
+<p>UserAgent过滤器，添加有关用户代理的信息，如系列，操作系统，版本和设备</p>
+<p>Logstash发行版随附了使用Apache 2.0许可证从ua-parser提供的regexes.yaml数据库。 有关ua-parser的更多详细信息，请参见<a href="https://github.com/tobie/ua-parser/。" target="_blank" rel="external">https://github.com/tobie/ua-parser/。</a></p>
+<h4 id="概述-12"><a href="#概述-12" class="headerlink" title="概述"></a>概述</h4><p>此插件支持以下配置选项：</p>
+<p>所需的配置选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">useragent &#123;</div><div class="line">    source =&gt; ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可用配置选项：</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Input type</th>
+<th>Required</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_field</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>add_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>lru_cache_size</td>
+<td>number</td>
+<td>No</td>
+<td>1000</td>
+</tr>
+<tr>
+<td>periodic_flush</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>prefix</td>
+<td>string</td>
+<td>No</td>
+<td>“”</td>
+</tr>
+<tr>
+<td>regexes</td>
+<td>string</td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td>remove_field</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>remove_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>source</td>
+<td>string</td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td>target</td>
+<td>string</td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h4 id="详情-12"><a href="#详情-12" class="headerlink" title="详情"></a>详情</h4><p><strong>add_field</strong></p>
+<ul>
+<li>值类型是哈希</li>
+<li>默认值为{}</li>
+</ul>
+<p>如果此过滤器成功，请将任意字段添加到此事件。字段名称可以是动态的，并使用％{field}包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  useragent &#123;</div><div class="line">    add_field =&gt; &#123; &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 您也可以一次添加多个字段：</div><div class="line">filter &#123;</div><div class="line">  useragent &#123;</div><div class="line">    add_field =&gt; &#123;</div><div class="line">      &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot;</div><div class="line">      &quot;new_field&quot; =&gt; &quot;new_static_value&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将添加字段foo_hello，如果它存在，与上面的值和％{host}块替换的事件中的值。第二个例子也将添加一个硬编码字段。</p>
+<p><strong>add_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请向事件中添加任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  useragent &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  useragent &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;taggedy_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”这个过滤器，在成功时，将添加一个标签foo_hello（第二个例子当然会添加一个taggedy_tag标签）。</p>
+<p><strong>lru_cache_size</strong></p>
+<ul>
+<li>值类型是数字</li>
+<li>默认值为1000</li>
+</ul>
+<p>UA解析是惊人的昂贵。此过滤器使用LRU缓存来利用这样的事实：用户代理经常在日志文件中彼此相邻，并且很少具有随机分布。设置的越高，项目在缓存中的可能性越大，并且此过滤器运行的速度越快。但是，如果您设置太高，您可以使用比所需的更多的内存。</p>
+<p>为此选项尝试不同的值，以便为数据集找到最佳性能。</p>
+<p>这必须设置为值&gt; 0。真的没有理由不想要这种行为，开销是最小的，速度增益很大。</p>
+<p>重要的是注意这个配置值是全局的。也就是说，用户代理过滤器的所有实例共享同一缓存。最后声明的缓存大小将赢。这样做的原因是，对于在流水线中的不同点处的不同实例具有多个高速缓存将没有益处，这只会增加高速缓存未命中和浪费存储器的数量。</p>
+<p><strong>periodic_flush</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>定期调用过滤器flush方法。可选的。</p>
+<p><strong>prefix</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>默认值为“”</li>
+</ul>
+<p>预先附加到所有提取的键的字符串</p>
+<p><strong>regexes</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>regexes.yaml文件使用</p>
+<p>如果不指定，这将默认为与logstash一起提供的regexes.yaml。</p>
+<p>您可以在这里找到最新版本：https：//github.com/tobie/ua-parser/blob/master/regexes.yaml</p>
+<p><strong>remove_field</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从此事件中删除任意字段。例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  useragent &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  useragent &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;my_extraneous_field&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除名为foo_hello的字段（如果存在）。第二个示例将删除一个附加的非动态字段。</p>
+<p><strong>remove_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从事件中删除任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  useragent &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  useragent &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;sad_unwanted_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除标签foo_hello如果它存在。第二个例子也会删除一个悲伤的，不需要的标签。</p>
+<p><strong>source</strong></p>
+<ul>
+<li>这是必需的设置。</li>
+<li>值类型是字符串</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>包含用户代理字符串的字段。如果此字段是数组，则仅使用第一个值。</p>
+<p><strong>target</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>要将用户代理数据分配到的字段的名称。</p>
+<p>如果没有指定，用户代理数据将存储在事件的根中。</p>
+<h3 id="xml"><a href="#xml" class="headerlink" title="xml"></a>xml</h3><p>XML过滤器。 获取包含XML的字段，并将其扩展为实际的数据结构。</p>
+<h4 id="概述-13"><a href="#概述-13" class="headerlink" title="概述"></a>概述</h4><p>此插件支持以下配置选项：</p>
+<p>所需的配置选项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">xml &#123;</div><div class="line">    source =&gt; ...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>可用配置选项：</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Input type</th>
+<th>Required</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>add_field</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>add_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>force_array</td>
+<td>boolean</td>
+<td>No</td>
+<td>true</td>
+</tr>
+<tr>
+<td>namespaces</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>periodic_flush</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>remove_field</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>remove_namespaces</td>
+<td>boolean</td>
+<td>No</td>
+<td>false</td>
+</tr>
+<tr>
+<td>remove_tag</td>
+<td>array</td>
+<td>No</td>
+<td>[]</td>
+</tr>
+<tr>
+<td>source</td>
+<td>string</td>
+<td>Yes</td>
+<td></td>
+</tr>
+<tr>
+<td>store_xml</td>
+<td>boolean</td>
+<td>No</td>
+<td>true</td>
+</tr>
+<tr>
+<td>target</td>
+<td>string</td>
+<td>No</td>
+<td></td>
+</tr>
+<tr>
+<td>xpath</td>
+<td>hash</td>
+<td>No</td>
+<td>{}</td>
+</tr>
+</tbody>
+</table>
+<h4 id="详情-13"><a href="#详情-13" class="headerlink" title="详情"></a>详情</h4><p><strong>add_field</strong><br>值类型是哈希<br>默认值为{}<br>如果此过滤器成功，请将任意字段添加到此事件。字段名称可以是动态的，并使用％{field}包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  xml &#123;</div><div class="line">    add_field =&gt; &#123; &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot; &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  xml &#123;</div><div class="line">    add_field =&gt; &#123;</div><div class="line">      &quot;foo_%&#123;somefield&#125;&quot; =&gt; &quot;Hello world, from %&#123;host&#125;&quot;</div><div class="line">      &quot;new_field&quot; =&gt; &quot;new_static_value&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将添加字段foo_hello，如果它存在，与上面的值和％{host}块替换的事件中的值。第二个例子也将添加一个硬编码字段。</p>
+<p><strong>add_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请向事件中添加任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  xml &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also add multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  xml &#123;</div><div class="line">    add_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;taggedy_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”这个过滤器，在成功时，将添加一个标签foo_hello（第二个例子当然会添加一个taggedy_tag标签）。</p>
+<p><strong>force_array</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为true</li>
+</ul>
+<p>默认情况下，过滤器会强制单个元素为数组。将此设置为false将阻止在数组中存储单个元素。</p>
+<p><strong>namespaces</strong></p>
+<ul>
+<li>值类型是哈希</li>
+<li>默认值为{}</li>
+</ul>
+<p>默认情况下，只考虑根元素上的命名空间声明。这允许配置所有命名空间声明来解析XML文档。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  xml &#123;</div><div class="line">    namespaces =&gt; &#123;</div><div class="line">      &quot;xsl&quot; =&gt; &quot;http://www.w3.org/1999/XSL/Transform&quot;</div><div class="line">      &quot;xhtml&quot; =&gt; http://www.w3.org/1999/xhtml&quot;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>periodic_flush</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>定期调用过滤器flush方法。可选的。</p>
+<p><strong>remove_field</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从此事件中删除任意字段。例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  xml &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple fields at once:</div><div class="line">filter &#123;</div><div class="line">  xml &#123;</div><div class="line">    remove_field =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;my_extraneous_field&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除名为foo_hello的字段（如果存在）。第二个示例将删除一个附加的非动态字段。</p>
+<p><strong>remove_namespaces</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为false</li>
+</ul>
+<p>从文档中的所有节点中删除所有命名空间。当然，如果文档具有相同名称但不同命名空间的节点，它们现在将是不明确的。</p>
+<p><strong>remove_tag</strong></p>
+<ul>
+<li>值类型是数组</li>
+<li>默认值为[]</li>
+</ul>
+<p>如果此过滤器成功，请从事件中删除任意标记。标签可以是动态的，并使用％{字段}语法包括事件的部分。</p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  xml &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot; ]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># You can also remove multiple tags at once:</div><div class="line">filter &#123;</div><div class="line">  xml &#123;</div><div class="line">    remove_tag =&gt; [ &quot;foo_%&#123;somefield&#125;&quot;, &quot;sad_unwanted_tag&quot;]</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果事件有字段“somefield”==“hello”此过滤器，如果成功，将删除标签foo_hello如果它存在。第二个例子也会删除一个悲伤的，不需要的标签。</p>
+<p><strong>source</strong></p>
+<ul>
+<li>这是必需的设置。</li>
+<li>值类型是字符串</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>配置xml到哈希是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source =&gt; source_field</div></pre></td></tr></table></figure>
+<p>例如，如果您在消息字段中具有整个XML文档<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  xml &#123;</div><div class="line">    source =&gt; &quot;message&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上面将解析消息字段中的XML。</p>
+<p><strong>store_xml</strong></p>
+<ul>
+<li>值类型是布尔值</li>
+<li>默认值为true</li>
+</ul>
+<p>默认情况下，过滤器会将整个解析的XML存储在目标字段中，如上所述。设置为false将阻止。</p>
+<p><strong>target</strong></p>
+<ul>
+<li>值类型是字符串</li>
+<li>此设置没有默认值。</li>
+</ul>
+<p>定义放置数据的目标</p>
+<p>例如，如果您希望将数据放在doc字段中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filter &#123;</div><div class="line">  xml &#123;</div><div class="line">    target =&gt; &quot;doc&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>源字段值中的XML将扩展为目标字段中的数据结构。注意：如果目标字段已存在，它将被覆盖。如果store_xml为true（这是缺省值），那么是必需的。</p>
+<p><strong>xpath</strong></p>
+<ul>
+<li>值类型是哈希</li>
+<li>默认值为{}</li>
+</ul>
+<p>xpath将使用解析的XML（使用上述方法定义的每个源字段）另外选择字符串值（非字符串将使用Ruby的to_s函数转换为字符串），并将这些值放在目标字段中。组态：Configuration:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">xpath =&gt; [ &quot;xpath-syntax&quot;, &quot;destination-field&quot; ]</div></pre></td></tr></table></figure></p>
+<p>XPath从xpath语法解析返回的值将放在目标字段中。返回的多个值将作为数组推送到目标字段。因此，跨多个源字段的多个匹配将在字段中产生重复条目。</p>
+<p>更多关于XPath：http：//www.w3schools.com/xml/xml_xpath.asp</p>
+<p>XPath函数特别强大：<a href="http://www.w3schools.com/xsl/xsl_functions.asp" target="_blank" rel="external">http://www.w3schools.com/xsl/xsl_functions.asp</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/26/Logstash学习六/" itemprop="url">
+                  Logstash学习六
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-26T20:30:00+08:00" content="2016-10-26">
+              2016-10-26
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Logstash/" itemprop="url" rel="index">
+                    <span itemprop="name">Logstash</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/26/Logstash学习六/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/26/Logstash学习六/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <ul>
+<li>编解码器插件</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/26/Logstash学习六/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/25/Logstash学习三/" itemprop="url">
+                  Logstash学习三
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-25T20:30:00+08:00" content="2016-10-25">
+              2016-10-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Logstash/" itemprop="url" rel="index">
+                    <span itemprop="name">Logstash</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/25/Logstash学习三/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/25/Logstash学习三/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <ul>
+<li>性能故障排除指南</li>
+<li>使用插件</li>
+<li>输入插件</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/25/Logstash学习三/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/25/Logstash学习四/" itemprop="url">
+                  Logstash学习四
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-25T20:30:00+08:00" content="2016-10-25">
+              2016-10-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Logstash/" itemprop="url" rel="index">
+                    <span itemprop="name">Logstash</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/25/Logstash学习四/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/25/Logstash学习四/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <ul>
+<li>输出插件</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/25/Logstash学习四/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/24/Logstash学习二/" itemprop="url">
+                  Logstash学习二
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-24T22:30:00+08:00" content="2016-10-24">
+              2016-10-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Logstash/" itemprop="url" rel="index">
+                    <span itemprop="name">Logstash</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/24/Logstash学习二/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/24/Logstash学习二/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <ul>
+<li>版本的变化</li>
+<li>升级Logstash</li>
+<li>配置Logstash
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/24/Logstash学习二/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/24/Logstash学习一/" itemprop="url">
+                  Logstash学习一
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-24T20:30:00+08:00" content="2016-10-24">
+              2016-10-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Logstash/" itemprop="url" rel="index">
+                    <span itemprop="name">Logstash</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/24/Logstash学习一/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/24/Logstash学习一/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <ul>
+<li>Logstash简介</li>
+<li>Logstash入门</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/24/Logstash学习一/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/10/23/PHP根据文件头检测文件类型/" itemprop="url">
+                  PHP根据文件头检测文件类型
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-23T18:30:00+08:00" content="2016-10-23">
+              2016-10-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/23/PHP根据文件头检测文件类型/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/23/PHP根据文件头检测文件类型/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>文件签名一般都在文件的头部，如果你用十六进制方式查看文件，你就可以看到文件的一些签名信息。如用uestudio以十六进制方式查看zip格式的文件，其文件内容头部有50 4B 03 04这样的十六进制信息。同理jpg文件状况有FF D8 FF E0 xx xx 4A 46这样的十六进制信息，其实这此十六进制都是表示一些特殊字条。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/23/PHP根据文件头检测文件类型/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/10/22/Xdebug之PHP脚本剖析/" itemprop="url">
                   Xdebug之PHP脚本剖析
                 </a>
@@ -500,1041 +3818,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/22/Xdebug之堆栈跟踪/" itemprop="url">
-                  Xdebug之变量显示功能
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-22T20:30:00+08:00" content="2016-10-22">
-              2016-10-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/22/Xdebug之堆栈跟踪/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/22/Xdebug之堆栈跟踪/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-            
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>当Xdebug被激活时，只要PHP决定显示通知，警告，错误等，它将显示一个堆栈跟踪。堆栈跟踪显示的信息以及它们的呈现方式可以配置为满足您的需要。</p>
-<p>Xdebug在错误情况下显示的堆栈跟踪（如果display_errors在php.ini中设置为On）在它们显示的信息量上相当保守。 这是因为大量的信息可以减慢脚本的执行和在浏览器中呈现堆栈跟踪本身。 但是，可以使堆栈跟踪显示具有不同设置的更详细信息。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/22/Xdebug之堆栈跟踪/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/22/Xdebug之变量显示功能/" itemprop="url">
-                  Xdebug之变量显示功能
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-22T20:30:00+08:00" content="2016-10-22">
-              2016-10-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/22/Xdebug之变量显示功能/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/22/Xdebug之变量显示功能/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-            
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Xdebug替换了PHP的var_dump（）函数来显示变量。 Xdebug的版本包括不同类型的不同颜色，并且限制了数组元素/对象属性的数量，最大深度和字符串长度。 还有一些其他函数处理可变显示。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/22/Xdebug之变量显示功能/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/22/Xdebug之函数轨迹跟踪/" itemprop="url">
-                  Xdebug之函数轨迹跟踪
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-22T20:30:00+08:00" content="2016-10-22">
-              2016-10-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/22/Xdebug之函数轨迹跟踪/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/22/Xdebug之函数轨迹跟踪/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-            
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Xdebug允许您记录所有函数调用，包括参数和返回值到不同格式的文件。</p>
-<p>那些所谓的“函数跟踪”可以帮助当你是新的一个应用程序，或当你试图找出当你的应用程序运行时究竟是怎么回事。<br>函数跟踪还可以选择显示传递给函数和方法的变量的值，以及返回值。 在默认跟踪中，这两个元素不可用。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/22/Xdebug之函数轨迹跟踪/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/22/Xdebug之常见问题/" itemprop="url">
-                  Xdebug之常见问题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-22T20:30:00+08:00" content="2016-10-22">
-              2016-10-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/22/Xdebug之常见问题/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/22/Xdebug之常见问题/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-            
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <ul>
-<li><p>xdebug的使用</p>
-</li>
-<li><p>xdebug的编译安装</p>
-</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/22/Xdebug之常见问题/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/22/Xdebug之代码覆盖率分析/" itemprop="url">
-                  Xdebug之代码覆盖率分析
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-22T20:30:00+08:00" content="2016-10-22">
-              2016-10-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/22/Xdebug之代码覆盖率分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/22/Xdebug之代码覆盖率分析/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-            
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>代码覆盖率告诉您在请求期间已执行了哪些行的脚本（或一组脚本）。 有了这些信息，你可以找出你的单元测试有多好。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/22/Xdebug之代码覆盖率分析/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/22/PHP程序调试之Xdebug/" itemprop="url">
-                  PHP程序调试之Xdebug
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-22T18:30:00+08:00" content="2016-10-22">
-              2016-10-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/22/PHP程序调试之Xdebug/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/22/PHP程序调试之Xdebug/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-            
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Xdebug是一个开放源代码的PHP程序调试器(即一个Debug工具)，可以用来跟踪，调试和分析PHP程序的运行状况。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/22/PHP程序调试之Xdebug/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/21/apache上运行PHP的几种方式汇总/" itemprop="url">
-                  apache上运行PHP的几种方式汇总
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-21T22:40:00+08:00" content="2016-10-21">
-              2016-10-21
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Apache/" itemprop="url" rel="index">
-                    <span itemprop="name">Apache</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/21/apache上运行PHP的几种方式汇总/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/21/apache上运行PHP的几种方式汇总/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-            
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>之前也有整理过一篇 「apache中PHP的几种支持模式」的blog，但是感觉还是比较混乱，很多问题没有理清楚，一些方式也没有整理到。所以今天通过这篇blog再整理一下。</p>
-<ul>
-<li><p>Using proxy_fcgi and php-fpm (for apache 2.4)</p>
-</li>
-<li><p>Using php with fastcgi (for 2.2 and older)</p>
-</li>
-<li><p>Using php with fcgid (for 2.2 and older)</p>
-</li>
-<li><p>Using mod_php as a DSO with a threaded mpm (2.0 and newer)</p>
-</li>
-<li><p>Using mod_php as a DSO (deprecated)</p>
-</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/21/apache上运行PHP的几种方式汇总/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/20/High-performance PHP on apache httpd 2.4.x using mod_proxy_fcgi and php-fpm/" itemprop="url">
-                  httpd 2.4.x上使用mod_proxy_fcgi和php-fpm实现高性能PHP
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-20T22:40:00+08:00" content="2016-10-20">
-              2016-10-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/20/High-performance PHP on apache httpd 2.4.x using mod_proxy_fcgi and php-fpm/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/20/High-performance PHP on apache httpd 2.4.x using mod_proxy_fcgi and php-fpm/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-            
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>内容</p>
-<ul>
-<li>apache httpd 2.4.x上使用mod_proxy_fcgi和php-fpm实现高性能PHP<ul>
-<li>php-fpm</li>
-<li>apache httpd 2.4<ul>
-<li>TCP套接字（IP和端口）方法</li>
-<li>unix域套接字（UDS）方法</li>
-<li>通过代理程序处理</li>
-<li>先睹为快<ul>
-<li>一个简单的例子</li>
-<li>一个更灵活的例子</li>
-</ul>
-</li>
-<li>性能和陷阱</li>
-<li>警告</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/20/High-performance PHP on apache httpd 2.4.x using mod_proxy_fcgi and php-fpm/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1575,7 +3863,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">70</span>
+              <span class="site-state-item-count">78</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1583,7 +3871,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1592,7 +3880,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-count">59</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
