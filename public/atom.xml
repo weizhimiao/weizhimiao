@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://weizhimiao.github.io/"/>
-  <updated>2016-10-30T12:05:05.000Z</updated>
+  <updated>2016-11-07T09:51:46.000Z</updated>
   <id>https://weizhimiao.github.io/</id>
   
   <author>
@@ -14,6 +14,186 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>常见的排序算法与实现（PHP）汇总</title>
+    <link href="https://weizhimiao.github.io/2016/11/07/%E5%B8%B8%E8%A7%81%E7%9A%84%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E4%B8%8E%E5%AE%9E%E7%8E%B0%EF%BC%88PHP%EF%BC%89%E6%B1%87%E6%80%BB/"/>
+    <id>https://weizhimiao.github.io/2016/11/07/常见的排序算法与实现（PHP）汇总/</id>
+    <published>2016-11-07T12:30:00.000Z</published>
+    <updated>2016-11-07T09:51:46.000Z</updated>
+    
+    <content type="html"><![CDATA[<ul>
+<li>冒泡排序</li>
+<li>选择排序</li>
+<li>插入排序</li>
+<li>快速排序</li>
+<li>归并排序</li>
+<li>堆排序</li>
+<li>桶排序</li>
+<li>基数排序</li>
+<li>希尔排序</li>
+</ul>
+<a id="more"></a>
+<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><ul>
+<li><p>思路分析</p>
+<blockquote>
+<p>在排序的一组数中，对当前还未排好的序列，从前后对相邻的两个数依次进行比较和调整，让较大的数往下沉，较小的数往上冒。</p>
+<p>即，每当两个相邻的数比较后发现它们的排序与排序要求相反时，就将它们互换。</p>
+</blockquote>
+</li>
+<li><p>实现</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  $arr = <span class="keyword">array</span>(<span class="number">1</span>,<span class="number">223</span>,<span class="number">23</span>,<span class="number">43</span>,<span class="number">54</span>,<span class="number">455</span>,<span class="number">26</span>,<span class="number">823</span>,<span class="number">45</span>,<span class="number">9</span>,<span class="number">23</span>,<span class="number">65</span>);</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * [bubblingSort description]</div><div class="line">   * <span class="doctag">@param</span>  [type] $arr [description]</div><div class="line">   * <span class="doctag">@return</span> [type]      [description]</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">bubblingSort</span><span class="params">($arr)</span></span>&#123;</div><div class="line">    $len = count($arr);</div><div class="line"></div><div class="line">    <span class="comment">//控制需要冒泡的轮数</span></div><div class="line">    <span class="keyword">for</span>($i = <span class="number">1</span>;$i &lt; $len; $i++)&#123;</div><div class="line">      <span class="comment">//控制每层冒出一个数 需要比较的次数</span></div><div class="line">      <span class="keyword">for</span>($k = <span class="number">0</span>; $k &lt; $len-$i; $k++)&#123;</div><div class="line">        <span class="keyword">if</span>($arr[$k] &gt; $arr[$k+<span class="number">1</span>])&#123;</div><div class="line">          $temp = $arr[$k+<span class="number">1</span>];</div><div class="line">          $arr[$k+<span class="number">1</span>] = $arr[$k];</div><div class="line">          $arr[$k] = $temp;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> $arr;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  var_dump(bubblingSort($arr));</div></pre></td></tr></table></figure>
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><ul>
+<li><p>思路分析</p>
+<blockquote>
+<p>在要排序的一组数中，选出最小的一个数与第一个位置的数交换。</p>
+<p>然后在剩下的数当中再找最小的与第二个位置的数交换，如此循环到倒数第二个数和最后一个数比较为止。</p>
+</blockquote>
+</li>
+<li><p>实现</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  $arr = <span class="keyword">array</span>(<span class="number">1</span>,<span class="number">223</span>,<span class="number">23</span>,<span class="number">43</span>,<span class="number">54</span>,<span class="number">455</span>,<span class="number">26</span>,<span class="number">823</span>,<span class="number">45</span>,<span class="number">9</span>,<span class="number">23</span>,<span class="number">65</span>);</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * [selectSort description]</div><div class="line">   * <span class="doctag">@param</span>  [type] $arr [description]</div><div class="line">   * <span class="doctag">@return</span> [type]      [description]</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">selectSort</span><span class="params">($arr)</span></span>&#123;</div><div class="line">    <span class="comment">//双重循环，外层控制循环轮数，内层控制比较次数</span></div><div class="line">    $len = count($arr);</div><div class="line">    <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;$len<span class="number">-1</span>;$i++)&#123;</div><div class="line">      <span class="comment">//先假设最小的值的位置</span></div><div class="line">      $p = $i;</div><div class="line"></div><div class="line">      <span class="keyword">for</span>($j=$i+<span class="number">1</span>;$j&lt;$len;$j++)&#123;</div><div class="line">        <span class="comment">//$arr[$p] 是当前已知的最小值</span></div><div class="line">        <span class="keyword">if</span>($arr[$p] &gt; $arr[$j])&#123;</div><div class="line">          <span class="comment">//比较，发现更小的，记录下最小值的位置；并且在下次比较时采用已知的最小值进行比较</span></div><div class="line">          $p = $j;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="comment">//已经确定了当前的最小值的位置，保存到$p中。如果发现最小值的位置与当前假设的位置$i不同，则位置互换即可。</span></div><div class="line">      <span class="keyword">if</span>($p != $i)&#123;</div><div class="line">        $tmp = $arr[$p];</div><div class="line">        $arr[$p] = $arr[$i];</div><div class="line">        $arr[$i] = $tmp;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> $arr;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  var_dump(selectSort($arr));</div></pre></td></tr></table></figure>
+<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><ul>
+<li><p>思路分析</p>
+<blockquote>
+<p>在要排序的一组数中，假设前面的数已经是排好顺序的，现在要把第n个数插入到前面的有序数中，使得这n个数也是排好序的。如此反复循环，直到全部排好顺序。</p>
+</blockquote>
+</li>
+<li><p>实现</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  $arr = <span class="keyword">array</span>(<span class="number">1</span>,<span class="number">223</span>,<span class="number">23</span>,<span class="number">43</span>,<span class="number">54</span>,<span class="number">455</span>,<span class="number">26</span>,<span class="number">823</span>,<span class="number">45</span>,<span class="number">9</span>,<span class="number">23</span>,<span class="number">65</span>);</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * [insertSort description]</div><div class="line">   * <span class="doctag">@param</span>  [type] $arr [description]</div><div class="line">   * <span class="doctag">@return</span> [type]      [description]</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">insertSort</span><span class="params">($arr)</span></span>&#123;</div><div class="line">    $len = count($arr);</div><div class="line"></div><div class="line">    <span class="keyword">for</span>($i=<span class="number">1</span>;$i&lt;$len;$i++)&#123;</div><div class="line">      $tmp = $arr[$i];</div><div class="line">      <span class="comment">//内层循环控制，比较并插入</span></div><div class="line">      <span class="keyword">for</span>($j=$i<span class="number">-1</span>;$j&gt;=<span class="number">0</span>;$j--)&#123;</div><div class="line">        <span class="keyword">if</span>($tmp &lt; $arr[$j])&#123;</div><div class="line">          <span class="comment">//发现插入的元素要小，交换位置，将后边的元素与前面的元素互换</span></div><div class="line">          $arr[$j+<span class="number">1</span>] = $arr[$j];</div><div class="line">          $arr[$j] = $tmp;</div><div class="line">        &#125; <span class="keyword">else</span>&#123;</div><div class="line">          <span class="comment">//如果碰到不需要移动的元素，由于是已经排序好的数组，则前面的就不需要再次比较了</span></div><div class="line">          <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> $arr;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  var_dump(insertSort($arr));</div></pre></td></tr></table></figure>
+<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><ul>
+<li><p>思路分析</p>
+<blockquote>
+<p>选择一个基准元素，通常选择第一个元素或者最后一个元素。通过一趟扫描，将待排序列分成两部分，一部分比基准元素小，一部分大于等于基准元素。</p>
+<p>此时基准元素在其排好序后的正确位置，然后再用同样的方法递归地排序划分的两部分。</p>
+</blockquote>
+</li>
+<li><p>实现</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  $arr = <span class="keyword">array</span>(<span class="number">1</span>,<span class="number">223</span>,<span class="number">23</span>,<span class="number">43</span>,<span class="number">54</span>,<span class="number">455</span>,<span class="number">26</span>,<span class="number">823</span>,<span class="number">45</span>,<span class="number">9</span>,<span class="number">23</span>,<span class="number">65</span>);</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * [quickSort description]</div><div class="line">   * <span class="doctag">@param</span>  [type] $arr [description]</div><div class="line">   * <span class="doctag">@return</span> [type]      [description]</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">quickSort</span><span class="params">($arr)</span></span>&#123;</div><div class="line">    <span class="comment">//先判断是否需要继续进行</span></div><div class="line">    $len = count($arr);</div><div class="line">    <span class="keyword">if</span>($len &lt;= <span class="number">1</span>)&#123;</div><div class="line">      <span class="keyword">return</span> $arr;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//选择第一个元素作为基准</span></div><div class="line">    $base_num = $arr[<span class="number">0</span>];</div><div class="line"></div><div class="line">    <span class="comment">//遍历除了标尺外的所有元素，按照大小关系放入两个数组内</span></div><div class="line">    <span class="comment">//初始化两个数组</span></div><div class="line">    $left_array = <span class="keyword">array</span>();  <span class="comment">//小于基准值的数组</span></div><div class="line">    $right_array = <span class="keyword">array</span>();   <span class="comment">//大于基准的数组</span></div><div class="line"></div><div class="line">    <span class="keyword">for</span>($i=<span class="number">1</span>;$i&lt;$len;$i++)&#123;</div><div class="line">      <span class="keyword">if</span>($base_num &gt; $arr[$i])&#123;</div><div class="line">        <span class="comment">//放入左边</span></div><div class="line">        $left_array[] = $arr[$i];</div><div class="line">      &#125; <span class="keyword">else</span>&#123;</div><div class="line">        <span class="comment">//放入右边</span></div><div class="line">        $right_array[] = $arr[$i];</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//分别对左边和右边的数组进行相同的排序处理方式递归调用这个函数</span></div><div class="line">    $left_array = quickSort($left_array);</div><div class="line">    $right_array = quickSort($right_array);</div><div class="line"></div><div class="line">    <span class="comment">//合并</span></div><div class="line">    <span class="keyword">return</span> array_merge($left_array, <span class="keyword">array</span>($base_num), $right_array);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  var_dump(quickSort($arr));</div></pre></td></tr></table></figure>
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><ul>
+<li><p>思路分析</p>
+<blockquote>
+<p>采用分治法，将已有序的子序列合并,从而得到完全有序的序列.</p>
+</blockquote>
+</li>
+<li><p>实现</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  $arr = <span class="keyword">array</span>(<span class="number">1</span>,<span class="number">223</span>,<span class="number">23</span>,<span class="number">43</span>,<span class="number">54</span>,<span class="number">455</span>,<span class="number">26</span>,<span class="number">823</span>,<span class="number">45</span>,<span class="number">9</span>,<span class="number">23</span>,<span class="number">65</span>);</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * [mergeSort description]</div><div class="line">   * <span class="doctag">@param</span>  [type] $arr [description]</div><div class="line">   * <span class="doctag">@return</span> [type]      [description]</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">mergeSort</span><span class="params">($arr)</span></span>&#123;</div><div class="line">    $len = count($arr);</div><div class="line"></div><div class="line">    <span class="keyword">if</span>($len &lt; <span class="number">2</span>)&#123;</div><div class="line">      <span class="keyword">return</span> $arr;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//获取中间参考点值</span></div><div class="line">    $middle = floor($len/<span class="number">2</span>);</div><div class="line">    <span class="comment">//取左边区间</span></div><div class="line">    $left = array_slice($arr, <span class="number">0</span>, $middle);</div><div class="line">    <span class="comment">//取右边区间</span></div><div class="line">    $right = array_slice($arr, $middle);</div><div class="line"></div><div class="line">    <span class="comment">//调用归并函数</span></div><div class="line">    <span class="keyword">return</span> merge(mergeSort($left), mergeSort($right));</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * 归并函数</div><div class="line">   * <span class="doctag">@param</span>  [type] $left  [description]</div><div class="line">   * <span class="doctag">@param</span>  [type] $right [description]</div><div class="line">   * <span class="doctag">@return</span> [type]        [description]</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">merge</span><span class="params">($left, $right)</span></span>&#123;</div><div class="line">    $res = <span class="keyword">array</span>();</div><div class="line"></div><div class="line">    <span class="keyword">while</span>(count($left) &gt; <span class="number">0</span> &amp;&amp; count($right) &gt; <span class="number">0</span>)&#123;</div><div class="line">      <span class="keyword">if</span>($left[<span class="number">0</span>] &lt;= $right[<span class="number">0</span>])&#123;</div><div class="line">        array_push($res, array_shift($left));</div><div class="line">      &#125; <span class="keyword">else</span>&#123;</div><div class="line">        array_push($res, array_shift($right));</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//解决$left遗留元素</span></div><div class="line">    <span class="keyword">while</span>(count($left) &gt; <span class="number">0</span>)&#123;</div><div class="line">      array_push($res, array_shift($left));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//解决$right遗留元素</span></div><div class="line">    <span class="keyword">while</span>(count($right) &gt; <span class="number">0</span>)&#123;</div><div class="line">      array_push($res, array_shift($right));</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> $res;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  var_dump(mergeSort($arr));</div></pre></td></tr></table></figure>
+<h2 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h2><ul>
+<li>思路分析<blockquote>
+<p><strong>建堆</strong>，建堆是不断调整堆的过程，从len/2处开始调整，一直到第一个节点，此处len是堆中元素的个数。建堆的过程是线性的过程，从len/2到0处一直调用调整堆的过程，相当于o(h1)+o(h2)…+o(hlen/2) 其中h表示节点的深度，len/2表示节点的个数，这是一个求和的过程，结果是线性的O(n)。</p>
+<p><strong>调整堆</strong>：调整堆在构建堆的过程中会用到，而且在堆排序过程中也会用到。利用的思想是比较节点i和它的孩子节点left(i),right(i)，选出三者最大(或者最小)者，如果最大（小）值不是节点i而是它的一个孩子节点，那边交互节点i和该节点，然后再调用调整堆过程，这是一个递归的过程。调整堆的过程时间复杂度与堆的深度有关系，是lgn的操作，因为是沿着深度方向进行调整的。</p>
+<p><strong>堆排序</strong>：堆排序是利用上面的两个过程来进行的。首先是根据元素构建堆。然后将堆的根节点取出(一般是与最后一个节点进行交换)，将前面len-1个节点继续进行堆调整的过程，然后再将根节点取出，这样一直到所有节点都取出。堆排序过程的时间复杂度是O(nlgn)。因为建堆的时间复杂度是O(n)（调用一次）；调整堆的时间复杂度是lgn，调用了n-1次，所以堆排序的时间复杂度是O(nlgn)</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li>实现</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  $arr = <span class="keyword">array</span>(<span class="number">1</span>,<span class="number">223</span>,<span class="number">23</span>,<span class="number">43</span>,<span class="number">54</span>,<span class="number">455</span>,<span class="number">26</span>,<span class="number">823</span>,<span class="number">45</span>,<span class="number">9</span>,<span class="number">23</span>,<span class="number">65</span>);</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * [heapSort description]</div><div class="line">   * <span class="doctag">@param</span>  [type] $arr [description]</div><div class="line">   * <span class="doctag">@return</span> [type]      [description]</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">heapSort</span><span class="params">($arr)</span> </span>&#123;</div><div class="line">      <span class="comment">#初始化大顶堆</span></div><div class="line">      initHeap($arr, <span class="number">0</span>, count($arr) - <span class="number">1</span>);</div><div class="line"></div><div class="line">      <span class="comment">#开始交换首尾节点,并每次减少一个末尾节点再调整堆,直到剩下一个元素</span></div><div class="line">      <span class="keyword">for</span>($end = count($arr) - <span class="number">1</span>; $end &gt; <span class="number">0</span>; $end--) &#123;</div><div class="line">          $temp = $arr[<span class="number">0</span>];</div><div class="line">          $arr[<span class="number">0</span>] = $arr[$end];</div><div class="line">          $arr[$end] = $temp;</div><div class="line">          ajustNodes($arr, <span class="number">0</span>, $end - <span class="number">1</span>);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">return</span> $arr;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * 初始化大顶堆</div><div class="line">   * 初始化最大堆,从最后一个非叶子节点开始,最后一个非叶子节点编号为 数组长度/2 向下取整</div><div class="line">   * <span class="doctag">@param</span>  [type] $arr [description]</div><div class="line">   * <span class="doctag">@return</span> [type]      [description]</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">initHeap</span><span class="params">(&amp;$arr)</span> </span>&#123;</div><div class="line">      $len = count($arr);</div><div class="line">      <span class="keyword">for</span>($start = floor($len / <span class="number">2</span>) - <span class="number">1</span>; $start &gt;= <span class="number">0</span>; $start--) &#123;</div><div class="line">          ajustNodes($arr, $start, $len - <span class="number">1</span>);</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * 调整节点</div><div class="line">   * <span class="doctag">@param</span>  [type] $arr   待调整数组</div><div class="line">   * <span class="doctag">@param</span>  [type] $start 调整的父节点坐标</div><div class="line">   * <span class="doctag">@param</span>  [type] $end   待调整数组结束节点坐标</div><div class="line">   * <span class="doctag">@return</span> [type]        [description]</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">ajustNodes</span><span class="params">(&amp;$arr, $start, $end)</span> </span>&#123;</div><div class="line">      $maxInx = $start;</div><div class="line">      $len = $end + <span class="number">1</span>;    <span class="comment">#待调整部分长度</span></div><div class="line">      $leftChildInx = ($start + <span class="number">1</span>) * <span class="number">2</span> - <span class="number">1</span>;    <span class="comment">#左孩子坐标</span></div><div class="line">      $rightChildInx = ($start + <span class="number">1</span>) * <span class="number">2</span>;    <span class="comment">#右孩子坐标</span></div><div class="line"></div><div class="line">      <span class="comment">#如果待调整部分有左孩子</span></div><div class="line">      <span class="keyword">if</span>($leftChildInx + <span class="number">1</span> &lt;= $len) &#123;</div><div class="line">          <span class="comment">#获取最小节点坐标</span></div><div class="line">          <span class="keyword">if</span>($arr[$maxInx] &lt; $arr[$leftChildInx]) &#123;</div><div class="line">              $maxInx = $leftChildInx;</div><div class="line">          &#125;</div><div class="line"></div><div class="line">          <span class="comment">#如果待调整部分有右子节点</span></div><div class="line">          <span class="keyword">if</span>($rightChildInx + <span class="number">1</span> &lt;= $len) &#123;</div><div class="line">              <span class="keyword">if</span>($arr[$maxInx] &lt; $arr[$rightChildInx]) &#123;</div><div class="line">                  $maxInx = $rightChildInx;</div><div class="line">              &#125;</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      <span class="comment">#交换父节点和最大节点</span></div><div class="line">      <span class="keyword">if</span>($start != $maxInx) &#123;</div><div class="line">          $temp = $arr[$start];</div><div class="line">          $arr[$start] = $arr[$maxInx];</div><div class="line">          $arr[$maxInx] = $temp;</div><div class="line"></div><div class="line">          <span class="comment">#如果交换后的子节点还有子节点,继续调整</span></div><div class="line">          <span class="keyword">if</span>(($maxInx + <span class="number">1</span>) * <span class="number">2</span> &lt;= $len) &#123;</div><div class="line">              ajustNodes($arr, $maxInx, $end);</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  var_dump(heapSort($arr));</div></pre></td></tr></table></figure>
+<h2 id="桶排序"><a href="#桶排序" class="headerlink" title="桶排序"></a>桶排序</h2><ul>
+<li><p>思路分析</p>
+<blockquote>
+<p>先将数组根据其值的大小放入到桶的相应位置，然后在按照顺序将元素从桶中取出。</p>
+</blockquote>
+</li>
+<li><p>实现</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  $arr = <span class="keyword">array</span>(<span class="number">1</span>,<span class="number">223</span>,<span class="number">23</span>,<span class="number">43</span>,<span class="number">54</span>,<span class="number">455</span>,<span class="number">26</span>,<span class="number">823</span>,<span class="number">45</span>,<span class="number">9</span>,<span class="number">23</span>,<span class="number">65</span>);</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * [tongSort description]</div><div class="line">   * <span class="doctag">@param</span>  [type] $arr [description]</div><div class="line">   * <span class="doctag">@param</span>  [type] $max [description]</div><div class="line">   * <span class="doctag">@return</span> [type]      [description]</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">tongSort</span><span class="params">($arr, $max)</span></span>&#123;</div><div class="line">    $len = count($arr);</div><div class="line"></div><div class="line">    <span class="comment">//填充木桶</span></div><div class="line">		$tong = <span class="keyword">array</span>();</div><div class="line">    <span class="keyword">for</span>($i=<span class="number">0</span>;$i&lt;$max;$i++)&#123;</div><div class="line">      $tong[$i] = <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">		<span class="comment">//开始标示木桶</span></div><div class="line">		<span class="keyword">for</span>($i = <span class="number">0</span>; $i&lt;$len; $i++)&#123;</div><div class="line">			$tong[$arr[$i]]++;</div><div class="line">		&#125;</div><div class="line"></div><div class="line">		$res = <span class="keyword">array</span>();</div><div class="line">		<span class="comment">//开始从木桶中拿出数据</span></div><div class="line">		<span class="keyword">for</span>($i = <span class="number">0</span>; $i&lt; $max ; $i++)&#123;</div><div class="line">        <span class="keyword">if</span>($tong[$i] &gt; <span class="number">0</span>)&#123;</div><div class="line">          <span class="keyword">for</span>($j = <span class="number">1</span>; $j &lt;= $tong[$i]; $j++)&#123; <span class="comment">//这一行主要用来控制输出多个数</span></div><div class="line">            $res[] = $i;</div><div class="line">    			&#125;</div><div class="line">        &#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> $res;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">  var_dump(tongSort($arr, <span class="number">1000</span>));</div></pre></td></tr></table></figure>
+<h2 id="基数排序"><a href="#基数排序" class="headerlink" title="基数排序"></a>基数排序</h2><ul>
+<li><p>思路分析</p>
+<blockquote>
+<p>将所有待比较数值（正整数）统一为同样的数位长度，数位较短的数前面补零。</p>
+<p>然后，从最低位开始，依次进行一次排序。这样从最低位排序一直到最高位排序完成以后,数列就变成一个有序序列。</p>
+</blockquote>
+</li>
+<li><p>实现</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  $arr = <span class="keyword">array</span>(<span class="number">1</span>,<span class="number">223</span>,<span class="number">23</span>,<span class="number">43</span>,<span class="number">54</span>,<span class="number">455</span>,<span class="number">26</span>,<span class="number">823</span>,<span class="number">45</span>,<span class="number">9</span>,<span class="number">23</span>,<span class="number">65</span>);</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * [countingSort description]</div><div class="line">   * <span class="doctag">@param</span>  [type]  $arr       [description]</div><div class="line">   * <span class="doctag">@param</span>  boolean $digit_num [description]</div><div class="line">   * <span class="doctag">@return</span> [type]             [description]</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">countingSort</span><span class="params">($arr, $digit_num = false)</span> </span>&#123;</div><div class="line">     <span class="keyword">if</span> ($digit_num !== <span class="keyword">false</span>) &#123; <span class="comment">#如果参数$digit_num不为空，则根据元素的第$digit_num位数进行排序</span></div><div class="line">       <span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; count($arr); $i++) &#123;</div><div class="line">         $arr_temp[$i] = get_specific_digit($arr[$i], $digit_num);</div><div class="line">       &#125;</div><div class="line">     &#125; <span class="keyword">else</span> &#123;</div><div class="line">       $arr_temp = $arr;</div><div class="line">     &#125;</div><div class="line"></div><div class="line">     $max = max($arr);</div><div class="line">     $time_arr = <span class="keyword">array</span>(); <span class="comment">#储存元素出现次数的数组</span></div><div class="line"></div><div class="line">     <span class="comment">#初始化出现次数数组</span></div><div class="line">     <span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt;= $max; $i++) &#123;</div><div class="line">       $time_arr[$i] = <span class="number">0</span>;</div><div class="line">     &#125;</div><div class="line"></div><div class="line">     <span class="comment">#统计每个元素出现次数</span></div><div class="line">     <span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; count($arr_temp); $i++) &#123;</div><div class="line">       $time_arr[$arr_temp[$i]]++;</div><div class="line">     &#125;</div><div class="line"></div><div class="line">     <span class="comment">#统计每个元素比其小或相等的元素出现次数</span></div><div class="line">     <span class="keyword">for</span> ($i = <span class="number">0</span>; $i &lt; count($time_arr) - <span class="number">1</span>; $i++) &#123;</div><div class="line">       $time_arr[$i + <span class="number">1</span>] += $time_arr[$i];</div><div class="line">     &#125;</div><div class="line"></div><div class="line">     <span class="comment">#利用出现次数对数组进行排序</span></div><div class="line">     <span class="keyword">for</span>($i = count($arr) - <span class="number">1</span>; $i &gt;= <span class="number">0</span>; $i--) &#123;</div><div class="line">       $sorted_arr[$time_arr[$arr_temp[$i]] - <span class="number">1</span>] = $arr[$i];</div><div class="line">       $time_arr[$arr_temp[$i]]--;</div><div class="line">     &#125;</div><div class="line"></div><div class="line">     $arr = $sorted_arr;</div><div class="line">     ksort($arr);  <span class="comment">#忽略这次对key排序的效率损耗</span></div><div class="line">     <span class="keyword">return</span> $arr;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="comment">/**</span></div><div class="line">    * 计算某个数的位数</div><div class="line">    * <span class="doctag">@param</span>  [type] $number [description]</div><div class="line">    * <span class="doctag">@return</span> [type]         [description]</div><div class="line">    */</div><div class="line">   <span class="function"><span class="keyword">function</span> <span class="title">get_digit</span><span class="params">($number)</span> </span>&#123;</div><div class="line">     $i = <span class="number">1</span>;</div><div class="line">     <span class="keyword">while</span> ($number &gt;= pow(<span class="number">10</span>, $i)) &#123;</div><div class="line">      $i++;</div><div class="line">     &#125;</div><div class="line"></div><div class="line">     <span class="keyword">return</span> $i;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="comment">/**</span></div><div class="line">    * 获取某个数字的从个位算起的第i位数</div><div class="line">    * <span class="doctag">@param</span>  [type] $num [description]</div><div class="line">    * <span class="doctag">@param</span>  [type] $i   [description]</div><div class="line">    * <span class="doctag">@return</span> [type]      [description]</div><div class="line">    */</div><div class="line">   <span class="function"><span class="keyword">function</span> <span class="title">get_specific_digit</span><span class="params">($num, $i)</span> </span>&#123;</div><div class="line">     <span class="keyword">if</span> ($num &lt; pow(<span class="number">10</span>, $i - <span class="number">1</span>)) &#123;</div><div class="line">       <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">return</span> floor($num % pow(<span class="number">10</span>, $i) / pow(<span class="number">10</span>, $i - <span class="number">1</span>));</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="comment">/**</span></div><div class="line">    * 基数排序,以计数排序作为子排序过程</div><div class="line">    * <span class="doctag">@param</span>  [type] $arr [description]</div><div class="line">    * <span class="doctag">@return</span> [type]      [description]</div><div class="line">    */</div><div class="line">   <span class="function"><span class="keyword">function</span> <span class="title">radix_sort</span><span class="params">(&amp;$arr)</span> </span>&#123;</div><div class="line">     <span class="comment">#先求出数组中最大的位数</span></div><div class="line">     $max = max($arr);</div><div class="line">     $max_digit = get_digit($max);</div><div class="line"></div><div class="line">     <span class="keyword">for</span> ($i = <span class="number">1</span>; $i &lt;= $max_digit; $i++) &#123;</div><div class="line">       counting_sort($arr, $i);</div><div class="line">     &#125;</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   var_dump(countingSort($arr));</div></pre></td></tr></table></figure>
+<h2 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h2><ul>
+<li><p>思路分析：</p>
+<blockquote>
+<p>先将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序，待整个序列中的记录“基本有序”时，再对全体记录进行依次直接插入排序。</p>
+</blockquote>
+</li>
+<li><p>实现</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  $arr = <span class="keyword">array</span>(<span class="number">1</span>,<span class="number">223</span>,<span class="number">23</span>,<span class="number">43</span>,<span class="number">54</span>,<span class="number">455</span>,<span class="number">26</span>,<span class="number">823</span>,<span class="number">45</span>,<span class="number">9</span>,<span class="number">23</span>,<span class="number">65</span>);</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line">   * [shellSort description]</div><div class="line">   * <span class="doctag">@param</span>  [type] $arr [description]</div><div class="line">   * <span class="doctag">@return</span> [type]      [description]</div><div class="line">   */</div><div class="line">  <span class="function"><span class="keyword">function</span> <span class="title">shellSort</span><span class="params">($arr)</span></span>&#123;</div><div class="line">    $length=count($arr);</div><div class="line">    $h=<span class="number">1</span>;</div><div class="line">    <span class="keyword">while</span>($h&lt;$length/<span class="number">3</span>)</div><div class="line">    &#123;</div><div class="line">      $h=<span class="number">3</span>*$h+<span class="number">1</span>;<span class="comment">//设置间隔</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">while</span>($h&gt;=<span class="number">1</span>)</div><div class="line">    &#123;</div><div class="line">      <span class="keyword">for</span>($i=$h; $i&lt;$length; $i++)</div><div class="line">      &#123;</div><div class="line">        <span class="keyword">for</span>($j=$i; $j&gt;=$h &amp;&amp; $arr[$j]&lt;$arr[$j-$h]; $j-=$h)</div><div class="line">        &#123;</div><div class="line">           $temp =$arr[$j-$h];</div><div class="line">           $arr[$j-$h]=$arr[$j];</div><div class="line">           $arr[$j]=$temp;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">      $h=($h<span class="number">-1</span>)/<span class="number">3</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> $arr;</div><div class="line">  &#125;</div><div class="line">  var_dump(shellSort($arr));</div></pre></td></tr></table></figure>
+<h2 id="简单比较"><a href="#简单比较" class="headerlink" title="简单比较"></a>简单比较</h2><p><img src="http://n.sinaimg.cn/games/3ece443e/20161107/sort_img.png" alt="sort"></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ul&gt;
+&lt;li&gt;冒泡排序&lt;/li&gt;
+&lt;li&gt;选择排序&lt;/li&gt;
+&lt;li&gt;插入排序&lt;/li&gt;
+&lt;li&gt;快速排序&lt;/li&gt;
+&lt;li&gt;归并排序&lt;/li&gt;
+&lt;li&gt;堆排序&lt;/li&gt;
+&lt;li&gt;桶排序&lt;/li&gt;
+&lt;li&gt;基数排序&lt;/li&gt;
+&lt;li&gt;希尔排序&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
+    
+    
+      <category term="算法" scheme="https://weizhimiao.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Linux中常用的shell脚本（二）</title>
+    <link href="https://weizhimiao.github.io/2016/11/01/Linux%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84shell%E8%84%9A%E6%9C%AC%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
+    <id>https://weizhimiao.github.io/2016/11/01/Linux中常用的shell脚本（二）/</id>
+    <published>2016-11-01T12:30:00.000Z</published>
+    <updated>2016-11-10T02:52:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="http://n.sinaimg.cn/games/3ece443e/20161030/bash.png" alt="Linux中常用的shell脚本"></p>
+<a id="more"></a>
+<p>1、进程运行前后台切换<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Ctrl+z		# 将进程转入后台运行</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fg				# 将进程转到前台</div></pre></td></tr></table></figure>
+<p>示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">$ ping www.baidu.com</div><div class="line">PING www.a.shifen.com (119.75.217.109): 56 data bytes</div><div class="line">64 bytes from 119.75.217.109: icmp_seq=0 ttl=57 time=6.829 ms</div><div class="line">64 bytes from 119.75.217.109: icmp_seq=1 ttl=57 time=32.417 ms</div><div class="line">64 bytes from 119.75.217.109: icmp_seq=2 ttl=57 time=5.999 ms</div><div class="line">64 bytes from 119.75.217.109: icmp_seq=3 ttl=57 time=21.105 ms</div><div class="line">^Z</div><div class="line">[1]  + 1879 suspended  ping www.baidu.com</div><div class="line">--------------------------------------------------------------</div><div class="line">$ fg                </div><div class="line">[1]  + 1879 continued  ping www.baidu.com</div><div class="line">64 bytes from 119.75.217.109: icmp_seq=4 ttl=57 time=27.063 ms</div><div class="line">64 bytes from 119.75.217.109: icmp_seq=5 ttl=57 time=5.939 ms</div><div class="line">64 bytes from 119.75.217.109: icmp_seq=6 ttl=57 time=6.633 ms</div><div class="line">64 bytes from 119.75.217.109: icmp_seq=7 ttl=57 time=7.462 ms</div><div class="line">^C</div><div class="line">--- www.a.shifen.com ping statistics ---</div><div class="line">8 packets transmitted, 8 packets received, 0.0% packet loss</div><div class="line">round-trip min/avg/max/stddev = 5.939/14.181/32.417/10.232 ms</div></pre></td></tr></table></figure></p>
+<p>2、截取前5个字符<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ var=&quot;hello world&quot;</div><div class="line">$ echo $&#123;var:0:5&#125;</div><div class="line">hello</div></pre></td></tr></table></figure></p>
+<p>3、一次创建多个目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">$ mkdir -p data/&#123;test,test1,test2&#125;</div><div class="line">$ tree data</div><div class="line">data</div><div class="line">├── test</div><div class="line">├── test1</div><div class="line">└── test2</div></pre></td></tr></table></figure></p>
+<p>4、获得文本的md5 hash<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo -n &quot;testText&quot; | md5sum</div></pre></td></tr></table></figure></p>
+<p>5、将tar.gz提取到新目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ tar -zxvf package.tar.gz -C /path/to/new</div></pre></td></tr></table></figure></p>
+<p>6、通过curl获取HTTP头信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">$ curl -I http://www.baidu.com</div><div class="line">HTTP/1.1 200 OK</div><div class="line">Server: bfe/1.0.8.18</div><div class="line">Date: Tue, 01 Nov 2016 15:00:30 GMT</div><div class="line">Content-Type: text/html</div><div class="line">Content-Length: 277</div><div class="line">Last-Modified: Mon, 13 Jun 2016 02:50:08 GMT</div><div class="line">Connection: Keep-Alive</div><div class="line">ETag: &quot;575e1f60-115&quot;</div><div class="line">Cache-Control: private, no-cache, no-store, proxy-revalidate, no-transform</div><div class="line">Pragma: no-cache</div><div class="line">Accept-Ranges: bytes</div></pre></td></tr></table></figure></p>
+<p>7、快速备份一个文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">$ ll</div><div class="line">-rw-r--r--   1 zhimiao  staff   200B  2 29  2016 test.txt</div><div class="line"></div><div class="line">$ cp test.txt&#123;,.bak&#125;</div><div class="line"></div><div class="line">$ ll</div><div class="line">-rw-r--r--   1 zhimiao  staff   200B  2 29  2016 test.txt</div><div class="line">-rw-r--r--   1 zhimiao  staff   200B 11  1 23:02 test.txt.bak</div></pre></td></tr></table></figure></p>
+<p>8、利用cat快速输入多行文字（Ctrl+d 退出）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">$ cat &gt; test2.txt</div><div class="line">weizhadf</div><div class="line">asdfads</div><div class="line">asdf</div><div class="line">adsf</div><div class="line">asdf</div><div class="line">adf</div><div class="line">(Ctrl+d)</div><div class="line"></div><div class="line">$ cat test2.txt</div><div class="line">weizhadf</div><div class="line">asdfads</div><div class="line">asdf</div><div class="line">adsf</div><div class="line">asdf</div><div class="line">adf</div></pre></td></tr></table></figure></p>
+<p>9、重复运行命令，并显示其输出（默认是2秒运行一次）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">watch ps -ef</div><div class="line">Every 2.0s: ps -ef                                                                     Tue Nov  1 23:10:06 2016</div><div class="line"></div><div class="line">  UID   PID  PPID   C STIME   TTY           TIME CMD</div><div class="line">    0     1     0   0 10:28    ??         0:05.23 /sbin/launchd</div><div class="line">    0    47     1   0 10:28    ??         0:01.21 /usr/libexec/UserEventAgent (System)</div><div class="line">    0    48     1   0 10:28    ??         0:00.42 /usr/sbin/syslogd</div><div class="line">    0    50     1   0 10:28    ??         0:00.14 /System/Library/PrivateFrameworks/Uninstall.framework/Resourc</div><div class="line">es/uninstalld</div><div class="line">......</div></pre></td></tr></table></figure></p>
+<p>10、递归查找目录中文件中的内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ grep -r &quot;some_text&quot; /path/</div></pre></td></tr></table></figure></p>
+<p>11、将所有的文件名中含有”*.txt”的文件，移入指定目录中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ find -iname &quot;*.txt*&quot; -exec mv -v &#123;&#125; /home/user \;</div></pre></td></tr></table></figure></p>
+<p>12、拆分大体积tar.gz文件（拆成每个100MB），然后合并<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ split -b 100m /path/to/large/archive /path/to/output/files</div><div class="line">$ cat files* &gt; archive</div></pre></td></tr></table></figure></p>
+<p>13、Shell(Bash)中如何判断是否存在某个命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 判断foo命令是否存在</div><div class="line">$ command -v foo &gt;/dev/null 2&gt;&amp;1 || &#123; echo &gt;&amp;2 &quot;I require foo but it&apos;s not installed.  Aborting.&quot;; exit 1; &#125;</div><div class="line">$ type foo &gt;/dev/null 2&gt;&amp;1 || &#123; echo &gt;&amp;2 &quot;I require foo but it&apos;s not installed.  Aborting.&quot;; exit 1; &#125;</div><div class="line">$ hash foo 2&gt;/dev/null || &#123; echo &gt;&amp;2 &quot;I require foo but it&apos;s not installed.  Aborting.&quot;; exit 1; &#125;</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;img src=&quot;http://n.sinaimg.cn/games/3ece443e/20161030/bash.png&quot; alt=&quot;Linux中常用的shell脚本&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://weizhimiao.github.io/categories/Linux/"/>
+    
+    
+      <category term="shell" scheme="https://weizhimiao.github.io/tags/shell/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux中常用的shell脚本</title>
@@ -210,107 +390,229 @@
   
   <entry>
     <title>Xdebug之变量显示功能</title>
-    <link href="https://weizhimiao.github.io/2016/10/22/Xdebug%E4%B9%8B%E5%8F%98%E9%87%8F%E6%98%BE%E7%A4%BA%E5%8A%9F%E8%83%BD/"/>
-    <id>https://weizhimiao.github.io/2016/10/22/Xdebug之变量显示功能/</id>
+    <link href="https://weizhimiao.github.io/2016/10/22/Xdebug%E4%B9%8B%E5%A0%86%E6%A0%88%E8%B7%9F%E8%B8%AA/"/>
+    <id>https://weizhimiao.github.io/2016/10/22/Xdebug之堆栈跟踪/</id>
     <published>2016-10-22T12:30:00.000Z</published>
-    <updated>2016-10-22T16:07:20.000Z</updated>
+    <updated>2016-10-22T16:07:31.000Z</updated>
     
-    <content type="html"><![CDATA[<p>Xdebug替换了PHP的var_dump（）函数来显示变量。 Xdebug的版本包括不同类型的不同颜色，并且限制了数组元素/对象属性的数量，最大深度和字符串长度。 还有一些其他函数处理可变显示。</p>
+    <content type="html"><![CDATA[<p>当Xdebug被激活时，只要PHP决定显示通知，警告，错误等，它将显示一个堆栈跟踪。堆栈跟踪显示的信息以及它们的呈现方式可以配置为满足您的需要。</p>
+<p>Xdebug在错误情况下显示的堆栈跟踪（如果display_errors在php.ini中设置为On）在它们显示的信息量上相当保守。 这是因为大量的信息可以减慢脚本的执行和在浏览器中呈现堆栈跟踪本身。 但是，可以使堆栈跟踪显示具有不同设置的更详细信息。</p>
 <a id="more"></a>
-<p>有一些设置控制Xdebug修改的var_dump（）函数的输出：</p>
+<h2 id="堆栈跟踪中的变量"><a href="#堆栈跟踪中的变量" class="headerlink" title="堆栈跟踪中的变量"></a>堆栈跟踪中的变量</h2><p>默认情况下，Xdebug现在会在它生成的堆栈跟踪中显示变量信息。 在收集或显示时，可变信息可能需要相当多的资源。 然而，在许多情况下，显示变量信息是有用的，这就是为什么Xdebug具有设置xdebug.collect_params。 下面的脚本结合了该设置的不同值的输出结果，如下例所示。</p>
+<p>示例：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">( $a )</span> </span>&#123;</div><div class="line">    <span class="keyword">for</span> ($i = <span class="number">1</span>; $i &lt; $a[<span class="string">'foo'</span>]; $i++) &#123;</div><div class="line">        <span class="keyword">if</span> ($i == <span class="number">500000</span>) xdebug_break();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">set_time_limit(<span class="number">1</span>);</div><div class="line">$c = <span class="keyword">new</span> stdClass;</div><div class="line">$c-&gt;bar = <span class="number">100</span>;</div><div class="line">$a = <span class="keyword">array</span>(</div><div class="line">    <span class="number">42</span> =&gt; <span class="keyword">false</span>, <span class="string">'foo'</span> =&gt; <span class="number">912124</span>,</div><div class="line">    $c, <span class="keyword">new</span> stdClass, fopen( <span class="string">'/etc/passwd'</span>, <span class="string">'r'</span> )</div><div class="line">);</div><div class="line">foo( $a );</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>结果:<br>xdebug.collect_params设置的不同值提供不同的输出，您可以在下面看到：</p>
 <ul>
-<li>xdebug.var_display_max_children，</li>
-<li>xdebug.var_display_max_data</li>
-<li><p>xdebug.var_display_max_depth</p>
-<p>这三个设置的效果最好用一个例子。 下面的脚本运行四次，每次使用不同的设置。 您可以使用选项卡查看差异。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> $pub = <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">private</span> $priv = <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">protected</span> $prot = <span class="number">42</span>;</div><div class="line">&#125;</div><div class="line">$t = <span class="keyword">new</span> test;</div><div class="line">$t-&gt;pub = $t;</div><div class="line">$data = <span class="keyword">array</span>(</div><div class="line">    <span class="string">'one'</span> =&gt; <span class="string">'a somewhat long string!'</span>,</div><div class="line">    <span class="string">'two'</span> =&gt; <span class="keyword">array</span>(</div><div class="line">        <span class="string">'two.one'</span> =&gt; <span class="keyword">array</span>(</div><div class="line">            <span class="string">'two.one.zero'</span> =&gt; <span class="number">210</span>,</div><div class="line">            <span class="string">'two.one.one'</span> =&gt; <span class="keyword">array</span>(</div><div class="line">                <span class="string">'two.one.one.zero'</span> =&gt; <span class="number">3.141592564</span>,</div><div class="line">                <span class="string">'two.one.one.one'</span>  =&gt; <span class="number">2.7</span>,</div><div class="line">            ),</div><div class="line">        ),</div><div class="line">    ),</div><div class="line">    <span class="string">'three'</span> =&gt; $t,</div><div class="line">    <span class="string">'four'</span> =&gt; range(<span class="number">0</span>, <span class="number">5</span>),</div><div class="line">);</div><div class="line">var_dump( $data );</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-</li>
-<li><p>默认</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  &apos;one&apos; =&gt; string &apos;a somewhat long string!&apos; (length=23)</div><div class="line">  &apos;two&apos; =&gt;</div><div class="line">    array</div><div class="line">      &apos;two.one&apos; =&gt;</div><div class="line">        array</div><div class="line">          &apos;two.one.zero&apos; =&gt; int 210</div><div class="line">          &apos;two.one.one&apos; =&gt;</div><div class="line">            array</div><div class="line">              ...</div><div class="line">  &apos;three&apos; =&gt;</div><div class="line">    object(test)[1]</div><div class="line">      public &apos;pub&apos; =&gt;</div><div class="line">        &amp;object(test)[1]</div><div class="line">      private &apos;priv&apos; =&gt; boolean true</div><div class="line">      protected &apos;prot&apos; =&gt; int 42</div><div class="line">  &apos;four&apos; =&gt;</div><div class="line">    array</div><div class="line">      0 =&gt; int 0</div><div class="line">      1 =&gt; int 1</div><div class="line">      2 =&gt; int 2</div><div class="line">      3 =&gt; int 3</div><div class="line">      4 =&gt; int 4</div><div class="line">      5 =&gt; int 5</div></pre></td></tr></table></figure>
-</li>
-<li><p>children=2</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  &apos;one&apos; =&gt; string &apos;a somewhat long string!&apos; (length=23)</div><div class="line">  &apos;two&apos; =&gt;</div><div class="line">    array</div><div class="line">      &apos;two.one&apos; =&gt;</div><div class="line">        array</div><div class="line">          &apos;two.one.zero&apos; =&gt; int 210</div><div class="line">          &apos;two.one.one&apos; =&gt;</div><div class="line">            array</div><div class="line">              ...</div><div class="line">  more elements...</div></pre></td></tr></table></figure>
-</li>
-<li><p>data=16</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  &apos;one&apos; =&gt; string &apos;a somewhat long &apos;... (length=23)</div><div class="line">  &apos;two&apos; =&gt;</div><div class="line">    array</div><div class="line">      &apos;two.one&apos; =&gt;</div><div class="line">        array</div><div class="line">          &apos;two.one.zero&apos; =&gt; int 210</div><div class="line">          &apos;two.one.one&apos; =&gt;</div><div class="line">            array</div><div class="line">              ...</div><div class="line">  &apos;three&apos; =&gt;</div><div class="line">    object(test)[1]</div><div class="line">      public &apos;pub&apos; =&gt;</div><div class="line">        &amp;object(test)[1]</div><div class="line">      private &apos;priv&apos; =&gt; boolean true</div><div class="line">      protected &apos;prot&apos; =&gt; int 42</div><div class="line">  &apos;four&apos; =&gt;</div><div class="line">    array</div><div class="line">      0 =&gt; int 0</div><div class="line">      1 =&gt; int 1</div><div class="line">      2 =&gt; int 2</div><div class="line">      3 =&gt; int 3</div><div class="line">      4 =&gt; int 4</div><div class="line">      5 =&gt; int 5</div></pre></td></tr></table></figure>
-</li>
-<li><p>depth=2</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  &apos;one&apos; =&gt; string &apos;a somewhat long string!&apos; (length=23)</div><div class="line">  &apos;two&apos; =&gt;</div><div class="line">    array</div><div class="line">      &apos;two.one&apos; =&gt;</div><div class="line">        array</div><div class="line">          ...</div><div class="line">  &apos;three&apos; =&gt;</div><div class="line">    object(test)[1]</div><div class="line">      public &apos;pub&apos; =&gt;</div><div class="line">        &amp;object(test)[1]</div><div class="line">      private &apos;priv&apos; =&gt; boolean true</div><div class="line">      protected &apos;prot&apos; =&gt; int 42</div><div class="line">  &apos;four&apos; =&gt;</div><div class="line">    array</div><div class="line">      0 =&gt; int 0</div><div class="line">      1 =&gt; int 1</div><div class="line">      2 =&gt; int 2</div><div class="line">      3 =&gt; int 3</div><div class="line">      4 =&gt; int 4</div><div class="line">      5 =&gt; int 5</div></pre></td></tr></table></figure>
-</li>
-<li><p>children=3, data=8, depth=1</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  &apos;one&apos; =&gt; string &apos;a somewh&apos;... (length=23)</div><div class="line">  &apos;two&apos; =&gt;</div><div class="line">    array</div><div class="line">      ...</div><div class="line">  &apos;three&apos; =&gt;</div><div class="line">    object(test)[1]</div><div class="line">      ...</div><div class="line">  more elements...</div></pre></td></tr></table></figure>
+<li>default</li>
+</ul>
+<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-0@2x.png" alt="default"></p>
+<ul>
+<li>1<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ini_set(&apos;xdebug.collect_params&apos;, &apos;1&apos;);</div></pre></td></tr></table></figure>
 </li>
 </ul>
+<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-1@2x.png" alt="default"></p>
+<ul>
+<li>2<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ini_set(&apos;xdebug.collect_params&apos;, &apos;2&apos;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-2@2x.png" alt="default"></p>
+<ul>
+<li>3<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ini_set(&apos;xdebug.collect_params&apos;, &apos;3&apos;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-3@2x.png" alt="default"></p>
+<ul>
+<li>4<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ini_set(&apos;xdebug.collect_params&apos;, &apos;4&apos;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-4@2x.png" alt="default"></p>
+<h2 id="附加信息"><a href="#附加信息" class="headerlink" title="附加信息"></a>附加信息</h2><p>除了显示传递给每个函数的变量的值之外，Xdebug还可以通过使用xdebug.dump_globals和xdebug.dump.* 设置来选择性地显示关于所选超级元素的信息。 设置xdebug.dump_once和xdebug.dump_undefined会稍微修改可用超级元素显示的时间和信息。 使用xdebug.show_local_vars设置，您可以指示Xdebug为用户定义的函数显示最顶层栈级中可用的所有变量。 下面的示例显示了这一点（脚本从上面的示例中使用）。</p>
+<ul>
+<li>default</li>
+</ul>
+<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-5@2x.png" alt="default"></p>
+<ul>
+<li>dump_superglobals=1<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ini_set(&apos;xdebug.collect_vars&apos;, &apos;on&apos;);</div><div class="line">ini_set(&apos;xdebug.collect_params&apos;, &apos;4&apos;);</div><div class="line">ini_set(&apos;xdebug.dump_globals&apos;, &apos;on&apos;);</div><div class="line">ini_set(&apos;xdebug.dump.SERVER&apos;, &apos;REQUEST_URI&apos;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-6@2x.png" alt="default"></p>
+<ul>
+<li>show_local_vars=1<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ini_set(&apos;xdebug.collect_vars&apos;, &apos;on&apos;);</div><div class="line">ini_set(&apos;xdebug.collect_params&apos;, &apos;4&apos;);</div><div class="line">ini_set(&apos;xdebug.dump_globals&apos;, &apos;on&apos;);</div><div class="line">ini_set(&apos;xdebug.dump.SERVER&apos;, &apos;REQUEST_URI&apos;);</div><div class="line">ini_set(&apos;xdebug.show_local_vars&apos;, &apos;on&apos;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-8@2x.png" alt="default"></p>
 <h2 id="相关设置"><a href="#相关设置" class="headerlink" title="相关设置"></a>相关设置</h2><h3 id="xdebug-cli-color"><a href="#xdebug-cli-color" class="headerlink" title="xdebug.cli_color"></a><strong>xdebug.cli_color</strong></h3><p>类型：整数，默认值：0，在Xdebug&gt; 2.2中引入</p>
-<ul>
-<li><p>如果此设置为1，则Xdebug将在CLI模式下和输出为tty时对var_dumps和堆栈跟踪输出进行颜色。在Windows上，需要安装ANSICON工具。</p>
-</li>
-<li><p>如果设置为2，那么无论Xdebug是否连接到tty或是否安装了ANSICON，Xdebug都将始终对var_dumps和堆栈跟踪进行着色。在这种情况下，您可能会看到转义码。</p>
-</li>
-</ul>
+<p>如果此设置为1，则Xdebug将在CLI模式下和输出为tty时对var_dumps和堆栈跟踪输出进行颜色。在Windows上，需要安装ANSICON工具。</p>
+<p>如果设置为2，那么无论Xdebug是否连接到tty或是否安装了ANSICON，Xdebug都将始终对var_dumps和堆栈跟踪进行着色。在这种情况下，您可能会看到转义码。</p>
 <p>有关更多信息，请参阅此<a href="http://drck.me/clicolor-9cr" target="_blank" rel="external">文章</a>。</p>
-<h3 id="xdebug-overload-var-dump"><a href="#xdebug-overload-var-dump" class="headerlink" title="xdebug.overload_var_dump"></a><strong>xdebug.overload_var_dump</strong></h3><p>类型：boolean，默认值：2，在Xdebug&gt; 2.1中引入</p>
+<h3 id="xdebug-collect-includes"><a href="#xdebug-collect-includes" class="headerlink" title="xdebug.collect_includes"></a><strong>xdebug.collect_includes</strong></h3><p>类型：布尔值，默认值：1</p>
+<p>此设置默认为1，控制Xdebug是否应将include（），include_once（），require（）或require_once（）中使用的文件名写入跟踪文件。</p>
+<h3 id="xdebug-collect-params"><a href="#xdebug-collect-params" class="headerlink" title="xdebug.collect_params"></a><strong>xdebug.collect_params</strong></h3><p>类型：整数，默认值：0</p>
+<p>此设置默认为0，控制在函数跟踪或堆栈跟踪中记录函数调用时，Xdebug是否应收集传递给函数的参数。</p>
+<p>该设置默认为0，因为对于非常大的脚本，它可能使用大量的内存，因此使巨量脚本无法运行。您可以最安全地打开此设置，但是您可以预期在具有大量函数调用和/或巨大的数据结构作为参数的脚本中存在一些问题。</p>
+<p>Xdebug 2不会有增加的内存使用这个问题，因为它永远不会将此信息存储在内存中。相反，它将只被写入磁盘。这意味着您需要查看磁盘使用情况。</p>
+<p>此设置可以有四个不同的值。对于每个值，示出了不同量的信息。下面你将看到每个值提供什么信息。另请参见功能堆栈跟踪的几个截图的介绍。</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>显示参数信息</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>无。</td>
+</tr>
+<tr>
+<td>1</td>
+<td>元素的类型和数量（f.e. string（6），array（8））。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>元素的类型和数量，带有完整信息的工具提示1。在CLI版本的PHP它不会有工具提示，而不是在输出文件。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>完全变量内容（具有由xdebug.var_display_max_children，xdebug.var_display_max_data和xdebug.var_display_max_depth设置的限制）。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>完全变量内容和变量名称。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>PHP序列化变量内容，没有名称。 （Xdebug 2.3中的新功能）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="xdebug-collect-vars"><a href="#xdebug-collect-vars" class="headerlink" title="xdebug.collect_vars"></a><strong>xdebug.collect_vars</strong></h3><p>类型：布尔值，默认值：0</p>
+<p>此设置告诉Xdebug收集有关在某个范围中使用哪些变量的信息。 这个分析可能很慢，因为Xdebug必须逆向工程PHP的操作码数组。 此设置不会记录不同变量具有的值，因为使用xdebug.collect_params。 仅当您希望使用xdebug_get_declared_vars（）时，才需要启用此设置。</p>
+<h3 id="xdebug-dump"><a href="#xdebug-dump" class="headerlink" title="xdebug.dump.*"></a><strong>xdebug.dump.*</strong></h3><p>类型：字符串，默认值：空</p>
+<p>*可以是COOKIE，FILES，GET，POST，REQUEST，SERVER，SESSION中的任何一个。 这七个设置控制当发生错误情况时来自超级溶剂的数据。</p>
+<p>每个php.ini设置可以包括一个逗号分隔的变量从这个超级全局转储，或*所有的。 请确保您在此设置中不添加空格。</p>
+<p>为了在发生错误时转储REMOTE_ADDR和REQUEST_METHOD，以及所有GET参数，请添加以下设置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">xdebug.dump.SERVER = REMOTE_ADDR,REQUEST_METHOD</div><div class="line">xdebug.dump.GET = *</div></pre></td></tr></table></figure></p>
+<h3 id="xdebug-dump-globals"><a href="#xdebug-dump-globals" class="headerlink" title="xdebug.dump_globals"></a><strong>xdebug.dump_globals</strong></h3><p>类型：布尔值，默认值：1</p>
+<p>控制是否应显示由xdebug.dump.*设置定义的超级元素的值。</p>
+<h3 id="xdebug-dump-once"><a href="#xdebug-dump-once" class="headerlink" title="xdebug.dump_once"></a><strong>xdebug.dump_once</strong></h3><p>类型：布尔值，默认值：1</p>
+<p>控制是否应在所有错误情况（设置为0）或仅在第一个（设置为1）上转储超级元素的值。</p>
+<h3 id="xdebug-dump-undefined"><a href="#xdebug-dump-undefined" class="headerlink" title="xdebug.dump_undefined"></a><strong>xdebug.dump_undefined</strong></h3><p>类型：布尔值，默认值：0<br>如果要从超级元组转储未定义的值，您应该将此设置设置为1，否则将其设置为0。</p>
+<h3 id="xdebug-file-link-format"><a href="#xdebug-file-link-format" class="headerlink" title="xdebug.file_link_format"></a><strong>xdebug.file_link_format</strong></h3><p>类型：字符串，默认值：，在Xdebug&gt; 2.1中引入</p>
+<p>此设置确定在使用文件名的堆栈跟踪显示中进行的链接的格式。 这允许IDE设置一个链接协议，通过单击Xdebug在堆栈跟踪中显示的文件名，可以直接转到行和文件。 示例格式可能如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">myide://%f@%l</div></pre></td></tr></table></figure></p>
+<p>可能的格式说明符是：</p>
+<table>
+<thead>
+<tr>
+<th>说明符</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>％f</td>
+<td>文件名</td>
+</tr>
+<tr>
+<td>％l</td>
+<td>行号</td>
+</tr>
+</tbody>
+</table>
+<p>对于各种IDE / OSses，有一些关于如何使这项工作的指示：</p>
+<p>Linux上的Firefox</p>
 <ul>
-<li><p>默认情况下，当html_errors php.ini设置为1或2时，Xdebug会自动重载var_dump（）并显示变量。</p>
-</li>
-<li><p>如果您不想要，可以将此设置设置为0，但首先检查它是否不是更聪明的关闭html_errors。</p>
-</li>
-<li><p>您也可以使用2作为此设置的值。除了格式化var_dump（）输出很好，它还将添加文件名和行号到输出。还尊重xdebug.file_link_format设置。 （Xdebug 2.3中的新功能）</p>
+<li>打开about：config</li>
+<li>添加一个新的布尔设置“network.protocol-handler.expose.xdebug”并将其设置为“false”</li>
+<li>将以下内容添加到shell脚本〜/ bin / ff-xdebug.sh中：<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#! /bin/sh</span></div><div class="line">f=`<span class="built_in">echo</span> <span class="variable">$1</span> | cut <span class="_">-d</span> @ <span class="_">-f</span> 1 | sed <span class="string">'s/xdebug:\/\///'</span>`</div><div class="line">l=`<span class="built_in">echo</span> <span class="variable">$1</span> | cut <span class="_">-d</span> @ <span class="_">-f</span> 2`</div></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>在Xdebug 2.4之前，此设置的默认值为1。</p>
+<p>添加（取决于你有komodo，vim vs netbeans）：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">komodo <span class="variable">$f</span> <span class="_">-l</span> <span class="variable">$l</span></div><div class="line">gvim --remote-tab +<span class="variable">$l</span> <span class="variable">$f</span></div><div class="line">netbeans <span class="string">"<span class="variable">$f</span>:<span class="variable">$l</span>"</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>使用chmod + x〜/ bin / ff-xdebug.sh来使脚本可执行</li>
+<li>将xdebug.file_link_format设置为xdebug：//％f @％l</li>
+</ul>
+<p>Windows和netbeans</p>
+<ul>
+<li>创建文件netbeans.bat并将其保存在您的路径（C：\ Windows）：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@echo off</div><div class="line">setlocal enableextensions enabledelayedexpansion</div><div class="line">set NETBEANS=%1</div><div class="line">set FILE=%~2</div><div class="line">%NETBEANS% --nosplash --console suppress --open &quot;%FILE:~19%&quot;</div><div class="line">nircmd win activate process netbeans.exe</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>注意：如果没有nircmd，请删除最后一行。</p>
+<ul>
+<li>将以下代码保存在netbeans protocol.reg中：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">Windows Registry Editor Version 5.00</div><div class="line"></div><div class="line">[HKEY_CLASSES_ROOT\netbeans]</div><div class="line">&quot;URL Protocol&quot;=&quot;&quot;</div><div class="line">@=&quot;URL:Netbeans Protocol&quot;</div><div class="line"></div><div class="line">[HKEY_CLASSES_ROOT\netbeans\DefaultIcon]</div><div class="line">@=&quot;\&quot;C:\\Program Files\\NetBeans 7.1.1\\bin\\netbeans.exe,1\&quot;&quot;</div><div class="line"></div><div class="line">[HKEY_CLASSES_ROOT\netbeans\shell]</div><div class="line"></div><div class="line">[HKEY_CLASSES_ROOT\netbeans\shell\open]</div><div class="line"></div><div class="line">[HKEY_CLASSES_ROOT\netbeans\shell\open\command]</div><div class="line">@=&quot;\&quot;C:\\Windows\\netbeans.bat\&quot; \&quot;C:\\Program Files\\NetBeans 7.1.1\\bin\\netbeans.exe\&quot; \&quot;%1\&quot;&quot;</div></pre></td></tr></table></figure>
+<p>注意：确保更改Netbeans（两次）的路径以及netbeans.bat批处理文件（如果将其保存在C：\Windows 以外的其他位置）。</p>
+<p>Double click on the netbeans_protocol.reg file to import it into the registry.<br>Set the xdebug.file_link_format setting to</p>
+<ul>
+<li><p>双击netbeans protocol.reg文件将其导入到注册表中。</p>
+</li>
+<li><p>将xdebug.file_link_format设置设置为<code>xdebug.file_link_format = &quot;netbeans://open/?f=%f:%l&quot;</code></p>
+</li>
+</ul>
+<h3 id="xdebug-manual-url"><a href="#xdebug-manual-url" class="headerlink" title="xdebug.manual_url"></a><strong>xdebug.manual_url</strong></h3><p>类型：字符串，默认值：http：//www.php.net，在Xdebug &lt;2.2.1中引入</p>
+<p>这是从函数跟踪和错误消息到函数的手册页的链接的基本URL。建议将此设置设置为使用最近的镜像。</p>
+<h3 id="xdebug-show-exception-trace"><a href="#xdebug-show-exception-trace" class="headerlink" title="xdebug.show_exception_trace"></a><strong>xdebug.show_exception_trace</strong></h3><p>类型：整数，默认值：0</p>
+<p>当此设置设置为1时，每当引发异常时，即使此异常实际被捕获，Xdebug也将显示堆栈跟踪。</p>
+<h3 id="xdebug-show-local-vars"><a href="#xdebug-show-local-vars" class="headerlink" title="xdebug.show_local_vars"></a><strong>xdebug.show_local_vars</strong></h3><p>类型：整数，默认值：0</p>
+<p>当这个设置设置为某事！= 0 Xdebug的错误情况下生成的堆栈转储也将显示最顶层范围中的所有变量。请注意，这可能会生成大量的信息，因此默认情况下关闭。</p>
+<h3 id="xdebug-show-mem-delta"><a href="#xdebug-show-mem-delta" class="headerlink" title="xdebug.show_mem_delta"></a><strong>xdebug.show_mem_delta</strong></h3><p>类型：整数，默认值：0</p>
+<p>当这个设置设置为某些！= 0 Xdebug的人类可读的生成的跟踪文件将显示在函数调用之间的内存使用的差异。如果Xdebug配置为生成计算机可读的跟踪文件，则它们将始终显示此信息。</p>
 <h3 id="xdebug-var-display-max-children"><a href="#xdebug-var-display-max-children" class="headerlink" title="xdebug.var_display_max_children"></a><strong>xdebug.var_display_max_children</strong></h3><p>类型：整数，默认值：128</p>
 <p>控制使用xdebug_var_dump（），xdebug.show_local_vars或通过函数跟踪显示变量时显示的数组子元素和对象的属性的数量。</p>
-<ul>
-<li>要禁用任何限制，请使用-1作为值。</li>
-</ul>
+<p>要禁用任何限制，请使用-1作为值。</p>
 <p>此设置对通过远程调试功能发送到客户端的子项数没有任何影响。</p>
 <h3 id="xdebug-var-display-max-data"><a href="#xdebug-var-display-max-data" class="headerlink" title="xdebug.var_display_max_data"></a><strong>xdebug.var_display_max_data</strong></h3><p>类型：整数，默认值：512</p>
 <p>控制使用xdebug_var_dump（），xdebug.show_local_vars或通过函数跟踪显示变量时显示的最大字符串长度。</p>
-<ul>
-<li>要禁用任何限制，请使用-1作为值。</li>
-</ul>
+<p>要禁用任何限制，请使用-1作为值。</p>
 <p>此设置对通过远程调试功能发送到客户端的子项数没有任何影响。</p>
 <h3 id="xdebug-var-display-max-depth"><a href="#xdebug-var-display-max-depth" class="headerlink" title="xdebug.var_display_max_depth"></a><strong>xdebug.var_display_max_depth</strong></h3><p>类型：整数，默认值：3</p>
 <p>当使用xdebug_var_dump（），xdebug.show_local_vars或通过函数跟踪显示变量时，控制数组元素和对象属性的嵌套级别数。</p>
-<ul>
-<li>您可以选择的最大值为1023.您还可以使用-1作为值来选择此最大数。</li>
-</ul>
+<p>您可以选择的最大值为1023.您还可以使用-1作为值来选择此最大数。</p>
 <p>此设置对通过远程调试功能发送到客户端的子项数没有任何影响。</p>
-<h2 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h2><h3 id="void-var-dump（-mixture-var-，…-）"><a href="#void-var-dump（-mixture-var-，…-）" class="headerlink" title="void var_dump（[mixture var [，…]]）"></a><strong>void var_dump（[mixture var [，…]]）</strong></h3><blockquote>
-<p>显示有关变量的详细信息</p>
+<h2 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h2><h3 id="array-xdebug-get-declared-vars（）"><a href="#array-xdebug-get-declared-vars（）" class="headerlink" title="array xdebug_get_declared_vars（）"></a><strong>array xdebug_get_declared_vars（）</strong></h3><p>返回声明的变量</p>
+<p>返回一个数组，其中每个元素是在当前范围中定义的变量名称。 需要启用xdebug.collect_vars设置。</p>
+<p>Example:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">strings</span> </span>&#123;</div><div class="line">        <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">fix_strings</span><span class="params">($a, $b)</span> </span>&#123;</div><div class="line">            <span class="keyword">foreach</span> ($b <span class="keyword">as</span> $item) &#123;</div><div class="line">            &#125;</div><div class="line">            var_dump(xdebug_get_declared_vars());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    strings::fix_strings(<span class="keyword">array</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>), <span class="keyword">array</span>(<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>));</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>Returns:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  0 =&gt; string &apos;a&apos; (length=1)</div><div class="line">  1 =&gt; string &apos;b&apos; (length=1)</div><div class="line">  2 =&gt; string &apos;item&apos; (length=4)</div></pre></td></tr></table></figure></p>
+<p>在5.1之前的PHP版本中，变量名“a”不在返回的数组中，因为它在调用函数xdebug_get_declared_vars（）的作用域中不使用。</p>
+<h3 id="array-xdebug-get-function-stack（）"><a href="#array-xdebug-get-function-stack（）" class="headerlink" title="array xdebug_get_function_stack（）"></a><strong>array xdebug_get_function_stack（）</strong></h3><p>返回有关堆栈的信息</p>
+<p>返回类似于此点的堆栈跟踪的数组。 示例脚本：</p>
+<p>Example:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">strings</span> </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">function</span> <span class="title">fix_string</span><span class="params">($a)</span></span></div><div class="line">        &#123;</div><div class="line">            var_dump(xdebug_get_function_stack());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">function</span> <span class="title">fix_strings</span><span class="params">($b)</span> </span>&#123;</div><div class="line">            <span class="keyword">foreach</span> ($b <span class="keyword">as</span> $item) &#123;</div><div class="line">                <span class="keyword">$this</span>-&gt;fix_string($item);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    $s = <span class="keyword">new</span> strings();</div><div class="line">    $ret = $s-&gt;fix_strings(<span class="keyword">array</span>(<span class="string">'Derick'</span>));</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>Returns:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  0 =&gt;</div><div class="line">    array</div><div class="line">      &apos;function&apos; =&gt; string &apos;&#123;main&#125;&apos; (length=6)</div><div class="line">      &apos;file&apos; =&gt; string &apos;/var/www/xdebug_get_function_stack.php&apos; (length=63)</div><div class="line">      &apos;line&apos; =&gt; int 0</div><div class="line">      &apos;params&apos; =&gt;</div><div class="line">        array</div><div class="line">          empty</div><div class="line">  1 =&gt;</div><div class="line">    array</div><div class="line">      &apos;function&apos; =&gt; string &apos;fix_strings&apos; (length=11)</div><div class="line">      &apos;class&apos; =&gt; string &apos;strings&apos; (length=7)</div><div class="line">      &apos;file&apos; =&gt; string &apos;/var/www/xdebug_get_function_stack.php&apos; (length=63)</div><div class="line">      &apos;line&apos; =&gt; int 18</div><div class="line">      &apos;params&apos; =&gt;</div><div class="line">        array</div><div class="line">          &apos;b&apos; =&gt; string &apos;array (0 =&gt; &apos;Derick&apos;)&apos; (length=21)</div><div class="line">  2 =&gt;</div><div class="line">    array</div><div class="line">      &apos;function&apos; =&gt; string &apos;fix_string&apos; (length=10)</div><div class="line">      &apos;class&apos; =&gt; string &apos;strings&apos; (length=7)</div><div class="line">      &apos;file&apos; =&gt; string &apos;/var/www/xdebug_get_function_stack.php&apos; (length=63)</div><div class="line">      &apos;line&apos; =&gt; int 12</div><div class="line">      &apos;params&apos; =&gt;</div><div class="line">        array</div><div class="line">          &apos;a&apos; =&gt; string &apos;&apos;Derick&apos;&apos; (length=8)</div></pre></td></tr></table></figure></p>
+<h3 id="array-xdebug-get-monitored-functions（）"><a href="#array-xdebug-get-monitored-functions（）" class="headerlink" title="array xdebug_get_monitored_functions（）"></a><strong>array xdebug_get_monitored_functions（）</strong></h3><p>返回有关受监视函数的信息</p>
+<p>在2.4版本中引入</p>
+<p>返回一个结构，其中包含有关在脚本中执行受监视函数的位置的信息。 以下示例显示如何使用此和返回的信息：</p>
+<p>Example:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="comment">/* Start the function monitor for strrev and array_push: */</span></div><div class="line">xdebug_start_function_monitor( [ <span class="string">'strrev'</span>, <span class="string">'array_push'</span> ] );</div><div class="line"></div><div class="line"><span class="comment">/* Run some code: */</span></div><div class="line"><span class="keyword">echo</span> strrev(<span class="string">"yes!"</span>), <span class="string">"\n"</span>;</div><div class="line"></div><div class="line"><span class="keyword">echo</span> strrev(<span class="string">"yes!"</span>), <span class="string">"\n"</span>;</div><div class="line"></div><div class="line">var_dump(xdebug_get_monitored_functions());</div><div class="line">xdebug_stop_function_monitor();</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>Returns:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">/tmp/monitor-example.php:10:</div><div class="line">array(2) &#123;</div><div class="line">  [0] =&gt;</div><div class="line">  array(3) &#123;</div><div class="line">    &apos;function&apos; =&gt;</div><div class="line">    string(6) &quot;strrev&quot;</div><div class="line">    &apos;filename&apos; =&gt;</div><div class="line">    string(24) &quot;/tmp/monitor-example.php&quot;</div><div class="line">    &apos;lineno&apos; =&gt;</div><div class="line">    int(6)</div><div class="line">  &#125;</div><div class="line">  [1] =&gt;</div><div class="line">  array(3) &#123;</div><div class="line">    &apos;function&apos; =&gt;</div><div class="line">    string(6) &quot;strrev&quot;</div><div class="line">    &apos;filename&apos; =&gt;</div><div class="line">    string(24) &quot;/tmp/monitor-example.php&quot;</div><div class="line">    &apos;lineno&apos; =&gt;</div><div class="line">    int(8)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="integer-xdebug-get-stack-depth（）"><a href="#integer-xdebug-get-stack-depth（）" class="headerlink" title="integer xdebug_get_stack_depth（）"></a><strong>integer xdebug_get_stack_depth（）</strong></h3><p>返回当前堆栈深度级别</p>
+<p>返回堆栈深度级别。 脚本的主体是级别0，每个包含和/或函数调用将向堆栈深度级别添加一个。</p>
+<h3 id="none-xdebug-print-function-stack-string-message-int-options"><a href="#none-xdebug-print-function-stack-string-message-int-options" class="headerlink" title="none xdebug_print_function_stack( [ string message [, int options ] ] )"></a><strong>none xdebug_print_function_stack( [ string message [, int options ] ] )</strong></h3><p>显示当前函数栈</p>
+<p>以类似于Xdebug在错误情况下显示的方式显示当前函数堆栈。</p>
+<p>“message”参数允许您使用自己的头部替换消息。 （在Xdebug 2.1中引入）。</p>
+<p>Example:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">( $far, $out )</span></span></div><div class="line">&#123;</div><div class="line">    xdebug_print_function_stack( <span class="string">'Your own message'</span> );</div><div class="line">&#125;</div><div class="line">foo( <span class="number">42</span>, <span class="number">3141592654</span> );</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>Returns:</p>
+<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-9@2x.png" alt="img"></p>
+<p>位掩码“options”允许您配置一些额外的选项。 目前支持以下选项：</p>
+<ul>
+<li>XDEBUG_STACK_NO_DESC<blockquote>
+<p>如果设置了此选项，则打印的堆栈跟踪将不具有标题。 如果要从自己的错误处理程序打印堆栈跟踪，否则打印位置是从中调用xdebug_print_function_stack（）时，这是有用的。 （在Xdebug 2.3中引入）。</p>
 </blockquote>
-<p>此函数由Xdebug重载，请参阅xdebug_var_dump（）的说明。</p>
-<h3 id="void-xdebug-debug-zval（-string-varname-，…-）"><a href="#void-xdebug-debug-zval（-string-varname-，…-）" class="headerlink" title="void xdebug_debug_zval（[string varname [，…]]）"></a><strong>void xdebug_debug_zval（[string varname [，…]]）</strong></h3><blockquote>
-<p>显示有关变量的信息</p>
-</blockquote>
-<p>此函数显示有关一个或多个变量的结构化信息，包括其类型，值和引用计数信息。使用值递归地探索数组。这个函数的实现不同于PHP的debug_zval_dump（）函数，以解决该函数的问题，因为变量本身实际上传递给函数。 Xdebug的版本是更好的，因为它使用变量名称来查找内部符号表中的变量，并直接访问所有的属性，而不必处理实际传递一个变量到一个函数。结果是，该函数返回的信息比PHP自己的用于显示zval信息的函数准确得多。</p>
-<p>从Xdebug 2.3开始支持除了简单变量名（例如下面的“a [2]”）之外的任何东西。</p>
-<p>Example:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    $a = <span class="keyword">array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">    $b =&amp; $a;</div><div class="line">    $c =&amp; $a[<span class="number">2</span>];</div><div class="line"></div><div class="line">    xdebug_debug_zval(<span class="string">'a'</span>);</div><div class="line">    xdebug_debug_zval(<span class="string">"a[2]"</span>);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
-<p>结果：(refcount:引用次数，)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">a: (refcount=2, is_ref=1)=array (</div><div class="line">	0 =&gt; (refcount=1, is_ref=0)=1,</div><div class="line">	1 =&gt; (refcount=1, is_ref=0)=2,</div><div class="line">	2 =&gt; (refcount=2, is_ref=1)=3)</div><div class="line">a[2]: (refcount=2, is_ref=1)=3</div></pre></td></tr></table></figure></p>
-<h3 id="void-xdebug-debug-zval-stdout（-string-varname-，…-）"><a href="#void-xdebug-debug-zval-stdout（-string-varname-，…-）" class="headerlink" title="void xdebug_debug_zval_stdout（[string varname [，…]]）"></a><strong>void xdebug_debug_zval_stdout（[string varname [，…]]）</strong></h3><blockquote>
-<p>将有关变量的信息返回到stdout。</p>
-</blockquote>
-<p>此函数显示有关一个或多个变量的结构化信息，包括其类型，值和引用计数信息。 使用值递归地探索数组。 与xdebug_debug_zval（）的区别在于，该信息不通过Web服务器API层显示，而是直接显示在stdout上（因此，在Apache以单进程模式运行时，它会在控制台上运行）。</p>
-<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">    $a = array(1, 2, 3);</div><div class="line">    $b =&amp; $a;</div><div class="line">    $c =&amp; $a[2];</div><div class="line"></div><div class="line">    xdebug_debug_zval_stdout(&apos;a&apos;);</div></pre></td></tr></table></figure></p>
-<p>返回：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">a: (refcount=2, is_ref=1)=array (</div><div class="line">	0 =&gt; (refcount=1, is_ref=0)=1,</div><div class="line">	1 =&gt; (refcount=1, is_ref=0)=2,</div><div class="line">	2 =&gt; (refcount=2, is_ref=1)=3)</div></pre></td></tr></table></figure></p>
-<h3 id="void-xdebug-dump-superglobals（）"><a href="#void-xdebug-dump-superglobals（）" class="headerlink" title="void xdebug_dump_superglobals（）"></a><strong>void xdebug_dump_superglobals（）</strong></h3><blockquote>
-<p>显示有关超级全局的信息</p>
-</blockquote>
-<p>此函数转储指定的超级全局元素的值通过php.ini中的xdebug.dump.*选项。 对于下面的示例，php.ini中的设置是：</p>
-<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">xdebug.dump.GET=*</div><div class="line">xdebug.dump.SERVER=REMOTE_ADDR</div><div class="line"></div><div class="line">Query string:</div><div class="line">?var=fourty%20two&amp;array[a]=a&amp;array[9]=b</div></pre></td></tr></table></figure></p>
-<p>结果：<br><img src="http://n.sinaimg.cn/games/3ece443e/20161022/8F0658D7-C951-4B12-BC74-92E15E31C44C.png" alt="img"></p>
-<h3 id="void-xdebug-var-dump（-mixed-var-，…-）"><a href="#void-xdebug-var-dump（-mixed-var-，…-）" class="headerlink" title="void xdebug_var_dump（[mixed var [，…]]）"></a><strong>void xdebug_var_dump（[mixed var [，…]]）</strong></h3><blockquote>
-<p>显示有关变量的详细信息</p>
-</blockquote>
-<p>此函数显示有关包含其类型和值的一个或多个表达式的结构化信息。 使用值递归地探索数组。 请参阅变量显示功能的介绍，其中php.ini设置影响此功能。</p>
-<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">ini_set(&apos;xdebug.var_display_max_children&apos;, 3 );</div><div class="line">$c = new stdClass;</div><div class="line">$c-&gt;foo = &apos;bar&apos;;</div><div class="line">$c-&gt;file = fopen( &apos;/etc/passwd&apos;, &apos;r&apos; );</div><div class="line">var_dump(</div><div class="line">    array(</div><div class="line">        array(TRUE, 2, 3.14, &apos;foo&apos;),</div><div class="line">        &apos;object&apos; =&gt; $c</div><div class="line">    )</div><div class="line">);</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
-<p>结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  0 =&gt;</div><div class="line">    array</div><div class="line">      0 =&gt; boolean true</div><div class="line">      1 =&gt; int 2</div><div class="line">      2 =&gt; float 3.14</div><div class="line">      more elements...</div><div class="line">  &apos;object&apos; =&gt;</div><div class="line">    object(stdClass)[1]</div><div class="line">      public &apos;foo&apos; =&gt; string &apos;bar&apos; (length=3)</div><div class="line">      public &apos;file&apos; =&gt; resource(3, stream)</div></pre></td></tr></table></figure></p>
+</li>
+</ul>
+<h3 id="void-xdebug-start-function-monitor（array-list-of-functions-to-monitor）"><a href="#void-xdebug-start-function-monitor（array-list-of-functions-to-monitor）" class="headerlink" title="void xdebug_start_function_monitor（array $ list_of_functions_to_monitor）"></a><strong>void xdebug_start_function_monitor（array $ list_of_functions_to_monitor）</strong></h3><p>开始功能监控</p>
+<p>在2.4版本中引入</p>
+<p>此函数开始监视列表中给出的函数作为此函数的参数。 函数监视允许您找到代码中提供的作为参数的函数在哪里调用。 这可以用于跟踪使用旧的或不鼓励的函数的位置。</p>
+<p>Example:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">xdebug_start_function_monitor( [ <span class="string">'strrev'</span>, <span class="string">'array_push'</span> ] );</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>您还可以向定义要监视的函数的数组添加类方法和静态方法。 例如，要捕获对DramModel :: canSee的静态调用和对Whisky-&gt; drink的动态调用，您将启动监视器：</p>
+<p>Example:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">xdebug_start_function_monitor( [ <span class="string">'DramModel::canSee'</span>, <span class="string">'Whisky-&gt;drink'</span>] );</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>定义的函数区分大小写，并且不会捕获对静态方法的动态调用。</p>
+<h3 id="void-xdebug-stop-function-monitor（）"><a href="#void-xdebug-stop-function-monitor（）" class="headerlink" title="void xdebug_stop_function_monitor（）"></a><strong>void xdebug_stop_function_monitor（）</strong></h3><p>停止监视功能</p>
+<p>在2.4版本中引入</p>
+<p>此功能停止功能监视器。 为了获得受监视函数的列表，您需要使用xdebug_get_monitored_functions（）函数。</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;Xdebug替换了PHP的var_dump（）函数来显示变量。 Xdebug的版本包括不同类型的不同颜色，并且限制了数组元素/对象属性的数量，最大深度和字符串长度。 还有一些其他函数处理可变显示。&lt;/p&gt;
+      &lt;p&gt;当Xdebug被激活时，只要PHP决定显示通知，警告，错误等，它将显示一个堆栈跟踪。堆栈跟踪显示的信息以及它们的呈现方式可以配置为满足您的需要。&lt;/p&gt;
+&lt;p&gt;Xdebug在错误情况下显示的堆栈跟踪（如果display_errors在php.ini中设置为On）在它们显示的信息量上相当保守。 这是因为大量的信息可以减慢脚本的执行和在浏览器中呈现堆栈跟踪本身。 但是，可以使堆栈跟踪显示具有不同设置的更详细信息。&lt;/p&gt;
     
     </summary>
     
@@ -820,68 +1122,6 @@
   </entry>
   
   <entry>
-    <title>Xdebug之PHP脚本剖析</title>
-    <link href="https://weizhimiao.github.io/2016/10/22/Xdebug%E4%B9%8BPHP%E8%84%9A%E6%9C%AC%E5%89%96%E6%9E%90/"/>
-    <id>https://weizhimiao.github.io/2016/10/22/Xdebug之PHP脚本剖析/</id>
-    <published>2016-10-22T12:30:00.000Z</published>
-    <updated>2016-10-22T16:06:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Xdebug内置分析器允许您在脚本中找到瓶颈，并使用外部工具（如KCacheGrind或WinCacheGrind）可视化这些瓶颈。</p>
-<a id="more"></a>
-<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Xdebug的Profiler是一个强大的工具，使您能够分析您的PHP代码并确定瓶颈，或者通常查看代码的哪些部分很慢，并可以使用速度提升。<br>Xdebug 2中的分析器以高速缓存磨削兼容文件的形式输出分析信息。这允许您使用优秀的KCacheGrind工具（Linux，KDE）来分析概要分析数据。</p>
-<ul>
-<li><p>如果你在Linux上，你可以安装KCacheGrind通过你最喜欢的包管理器。</p>
-</li>
-<li><p>如果你在Windows上，有预编译的QCacheGrind二进制文件可用。 （QCacheGrind是没有KDE绑定的KCacheGrind）。</p>
-</li>
-<li><p>如果你在Mac OSX上，还有如何构建QCacheGrind的说明。</p>
-</li>
-</ul>
-<p>Windows的用户可以选择使用WinCacheGrind。该功能不同于KCacheGrind，因此在此页面上记录使用KCacheGrind的部分不适用于此程序。 WinCacheGrind目前不支持Xdebug 2.3引入的cachegrind文件的文件和函数压缩。</p>
-<p>还有一个替代的配置文件信息呈现工具xdebugtoolkit，一个称为Webgrind的基于Web的前端，以及一个名为XCallGraph的基于Java的工具。</p>
-<p>如果您不能使用KDE（或不想使用KDE），kcachegrind软件包也会附带一个perl脚本“ct_annotate”，该脚本从profiler跟踪文件生成ASCII输出。</p>
-<h2 id="启动Profiler"><a href="#启动Profiler" class="headerlink" title="启动Profiler"></a>启动Profiler</h2><p>通过在php.ini中将xdebug.profiler_enable设置为1来启用分析。<br>这将指示Xdebug开始将分析信息写入使用xdebug.profiler_output_dir指令配置的转储目录。<br>生成的文件的名称始终以“cachegrind.out”开头。并以PHP（或Apache）进程的PID（进程ID）或包含最初调试的脚本的目录的crc32哈希结束。<br>请确保您的xdebug.profiler_output_dir中有足够的空间，因为分析器生成的信息量对于复杂脚本非常大，例如对于像eZ Publish这样的复杂应用程序，最多可以有500MB的空间。</p>
-<p>您还可以选择性地启用分析器，将xdebug.profiler_enable_trigger设置为1.<br>如果设置为1，那么可以使用名为XDEBUG_PROFILE的GET / POST或COOKIE变量启用分析器。<br>可以用于启用调试器（请参阅HTTP调试会话）的FireFox 2扩展也可以与此设置一起使用。为了使触发器正常工作，xdebug.profiler_enable需要设置为0。</p>
-<h2 id="分析Profiler"><a href="#分析Profiler" class="headerlink" title="分析Profiler"></a>分析Profiler</h2><p>生成配置文件信息文件后，可以使用 <a href="https://kcachegrind.github.io/" target="_blank" rel="external">KCacheGrind</a> 打开它：</p>
-<p><img src="https://xdebug.org/images/docs/kc-open.png" alt="img"></p>
-<p>一旦打开文件，您就可以在KCacheGrind的不同窗格中获得大量信息。在左侧，找到“Flat Profile”窗格，其中显示了脚本中按照此函数中的时间花费及其所有子项排序的所​​有函数。第二列“Self”显示此函数（没有其子项）的时间花费，第三列“Called”显示特定函数的调用频率，最后一列“Function”显示函数的名称。 Xdebug通过用“php ::”作为前缀来更改内部PHP函数名称，并且包含文件也以特殊方式处理。调用include（和include_one，require和require_once）后跟“::”和包含文件的文件名。在左边的截图中你可以看到“include :: / home / httpd / ez_34 / v …”，内部PHP函数的例子是“php :: mysql_query”。前两列中的数字可以是脚本的完整运行时间的百分比（如在示例中）或绝对时间（1单位是1 / 1,000,000秒）。您可以使用右侧显示的按钮在两种模式之间切换。</p>
-<p><img src="https://xdebug.org/images/docs/kc-profile.png" alt="img"></p>
-<p>右侧的窗格包含上窗格和下窗格。 上面的图显示了有关称为当前所选函数的函数的信息（“eztemplatedesignresource-&gt; executecompiledtemplate”）。下面的窗格显示当前所选函数调用的函数的信息。</p>
-<p><img src="https://xdebug.org/images/docs/kc-right-call.png" alt="img"></p>
-<p>上方窗格中的“成本”列显示从列表中的函数调用时当前所选函数的时间花费。 添加的“费用”列中的数字将始终为100％。 下方窗格中的“成本”列显示从列表中调用函数所花费的时间。 在添加此列表中的数字时，您很可能永远不会达到100％，因为所选的函数本身也需要时间来执行。</p>
-<p><img src="https://xdebug.org/images/docs/kc-right-callers.png" alt="img"></p>
-<p>“所有呼叫者”和“所有呼叫”选项卡不仅显示从其调用该函数的直接调用，而且还显示所有直接调用的函数调用，还显示函数调用更多级别上下调用。 左侧屏幕截图中的上部窗格显示了所有调用当前所选函数的函数，直接和间接地使用堆栈上它们之间的其他函数。 “距离”列显示列出的和当前选择的函数调用之间有多少个函数调用（-1）。 如果两个函数之间有不同的距离，则显示为一个范围（例如“5-24”）。 括号中的数字是中值距离。 下面的窗格是类似的，除了它显示从当前选择的函数调用的函数的信息，再次是直接或间接。</p>
-<h2 id="相关的设置"><a href="#相关的设置" class="headerlink" title="相关的设置"></a>相关的设置</h2><h3 id="xdebug-profiler-append"><a href="#xdebug-profiler-append" class="headerlink" title="xdebug.profiler_append"></a>xdebug.profiler_append</h3><p>类型：整数，默认值：0</p>
-<p>当此设置设置为1时，当新请求映射到同一文件时（不在xdebug.profiler_output_name设置上），将不会覆盖分析器文件，而是使用新配置文件附加文件。</p>
-<h3 id="xdebug-profiler-enable"><a href="#xdebug-profiler-enable" class="headerlink" title="xdebug.profiler_enable"></a>xdebug.profiler_enable</h3><p>类型：整数，默认值：0</p>
-<p>启用Xdebug的概要分析器，它在概要文件输出目录中创建文件。这些文件可以由KCacheGrind读取以可视化您的数据。<br>无法使用ini_set（）在脚本中设置此设置。如果要选择性地启用分析器，请将xdebug.profiler_enable_trigger设置为1，而不使用此设置。</p>
-<h3 id="xdebug-profiler-enable-trigger"><a href="#xdebug-profiler-enable-trigger" class="headerlink" title="xdebug.profiler_enable_trigger"></a>xdebug.profiler_enable_trigger</h3><p>类型：整数，默认值：0</p>
-<p>当此设置设置为1时，可以使用XDEBUG_PROFILE GET / POST参数触发剖析器文件的生成，或者设置名为XDEBUG_PROFILE的cookie。<br>这将然后将分析器数据写入定义的目录。为了防止profiler为每个请求生成概要文件文件，您需要将xdebug.profiler_enable设置为0.对触发器本身的访问可以通过xdebug.profiler_enable_trigger_value配置。</p>
-<h3 id="xdebug-profiler-enable-trigger-value"><a href="#xdebug-profiler-enable-trigger-value" class="headerlink" title="xdebug.profiler_enable_trigger_value"></a>xdebug.profiler_enable_trigger_value</h3><p>类型：字符串，默认值：“”，在Xdebug&gt; 2.3中引入</p>
-<p>此设置可用于限制谁可以使用xdebug.profiler_enable_trigger中概述的XDEBUG_PROFILE功能。当从空字符串的默认值更改时，cookie，GET或POST参数的值需要使用此设置匹配共享机密集，<br>以便分析器启动。</p>
-<h3 id="xdebug-profiler-output-dir"><a href="#xdebug-profiler-output-dir" class="headerlink" title="xdebug.profiler_output_dir"></a>xdebug.profiler_output_dir</h3><p>类型：字符串，默认值：/ tmp</p>
-<p>将写入分析器输出的目录，确保PHP将运行的用户具有对该目录的写入权限。无法使用ini_set（）在脚本中设置此设置。</p>
-<h3 id="xdebug-profiler-output-name"><a href="#xdebug-profiler-output-name" class="headerlink" title="xdebug.profiler_output_name"></a>xdebug.profiler_output_name</h3><p>类型：字符串，默认值：cachegrind.out。％p</p>
-<p>此设置确定用于将跟踪转储到的文件的名称。设置使用格式说明符指定格式，非常类似于sprintf（）和strftime（）。有几个格式说明符可以用于格式化文件名。</p>
-<p>有关受支持的说明符，请参见 <a href="https://xdebug.org/docs/all_settings#trace_output_name" target="_blank" rel="external">xdebug.trace_output_name</a> 文档。</p>
-<h2 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h2><h3 id="string-xdebug-get-profiler-filename（）"><a href="#string-xdebug-get-profiler-filename（）" class="headerlink" title="string xdebug get profiler filename（）"></a>string xdebug get profiler filename（）</h3><p>返回配置文件信息文件名</p>
-<p>返回用于将配置文件信息保存到的文件的名称。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Xdebug内置分析器允许您在脚本中找到瓶颈，并使用外部工具（如KCacheGrind或WinCacheGrind）可视化这些瓶颈。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
-    
-    
-      <category term="Xdebug" scheme="https://weizhimiao.github.io/tags/Xdebug/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Xdebug之常见问题</title>
     <link href="https://weizhimiao.github.io/2016/10/22/Xdebug%E4%B9%8B%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/"/>
     <id>https://weizhimiao.github.io/2016/10/22/Xdebug之常见问题/</id>
@@ -954,229 +1194,169 @@
   
   <entry>
     <title>Xdebug之变量显示功能</title>
-    <link href="https://weizhimiao.github.io/2016/10/22/Xdebug%E4%B9%8B%E5%A0%86%E6%A0%88%E8%B7%9F%E8%B8%AA/"/>
-    <id>https://weizhimiao.github.io/2016/10/22/Xdebug之堆栈跟踪/</id>
+    <link href="https://weizhimiao.github.io/2016/10/22/Xdebug%E4%B9%8B%E5%8F%98%E9%87%8F%E6%98%BE%E7%A4%BA%E5%8A%9F%E8%83%BD/"/>
+    <id>https://weizhimiao.github.io/2016/10/22/Xdebug之变量显示功能/</id>
     <published>2016-10-22T12:30:00.000Z</published>
-    <updated>2016-10-22T16:07:31.000Z</updated>
+    <updated>2016-10-22T16:07:20.000Z</updated>
     
-    <content type="html"><![CDATA[<p>当Xdebug被激活时，只要PHP决定显示通知，警告，错误等，它将显示一个堆栈跟踪。堆栈跟踪显示的信息以及它们的呈现方式可以配置为满足您的需要。</p>
-<p>Xdebug在错误情况下显示的堆栈跟踪（如果display_errors在php.ini中设置为On）在它们显示的信息量上相当保守。 这是因为大量的信息可以减慢脚本的执行和在浏览器中呈现堆栈跟踪本身。 但是，可以使堆栈跟踪显示具有不同设置的更详细信息。</p>
+    <content type="html"><![CDATA[<p>Xdebug替换了PHP的var_dump（）函数来显示变量。 Xdebug的版本包括不同类型的不同颜色，并且限制了数组元素/对象属性的数量，最大深度和字符串长度。 还有一些其他函数处理可变显示。</p>
 <a id="more"></a>
-<h2 id="堆栈跟踪中的变量"><a href="#堆栈跟踪中的变量" class="headerlink" title="堆栈跟踪中的变量"></a>堆栈跟踪中的变量</h2><p>默认情况下，Xdebug现在会在它生成的堆栈跟踪中显示变量信息。 在收集或显示时，可变信息可能需要相当多的资源。 然而，在许多情况下，显示变量信息是有用的，这就是为什么Xdebug具有设置xdebug.collect_params。 下面的脚本结合了该设置的不同值的输出结果，如下例所示。</p>
-<p>示例：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">( $a )</span> </span>&#123;</div><div class="line">    <span class="keyword">for</span> ($i = <span class="number">1</span>; $i &lt; $a[<span class="string">'foo'</span>]; $i++) &#123;</div><div class="line">        <span class="keyword">if</span> ($i == <span class="number">500000</span>) xdebug_break();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">set_time_limit(<span class="number">1</span>);</div><div class="line">$c = <span class="keyword">new</span> stdClass;</div><div class="line">$c-&gt;bar = <span class="number">100</span>;</div><div class="line">$a = <span class="keyword">array</span>(</div><div class="line">    <span class="number">42</span> =&gt; <span class="keyword">false</span>, <span class="string">'foo'</span> =&gt; <span class="number">912124</span>,</div><div class="line">    $c, <span class="keyword">new</span> stdClass, fopen( <span class="string">'/etc/passwd'</span>, <span class="string">'r'</span> )</div><div class="line">);</div><div class="line">foo( $a );</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
-<p>结果:<br>xdebug.collect_params设置的不同值提供不同的输出，您可以在下面看到：</p>
+<p>有一些设置控制Xdebug修改的var_dump（）函数的输出：</p>
 <ul>
-<li>default</li>
-</ul>
-<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-0@2x.png" alt="default"></p>
-<ul>
-<li>1<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ini_set(&apos;xdebug.collect_params&apos;, &apos;1&apos;);</div></pre></td></tr></table></figure>
+<li>xdebug.var_display_max_children，</li>
+<li>xdebug.var_display_max_data</li>
+<li><p>xdebug.var_display_max_depth</p>
+<p>这三个设置的效果最好用一个例子。 下面的脚本运行四次，每次使用不同的设置。 您可以使用选项卡查看差异。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> $pub = <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">private</span> $priv = <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">protected</span> $prot = <span class="number">42</span>;</div><div class="line">&#125;</div><div class="line">$t = <span class="keyword">new</span> test;</div><div class="line">$t-&gt;pub = $t;</div><div class="line">$data = <span class="keyword">array</span>(</div><div class="line">    <span class="string">'one'</span> =&gt; <span class="string">'a somewhat long string!'</span>,</div><div class="line">    <span class="string">'two'</span> =&gt; <span class="keyword">array</span>(</div><div class="line">        <span class="string">'two.one'</span> =&gt; <span class="keyword">array</span>(</div><div class="line">            <span class="string">'two.one.zero'</span> =&gt; <span class="number">210</span>,</div><div class="line">            <span class="string">'two.one.one'</span> =&gt; <span class="keyword">array</span>(</div><div class="line">                <span class="string">'two.one.one.zero'</span> =&gt; <span class="number">3.141592564</span>,</div><div class="line">                <span class="string">'two.one.one.one'</span>  =&gt; <span class="number">2.7</span>,</div><div class="line">            ),</div><div class="line">        ),</div><div class="line">    ),</div><div class="line">    <span class="string">'three'</span> =&gt; $t,</div><div class="line">    <span class="string">'four'</span> =&gt; range(<span class="number">0</span>, <span class="number">5</span>),</div><div class="line">);</div><div class="line">var_dump( $data );</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>默认</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  &apos;one&apos; =&gt; string &apos;a somewhat long string!&apos; (length=23)</div><div class="line">  &apos;two&apos; =&gt;</div><div class="line">    array</div><div class="line">      &apos;two.one&apos; =&gt;</div><div class="line">        array</div><div class="line">          &apos;two.one.zero&apos; =&gt; int 210</div><div class="line">          &apos;two.one.one&apos; =&gt;</div><div class="line">            array</div><div class="line">              ...</div><div class="line">  &apos;three&apos; =&gt;</div><div class="line">    object(test)[1]</div><div class="line">      public &apos;pub&apos; =&gt;</div><div class="line">        &amp;object(test)[1]</div><div class="line">      private &apos;priv&apos; =&gt; boolean true</div><div class="line">      protected &apos;prot&apos; =&gt; int 42</div><div class="line">  &apos;four&apos; =&gt;</div><div class="line">    array</div><div class="line">      0 =&gt; int 0</div><div class="line">      1 =&gt; int 1</div><div class="line">      2 =&gt; int 2</div><div class="line">      3 =&gt; int 3</div><div class="line">      4 =&gt; int 4</div><div class="line">      5 =&gt; int 5</div></pre></td></tr></table></figure>
+</li>
+<li><p>children=2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  &apos;one&apos; =&gt; string &apos;a somewhat long string!&apos; (length=23)</div><div class="line">  &apos;two&apos; =&gt;</div><div class="line">    array</div><div class="line">      &apos;two.one&apos; =&gt;</div><div class="line">        array</div><div class="line">          &apos;two.one.zero&apos; =&gt; int 210</div><div class="line">          &apos;two.one.one&apos; =&gt;</div><div class="line">            array</div><div class="line">              ...</div><div class="line">  more elements...</div></pre></td></tr></table></figure>
+</li>
+<li><p>data=16</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  &apos;one&apos; =&gt; string &apos;a somewhat long &apos;... (length=23)</div><div class="line">  &apos;two&apos; =&gt;</div><div class="line">    array</div><div class="line">      &apos;two.one&apos; =&gt;</div><div class="line">        array</div><div class="line">          &apos;two.one.zero&apos; =&gt; int 210</div><div class="line">          &apos;two.one.one&apos; =&gt;</div><div class="line">            array</div><div class="line">              ...</div><div class="line">  &apos;three&apos; =&gt;</div><div class="line">    object(test)[1]</div><div class="line">      public &apos;pub&apos; =&gt;</div><div class="line">        &amp;object(test)[1]</div><div class="line">      private &apos;priv&apos; =&gt; boolean true</div><div class="line">      protected &apos;prot&apos; =&gt; int 42</div><div class="line">  &apos;four&apos; =&gt;</div><div class="line">    array</div><div class="line">      0 =&gt; int 0</div><div class="line">      1 =&gt; int 1</div><div class="line">      2 =&gt; int 2</div><div class="line">      3 =&gt; int 3</div><div class="line">      4 =&gt; int 4</div><div class="line">      5 =&gt; int 5</div></pre></td></tr></table></figure>
+</li>
+<li><p>depth=2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  &apos;one&apos; =&gt; string &apos;a somewhat long string!&apos; (length=23)</div><div class="line">  &apos;two&apos; =&gt;</div><div class="line">    array</div><div class="line">      &apos;two.one&apos; =&gt;</div><div class="line">        array</div><div class="line">          ...</div><div class="line">  &apos;three&apos; =&gt;</div><div class="line">    object(test)[1]</div><div class="line">      public &apos;pub&apos; =&gt;</div><div class="line">        &amp;object(test)[1]</div><div class="line">      private &apos;priv&apos; =&gt; boolean true</div><div class="line">      protected &apos;prot&apos; =&gt; int 42</div><div class="line">  &apos;four&apos; =&gt;</div><div class="line">    array</div><div class="line">      0 =&gt; int 0</div><div class="line">      1 =&gt; int 1</div><div class="line">      2 =&gt; int 2</div><div class="line">      3 =&gt; int 3</div><div class="line">      4 =&gt; int 4</div><div class="line">      5 =&gt; int 5</div></pre></td></tr></table></figure>
+</li>
+<li><p>children=3, data=8, depth=1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  &apos;one&apos; =&gt; string &apos;a somewh&apos;... (length=23)</div><div class="line">  &apos;two&apos; =&gt;</div><div class="line">    array</div><div class="line">      ...</div><div class="line">  &apos;three&apos; =&gt;</div><div class="line">    object(test)[1]</div><div class="line">      ...</div><div class="line">  more elements...</div></pre></td></tr></table></figure>
 </li>
 </ul>
-<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-1@2x.png" alt="default"></p>
-<ul>
-<li>2<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ini_set(&apos;xdebug.collect_params&apos;, &apos;2&apos;);</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-2@2x.png" alt="default"></p>
-<ul>
-<li>3<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ini_set(&apos;xdebug.collect_params&apos;, &apos;3&apos;);</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-3@2x.png" alt="default"></p>
-<ul>
-<li>4<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ini_set(&apos;xdebug.collect_params&apos;, &apos;4&apos;);</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-4@2x.png" alt="default"></p>
-<h2 id="附加信息"><a href="#附加信息" class="headerlink" title="附加信息"></a>附加信息</h2><p>除了显示传递给每个函数的变量的值之外，Xdebug还可以通过使用xdebug.dump_globals和xdebug.dump.* 设置来选择性地显示关于所选超级元素的信息。 设置xdebug.dump_once和xdebug.dump_undefined会稍微修改可用超级元素显示的时间和信息。 使用xdebug.show_local_vars设置，您可以指示Xdebug为用户定义的函数显示最顶层栈级中可用的所有变量。 下面的示例显示了这一点（脚本从上面的示例中使用）。</p>
-<ul>
-<li>default</li>
-</ul>
-<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-5@2x.png" alt="default"></p>
-<ul>
-<li>dump_superglobals=1<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ini_set(&apos;xdebug.collect_vars&apos;, &apos;on&apos;);</div><div class="line">ini_set(&apos;xdebug.collect_params&apos;, &apos;4&apos;);</div><div class="line">ini_set(&apos;xdebug.dump_globals&apos;, &apos;on&apos;);</div><div class="line">ini_set(&apos;xdebug.dump.SERVER&apos;, &apos;REQUEST_URI&apos;);</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-6@2x.png" alt="default"></p>
-<ul>
-<li>show_local_vars=1<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ini_set(&apos;xdebug.collect_vars&apos;, &apos;on&apos;);</div><div class="line">ini_set(&apos;xdebug.collect_params&apos;, &apos;4&apos;);</div><div class="line">ini_set(&apos;xdebug.dump_globals&apos;, &apos;on&apos;);</div><div class="line">ini_set(&apos;xdebug.dump.SERVER&apos;, &apos;REQUEST_URI&apos;);</div><div class="line">ini_set(&apos;xdebug.show_local_vars&apos;, &apos;on&apos;);</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-8@2x.png" alt="default"></p>
 <h2 id="相关设置"><a href="#相关设置" class="headerlink" title="相关设置"></a>相关设置</h2><h3 id="xdebug-cli-color"><a href="#xdebug-cli-color" class="headerlink" title="xdebug.cli_color"></a><strong>xdebug.cli_color</strong></h3><p>类型：整数，默认值：0，在Xdebug&gt; 2.2中引入</p>
-<p>如果此设置为1，则Xdebug将在CLI模式下和输出为tty时对var_dumps和堆栈跟踪输出进行颜色。在Windows上，需要安装ANSICON工具。</p>
-<p>如果设置为2，那么无论Xdebug是否连接到tty或是否安装了ANSICON，Xdebug都将始终对var_dumps和堆栈跟踪进行着色。在这种情况下，您可能会看到转义码。</p>
+<ul>
+<li><p>如果此设置为1，则Xdebug将在CLI模式下和输出为tty时对var_dumps和堆栈跟踪输出进行颜色。在Windows上，需要安装ANSICON工具。</p>
+</li>
+<li><p>如果设置为2，那么无论Xdebug是否连接到tty或是否安装了ANSICON，Xdebug都将始终对var_dumps和堆栈跟踪进行着色。在这种情况下，您可能会看到转义码。</p>
+</li>
+</ul>
 <p>有关更多信息，请参阅此<a href="http://drck.me/clicolor-9cr" target="_blank" rel="external">文章</a>。</p>
-<h3 id="xdebug-collect-includes"><a href="#xdebug-collect-includes" class="headerlink" title="xdebug.collect_includes"></a><strong>xdebug.collect_includes</strong></h3><p>类型：布尔值，默认值：1</p>
-<p>此设置默认为1，控制Xdebug是否应将include（），include_once（），require（）或require_once（）中使用的文件名写入跟踪文件。</p>
-<h3 id="xdebug-collect-params"><a href="#xdebug-collect-params" class="headerlink" title="xdebug.collect_params"></a><strong>xdebug.collect_params</strong></h3><p>类型：整数，默认值：0</p>
-<p>此设置默认为0，控制在函数跟踪或堆栈跟踪中记录函数调用时，Xdebug是否应收集传递给函数的参数。</p>
-<p>该设置默认为0，因为对于非常大的脚本，它可能使用大量的内存，因此使巨量脚本无法运行。您可以最安全地打开此设置，但是您可以预期在具有大量函数调用和/或巨大的数据结构作为参数的脚本中存在一些问题。</p>
-<p>Xdebug 2不会有增加的内存使用这个问题，因为它永远不会将此信息存储在内存中。相反，它将只被写入磁盘。这意味着您需要查看磁盘使用情况。</p>
-<p>此设置可以有四个不同的值。对于每个值，示出了不同量的信息。下面你将看到每个值提供什么信息。另请参见功能堆栈跟踪的几个截图的介绍。</p>
-<table>
-<thead>
-<tr>
-<th>值</th>
-<th>显示参数信息</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>无。</td>
-</tr>
-<tr>
-<td>1</td>
-<td>元素的类型和数量（f.e. string（6），array（8））。</td>
-</tr>
-<tr>
-<td>2</td>
-<td>元素的类型和数量，带有完整信息的工具提示1。在CLI版本的PHP它不会有工具提示，而不是在输出文件。</td>
-</tr>
-<tr>
-<td>3</td>
-<td>完全变量内容（具有由xdebug.var_display_max_children，xdebug.var_display_max_data和xdebug.var_display_max_depth设置的限制）。</td>
-</tr>
-<tr>
-<td>4</td>
-<td>完全变量内容和变量名称。</td>
-</tr>
-<tr>
-<td>5</td>
-<td>PHP序列化变量内容，没有名称。 （Xdebug 2.3中的新功能）</td>
-</tr>
-</tbody>
-</table>
-<h3 id="xdebug-collect-vars"><a href="#xdebug-collect-vars" class="headerlink" title="xdebug.collect_vars"></a><strong>xdebug.collect_vars</strong></h3><p>类型：布尔值，默认值：0</p>
-<p>此设置告诉Xdebug收集有关在某个范围中使用哪些变量的信息。 这个分析可能很慢，因为Xdebug必须逆向工程PHP的操作码数组。 此设置不会记录不同变量具有的值，因为使用xdebug.collect_params。 仅当您希望使用xdebug_get_declared_vars（）时，才需要启用此设置。</p>
-<h3 id="xdebug-dump"><a href="#xdebug-dump" class="headerlink" title="xdebug.dump.*"></a><strong>xdebug.dump.*</strong></h3><p>类型：字符串，默认值：空</p>
-<p>*可以是COOKIE，FILES，GET，POST，REQUEST，SERVER，SESSION中的任何一个。 这七个设置控制当发生错误情况时来自超级溶剂的数据。</p>
-<p>每个php.ini设置可以包括一个逗号分隔的变量从这个超级全局转储，或*所有的。 请确保您在此设置中不添加空格。</p>
-<p>为了在发生错误时转储REMOTE_ADDR和REQUEST_METHOD，以及所有GET参数，请添加以下设置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">xdebug.dump.SERVER = REMOTE_ADDR,REQUEST_METHOD</div><div class="line">xdebug.dump.GET = *</div></pre></td></tr></table></figure></p>
-<h3 id="xdebug-dump-globals"><a href="#xdebug-dump-globals" class="headerlink" title="xdebug.dump_globals"></a><strong>xdebug.dump_globals</strong></h3><p>类型：布尔值，默认值：1</p>
-<p>控制是否应显示由xdebug.dump.*设置定义的超级元素的值。</p>
-<h3 id="xdebug-dump-once"><a href="#xdebug-dump-once" class="headerlink" title="xdebug.dump_once"></a><strong>xdebug.dump_once</strong></h3><p>类型：布尔值，默认值：1</p>
-<p>控制是否应在所有错误情况（设置为0）或仅在第一个（设置为1）上转储超级元素的值。</p>
-<h3 id="xdebug-dump-undefined"><a href="#xdebug-dump-undefined" class="headerlink" title="xdebug.dump_undefined"></a><strong>xdebug.dump_undefined</strong></h3><p>类型：布尔值，默认值：0<br>如果要从超级元组转储未定义的值，您应该将此设置设置为1，否则将其设置为0。</p>
-<h3 id="xdebug-file-link-format"><a href="#xdebug-file-link-format" class="headerlink" title="xdebug.file_link_format"></a><strong>xdebug.file_link_format</strong></h3><p>类型：字符串，默认值：，在Xdebug&gt; 2.1中引入</p>
-<p>此设置确定在使用文件名的堆栈跟踪显示中进行的链接的格式。 这允许IDE设置一个链接协议，通过单击Xdebug在堆栈跟踪中显示的文件名，可以直接转到行和文件。 示例格式可能如下所示：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">myide://%f@%l</div></pre></td></tr></table></figure></p>
-<p>可能的格式说明符是：</p>
-<table>
-<thead>
-<tr>
-<th>说明符</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>％f</td>
-<td>文件名</td>
-</tr>
-<tr>
-<td>％l</td>
-<td>行号</td>
-</tr>
-</tbody>
-</table>
-<p>对于各种IDE / OSses，有一些关于如何使这项工作的指示：</p>
-<p>Linux上的Firefox</p>
+<h3 id="xdebug-overload-var-dump"><a href="#xdebug-overload-var-dump" class="headerlink" title="xdebug.overload_var_dump"></a><strong>xdebug.overload_var_dump</strong></h3><p>类型：boolean，默认值：2，在Xdebug&gt; 2.1中引入</p>
 <ul>
-<li>打开about：config</li>
-<li>添加一个新的布尔设置“network.protocol-handler.expose.xdebug”并将其设置为“false”</li>
-<li>将以下内容添加到shell脚本〜/ bin / ff-xdebug.sh中：<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#! /bin/sh</span></div><div class="line">f=`<span class="built_in">echo</span> <span class="variable">$1</span> | cut <span class="_">-d</span> @ <span class="_">-f</span> 1 | sed <span class="string">'s/xdebug:\/\///'</span>`</div><div class="line">l=`<span class="built_in">echo</span> <span class="variable">$1</span> | cut <span class="_">-d</span> @ <span class="_">-f</span> 2`</div></pre></td></tr></table></figure>
+<li><p>默认情况下，当html_errors php.ini设置为1或2时，Xdebug会自动重载var_dump（）并显示变量。</p>
+</li>
+<li><p>如果您不想要，可以将此设置设置为0，但首先检查它是否不是更聪明的关闭html_errors。</p>
+</li>
+<li><p>您也可以使用2作为此设置的值。除了格式化var_dump（）输出很好，它还将添加文件名和行号到输出。还尊重xdebug.file_link_format设置。 （Xdebug 2.3中的新功能）</p>
 </li>
 </ul>
-<p>添加（取决于你有komodo，vim vs netbeans）：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">komodo <span class="variable">$f</span> <span class="_">-l</span> <span class="variable">$l</span></div><div class="line">gvim --remote-tab +<span class="variable">$l</span> <span class="variable">$f</span></div><div class="line">netbeans <span class="string">"<span class="variable">$f</span>:<span class="variable">$l</span>"</span></div></pre></td></tr></table></figure></p>
-<ul>
-<li>使用chmod + x〜/ bin / ff-xdebug.sh来使脚本可执行</li>
-<li>将xdebug.file_link_format设置为xdebug：//％f @％l</li>
-</ul>
-<p>Windows和netbeans</p>
-<ul>
-<li>创建文件netbeans.bat并将其保存在您的路径（C：\ Windows）：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@echo off</div><div class="line">setlocal enableextensions enabledelayedexpansion</div><div class="line">set NETBEANS=%1</div><div class="line">set FILE=%~2</div><div class="line">%NETBEANS% --nosplash --console suppress --open &quot;%FILE:~19%&quot;</div><div class="line">nircmd win activate process netbeans.exe</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>注意：如果没有nircmd，请删除最后一行。</p>
-<ul>
-<li>将以下代码保存在netbeans protocol.reg中：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">Windows Registry Editor Version 5.00</div><div class="line"></div><div class="line">[HKEY_CLASSES_ROOT\netbeans]</div><div class="line">&quot;URL Protocol&quot;=&quot;&quot;</div><div class="line">@=&quot;URL:Netbeans Protocol&quot;</div><div class="line"></div><div class="line">[HKEY_CLASSES_ROOT\netbeans\DefaultIcon]</div><div class="line">@=&quot;\&quot;C:\\Program Files\\NetBeans 7.1.1\\bin\\netbeans.exe,1\&quot;&quot;</div><div class="line"></div><div class="line">[HKEY_CLASSES_ROOT\netbeans\shell]</div><div class="line"></div><div class="line">[HKEY_CLASSES_ROOT\netbeans\shell\open]</div><div class="line"></div><div class="line">[HKEY_CLASSES_ROOT\netbeans\shell\open\command]</div><div class="line">@=&quot;\&quot;C:\\Windows\\netbeans.bat\&quot; \&quot;C:\\Program Files\\NetBeans 7.1.1\\bin\\netbeans.exe\&quot; \&quot;%1\&quot;&quot;</div></pre></td></tr></table></figure>
-<p>注意：确保更改Netbeans（两次）的路径以及netbeans.bat批处理文件（如果将其保存在C：\Windows 以外的其他位置）。</p>
-<p>Double click on the netbeans_protocol.reg file to import it into the registry.<br>Set the xdebug.file_link_format setting to</p>
-<ul>
-<li><p>双击netbeans protocol.reg文件将其导入到注册表中。</p>
-</li>
-<li><p>将xdebug.file_link_format设置设置为<code>xdebug.file_link_format = &quot;netbeans://open/?f=%f:%l&quot;</code></p>
-</li>
-</ul>
-<h3 id="xdebug-manual-url"><a href="#xdebug-manual-url" class="headerlink" title="xdebug.manual_url"></a><strong>xdebug.manual_url</strong></h3><p>类型：字符串，默认值：http：//www.php.net，在Xdebug &lt;2.2.1中引入</p>
-<p>这是从函数跟踪和错误消息到函数的手册页的链接的基本URL。建议将此设置设置为使用最近的镜像。</p>
-<h3 id="xdebug-show-exception-trace"><a href="#xdebug-show-exception-trace" class="headerlink" title="xdebug.show_exception_trace"></a><strong>xdebug.show_exception_trace</strong></h3><p>类型：整数，默认值：0</p>
-<p>当此设置设置为1时，每当引发异常时，即使此异常实际被捕获，Xdebug也将显示堆栈跟踪。</p>
-<h3 id="xdebug-show-local-vars"><a href="#xdebug-show-local-vars" class="headerlink" title="xdebug.show_local_vars"></a><strong>xdebug.show_local_vars</strong></h3><p>类型：整数，默认值：0</p>
-<p>当这个设置设置为某事！= 0 Xdebug的错误情况下生成的堆栈转储也将显示最顶层范围中的所有变量。请注意，这可能会生成大量的信息，因此默认情况下关闭。</p>
-<h3 id="xdebug-show-mem-delta"><a href="#xdebug-show-mem-delta" class="headerlink" title="xdebug.show_mem_delta"></a><strong>xdebug.show_mem_delta</strong></h3><p>类型：整数，默认值：0</p>
-<p>当这个设置设置为某些！= 0 Xdebug的人类可读的生成的跟踪文件将显示在函数调用之间的内存使用的差异。如果Xdebug配置为生成计算机可读的跟踪文件，则它们将始终显示此信息。</p>
+<p>在Xdebug 2.4之前，此设置的默认值为1。</p>
 <h3 id="xdebug-var-display-max-children"><a href="#xdebug-var-display-max-children" class="headerlink" title="xdebug.var_display_max_children"></a><strong>xdebug.var_display_max_children</strong></h3><p>类型：整数，默认值：128</p>
 <p>控制使用xdebug_var_dump（），xdebug.show_local_vars或通过函数跟踪显示变量时显示的数组子元素和对象的属性的数量。</p>
-<p>要禁用任何限制，请使用-1作为值。</p>
+<ul>
+<li>要禁用任何限制，请使用-1作为值。</li>
+</ul>
 <p>此设置对通过远程调试功能发送到客户端的子项数没有任何影响。</p>
 <h3 id="xdebug-var-display-max-data"><a href="#xdebug-var-display-max-data" class="headerlink" title="xdebug.var_display_max_data"></a><strong>xdebug.var_display_max_data</strong></h3><p>类型：整数，默认值：512</p>
 <p>控制使用xdebug_var_dump（），xdebug.show_local_vars或通过函数跟踪显示变量时显示的最大字符串长度。</p>
-<p>要禁用任何限制，请使用-1作为值。</p>
+<ul>
+<li>要禁用任何限制，请使用-1作为值。</li>
+</ul>
 <p>此设置对通过远程调试功能发送到客户端的子项数没有任何影响。</p>
 <h3 id="xdebug-var-display-max-depth"><a href="#xdebug-var-display-max-depth" class="headerlink" title="xdebug.var_display_max_depth"></a><strong>xdebug.var_display_max_depth</strong></h3><p>类型：整数，默认值：3</p>
 <p>当使用xdebug_var_dump（），xdebug.show_local_vars或通过函数跟踪显示变量时，控制数组元素和对象属性的嵌套级别数。</p>
-<p>您可以选择的最大值为1023.您还可以使用-1作为值来选择此最大数。</p>
-<p>此设置对通过远程调试功能发送到客户端的子项数没有任何影响。</p>
-<h2 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h2><h3 id="array-xdebug-get-declared-vars（）"><a href="#array-xdebug-get-declared-vars（）" class="headerlink" title="array xdebug_get_declared_vars（）"></a><strong>array xdebug_get_declared_vars（）</strong></h3><p>返回声明的变量</p>
-<p>返回一个数组，其中每个元素是在当前范围中定义的变量名称。 需要启用xdebug.collect_vars设置。</p>
-<p>Example:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">strings</span> </span>&#123;</div><div class="line">        <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">fix_strings</span><span class="params">($a, $b)</span> </span>&#123;</div><div class="line">            <span class="keyword">foreach</span> ($b <span class="keyword">as</span> $item) &#123;</div><div class="line">            &#125;</div><div class="line">            var_dump(xdebug_get_declared_vars());</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    strings::fix_strings(<span class="keyword">array</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>), <span class="keyword">array</span>(<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>));</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
-<p>Returns:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  0 =&gt; string &apos;a&apos; (length=1)</div><div class="line">  1 =&gt; string &apos;b&apos; (length=1)</div><div class="line">  2 =&gt; string &apos;item&apos; (length=4)</div></pre></td></tr></table></figure></p>
-<p>在5.1之前的PHP版本中，变量名“a”不在返回的数组中，因为它在调用函数xdebug_get_declared_vars（）的作用域中不使用。</p>
-<h3 id="array-xdebug-get-function-stack（）"><a href="#array-xdebug-get-function-stack（）" class="headerlink" title="array xdebug_get_function_stack（）"></a><strong>array xdebug_get_function_stack（）</strong></h3><p>返回有关堆栈的信息</p>
-<p>返回类似于此点的堆栈跟踪的数组。 示例脚本：</p>
-<p>Example:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">strings</span> </span>&#123;</div><div class="line">        <span class="function"><span class="keyword">function</span> <span class="title">fix_string</span><span class="params">($a)</span></span></div><div class="line">        &#123;</div><div class="line">            var_dump(xdebug_get_function_stack());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">function</span> <span class="title">fix_strings</span><span class="params">($b)</span> </span>&#123;</div><div class="line">            <span class="keyword">foreach</span> ($b <span class="keyword">as</span> $item) &#123;</div><div class="line">                <span class="keyword">$this</span>-&gt;fix_string($item);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    $s = <span class="keyword">new</span> strings();</div><div class="line">    $ret = $s-&gt;fix_strings(<span class="keyword">array</span>(<span class="string">'Derick'</span>));</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
-<p>Returns:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  0 =&gt;</div><div class="line">    array</div><div class="line">      &apos;function&apos; =&gt; string &apos;&#123;main&#125;&apos; (length=6)</div><div class="line">      &apos;file&apos; =&gt; string &apos;/var/www/xdebug_get_function_stack.php&apos; (length=63)</div><div class="line">      &apos;line&apos; =&gt; int 0</div><div class="line">      &apos;params&apos; =&gt;</div><div class="line">        array</div><div class="line">          empty</div><div class="line">  1 =&gt;</div><div class="line">    array</div><div class="line">      &apos;function&apos; =&gt; string &apos;fix_strings&apos; (length=11)</div><div class="line">      &apos;class&apos; =&gt; string &apos;strings&apos; (length=7)</div><div class="line">      &apos;file&apos; =&gt; string &apos;/var/www/xdebug_get_function_stack.php&apos; (length=63)</div><div class="line">      &apos;line&apos; =&gt; int 18</div><div class="line">      &apos;params&apos; =&gt;</div><div class="line">        array</div><div class="line">          &apos;b&apos; =&gt; string &apos;array (0 =&gt; &apos;Derick&apos;)&apos; (length=21)</div><div class="line">  2 =&gt;</div><div class="line">    array</div><div class="line">      &apos;function&apos; =&gt; string &apos;fix_string&apos; (length=10)</div><div class="line">      &apos;class&apos; =&gt; string &apos;strings&apos; (length=7)</div><div class="line">      &apos;file&apos; =&gt; string &apos;/var/www/xdebug_get_function_stack.php&apos; (length=63)</div><div class="line">      &apos;line&apos; =&gt; int 12</div><div class="line">      &apos;params&apos; =&gt;</div><div class="line">        array</div><div class="line">          &apos;a&apos; =&gt; string &apos;&apos;Derick&apos;&apos; (length=8)</div></pre></td></tr></table></figure></p>
-<h3 id="array-xdebug-get-monitored-functions（）"><a href="#array-xdebug-get-monitored-functions（）" class="headerlink" title="array xdebug_get_monitored_functions（）"></a><strong>array xdebug_get_monitored_functions（）</strong></h3><p>返回有关受监视函数的信息</p>
-<p>在2.4版本中引入</p>
-<p>返回一个结构，其中包含有关在脚本中执行受监视函数的位置的信息。 以下示例显示如何使用此和返回的信息：</p>
-<p>Example:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="comment">/* Start the function monitor for strrev and array_push: */</span></div><div class="line">xdebug_start_function_monitor( [ <span class="string">'strrev'</span>, <span class="string">'array_push'</span> ] );</div><div class="line"></div><div class="line"><span class="comment">/* Run some code: */</span></div><div class="line"><span class="keyword">echo</span> strrev(<span class="string">"yes!"</span>), <span class="string">"\n"</span>;</div><div class="line"></div><div class="line"><span class="keyword">echo</span> strrev(<span class="string">"yes!"</span>), <span class="string">"\n"</span>;</div><div class="line"></div><div class="line">var_dump(xdebug_get_monitored_functions());</div><div class="line">xdebug_stop_function_monitor();</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
-<p>Returns:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">/tmp/monitor-example.php:10:</div><div class="line">array(2) &#123;</div><div class="line">  [0] =&gt;</div><div class="line">  array(3) &#123;</div><div class="line">    &apos;function&apos; =&gt;</div><div class="line">    string(6) &quot;strrev&quot;</div><div class="line">    &apos;filename&apos; =&gt;</div><div class="line">    string(24) &quot;/tmp/monitor-example.php&quot;</div><div class="line">    &apos;lineno&apos; =&gt;</div><div class="line">    int(6)</div><div class="line">  &#125;</div><div class="line">  [1] =&gt;</div><div class="line">  array(3) &#123;</div><div class="line">    &apos;function&apos; =&gt;</div><div class="line">    string(6) &quot;strrev&quot;</div><div class="line">    &apos;filename&apos; =&gt;</div><div class="line">    string(24) &quot;/tmp/monitor-example.php&quot;</div><div class="line">    &apos;lineno&apos; =&gt;</div><div class="line">    int(8)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<h3 id="integer-xdebug-get-stack-depth（）"><a href="#integer-xdebug-get-stack-depth（）" class="headerlink" title="integer xdebug_get_stack_depth（）"></a><strong>integer xdebug_get_stack_depth（）</strong></h3><p>返回当前堆栈深度级别</p>
-<p>返回堆栈深度级别。 脚本的主体是级别0，每个包含和/或函数调用将向堆栈深度级别添加一个。</p>
-<h3 id="none-xdebug-print-function-stack-string-message-int-options"><a href="#none-xdebug-print-function-stack-string-message-int-options" class="headerlink" title="none xdebug_print_function_stack( [ string message [, int options ] ] )"></a><strong>none xdebug_print_function_stack( [ string message [, int options ] ] )</strong></h3><p>显示当前函数栈</p>
-<p>以类似于Xdebug在错误情况下显示的方式显示当前函数堆栈。</p>
-<p>“message”参数允许您使用自己的头部替换消息。 （在Xdebug 2.1中引入）。</p>
-<p>Example:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span><span class="params">( $far, $out )</span></span></div><div class="line">&#123;</div><div class="line">    xdebug_print_function_stack( <span class="string">'Your own message'</span> );</div><div class="line">&#125;</div><div class="line">foo( <span class="number">42</span>, <span class="number">3141592654</span> );</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
-<p>Returns:</p>
-<p><img src="http://n.sinaimg.cn/games/3ece443e/20161022/QQ20161022-9@2x.png" alt="img"></p>
-<p>位掩码“options”允许您配置一些额外的选项。 目前支持以下选项：</p>
 <ul>
-<li>XDEBUG_STACK_NO_DESC<blockquote>
-<p>如果设置了此选项，则打印的堆栈跟踪将不具有标题。 如果要从自己的错误处理程序打印堆栈跟踪，否则打印位置是从中调用xdebug_print_function_stack（）时，这是有用的。 （在Xdebug 2.3中引入）。</p>
-</blockquote>
-</li>
+<li>您可以选择的最大值为1023.您还可以使用-1作为值来选择此最大数。</li>
 </ul>
-<h3 id="void-xdebug-start-function-monitor（array-list-of-functions-to-monitor）"><a href="#void-xdebug-start-function-monitor（array-list-of-functions-to-monitor）" class="headerlink" title="void xdebug_start_function_monitor（array $ list_of_functions_to_monitor）"></a><strong>void xdebug_start_function_monitor（array $ list_of_functions_to_monitor）</strong></h3><p>开始功能监控</p>
-<p>在2.4版本中引入</p>
-<p>此函数开始监视列表中给出的函数作为此函数的参数。 函数监视允许您找到代码中提供的作为参数的函数在哪里调用。 这可以用于跟踪使用旧的或不鼓励的函数的位置。</p>
-<p>Example:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">xdebug_start_function_monitor( [ <span class="string">'strrev'</span>, <span class="string">'array_push'</span> ] );</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
-<p>您还可以向定义要监视的函数的数组添加类方法和静态方法。 例如，要捕获对DramModel :: canSee的静态调用和对Whisky-&gt; drink的动态调用，您将启动监视器：</p>
-<p>Example:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">xdebug_start_function_monitor( [ <span class="string">'DramModel::canSee'</span>, <span class="string">'Whisky-&gt;drink'</span>] );</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
-<p>定义的函数区分大小写，并且不会捕获对静态方法的动态调用。</p>
-<h3 id="void-xdebug-stop-function-monitor（）"><a href="#void-xdebug-stop-function-monitor（）" class="headerlink" title="void xdebug_stop_function_monitor（）"></a><strong>void xdebug_stop_function_monitor（）</strong></h3><p>停止监视功能</p>
-<p>在2.4版本中引入</p>
-<p>此功能停止功能监视器。 为了获得受监视函数的列表，您需要使用xdebug_get_monitored_functions（）函数。</p>
+<p>此设置对通过远程调试功能发送到客户端的子项数没有任何影响。</p>
+<h2 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h2><h3 id="void-var-dump（-mixture-var-，…-）"><a href="#void-var-dump（-mixture-var-，…-）" class="headerlink" title="void var_dump（[mixture var [，…]]）"></a><strong>void var_dump（[mixture var [，…]]）</strong></h3><blockquote>
+<p>显示有关变量的详细信息</p>
+</blockquote>
+<p>此函数由Xdebug重载，请参阅xdebug_var_dump（）的说明。</p>
+<h3 id="void-xdebug-debug-zval（-string-varname-，…-）"><a href="#void-xdebug-debug-zval（-string-varname-，…-）" class="headerlink" title="void xdebug_debug_zval（[string varname [，…]]）"></a><strong>void xdebug_debug_zval（[string varname [，…]]）</strong></h3><blockquote>
+<p>显示有关变量的信息</p>
+</blockquote>
+<p>此函数显示有关一个或多个变量的结构化信息，包括其类型，值和引用计数信息。使用值递归地探索数组。这个函数的实现不同于PHP的debug_zval_dump（）函数，以解决该函数的问题，因为变量本身实际上传递给函数。 Xdebug的版本是更好的，因为它使用变量名称来查找内部符号表中的变量，并直接访问所有的属性，而不必处理实际传递一个变量到一个函数。结果是，该函数返回的信息比PHP自己的用于显示zval信息的函数准确得多。</p>
+<p>从Xdebug 2.3开始支持除了简单变量名（例如下面的“a [2]”）之外的任何东西。</p>
+<p>Example:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    $a = <span class="keyword">array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">    $b =&amp; $a;</div><div class="line">    $c =&amp; $a[<span class="number">2</span>];</div><div class="line"></div><div class="line">    xdebug_debug_zval(<span class="string">'a'</span>);</div><div class="line">    xdebug_debug_zval(<span class="string">"a[2]"</span>);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>结果：(refcount:引用次数，)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">a: (refcount=2, is_ref=1)=array (</div><div class="line">	0 =&gt; (refcount=1, is_ref=0)=1,</div><div class="line">	1 =&gt; (refcount=1, is_ref=0)=2,</div><div class="line">	2 =&gt; (refcount=2, is_ref=1)=3)</div><div class="line">a[2]: (refcount=2, is_ref=1)=3</div></pre></td></tr></table></figure></p>
+<h3 id="void-xdebug-debug-zval-stdout（-string-varname-，…-）"><a href="#void-xdebug-debug-zval-stdout（-string-varname-，…-）" class="headerlink" title="void xdebug_debug_zval_stdout（[string varname [，…]]）"></a><strong>void xdebug_debug_zval_stdout（[string varname [，…]]）</strong></h3><blockquote>
+<p>将有关变量的信息返回到stdout。</p>
+</blockquote>
+<p>此函数显示有关一个或多个变量的结构化信息，包括其类型，值和引用计数信息。 使用值递归地探索数组。 与xdebug_debug_zval（）的区别在于，该信息不通过Web服务器API层显示，而是直接显示在stdout上（因此，在Apache以单进程模式运行时，它会在控制台上运行）。</p>
+<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">    $a = array(1, 2, 3);</div><div class="line">    $b =&amp; $a;</div><div class="line">    $c =&amp; $a[2];</div><div class="line"></div><div class="line">    xdebug_debug_zval_stdout(&apos;a&apos;);</div></pre></td></tr></table></figure></p>
+<p>返回：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">a: (refcount=2, is_ref=1)=array (</div><div class="line">	0 =&gt; (refcount=1, is_ref=0)=1,</div><div class="line">	1 =&gt; (refcount=1, is_ref=0)=2,</div><div class="line">	2 =&gt; (refcount=2, is_ref=1)=3)</div></pre></td></tr></table></figure></p>
+<h3 id="void-xdebug-dump-superglobals（）"><a href="#void-xdebug-dump-superglobals（）" class="headerlink" title="void xdebug_dump_superglobals（）"></a><strong>void xdebug_dump_superglobals（）</strong></h3><blockquote>
+<p>显示有关超级全局的信息</p>
+</blockquote>
+<p>此函数转储指定的超级全局元素的值通过php.ini中的xdebug.dump.*选项。 对于下面的示例，php.ini中的设置是：</p>
+<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">xdebug.dump.GET=*</div><div class="line">xdebug.dump.SERVER=REMOTE_ADDR</div><div class="line"></div><div class="line">Query string:</div><div class="line">?var=fourty%20two&amp;array[a]=a&amp;array[9]=b</div></pre></td></tr></table></figure></p>
+<p>结果：<br><img src="http://n.sinaimg.cn/games/3ece443e/20161022/8F0658D7-C951-4B12-BC74-92E15E31C44C.png" alt="img"></p>
+<h3 id="void-xdebug-var-dump（-mixed-var-，…-）"><a href="#void-xdebug-var-dump（-mixed-var-，…-）" class="headerlink" title="void xdebug_var_dump（[mixed var [，…]]）"></a><strong>void xdebug_var_dump（[mixed var [，…]]）</strong></h3><blockquote>
+<p>显示有关变量的详细信息</p>
+</blockquote>
+<p>此函数显示有关包含其类型和值的一个或多个表达式的结构化信息。 使用值递归地探索数组。 请参阅变量显示功能的介绍，其中php.ini设置影响此功能。</p>
+<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">ini_set(&apos;xdebug.var_display_max_children&apos;, 3 );</div><div class="line">$c = new stdClass;</div><div class="line">$c-&gt;foo = &apos;bar&apos;;</div><div class="line">$c-&gt;file = fopen( &apos;/etc/passwd&apos;, &apos;r&apos; );</div><div class="line">var_dump(</div><div class="line">    array(</div><div class="line">        array(TRUE, 2, 3.14, &apos;foo&apos;),</div><div class="line">        &apos;object&apos; =&gt; $c</div><div class="line">    )</div><div class="line">);</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  0 =&gt;</div><div class="line">    array</div><div class="line">      0 =&gt; boolean true</div><div class="line">      1 =&gt; int 2</div><div class="line">      2 =&gt; float 3.14</div><div class="line">      more elements...</div><div class="line">  &apos;object&apos; =&gt;</div><div class="line">    object(stdClass)[1]</div><div class="line">      public &apos;foo&apos; =&gt; string &apos;bar&apos; (length=3)</div><div class="line">      public &apos;file&apos; =&gt; resource(3, stream)</div></pre></td></tr></table></figure></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;当Xdebug被激活时，只要PHP决定显示通知，警告，错误等，它将显示一个堆栈跟踪。堆栈跟踪显示的信息以及它们的呈现方式可以配置为满足您的需要。&lt;/p&gt;
-&lt;p&gt;Xdebug在错误情况下显示的堆栈跟踪（如果display_errors在php.ini中设置为On）在它们显示的信息量上相当保守。 这是因为大量的信息可以减慢脚本的执行和在浏览器中呈现堆栈跟踪本身。 但是，可以使堆栈跟踪显示具有不同设置的更详细信息。&lt;/p&gt;
+      &lt;p&gt;Xdebug替换了PHP的var_dump（）函数来显示变量。 Xdebug的版本包括不同类型的不同颜色，并且限制了数组元素/对象属性的数量，最大深度和字符串长度。 还有一些其他函数处理可变显示。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
+    
+    
+      <category term="Xdebug" scheme="https://weizhimiao.github.io/tags/Xdebug/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Xdebug之PHP脚本剖析</title>
+    <link href="https://weizhimiao.github.io/2016/10/22/Xdebug%E4%B9%8BPHP%E8%84%9A%E6%9C%AC%E5%89%96%E6%9E%90/"/>
+    <id>https://weizhimiao.github.io/2016/10/22/Xdebug之PHP脚本剖析/</id>
+    <published>2016-10-22T12:30:00.000Z</published>
+    <updated>2016-10-22T16:06:38.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Xdebug内置分析器允许您在脚本中找到瓶颈，并使用外部工具（如KCacheGrind或WinCacheGrind）可视化这些瓶颈。</p>
+<a id="more"></a>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Xdebug的Profiler是一个强大的工具，使您能够分析您的PHP代码并确定瓶颈，或者通常查看代码的哪些部分很慢，并可以使用速度提升。<br>Xdebug 2中的分析器以高速缓存磨削兼容文件的形式输出分析信息。这允许您使用优秀的KCacheGrind工具（Linux，KDE）来分析概要分析数据。</p>
+<ul>
+<li><p>如果你在Linux上，你可以安装KCacheGrind通过你最喜欢的包管理器。</p>
+</li>
+<li><p>如果你在Windows上，有预编译的QCacheGrind二进制文件可用。 （QCacheGrind是没有KDE绑定的KCacheGrind）。</p>
+</li>
+<li><p>如果你在Mac OSX上，还有如何构建QCacheGrind的说明。</p>
+</li>
+</ul>
+<p>Windows的用户可以选择使用WinCacheGrind。该功能不同于KCacheGrind，因此在此页面上记录使用KCacheGrind的部分不适用于此程序。 WinCacheGrind目前不支持Xdebug 2.3引入的cachegrind文件的文件和函数压缩。</p>
+<p>还有一个替代的配置文件信息呈现工具xdebugtoolkit，一个称为Webgrind的基于Web的前端，以及一个名为XCallGraph的基于Java的工具。</p>
+<p>如果您不能使用KDE（或不想使用KDE），kcachegrind软件包也会附带一个perl脚本“ct_annotate”，该脚本从profiler跟踪文件生成ASCII输出。</p>
+<h2 id="启动Profiler"><a href="#启动Profiler" class="headerlink" title="启动Profiler"></a>启动Profiler</h2><p>通过在php.ini中将xdebug.profiler_enable设置为1来启用分析。<br>这将指示Xdebug开始将分析信息写入使用xdebug.profiler_output_dir指令配置的转储目录。<br>生成的文件的名称始终以“cachegrind.out”开头。并以PHP（或Apache）进程的PID（进程ID）或包含最初调试的脚本的目录的crc32哈希结束。<br>请确保您的xdebug.profiler_output_dir中有足够的空间，因为分析器生成的信息量对于复杂脚本非常大，例如对于像eZ Publish这样的复杂应用程序，最多可以有500MB的空间。</p>
+<p>您还可以选择性地启用分析器，将xdebug.profiler_enable_trigger设置为1.<br>如果设置为1，那么可以使用名为XDEBUG_PROFILE的GET / POST或COOKIE变量启用分析器。<br>可以用于启用调试器（请参阅HTTP调试会话）的FireFox 2扩展也可以与此设置一起使用。为了使触发器正常工作，xdebug.profiler_enable需要设置为0。</p>
+<h2 id="分析Profiler"><a href="#分析Profiler" class="headerlink" title="分析Profiler"></a>分析Profiler</h2><p>生成配置文件信息文件后，可以使用 <a href="https://kcachegrind.github.io/" target="_blank" rel="external">KCacheGrind</a> 打开它：</p>
+<p><img src="https://xdebug.org/images/docs/kc-open.png" alt="img"></p>
+<p>一旦打开文件，您就可以在KCacheGrind的不同窗格中获得大量信息。在左侧，找到“Flat Profile”窗格，其中显示了脚本中按照此函数中的时间花费及其所有子项排序的所​​有函数。第二列“Self”显示此函数（没有其子项）的时间花费，第三列“Called”显示特定函数的调用频率，最后一列“Function”显示函数的名称。 Xdebug通过用“php ::”作为前缀来更改内部PHP函数名称，并且包含文件也以特殊方式处理。调用include（和include_one，require和require_once）后跟“::”和包含文件的文件名。在左边的截图中你可以看到“include :: / home / httpd / ez_34 / v …”，内部PHP函数的例子是“php :: mysql_query”。前两列中的数字可以是脚本的完整运行时间的百分比（如在示例中）或绝对时间（1单位是1 / 1,000,000秒）。您可以使用右侧显示的按钮在两种模式之间切换。</p>
+<p><img src="https://xdebug.org/images/docs/kc-profile.png" alt="img"></p>
+<p>右侧的窗格包含上窗格和下窗格。 上面的图显示了有关称为当前所选函数的函数的信息（“eztemplatedesignresource-&gt; executecompiledtemplate”）。下面的窗格显示当前所选函数调用的函数的信息。</p>
+<p><img src="https://xdebug.org/images/docs/kc-right-call.png" alt="img"></p>
+<p>上方窗格中的“成本”列显示从列表中的函数调用时当前所选函数的时间花费。 添加的“费用”列中的数字将始终为100％。 下方窗格中的“成本”列显示从列表中调用函数所花费的时间。 在添加此列表中的数字时，您很可能永远不会达到100％，因为所选的函数本身也需要时间来执行。</p>
+<p><img src="https://xdebug.org/images/docs/kc-right-callers.png" alt="img"></p>
+<p>“所有呼叫者”和“所有呼叫”选项卡不仅显示从其调用该函数的直接调用，而且还显示所有直接调用的函数调用，还显示函数调用更多级别上下调用。 左侧屏幕截图中的上部窗格显示了所有调用当前所选函数的函数，直接和间接地使用堆栈上它们之间的其他函数。 “距离”列显示列出的和当前选择的函数调用之间有多少个函数调用（-1）。 如果两个函数之间有不同的距离，则显示为一个范围（例如“5-24”）。 括号中的数字是中值距离。 下面的窗格是类似的，除了它显示从当前选择的函数调用的函数的信息，再次是直接或间接。</p>
+<h2 id="相关的设置"><a href="#相关的设置" class="headerlink" title="相关的设置"></a>相关的设置</h2><h3 id="xdebug-profiler-append"><a href="#xdebug-profiler-append" class="headerlink" title="xdebug.profiler_append"></a>xdebug.profiler_append</h3><p>类型：整数，默认值：0</p>
+<p>当此设置设置为1时，当新请求映射到同一文件时（不在xdebug.profiler_output_name设置上），将不会覆盖分析器文件，而是使用新配置文件附加文件。</p>
+<h3 id="xdebug-profiler-enable"><a href="#xdebug-profiler-enable" class="headerlink" title="xdebug.profiler_enable"></a>xdebug.profiler_enable</h3><p>类型：整数，默认值：0</p>
+<p>启用Xdebug的概要分析器，它在概要文件输出目录中创建文件。这些文件可以由KCacheGrind读取以可视化您的数据。<br>无法使用ini_set（）在脚本中设置此设置。如果要选择性地启用分析器，请将xdebug.profiler_enable_trigger设置为1，而不使用此设置。</p>
+<h3 id="xdebug-profiler-enable-trigger"><a href="#xdebug-profiler-enable-trigger" class="headerlink" title="xdebug.profiler_enable_trigger"></a>xdebug.profiler_enable_trigger</h3><p>类型：整数，默认值：0</p>
+<p>当此设置设置为1时，可以使用XDEBUG_PROFILE GET / POST参数触发剖析器文件的生成，或者设置名为XDEBUG_PROFILE的cookie。<br>这将然后将分析器数据写入定义的目录。为了防止profiler为每个请求生成概要文件文件，您需要将xdebug.profiler_enable设置为0.对触发器本身的访问可以通过xdebug.profiler_enable_trigger_value配置。</p>
+<h3 id="xdebug-profiler-enable-trigger-value"><a href="#xdebug-profiler-enable-trigger-value" class="headerlink" title="xdebug.profiler_enable_trigger_value"></a>xdebug.profiler_enable_trigger_value</h3><p>类型：字符串，默认值：“”，在Xdebug&gt; 2.3中引入</p>
+<p>此设置可用于限制谁可以使用xdebug.profiler_enable_trigger中概述的XDEBUG_PROFILE功能。当从空字符串的默认值更改时，cookie，GET或POST参数的值需要使用此设置匹配共享机密集，<br>以便分析器启动。</p>
+<h3 id="xdebug-profiler-output-dir"><a href="#xdebug-profiler-output-dir" class="headerlink" title="xdebug.profiler_output_dir"></a>xdebug.profiler_output_dir</h3><p>类型：字符串，默认值：/ tmp</p>
+<p>将写入分析器输出的目录，确保PHP将运行的用户具有对该目录的写入权限。无法使用ini_set（）在脚本中设置此设置。</p>
+<h3 id="xdebug-profiler-output-name"><a href="#xdebug-profiler-output-name" class="headerlink" title="xdebug.profiler_output_name"></a>xdebug.profiler_output_name</h3><p>类型：字符串，默认值：cachegrind.out。％p</p>
+<p>此设置确定用于将跟踪转储到的文件的名称。设置使用格式说明符指定格式，非常类似于sprintf（）和strftime（）。有几个格式说明符可以用于格式化文件名。</p>
+<p>有关受支持的说明符，请参见 <a href="https://xdebug.org/docs/all_settings#trace_output_name" target="_blank" rel="external">xdebug.trace_output_name</a> 文档。</p>
+<h2 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h2><h3 id="string-xdebug-get-profiler-filename（）"><a href="#string-xdebug-get-profiler-filename（）" class="headerlink" title="string xdebug get profiler filename（）"></a>string xdebug get profiler filename（）</h3><p>返回配置文件信息文件名</p>
+<p>返回用于将配置文件信息保存到的文件的名称。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Xdebug内置分析器允许您在脚本中找到瓶颈，并使用外部工具（如KCacheGrind或WinCacheGrind）可视化这些瓶颈。&lt;/p&gt;
     
     </summary>
     
@@ -2056,118 +2236,6 @@
       <category term="设计模式" scheme="https://weizhimiao.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
       <category term="工厂模式" scheme="https://weizhimiao.github.io/tags/%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP常见设计模式之注册表模式</title>
-    <link href="https://weizhimiao.github.io/2016/10/14/PHP%E5%B8%B8%E8%A7%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E6%B3%A8%E5%86%8C%E8%A1%A8%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://weizhimiao.github.io/2016/10/14/PHP常见设计模式之注册表模式/</id>
-    <published>2016-10-14T12:40:00.000Z</published>
-    <updated>2016-10-14T08:03:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="什么是注册表模式"><a href="#什么是注册表模式" class="headerlink" title="什么是注册表模式"></a>什么是注册表模式</h2><p>注册表（registry）模式仅是一个单独的全局类，在我们需要时允许代码检索一个对象的相同实例，也可以在我们需要的时候创建另一个实例。</p>
-<p>注册表就像是一个对象库，只要我们随时签入或者签出对象，而不必担心因为将这些对象保留太久而引起功能障碍。</p>
-<p>我们认为注册表模式中最简单的方式就是键/值存储，键作为一个对象的实例，而值就是实例本身。当我们需要管理键/值对的数组时，这个模式便开始发挥功效，存储最早实例化的实例，并且返回一个引用到请求中的同一个实例。</p>
-<h2 id="注册表模式和单例模式的关系"><a href="#注册表模式和单例模式的关系" class="headerlink" title="注册表模式和单例模式的关系"></a>注册表模式和单例模式的关系</h2><p>相同点：</p>
-<blockquote>
-<p>和单例模式一样，注册表模式也是用于访问全局可重用的对象；</p>
-</blockquote>
-<p>区别：</p>
-<blockquote>
-<p>注册表模式不负责创建对象，纯粹用于保持全局存储，可以容纳任何数量的相同类的实例。这使得它非常适合类似于数据库连接和配置对象等的采用单例模式满足不了其需求的情况。</p>
-</blockquote>
-<a id="more"></a>
-<h2 id="注册表模式的实现"><a href="#注册表模式的实现" class="headerlink" title="注册表模式的实现"></a>注册表模式的实现</h2><p>示例，<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Registry</span></span>&#123;</div><div class="line"></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> $_store = <span class="keyword">array</span>();</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">add</span><span class="params">($object, $name = null)</span></span>&#123;</div><div class="line">    $name = (!is_null($name)) ? $name : get_class($object);</div><div class="line">    $name = strtolower($name);</div><div class="line"></div><div class="line">    $return = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="keyword">self</span>::$_store[$name]))&#123;</div><div class="line">      $return = <span class="keyword">self</span>::$_store[$name];</div><div class="line">    &#125; <span class="keyword">else</span>&#123;</div><div class="line">      <span class="keyword">self</span>::$_store[$name] = $object;</div><div class="line">      $return = <span class="keyword">self</span>::$_store[$name];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> $return;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">get</span><span class="params">($name)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(!<span class="keyword">self</span>::contains($name))&#123;</div><div class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="keyword">Exception</span>(<span class="string">"object does not exist in registry"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>::$_store[$name];</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">contains</span><span class="params">($name)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(!<span class="keyword">isset</span>(<span class="keyword">self</span>::$_store[$name]))&#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">remove</span><span class="params">($name)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">self</span>::contains($name))&#123;</div><div class="line">      <span class="keyword">unset</span>(<span class="keyword">self</span>::$_store[$name]);</div><div class="line">    &#125;</div><div class="line">  &#125;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>注册表模式的4个实现方法：</p>
-<ul>
-<li>Registry::set(),添加一个对象到注册表，你可以指定一个名称（为多个实例）或者使用默认的类名（为单例，与行为类似）</li>
-<li>Registry::get(),从注册表的名字中检索一个对象</li>
-<li>Registry::contains(),在注册表中检查一个对象是否存在</li>
-<li>Registry::unset(),通过对象名在注册表中删除一个对象</li>
-</ul>
-<h2 id="注册表模式的应用"><a href="#注册表模式的应用" class="headerlink" title="注册表模式的应用"></a>注册表模式的应用</h2><p>创建了Registry类之后，我们可以通过两种方式来使用它。</p>
-<ul>
-<li>外部</li>
-<li>内部</li>
-</ul>
-<p>示例，两种方式的数据库连接代码。</p>
-<h3 id="外部"><a href="#外部" class="headerlink" title="外部"></a>外部</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  $read = <span class="keyword">new</span> DBReadConnection();</div><div class="line">  Registry::add($read);</div><div class="line"></div><div class="line">  $write = <span class="keyword">new</span> DBWriteConnection();</div><div class="line">  Registry::add($wite);</div><div class="line"></div><div class="line">  <span class="comment">//在之后的任何代码中，我们可以通过以下方式获得对应实例</span></div><div class="line">  $read = Registry::get(<span class="string">'DBReadConnection'</span>);</div><div class="line">  $write = Registry::get(<span class="string">'DBWriteConnection'</span>);</div></pre></td></tr></table></figure>
-<p>在这个示例中，我们没有传入实例名称，而是通过使用类名从注册表中提取对象。<br>在Registry类能访问到的任何地方该对象都可用。</p>
-<h3 id="内部"><a href="#内部" class="headerlink" title="内部"></a>内部</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">DBConnection</span> <span class="title">extend</span> <span class="title">PDO</span></span>&#123;</div><div class="line">  <span class="keyword">public</span> statuc <span class="function"><span class="keyword">function</span> <span class="title">getInstance</span><span class="params">($name = null)</span></span>&#123;</div><div class="line">    $class = get_called_class();</div><div class="line"></div><div class="line">    $name = (!is_null($name)) ? $name : $class;</div><div class="line">    $name = strtolower($name);</div><div class="line">    <span class="keyword">if</span>(!Registry::contains($name))&#123;</div><div class="line">      $instance = <span class="keyword">new</span> $class();</div><div class="line">      Registry::add($instance, $name);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> Registry::get($name);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DBWriteConnection</span> <span class="title">extend</span> <span class="title">DBConnection</span></span>&#123;</div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__contruct</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">parent</span>::_contruct(APP_DB_DSN, APP_DB_USER, APP_DB_PWD);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DBReadConnection</span> <span class="title">extend</span> <span class="title">DBConnection</span></span>&#123;</div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__contruct</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">parent</span>::_contruct(APP_DB_DSN, APP_DB_USER, APP_DB_PWD);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>要使用这些代码，我们只需在任一读或者写连接类中调用DBConnection::getInstance()即可，就像<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">  <span class="comment">//获得一个读实例</span></div><div class="line">  $read_db = DBReadConnection::getInstance();</div><div class="line">  <span class="comment">//获得一个写实例</span></div><div class="line">  $write_db  = DBWriteConnection::getInstance();</div><div class="line"></div><div class="line">  <span class="comment">//获得另一个读实例</span></div><div class="line">  $another_read_db = DBReadConnection::getInstance(<span class="string">"another_db"</span>);</div></pre></td></tr></table></figure></p>
-<p>在某些方面，这是一个单例模式和工厂模式的混合物。</p>
-<h2 id="注册的若干问题"><a href="#注册的若干问题" class="headerlink" title="注册的若干问题"></a>注册的若干问题</h2><p>对于外部注册表，你不能延迟加载；也就是说，在我们使用之前，必须初始化注册表中的每一个对象。如果操作顺序变得更为复杂，我们可能就会错过某个对象而产生预料之外的错误。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;什么是注册表模式&quot;&gt;&lt;a href=&quot;#什么是注册表模式&quot; class=&quot;headerlink&quot; title=&quot;什么是注册表模式&quot;&gt;&lt;/a&gt;什么是注册表模式&lt;/h2&gt;&lt;p&gt;注册表（registry）模式仅是一个单独的全局类，在我们需要时允许代码检索一个对象的相同实例，也可以在我们需要的时候创建另一个实例。&lt;/p&gt;
-&lt;p&gt;注册表就像是一个对象库，只要我们随时签入或者签出对象，而不必担心因为将这些对象保留太久而引起功能障碍。&lt;/p&gt;
-&lt;p&gt;我们认为注册表模式中最简单的方式就是键/值存储，键作为一个对象的实例，而值就是实例本身。当我们需要管理键/值对的数组时，这个模式便开始发挥功效，存储最早实例化的实例，并且返回一个引用到请求中的同一个实例。&lt;/p&gt;
-&lt;h2 id=&quot;注册表模式和单例模式的关系&quot;&gt;&lt;a href=&quot;#注册表模式和单例模式的关系&quot; class=&quot;headerlink&quot; title=&quot;注册表模式和单例模式的关系&quot;&gt;&lt;/a&gt;注册表模式和单例模式的关系&lt;/h2&gt;&lt;p&gt;相同点：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;和单例模式一样，注册表模式也是用于访问全局可重用的对象；&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;区别：&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;注册表模式不负责创建对象，纯粹用于保持全局存储，可以容纳任何数量的相同类的实例。这使得它非常适合类似于数据库连接和配置对象等的采用单例模式满足不了其需求的情况。&lt;/p&gt;
-&lt;/blockquote&gt;
-    
-    </summary>
-    
-      <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
-    
-    
-      <category term="设计模式" scheme="https://weizhimiao.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-      <category term="注册表模式" scheme="https://weizhimiao.github.io/tags/%E6%B3%A8%E5%86%8C%E8%A1%A8%E6%A8%A1%E5%BC%8F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>PHP常见设计模式之单例模式</title>
-    <link href="https://weizhimiao.github.io/2016/10/14/PHP%E5%B8%B8%E8%A7%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
-    <id>https://weizhimiao.github.io/2016/10/14/PHP常见设计模式之单例模式/</id>
-    <published>2016-10-14T12:00:00.000Z</published>
-    <updated>2016-10-14T08:02:28.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="什么是单例模式"><a href="#什么是单例模式" class="headerlink" title="什么是单例模式"></a>什么是单例模式</h2><p>当我们实例化一个对象时，他可以确保我们实例化的这个类将仅有一个实例，并且我们在我们的代码中的任何地方都可以轻易的召回相同的对象。</p>
-<p>就是说，当我们使用单例模式第一次调用对象时，他就会被实例化，之后每一次调用都将会返回同一个对象。</p>
-<p>单例模式通常用于对象，它代表在应用程序不同部分被再三使用的资源，而且始终为同一对象。</p>
-<p>常见的示例包括数据库连接和配置信息。</p>
-<a id="more"></a>
-<h2 id="为什么要使用单例模式"><a href="#为什么要使用单例模式" class="headerlink" title="为什么要使用单例模式"></a>为什么要使用单例模式</h2><p>单例模式最重要的方面就是在于对创建示例的限制能力。如果不这样做的话，应用程序中同一个对象可能会被创建多个实例，可能会造成资源的浪费。</p>
-<h2 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h2><p>通过创建私有的构造器来实现限制对象创建实例的能力。示例，<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Database</span> <span class="title">extend</span> <span class="title">PDO</span></span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">//私有静态变量，用来保存单例实例</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">static</span> $_instance = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">  <span class="comment">//私有构造函数，保证这个类只能被本省的静态发放实例化</span></div><div class="line">  <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">_contruct</span><span class="params">()</span></span>&#123;</div><div class="line"></div><div class="line">    <span class="comment">//调用PDO的构造函数</span></div><div class="line">    <span class="keyword">parent</span>::_contruct(APP_DB_DSN, APP_DB_USER, APP_DB_PWD);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">//获得单例实例的方法。如果实例已经存在，则直接返回；否则先构造一个，然后返回；</span></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getInstance</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(!(<span class="keyword">self</span>::$_instance <span class="keyword">instanceof</span> Database))&#123;</div><div class="line">      <span class="keyword">self</span>::$_instance = <span class="keyword">new</span> Database();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>::$_instance;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>实现单例的三个关键点：</p>
-<ul>
-<li>使用一个静态成员来保持一个单例实例。在这个例子中，我们有一个私有的DB::$_instance属性。</li>
-<li>然后，一个私有的构造函数将决定这个类只能被本身所包含的静态方法实例化。</li>
-<li>DB::getInstance()静态方法将用于数据库类。当他被调用时，DB::getInstance()将实例化一个Database类的对象并将这个对象指定给DB::$_instance属性，然后返回这个对象，或只返回先前已经实例化的对象。</li>
-</ul>
-<p>我们之所以使用单例模式，是因为静态方法可以在全局范围内被访问，无论哪里，当我们需要一个数据库连接时，只需要调用DB::getInstance()即可。</p>
-<h2 id="使用单例模式的问题"><a href="#使用单例模式的问题" class="headerlink" title="使用单例模式的问题"></a>使用单例模式的问题</h2><p><strong>尽管单例思想很伟大，但当我们确实需要多个实例的时候，其局限性就显而易见。</strong></p>
-<blockquote>
-<p>比如，我们拆分了数据库之后，就需要在不同的服务器上进行读写操作。而这时单例就满足不了我们的需求了。</p>
-</blockquote>
-<p>所以单例模式不恰当的使用就会抑制自身的发展和重用。所以当想通过一个类创建两个实例，我们可以考虑通过注册表模式来实现。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;什么是单例模式&quot;&gt;&lt;a href=&quot;#什么是单例模式&quot; class=&quot;headerlink&quot; title=&quot;什么是单例模式&quot;&gt;&lt;/a&gt;什么是单例模式&lt;/h2&gt;&lt;p&gt;当我们实例化一个对象时，他可以确保我们实例化的这个类将仅有一个实例，并且我们在我们的代码中的任何地方都可以轻易的召回相同的对象。&lt;/p&gt;
-&lt;p&gt;就是说，当我们使用单例模式第一次调用对象时，他就会被实例化，之后每一次调用都将会返回同一个对象。&lt;/p&gt;
-&lt;p&gt;单例模式通常用于对象，它代表在应用程序不同部分被再三使用的资源，而且始终为同一对象。&lt;/p&gt;
-&lt;p&gt;常见的示例包括数据库连接和配置信息。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="PHP" scheme="https://weizhimiao.github.io/categories/PHP/"/>
-    
-    
-      <category term="设计模式" scheme="https://weizhimiao.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-      <category term="单例模式" scheme="https://weizhimiao.github.io/tags/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
     
   </entry>
   
