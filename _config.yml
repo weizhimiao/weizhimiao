@@ -74,9 +74,9 @@ theme: next
 
 deploy:
   type: git
-  repository: git@github.com:weizhimiao/weizhimiao.github.io.git
+  repository: https://github.com/weizhimiao/weizhimiao.github.io.git
   branch: master
-
+ 
 include:
   - .nojekyll
 
