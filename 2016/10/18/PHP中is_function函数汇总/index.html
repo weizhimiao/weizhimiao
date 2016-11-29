@@ -1,0 +1,939 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="行云流水" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP中is_func函数汇总">
+<meta property="og:url" content="https://weizhimiao.github.io/2016/10/18/PHP中is_function函数汇总/index.html">
+<meta property="og:site_name" content="行云流水">
+<meta property="og:image" content="http://n.sinaimg.cn/games/3ece443e/20161018/is_func.png">
+<meta property="og:updated_time" content="2016-10-18T08:33:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP中is_func函数汇总">
+<meta name="twitter:image" content="http://n.sinaimg.cn/games/3ece443e/20161018/is_func.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://weizhimiao.github.io/2016/10/18/PHP中is_function函数汇总/"/>
+
+  <title> PHP中is_func函数汇总 | 行云流水 </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e4b7d6d381ddeae9bb9afe7349625074";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行云流水</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">却也碎碎念念</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-atom">
+          <a href="/atom.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-rss"></i> <br />
+            
+            订阅
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5esyb9coehH1NCtAqKqX','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                PHP中is_func函数汇总
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-18T18:30:00+08:00" content="2016-10-18">
+              2016-10-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/18/PHP中is_function函数汇总/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/18/PHP中is_function函数汇总/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv">本文总阅读量
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://n.sinaimg.cn/games/3ece443e/20161018/is_func.png" alt="PHP中is_func函数汇总"></p>
+<a id="more"></a>
+<h2 id="is-float"><a href="#is-float" class="headerlink" title="is_float"></a>is_float</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_float — 检测变量是否是浮点型</p>
+</blockquote>
+<p>描述<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_float ( mixed $var )</div></pre></td></tr></table></figure></p>
+<p>如果 var 是 float 则返回 TRUE，否则返回 FALSE。</p>
+<h2 id="is-soap-fault"><a href="#is-soap-fault" class="headerlink" title="is_soap_fault"></a>is_soap_fault</h2><blockquote>
+<p>is_soap_fault — 检查SOAP调用是否失败</p>
+</blockquote>
+<p>说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_soap_fault ( mixed $object )</div></pre></td></tr></table></figure></p>
+<p>此函数用于检查SOAP调用是否失败，但不使用异常。 要使用它，请创建一个SoapClient对象，将异常选项设置为零或FALSE。 在这种情况下，SOAP方法将返回封装故障详细信息（faultcode，faultstring，faultactor和faultdetails）的特殊SoapFault对象。</p>
+<p>如果未设置异常，那么SOAP调用将在错误时抛出异常。 is_soap_fault（）检查给定的参数是否是SoapFault对象。</p>
+<h2 id="is-bool"><a href="#is-bool" class="headerlink" title="is_bool"></a>is_bool</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_bool — 检测变量是否是布尔型</p>
+</blockquote>
+<p>描述<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_bool ( mixed $var )</div></pre></td></tr></table></figure></p>
+<p>如果 var 是 boolean 则返回 TRUE。</p>
+<h2 id="is-integer"><a href="#is-integer" class="headerlink" title="is_integer"></a>is_integer</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_integer — is_int() 的别名</p>
+</blockquote>
+<p>描述</p>
+<p>此函数是 is_int() 的别名函数。</p>
+<h2 id="is-dir"><a href="#is-dir" class="headerlink" title="is_dir"></a>is_dir</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_dir — 判断给定文件名是否是一个目录</p>
+</blockquote>
+<p>说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_dir ( string $filename )</div></pre></td></tr></table></figure></p>
+<p>判断给定文件名是否是一个目录。</p>
+<h2 id="is-writeable"><a href="#is-writeable" class="headerlink" title="is_writeable"></a>is_writeable</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_writeable — is_writable() 的别名</p>
+</blockquote>
+<p>说明</p>
+<p>此函数是该函数的别名：is_writable()。</p>
+<h2 id="is-real"><a href="#is-real" class="headerlink" title="is_real"></a>is_real</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_real — is_float() 的别名</p>
+</blockquote>
+<p>描述</p>
+<p>此函数是 is_float() 的别名函数。</p>
+<h2 id="is-file"><a href="#is-file" class="headerlink" title="is_file"></a>is_file</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_file — 判断给定文件名是否为一个正常的文件</p>
+</blockquote>
+<p>说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_file ( string $filename )</div></pre></td></tr></table></figure></p>
+<p>判断给定文件名是否为一个正常的文件。</p>
+<h2 id="is-subclass-of"><a href="#is-subclass-of" class="headerlink" title="is_subclass_of"></a>is_subclass_of</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_subclass_of — 如果此对象是该类的子类，则返回 TRUE</p>
+</blockquote>
+<p>说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_subclass_of ( object $object , string $class_name )</div></pre></td></tr></table></figure></p>
+<p>如果对象 object 所属类是类 class_name 的子类，则返回 TRUE，否则返回 FALSE。</p>
+<h2 id="is-tainted"><a href="#is-tainted" class="headerlink" title="is_tainted"></a>is_tainted</h2><blockquote>
+<p>(PECL taint &gt;=0.1.0)</p>
+<p>is_tainted — 检查字符串是否被污染</p>
+</blockquote>
+<p>说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_tainted ( string $string )</div></pre></td></tr></table></figure></p>
+<p>检查字符串是否被污染</p>
+<h2 id="is-resource"><a href="#is-resource" class="headerlink" title="is_resource"></a>is_resource</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_resource — 检测变量是否为资源类型</p>
+</blockquote>
+<p>描述<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_resource ( mixed $var )</div></pre></td></tr></table></figure></p>
+<p>如果给出的参数 var 是 resource 类型，is_resource() 返回 TRUE，否则返回 FALSE。</p>
+<p>PHP中<a href="http://php.net/manual/zh/resource.php" target="_blank" rel="external">资源类型列表</a></p>
+<h2 id="is-readable"><a href="#is-readable" class="headerlink" title="is_readable"></a>is_readable</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_readable — 判断给定文件名是否可读</p>
+</blockquote>
+<p>说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_readable ( string $filename )</div></pre></td></tr></table></figure></p>
+<p>判断给定文件名是否存在并且可读。</p>
+<h2 id="is-writable"><a href="#is-writable" class="headerlink" title="is_writable"></a>is_writable</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_writable — 判断给定的文件名是否可写</p>
+</blockquote>
+<p>说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_writable ( string $filename )</div></pre></td></tr></table></figure></p>
+<p>如果文件存在并且可写则返回 TRUE。filename 参数可以是一个允许进行是否可写检查的目录名。</p>
+<p><strong>记住 PHP 也许只能以运行 webserver 的用户名（通常为 ‘nobody’）来访问文件。不计入安全模式的限制。</strong></p>
+<h2 id="is-scalar"><a href="#is-scalar" class="headerlink" title="is_scalar"></a>is_scalar</h2><blockquote>
+<p>PHP 4 &gt;= 4.0.5, PHP 5, PHP 7)</p>
+<p>is_scalar — 检测变量是否是一个标量</p>
+</blockquote>
+<p>描述<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_scalar ( mixed $var )</div></pre></td></tr></table></figure></p>
+<p>如果给出的变量参数 var 是一个标量，is_scalar() 返回 TRUE，否则返回 FALSE。</p>
+<p>标量变量是指那些包含了 integer、float、string 或 boolean的变量，而 array、object 和 resource 则不是标量。</p>
+<h2 id="is-long"><a href="#is-long" class="headerlink" title="is_long"></a>is_long</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_long — is_int() 的别名</p>
+</blockquote>
+<p>描述</p>
+<p>此函数是 is_int() 的别名函数。</p>
+<h2 id="is-double"><a href="#is-double" class="headerlink" title="is_double"></a>is_double</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_double — is_float() 的别名</p>
+</blockquote>
+<p>描述</p>
+<p>此函数是 is_float() 的别名函数。</p>
+<h2 id="is-array"><a href="#is-array" class="headerlink" title="is_array"></a>is_array</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_array — 检测变量是否是数组</p>
+</blockquote>
+<p>描述<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_array ( mixed $var )</div></pre></td></tr></table></figure></p>
+<p>如果 var 是 array，则返回 TRUE，否则返回 FALSE。</p>
+<h2 id="is-object"><a href="#is-object" class="headerlink" title="is_object"></a>is_object</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_object — 检测变量是否是一个对象</p>
+</blockquote>
+<p>描述<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_object ( mixed $var )</div></pre></td></tr></table></figure></p>
+<p>如果 var 是一个 object 则返回 TRUE，否则返回 FALSE。</p>
+<h2 id="is-null"><a href="#is-null" class="headerlink" title="is_null"></a>is_null</h2><blockquote>
+<p>(PHP 4 &gt;= 4.0.4, PHP 5, PHP 7)</p>
+<p>is_null — 检测变量是否为 NULL</p>
+</blockquote>
+<p>描述<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_null ( mixed $var )</div></pre></td></tr></table></figure></p>
+<p>如果 var 是 null 则返回 TRUE，否则返回 FALSE。</p>
+<p>查看 NULL 类型获知变量什么时候被认为是 NULL，而什么时候不是。</p>
+<p>特殊的 NULL 值表示一个变量没有值。NULL 类型唯一可能的值就是 NULL。在下列情况下一个变量被认为是 NULL：</p>
+<ul>
+<li><p>被赋值为 NULL。</p>
+</li>
+<li><p>尚未被赋值。</p>
+</li>
+<li><p>被 unset()。</p>
+</li>
+</ul>
+<h2 id="is-string"><a href="#is-string" class="headerlink" title="is_string"></a>is_string</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_string — 检测变量是否是字符串</p>
+</blockquote>
+<p>描述<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_string ( mixed $var )</div></pre></td></tr></table></figure></p>
+<p>如果 var 是 string 则返回 TRUE，否则返回 FALSE。</p>
+<h2 id="is-finite"><a href="#is-finite" class="headerlink" title="is_finite"></a>is_finite</h2><blockquote>
+<p>(PHP 4 &gt;= 4.2.0, PHP 5, PHP 7)</p>
+<p>is_finite — 判断是否为有限值</p>
+</blockquote>
+<p>说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_finite ( float $val )</div></pre></td></tr></table></figure></p>
+<p>检查 val 是否是是本机平台上浮点数所允许范围中的一个合法的有限值。</p>
+<h2 id="is-callable"><a href="#is-callable" class="headerlink" title="is_callable"></a>is_callable</h2><blockquote>
+<p>(PHP 4 &gt;= 4.0.6, PHP 5, PHP 7)</p>
+<p>is_callable — 检测参数是否为合法的可调用结构</p>
+</blockquote>
+<p>说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_callable ( callable $name [, bool $syntax_only = false [, string &amp;$callable_name ]] )</div></pre></td></tr></table></figure></p>
+<p>验证变量的内容能否作为函数调用。 这可以检查包含有效函数名的变量，或者一个数组，包含了正确编码的对象以及函数名。</p>
+<h2 id="is-numeric"><a href="#is-numeric" class="headerlink" title="is_numeric"></a>is_numeric</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_numeric — 检测变量是否为数字或数字字符串</p>
+</blockquote>
+<p>描述<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_numeric ( mixed $var )</div></pre></td></tr></table></figure></p>
+<p>如果 var 是数字和数字字符串则返回 TRUE，否则返回 FALSE。</p>
+<h2 id="is-infinite"><a href="#is-infinite" class="headerlink" title="is_infinite"></a>is_infinite</h2><blockquote>
+<p>(PHP 4 &gt;= 4.2.0, PHP 5, PHP 7)</p>
+<p>is_infinite — 判断是否为无限值</p>
+</blockquote>
+<p>说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_infinite ( float $val )</div></pre></td></tr></table></figure></p>
+<p>如果 val 为无穷大（正的或负的），例如 log(0) 的结果或者任何超出本平台的浮点数范围的值，则返回 TRUE。</p>
+<h2 id="is-executable"><a href="#is-executable" class="headerlink" title="is_executable"></a>is_executable</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_executable — 判断给定文件名是否可执行</p>
+</blockquote>
+<p>说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_executable ( string $filename )</div></pre></td></tr></table></figure></p>
+<p>判断给定文件名是否可执行。</p>
+<h2 id="is-int"><a href="#is-int" class="headerlink" title="is_int"></a>is_int</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_int — 检测变量是否是整数</p>
+</blockquote>
+<p>描述 ¶<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_int ( mixed $var )</div></pre></td></tr></table></figure></p>
+<p>如果 var 是 integer 则返回 TRUE，否则返回 FALSE。</p>
+<p><strong>Note:</strong><br>若想测试一个变量是否是数字或数字字符串（如表单输入，它们通常为字符串），必须使用 is_numeric()。</p>
+<h2 id="is-nan"><a href="#is-nan" class="headerlink" title="is_nan"></a>is_nan</h2><blockquote>
+<p>(PHP 4 &gt;= 4.2.0, PHP 5, PHP 7)</p>
+<p>is_nan — 判断是否为合法数值</p>
+</blockquote>
+<p>说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_nan ( float $val )</div></pre></td></tr></table></figure></p>
+<p>如果 val 为“非数值”，例如 acos(1.01) 的结果，则返回 TRUE。</p>
+<h2 id="is-link"><a href="#is-link" class="headerlink" title="is_link"></a>is_link</h2><blockquote>
+<p>(PHP 4, PHP 5, PHP 7)</p>
+<p>is_link — 判断给定文件名是否为一个符号连接</p>
+</blockquote>
+<p>说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_link ( string $filename )</div></pre></td></tr></table></figure></p>
+<p>判断给定文件名是否为一个符号连接。</p>
+<h2 id="is-uploaded-file"><a href="#is-uploaded-file" class="headerlink" title="is_uploaded_file"></a>is_uploaded_file</h2><blockquote>
+<p>(PHP 4 &gt;= 4.0.3, PHP 5, PHP 7)</p>
+<p>is_uploaded_file — 判断文件是否是通过 HTTP POST 上传的</p>
+</blockquote>
+<p>说明<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bool is_uploaded_file ( string $filename )</div></pre></td></tr></table></figure></p>
+<p>如果 filename 所给出的文件是通过 HTTP POST 上传的则返回 TRUE。这可以用来确保恶意的用户无法欺骗脚本去访问本不能访问的文件，例如 /etc/passwd。</p>
+<p><strong>这种检查显得格外重要</strong>，如果上传的文件有可能会造成对用户或本系统的其他用户显示其内容的话。</p>
+<p>为了能使 is_uploaded_file() 函数正常工作，变量指定类似于 $_FILES[‘userfile’][‘tmp_name’] 的变量，而在从客户端上传的文件名 $_FILES[‘userfile’][‘name’] 不能正常运作。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/14/PHP常见设计模式之工厂模式/" rel="next" title="PHP常见设计模式之工厂模式">
+                <i class="fa fa-chevron-left"></i> PHP常见设计模式之工厂模式
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/18/PHP常见设计模式之观察者模式/" rel="prev" title="PHP常见设计模式之观察者模式">
+                PHP常见设计模式之观察者模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/18/PHP中is_function函数汇总/"
+           data-title="PHP中is_func函数汇总" data-url="https://weizhimiao.github.io/2016/10/18/PHP中is_function函数汇总/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/11239812?v=3&u=aede3c90c7e5cbc2d029e3f0988d9e1503b59943&s=140"
+               alt="zhimiao" />
+          <p class="site-author-name" itemprop="name">zhimiao</p>
+          <p class="site-description motion-element" itemprop="description">像“草根”一样，紧贴着地面，低调的存在，冬去春来枯荣无恙。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">80</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/weizhimiao/home" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weizhimiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#is-float"><span class="nav-number">1.</span> <span class="nav-text">is_float</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-soap-fault"><span class="nav-number">2.</span> <span class="nav-text">is_soap_fault</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-bool"><span class="nav-number">3.</span> <span class="nav-text">is_bool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-integer"><span class="nav-number">4.</span> <span class="nav-text">is_integer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-dir"><span class="nav-number">5.</span> <span class="nav-text">is_dir</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-writeable"><span class="nav-number">6.</span> <span class="nav-text">is_writeable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-real"><span class="nav-number">7.</span> <span class="nav-text">is_real</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-file"><span class="nav-number">8.</span> <span class="nav-text">is_file</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-subclass-of"><span class="nav-number">9.</span> <span class="nav-text">is_subclass_of</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-tainted"><span class="nav-number">10.</span> <span class="nav-text">is_tainted</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-resource"><span class="nav-number">11.</span> <span class="nav-text">is_resource</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-readable"><span class="nav-number">12.</span> <span class="nav-text">is_readable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-writable"><span class="nav-number">13.</span> <span class="nav-text">is_writable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-scalar"><span class="nav-number">14.</span> <span class="nav-text">is_scalar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-long"><span class="nav-number">15.</span> <span class="nav-text">is_long</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-double"><span class="nav-number">16.</span> <span class="nav-text">is_double</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-array"><span class="nav-number">17.</span> <span class="nav-text">is_array</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-object"><span class="nav-number">18.</span> <span class="nav-text">is_object</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-null"><span class="nav-number">19.</span> <span class="nav-text">is_null</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-string"><span class="nav-number">20.</span> <span class="nav-text">is_string</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-finite"><span class="nav-number">21.</span> <span class="nav-text">is_finite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-callable"><span class="nav-number">22.</span> <span class="nav-text">is_callable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-numeric"><span class="nav-number">23.</span> <span class="nav-text">is_numeric</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-infinite"><span class="nav-number">24.</span> <span class="nav-text">is_infinite</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-executable"><span class="nav-number">25.</span> <span class="nav-text">is_executable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-int"><span class="nav-number">26.</span> <span class="nav-text">is_int</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-nan"><span class="nav-number">27.</span> <span class="nav-text">is_nan</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-link"><span class="nav-number">28.</span> <span class="nav-text">is_link</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#is-uploaded-file"><span class="nav-number">29.</span> <span class="nav-text">is_uploaded_file</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhimiao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<!--
+<div class="theme-info">
+    | 京ICP备 
+    <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+          16031041号
+    </a>
+</div>
+-->
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">本站访客数<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv">本站总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"weizhimiao"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+
+
+</body>
+</html>

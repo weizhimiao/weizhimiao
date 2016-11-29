@@ -1,0 +1,804 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Xdebug," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="行云流水" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="xdebug的使用
+
+xdebug的编译安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xdebug之常见问题">
+<meta property="og:url" content="https://weizhimiao.github.io/2016/10/22/Xdebug之常见问题/index.html">
+<meta property="og:site_name" content="行云流水">
+<meta property="og:description" content="xdebug的使用
+
+xdebug的编译安装">
+<meta property="og:updated_time" content="2016-10-22T16:06:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Xdebug之常见问题">
+<meta name="twitter:description" content="xdebug的使用
+
+xdebug的编译安装">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://weizhimiao.github.io/2016/10/22/Xdebug之常见问题/"/>
+
+  <title> Xdebug之常见问题 | 行云流水 </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e4b7d6d381ddeae9bb9afe7349625074";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行云流水</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">却也碎碎念念</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-atom">
+          <a href="/atom.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-rss"></i> <br />
+            
+            订阅
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5esyb9coehH1NCtAqKqX','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Xdebug之常见问题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-22T20:30:00+08:00" content="2016-10-22">
+              2016-10-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/22/Xdebug之常见问题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/22/Xdebug之常见问题/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv">本文总阅读量
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li><p>xdebug的使用</p>
+</li>
+<li><p>xdebug的编译安装</p>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="xdebug的使用"><a href="#xdebug的使用" class="headerlink" title="xdebug的使用"></a>xdebug的使用</h2><p>问：phpinfo（）报告Xdebug已安装和启用，但我仍然不会得到任何堆栈跟踪时发生错误。</p>
+<p>A1：你必须搜索所有的PHP库，并包含任何“set_error<em>handler”调用的文件。如果有任何，你必须将其注释掉，或者更改handler函数的主体以调用xdebug</em> * api函数。</p>
+<p>A2：您没有在php.ini中将display_errors设置为1</p>
+<hr>
+<p>问：Xdebug不格式化输出。</p>
+<p>A：确保php.ini中的PHP的html_errors设置为1</p>
+<hr>
+<p>问：调试客户端没有收到任何连接，我怎么办？</p>
+<p>A：您可能忘记设置环境变量或向URL中添加必要的信息。有关详细信息，请参阅文档。</p>
+<p>A：您检查过防火墙设置了吗？确保Xdebug正在侦听的端口（默认为9000）未被阻止。</p>
+<p>A：你使用FastCGI，可能是通过FPM（FastCGI过程管理器）？它默认使用相同的端口作为Xdebug（9000），因此您需要将其中一个更改为不同的数字。在Xdebug，你可以使用xdebug.remote_port。</p>
+<p>A：如果你使用SELinux运行，你应该确保它不会阻止连接;查找关于name_connect或与Xdebug端口相关的任何警告。您可能必须明确允许访问。访问此网站或搜索“selinux name_connect apache”有关如何执行此操作的详细信息</p>
+<h2 id="xdebug的编译安装"><a href="#xdebug的编译安装" class="headerlink" title="xdebug的编译安装"></a>xdebug的编译安装</h2><p>问：我没有phpize工具。</p>
+<p>答：Debian和Ubuntu用户需要用apt安装php5-dev软件包。</p>
+<hr>
+<p>问：如何处理：Xdebug需要Zend Engine API版本xxxxxxxx。安装的Zend Engine API版本2xxxxxxxx较新。</p>
+<p>A：此消息意味着您正在尝试加载Xdebug的PHP版本，它不是为它构建的。如果你自己编译PHP，很可能是因为你编译Xdebug对PHP头，属于你运行的不同的PHP版本。例如，你使用PHP 5.3，你使用的头仍然是PHP 5.2。如果你使用一个预编译的二进制文件，那么你使用的是错误的。</p>
+<p>要诊断这是否是您的问题，请执行以下步骤：</p>
+<ul>
+<li><p>通过查看phpinfo（）（或“php -i”）输出，检查您正在运行的PHP版本的“Zend Extension”API号。您可以在输出的顶部找到它，与PHP徽标和PHP版本在同一个块中。例如，对于PHP 5.2，数字是“220060519”，对于PHP 5.3，它是“220090626”。</p>
+</li>
+<li><p>当您完成编译步骤时，检查“phpize”的输出。您要查找的数字是在“Zend Extension Api No”的行上。</p>
+</li>
+</ul>
+<p>如果上面的两个数字不匹配，你正在使用错误的PHP头文件进行编译。请参阅下一个常见问题条目以确定要使用的phpize。</p>
+<hr>
+<p>问：Xdebug仅作为PHP扩展加载，而不是作为Zend扩展。<br>定制的安装指导可能已指向此条目。</p>
+<p>为了使Xdebug正常工作，包括断点等，它需要它作为Zend扩展加载，而不只是作为一个普通的PHP扩展。有些安装工具（PEAR / PECL）有时建议您使用extension = xdebug.so加载Xdebug。这是不正确的。为了解决这个问题，请在顶部块中“加载配置文件”和“其他.ini文件解析”下列出的任何INI文件中查找一行extension = xdebug.so。删除此行，并返回到定制安装说明。</p>
+<hr>
+<p>问：我如何找到使用哪个phpize？</p>
+<p>A：运行：“phpize –help”。这将显示phpize的完整路径。此路径应该与您具有CLI二进制文件“php-config”和安装的“pear”和“pecl”二进制文件的路径相同。如果你运行“php-config –version”它应该显示与你运行的PHP版本相同。如果它不匹配，并且可能在路径上找到错误的“phpize”二进制，您可以运行configure如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/full/path/to/php/bin/phpize</div><div class="line">./configure --with-php-config=/full/path/to/php/bin/php-config</div></pre></td></tr></table></figure>
+<hr>
+<p>问：我使用XAMPP，但我似乎不能得到打包的xdebug扩展正常工作。</p>
+<p>A：如果你取消注释“extension = php_xdebug.dll”行，这是预期的。 Xdebug需要加载zend_extension_ts =“C：\ path \ to \ php_xdebug.dll”指令。 你也可能必须禁用加载Zend优化器，因为它默认情况下启用，并且不能很好地与Xdebug。 因此，查找php.ini中的相关条目，并将其注释掉。 从PHP 5.3起，您总是需要使用zend_extension PHP.ini设置名称，而不是zend_extension_ts。<br>问：在Debian，我看到以下问题与Xdebug的构建….任何修复？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">/usr/lib/libc_nonshared.a(stat.oS)(.text.__i686.get_pc_thunk.bx+0x0):</div><div class="line">In function `__i686.get_pc_thunk.bx&apos;:</div><div class="line">: multiple definition of `__i686.get_pc_thunk.bx&apos;</div><div class="line">/usr/lib/gcc-lib/i486-linux/3.3.5/crtbeginS.o</div><div class="line">(.gnu.linkonce.t.__i686.get_pc_thunk.bx+0x0): first defined here</div><div class="line">collect2: ld returned 1 exit status</div><div class="line">make: *** [xdebug.la] Error 1</div></pre></td></tr></table></figure>
+<p>A：这是Debian本身的问题，有关更多信息，请参阅<a href="http://www.xdebug.org/archives/xdebug-general/0825.html" target="_blank" rel="external">此处</a>和<a href="http://www.xdebug.org/archives/xdebug-general/0825.html" target="_blank" rel="external">此处</a>。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Xdebug/" rel="tag">#Xdebug</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/22/PHP程序调试之Xdebug/" rel="next" title="PHP程序调试之Xdebug">
+                <i class="fa fa-chevron-left"></i> PHP程序调试之Xdebug
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/22/Xdebug之堆栈跟踪/" rel="prev" title="Xdebug之变量显示功能">
+                Xdebug之变量显示功能 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/22/Xdebug之常见问题/"
+           data-title="Xdebug之常见问题" data-url="https://weizhimiao.github.io/2016/10/22/Xdebug之常见问题/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/11239812?v=3&u=aede3c90c7e5cbc2d029e3f0988d9e1503b59943&s=140"
+               alt="zhimiao" />
+          <p class="site-author-name" itemprop="name">zhimiao</p>
+          <p class="site-description motion-element" itemprop="description">像“草根”一样，紧贴着地面，低调的存在，冬去春来枯荣无恙。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">80</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/weizhimiao/home" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weizhimiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#xdebug的使用"><span class="nav-number">1.</span> <span class="nav-text">xdebug的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#xdebug的编译安装"><span class="nav-number">2.</span> <span class="nav-text">xdebug的编译安装</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhimiao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<!--
+<div class="theme-info">
+    | 京ICP备 
+    <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+          16031041号
+    </a>
+</div>
+-->
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">本站访客数<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv">本站总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"weizhimiao"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+
+
+</body>
+</html>

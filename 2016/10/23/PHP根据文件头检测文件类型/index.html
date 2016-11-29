@@ -1,0 +1,756 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="行云流水" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="文件签名一般都在文件的头部，如果你用十六进制方式查看文件，你就可以看到文件的一些签名信息。如用uestudio以十六进制方式查看zip格式的文件，其文件内容头部有50 4B 03 04这样的十六进制信息。同理jpg文件状况有FF D8 FF E0 xx xx 4A 46这样的十六进制信息，其实这此十六进制都是表示一些特殊字条。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP根据文件头检测文件类型">
+<meta property="og:url" content="https://weizhimiao.github.io/2016/10/23/PHP根据文件头检测文件类型/index.html">
+<meta property="og:site_name" content="行云流水">
+<meta property="og:description" content="文件签名一般都在文件的头部，如果你用十六进制方式查看文件，你就可以看到文件的一些签名信息。如用uestudio以十六进制方式查看zip格式的文件，其文件内容头部有50 4B 03 04这样的十六进制信息。同理jpg文件状况有FF D8 FF E0 xx xx 4A 46这样的十六进制信息，其实这此十六进制都是表示一些特殊字条。">
+<meta property="og:updated_time" content="2016-10-26T13:46:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP根据文件头检测文件类型">
+<meta name="twitter:description" content="文件签名一般都在文件的头部，如果你用十六进制方式查看文件，你就可以看到文件的一些签名信息。如用uestudio以十六进制方式查看zip格式的文件，其文件内容头部有50 4B 03 04这样的十六进制信息。同理jpg文件状况有FF D8 FF E0 xx xx 4A 46这样的十六进制信息，其实这此十六进制都是表示一些特殊字条。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://weizhimiao.github.io/2016/10/23/PHP根据文件头检测文件类型/"/>
+
+  <title> PHP根据文件头检测文件类型 | 行云流水 </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e4b7d6d381ddeae9bb9afe7349625074";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行云流水</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">却也碎碎念念</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-atom">
+          <a href="/atom.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-rss"></i> <br />
+            
+            订阅
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5esyb9coehH1NCtAqKqX','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                PHP根据文件头检测文件类型
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-23T18:30:00+08:00" content="2016-10-23">
+              2016-10-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/23/PHP根据文件头检测文件类型/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/23/PHP根据文件头检测文件类型/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv">本文总阅读量
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>文件签名一般都在文件的头部，如果你用十六进制方式查看文件，你就可以看到文件的一些签名信息。如用uestudio以十六进制方式查看zip格式的文件，其文件内容头部有50 4B 03 04这样的十六进制信息。同理jpg文件状况有FF D8 FF E0 xx xx 4A 46这样的十六进制信息，其实这此十六进制都是表示一些特殊字条。</p>
+<a id="more"></a>
+<p>php怎么样验证文件类型？先来看一个简单的方法：<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkFileType</span><span class="params">($fileName)</span></span>&#123;  </div><div class="line">       $file = fopen($fileName, <span class="string">"rb"</span>);  </div><div class="line">       $bin = fread($file, <span class="number">2</span>); <span class="comment">//只读2字节  </span></div><div class="line">       fclose($file);  </div><div class="line">	<span class="comment">// C为无符号整数，网上搜到的都是c，为有符号整数，这样会产生负数判断不正常</span></div><div class="line">       $strInfo  = @unpack(<span class="string">"C2chars"</span>, $bin);</div><div class="line">       $typeCode = intval($strInfo[<span class="string">'chars1'</span>].$strInfo[<span class="string">'chars2'</span>]);  </div><div class="line">       $fileType = <span class="string">''</span>;  </div><div class="line"></div><div class="line">	<span class="keyword">switch</span>( $typeCode )</div><div class="line">	&#123;</div><div class="line">		<span class="keyword">case</span> <span class="string">'255216'</span>:</div><div class="line">			<span class="keyword">return</span> $typeCode. <span class="string">' : '</span> .<span class="string">'jpg'</span>;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		<span class="keyword">case</span> <span class="string">'7173'</span>:</div><div class="line">			<span class="keyword">return</span> $typeCode. <span class="string">' : '</span> .<span class="string">'gif'</span>;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		<span class="keyword">case</span> <span class="string">'13780'</span>:</div><div class="line">			<span class="keyword">return</span> $typeCode. <span class="string">' : '</span> .<span class="string">'png'</span>;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		<span class="keyword">case</span> <span class="string">'6677'</span>:</div><div class="line">			<span class="keyword">return</span> $typeCode. <span class="string">' : '</span> .<span class="string">'bmp'</span>;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		<span class="keyword">case</span> <span class="string">'7790'</span>:</div><div class="line">			<span class="keyword">return</span> $typeCode. <span class="string">' : '</span> .<span class="string">'exe'</span>;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		<span class="keyword">case</span> <span class="string">'7784'</span>:</div><div class="line">			<span class="keyword">return</span> $typeCode. <span class="string">' : '</span> .<span class="string">'midi'</span>;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		<span class="keyword">case</span> <span class="string">'8297'</span>:</div><div class="line">			<span class="keyword">return</span> $typeCode. <span class="string">' : '</span> .<span class="string">'rar'</span>;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">		<span class="keyword">default</span>:</div><div class="line">			<span class="keyword">return</span> $typeCode. <span class="string">' : '</span> .<span class="string">'Unknown'</span>;</div><div class="line">			<span class="keyword">break</span>;</div><div class="line">	&#125;</div><div class="line">	<span class="comment">//return $typeCode;</span></div><div class="line">   &#125;</div><div class="line"></div><div class="line">$file_name = <span class="string">'11.doc'</span>;</div><div class="line"><span class="keyword">echo</span> checkFileType($file_name);</div></pre></td></tr></table></figure></p>
+<p>下来提供一个类的实现：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="comment">/*通过文件名，获得文件类型*</span></div><div class="line"> *<span class="doctag">@author</span> chengmo QQ:8292669*</div><div class="line"> *<span class="doctag">@copyright</span> &lt;a href="http://www.cnblogs.com/chengmo"&gt;http://www.cnblogs.com/chengmo&lt;/a&gt; 2010-10-17</div><div class="line"> *<span class="doctag">@version</span> 0.1</div><div class="line"> *$filename="d:/1.png";echo cFileTypeCheck::getFileType($filename); 打印：png</div><div class="line"> */</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">cFileTypeCheck</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> $_TypeList=<span class="keyword">array</span>();</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> $CheckClass=<span class="keyword">null</span>;</div><div class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">($filename)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">self</span>::$_TypeList=<span class="keyword">$this</span>-&gt;getTypeList();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     *处理文件类型映射关系表*</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> string $filename 文件类型</div><div class="line">     * <span class="doctag">@return</span> string 文件类型，没有找到返回：other</div><div class="line">     */</div><div class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">_getFileType</span><span class="params">($filename)</span></span></div><div class="line">    &#123;</div><div class="line">        $filetype=<span class="string">"other"</span>;</div><div class="line">        <span class="keyword">if</span>(!file_exists($filename)) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="keyword">Exception</span>(<span class="string">"no found file!"</span>);</div><div class="line">        $file = @fopen($filename,<span class="string">"rb"</span>);</div><div class="line">        <span class="keyword">if</span>(!$file) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="keyword">Exception</span>(<span class="string">"file refuse!"</span>);</div><div class="line">        $bin = fread($file, <span class="number">15</span>); <span class="comment">//只读15字节 各个不同文件类型，头信息不一样。</span></div><div class="line">        fclose($file);</div><div class="line"></div><div class="line">        $typelist=<span class="keyword">self</span>::$_TypeList;</div><div class="line">        <span class="keyword">foreach</span> ($typelist <span class="keyword">as</span> $v)</div><div class="line">        &#123;</div><div class="line">            $blen=strlen(pack(<span class="string">"H*"</span>,$v[<span class="number">0</span>])); <span class="comment">//得到文件头标记字节数</span></div><div class="line">            $tbin=substr($bin,<span class="number">0</span>,intval($blen)); <span class="comment">///需要比较文件头长度</span></div><div class="line"></div><div class="line">            <span class="keyword">if</span>(strtolower($v[<span class="number">0</span>])==strtolower(array_shift(unpack(<span class="string">"H*"</span>,$tbin))))</div><div class="line">            &#123;</div><div class="line">                <span class="keyword">return</span> $v[<span class="number">1</span>];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> $filetype;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/**</span></div><div class="line">     *得到文件头与文件类型映射表*</div><div class="line">     *</div><div class="line">     * <span class="doctag">@return</span> array array(array('key',value)...)</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getTypeList</span><span class="params">()</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">array</span>(<span class="keyword">array</span>(<span class="string">"FFD8FFE1"</span>,<span class="string">"jpg"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"89504E47"</span>,<span class="string">"png"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"47494638"</span>,<span class="string">"gif"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"49492A00"</span>,<span class="string">"tif"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"424D"</span>,<span class="string">"bmp"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"41433130"</span>,<span class="string">"dwg"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"38425053"</span>,<span class="string">"psd"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"7B5C727466"</span>,<span class="string">"rtf"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"3C3F786D6C"</span>,<span class="string">"xml"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"68746D6C3E"</span>,<span class="string">"html"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"44656C69766572792D646174"</span>,<span class="string">"eml"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"CFAD12FEC5FD746F"</span>,<span class="string">"dbx"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"2142444E"</span>,<span class="string">"pst"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"D0CF11E0"</span>,<span class="string">"xls/doc"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"5374616E64617264204A"</span>,<span class="string">"mdb"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"FF575043"</span>,<span class="string">"wpd"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"252150532D41646F6265"</span>,<span class="string">"eps/ps"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"255044462D312E"</span>,<span class="string">"pdf"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"E3828596"</span>,<span class="string">"pwl"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"504B0304"</span>,<span class="string">"zip"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"52617221"</span>,<span class="string">"rar"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"57415645"</span>,<span class="string">"wav"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"41564920"</span>,<span class="string">"avi"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"2E7261FD"</span>,<span class="string">"ram"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"2E524D46"</span>,<span class="string">"rm"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"000001BA"</span>,<span class="string">"mpg"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"000001B3"</span>,<span class="string">"mpg"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"6D6F6F76"</span>,<span class="string">"mov"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"3026B2758E66CF11"</span>,<span class="string">"asf"</span>),</div><div class="line">        <span class="keyword">array</span>(<span class="string">"4D546864"</span>,<span class="string">"mid"</span>));</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">function</span> <span class="title">getFileType</span><span class="params">($filename)</span></span></div><div class="line">    &#123;</div><div class="line">        <span class="keyword">if</span>(!<span class="keyword">self</span>::$CheckClass) <span class="keyword">self</span>::$CheckClass=<span class="keyword">new</span> <span class="keyword">self</span>($filename);</div><div class="line">        $class=<span class="keyword">self</span>::$CheckClass;</div><div class="line">        <span class="keyword">return</span> $class-&gt;_getFileType($filename);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">$filename=<span class="string">"22.jpg"</span>;</div><div class="line"><span class="keyword">echo</span> $filename,<span class="string">"t"</span>,cFileTypeCheck::getFileType($filename),<span class="string">"rn"</span>;</div><div class="line">$filename=<span class="string">"11.doc"</span>;</div><div class="line"><span class="keyword">echo</span> $filename,<span class="string">"t"</span>,cFileTypeCheck::getFileType($filename),<span class="string">"rn"</span>;</div></pre></td></tr></table></figure>
+<p>或者可以这么检测：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$filename = <span class="string">'22.jpg'</span>;</div><div class="line"></div><div class="line">$extname = strtolower(substr($filename, strrpos($filename, <span class="string">'.'</span>) + <span class="number">1</span>));</div><div class="line"><span class="keyword">echo</span> $extname.<span class="string">'&lt;br /&gt;'</span>;</div><div class="line">$file = @fopen($filename, <span class="string">'rb'</span>);</div><div class="line">    <span class="keyword">if</span> ($file)</div><div class="line">    &#123;</div><div class="line">        $str = @fread($file, <span class="number">0x400</span>); <span class="comment">// 读取前 1024 个字节</span></div><div class="line">		<span class="keyword">echo</span> substr($str, <span class="number">0</span>, <span class="number">4</span>);</div><div class="line">        @fclose($file);</div><div class="line">    &#125;</div><div class="line"> 	<span class="keyword">if</span> (substr($str, <span class="number">0</span>, <span class="number">4</span>) == <span class="string">'MThd'</span> &amp;&amp; $extname != <span class="string">'txt'</span>)</div><div class="line">        &#123;</div><div class="line">            $format = <span class="string">'mid'</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">elseif</span> (substr($str, <span class="number">0</span>, <span class="number">4</span>) == <span class="string">'RIFF'</span> &amp;&amp; $extname == <span class="string">'wav'</span>)</div><div class="line">        &#123;</div><div class="line">            $format = <span class="string">'wav'</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">elseif</span> (substr($str ,<span class="number">0</span>, <span class="number">3</span>) == <span class="string">"/xFF/xD8/xFF"</span>)</div><div class="line">        &#123;</div><div class="line">            $format = <span class="string">'jpg'</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">elseif</span> (substr($str ,<span class="number">0</span>, <span class="number">4</span>) == <span class="string">'GIF8'</span> &amp;&amp; $extname != <span class="string">'txt'</span>)</div><div class="line">        &#123;</div><div class="line">            $format = <span class="string">'gif'</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">elseif</span> (substr($str ,<span class="number">0</span>, <span class="number">8</span> ) == <span class="string">"/x89/x50/x4E/x47/x0D/x0A/x1A/x0A"</span>)</div><div class="line">        &#123;</div><div class="line">            $format = <span class="string">'png'</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">elseif</span> (substr($str ,<span class="number">0</span>, <span class="number">2</span>) == <span class="string">'BM'</span> &amp;&amp; $extname != <span class="string">'txt'</span>)</div><div class="line">        &#123;</div><div class="line">            $format = <span class="string">'bmp'</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">elseif</span> ((substr($str ,<span class="number">0</span>, <span class="number">3</span>) == <span class="string">'CWS'</span> || substr($str ,<span class="number">0</span>, <span class="number">3</span>) == <span class="string">'FWS'</span>) &amp;&amp; $extname != <span class="string">'txt'</span>)</div><div class="line">        &#123;</div><div class="line">            $format = <span class="string">'swf'</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">elseif</span> (substr($str ,<span class="number">0</span>, <span class="number">4</span>) == <span class="string">"/xD0/xCF/x11/xE0"</span>)</div><div class="line">        &#123;   <span class="comment">// D0CF11E == DOCFILE == Microsoft Office Document</span></div><div class="line">            <span class="keyword">if</span> (substr($str,<span class="number">0x200</span>,<span class="number">4</span>) == <span class="string">"/xEC/xA5/xC1/x00"</span> || $extname == <span class="string">'doc'</span>)</div><div class="line">            &#123;</div><div class="line">                $format = <span class="string">'doc'</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">elseif</span> (substr($str,<span class="number">0x200</span>,<span class="number">2</span>) == <span class="string">"/x09/x08"</span> || $extname == <span class="string">'xls'</span>)</div><div class="line">            &#123;</div><div class="line">                $format = <span class="string">'xls'</span>;</div><div class="line">            &#125; <span class="keyword">elseif</span> (substr($str,<span class="number">0x200</span>,<span class="number">4</span>) == <span class="string">"/xFD/xFF/xFF/xFF"</span> || $extname == <span class="string">'ppt'</span>)</div><div class="line">            &#123;</div><div class="line">                $format = <span class="string">'ppt'</span>;</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">elseif</span> (substr($str ,<span class="number">0</span>, <span class="number">4</span>) == <span class="string">"PK/x03/x04"</span>)</div><div class="line">        &#123;</div><div class="line">            $format = <span class="string">'zip'</span>;</div><div class="line">        &#125; <span class="keyword">elseif</span> (substr($str ,<span class="number">0</span>, <span class="number">4</span>) == <span class="string">'Rar!'</span> &amp;&amp; $extname != <span class="string">'txt'</span>)</div><div class="line">        &#123;</div><div class="line">            $format = <span class="string">'rar'</span>;</div><div class="line">        &#125; <span class="keyword">elseif</span> (substr($str ,<span class="number">0</span>, <span class="number">4</span>) == <span class="string">"/x25PDF"</span>)</div><div class="line">        &#123;</div><div class="line">            $format = <span class="string">'pdf'</span>;</div><div class="line">        &#125; <span class="keyword">elseif</span> (substr($str ,<span class="number">0</span>, <span class="number">3</span>) == <span class="string">"/x30/x82/x0A"</span>)</div><div class="line">        &#123;</div><div class="line">            $format = <span class="string">'cert'</span>;</div><div class="line">        &#125; <span class="keyword">elseif</span> (substr($str ,<span class="number">0</span>, <span class="number">4</span>) == <span class="string">'ITSF'</span> &amp;&amp; $extname != <span class="string">'txt'</span>)</div><div class="line">        &#123;</div><div class="line">            $format = <span class="string">'chm'</span>;</div><div class="line">        &#125; <span class="keyword">elseif</span> (substr($str ,<span class="number">0</span>, <span class="number">4</span>) == <span class="string">"/x2ERMF"</span>)</div><div class="line">        &#123;</div><div class="line">            $format = <span class="string">'rm'</span>;</div><div class="line">        &#125; <span class="keyword">elseif</span> ($extname == <span class="string">'sql'</span>)</div><div class="line">        &#123;</div><div class="line">            $format = <span class="string">'sql'</span>;</div><div class="line">        &#125; <span class="keyword">elseif</span> ($extname == <span class="string">'txt'</span>)</div><div class="line">        &#123;</div><div class="line">            $format = <span class="string">'txt'</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">		<span class="keyword">echo</span> $format;</div></pre></td></tr></table></figure>
+<p><a href="http://www.nowamagic.net/librarys/veda/detail/836" target="_blank" rel="external">转自：http://www.nowamagic.net/librarys/veda/detail/836</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/22/Xdebug之函数轨迹跟踪/" rel="next" title="Xdebug之函数轨迹跟踪">
+                <i class="fa fa-chevron-left"></i> Xdebug之函数轨迹跟踪
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/27/Javascript中用instanceof运算符实现对象的安全创建/" rel="prev" title="Javascript中用instanceof运算符实现对象的安全创建">
+                Javascript中用instanceof运算符实现对象的安全创建 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/23/PHP根据文件头检测文件类型/"
+           data-title="PHP根据文件头检测文件类型" data-url="https://weizhimiao.github.io/2016/10/23/PHP根据文件头检测文件类型/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/11239812?v=3&u=aede3c90c7e5cbc2d029e3f0988d9e1503b59943&s=140"
+               alt="zhimiao" />
+          <p class="site-author-name" itemprop="name">zhimiao</p>
+          <p class="site-description motion-element" itemprop="description">像“草根”一样，紧贴着地面，低调的存在，冬去春来枯荣无恙。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">80</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/weizhimiao/home" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weizhimiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhimiao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<!--
+<div class="theme-info">
+    | 京ICP备 
+    <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+          16031041号
+    </a>
+</div>
+-->
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">本站访客数<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv">本站总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"weizhimiao"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,788 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="行云流水" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL编译安装">
+<meta property="og:url" content="https://weizhimiao.github.io/2016/09/25/MySQL安装编译/index.html">
+<meta property="og:site_name" content="行云流水">
+<meta property="og:image" content="http://n.sinaimg.cn/games/3ece443e/20160925/mysql_log.png">
+<meta property="og:updated_time" content="2016-09-25T10:46:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL编译安装">
+<meta name="twitter:image" content="http://n.sinaimg.cn/games/3ece443e/20160925/mysql_log.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://weizhimiao.github.io/2016/09/25/MySQL安装编译/"/>
+
+  <title> MySQL编译安装 | 行云流水 </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e4b7d6d381ddeae9bb9afe7349625074";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行云流水</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">却也碎碎念念</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-atom">
+          <a href="/atom.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-rss"></i> <br />
+            
+            订阅
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5esyb9coehH1NCtAqKqX','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                MySQL编译安装
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-25T20:30:00+08:00" content="2016-09-25">
+              2016-09-25
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/25/MySQL安装编译/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/25/MySQL安装编译/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv">本文总阅读量
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://n.sinaimg.cn/games/3ece443e/20160925/mysql_log.png" alt="MySQL"><br><a id="more"></a></p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>OS：CentOS 7.2 64</p>
+<p>MySQL：<a href="http://dev.mysql.com/downloads/mysql/" target="_blank" rel="external">mysql-5.7.15</a></p>
+<h2 id="编译环境准备"><a href="#编译环境准备" class="headerlink" title="编译环境准备"></a>编译环境准备</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># yum -y install make gcc-c++ cmake bison-devel ncurses-devel</div></pre></td></tr></table></figure>
+<blockquote>
+<p>make，Linux下非常重要的编译工具，最主要也是最基本的功能就是通过makefile文件来描述源程序之间的相互关系并自动维护编译工作。<br>gcc-c++，C++ 编译器（gcc，C编译器）<br>cmake，一个跨平台的编译自动配置工具，（作用生成makefile 文件）<br>bison-devel 一个语法分析器生成器<br>ncurses-devel，Ncurses介绍摘要:Ncurses是一个能提供功能键定义(快捷键),屏幕绘制以及基于文本终端.</p>
+</blockquote>
+<h3 id="ncurses"><a href="#ncurses" class="headerlink" title="ncurses"></a>ncurses</h3><p>Ncurses 提供字符终端处理库，包括面板和菜单。它提供了一套控制光标，建立窗口，改变前景背景颜色以及处理鼠标操作的函数。使用户在字符终端下编写应用程序时绕过了那些恼人的底层机制。简而言之，他是一个可以使应用程序直接控制终端屏幕显示的函数库。<br>1、yum安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum -y install ncurses-devel</div></pre></td></tr></table></figure></p>
+<p>注：如果报错，包找不到，是<em>通配符没有识别，给文件名加双引号  “ncurses</em>”</p>
+<p>2、源代码编译:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">下载解压</div><div class="line">cd ncurses-5.9</div><div class="line">./configure --with-shared --without-debug --without-ada --enable-overwrite</div><div class="line">make</div><div class="line">make install</div></pre></td></tr></table></figure></p>
+<ul>
+<li>若不安装ncurses编译MySQL时会报错</li>
+<li>–without-ada 参数为设定不编译为ada绑定，因进入chroot环境不能使用ada ；–enable-overwrite参数为定义把头文件安装到/tools/include下而不是/tools/include/ncurses目录</li>
+<li>–with-shared 生成共享库</li>
+</ul>
+<h3 id="安装cmake和bison"><a href="#安装cmake和bison" class="headerlink" title="安装cmake和bison"></a>安装cmake和bison</h3><p>mysql在5.5以后，不再使用./configure工具，进行编译安装。而使用cmake工具替代了./configure工具。cmake的具体用法参考文档cmake说明。</p>
+<p>bison是一个自由软件，用于自动生成语法分析器程序，可用于所有常见的操作系统<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum -y install cmake</div><div class="line">yum -y install bison</div></pre></td></tr></table></figure></p>
+<h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>解压源码包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar -zxvf mysql-5.7.15.tar.gz</div></pre></td></tr></table></figure></p>
+<p>进入源码包目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd mysql-5.7.15</div></pre></td></tr></table></figure></p>
+<p>编译<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">cmake  \</div><div class="line">-DDEFAULT_CHARSET=utf8 \</div><div class="line">-DDEFAULT_COLLATION=utf8_general_ci \</div><div class="line">-DWITH_INNOBASE_STORAGE_ENGINE=1 \</div><div class="line">-DENABLED_LOCAL_INFILE=1 \</div><div class="line">-DWITH_BOOST=/usr/local/boost</div></pre></td></tr></table></figure></p>
+<p>Boost，是为C++语言标准库提供扩展的一些C++程序库的总称，，由Boost社区组织开发、维护。<br>最后一行配置，是配置boost库的，如果没有boost包，编译会报错。<br>如果之前没有安装过，可以单独安装，也可在mysql安装的时候直接下载安装，这样的话，最后一行配置修改如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-DDOWNLOAD_BOOST=1 -DWITH_BOOST=/usr/local/boost #直接下载并安装</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make &amp;&amp; make install</div></pre></td></tr></table></figure>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="创建MySQL运行用户和用户组"><a href="#创建MySQL运行用户和用户组" class="headerlink" title="创建MySQL运行用户和用户组"></a>创建MySQL运行用户和用户组</h3><p>查看mysql用户及用户组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cat /etc/passwd     查看用户列表</div><div class="line">cat /etc/group      查看用户组列表</div></pre></td></tr></table></figure></p>
+<p>如果没有就创建<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">groupadd mysql</div><div class="line">useradd -g mysql mysql</div></pre></td></tr></table></figure></p>
+<p>修改/usr/local/mysql权限<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chown -R mysql:mysql /usr/local/mysql</div></pre></td></tr></table></figure></p>
+<p>初始化配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/mysql</div><div class="line">cp support-files/my-default.cnf /etc/my.cnf</div></pre></td></tr></table></figure></p>
+<p>注：在启动MySQL服务时，会按照一定次序搜索my.cnf，先在/etc目录下找，找不到则会在安装目录下面找，在本例中就是 /usr/local/mysql/my.cnf，这是新版MySQL的配置文件的默认位置。</p>
+<h3 id="初始化数据库并生成初始密码"><a href="#初始化数据库并生成初始密码" class="headerlink" title="初始化数据库并生成初始密码"></a>初始化数据库并生成初始密码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/mysql/bin/mysqld --initialize --user=mysql</div></pre></td></tr></table></figure>
+<p>会生成一个初始密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># A temporary password is generated for root@localhost: -qeFRRlHV0jf</div></pre></td></tr></table></figure></p>
+<p>密码：-qeFRRlHV0jf</p>
+<h3 id="设置环境变量（使得mysql服务可以全局访问）"><a href="#设置环境变量（使得mysql服务可以全局访问）" class="headerlink" title="设置环境变量（使得mysql服务可以全局访问）"></a>设置环境变量（使得mysql服务可以全局访问）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi ~/.bash_profile</div></pre></td></tr></table></figure>
+<p>在修改PATH=$PATH:$HOME/bin为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">PATH=$PATH:$HOME/bin:/usr/local/mysql/bin:/usr/local/mysql/lib</div></pre></td></tr></table></figure></p>
+<p>重新加载环境变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[root@root ~]# source /root/.bash_profile</div></pre></td></tr></table></figure></p>
+<h2 id="管理"><a href="#管理" class="headerlink" title="管理"></a>管理</h2><h3 id="启动mysql"><a href="#启动mysql" class="headerlink" title="启动mysql"></a>启动mysql</h3><p>方法一：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 将mysql的启动服务添加到系统服务中</div><div class="line"># cp support-files/mysql.server /etc/init.d/mysql</div><div class="line"># service mysql start</div></pre></td></tr></table></figure></p>
+<p>方法二：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/mysql/bin/mysqld_safe --user=mysql &amp;</div></pre></td></tr></table></figure></p>
+<h3 id="设置开机自启动"><a href="#设置开机自启动" class="headerlink" title="设置开机自启动"></a>设置开机自启动</h3><p>方法一：</p>
+<p>通过chkconfig实现。</p>
+<p>方法二：直接修改 rc.local 文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo &quot;/usr/local/mysql/bin/mysqld_safe --user=mysql &amp;&quot; &gt;&gt; /etc/rc.local</div></pre></td></tr></table></figure></p>
+<h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><p>登录并修改初始密码（不修改密码不让你操作，就是这么任性）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># mysql -uroot -hlocalhost -p</div><div class="line">Enter password:-qeFRRlHV0jf（初始密码）</div><div class="line"># mysql&gt; SET PASSWORD FOR &apos;root&apos;@&apos;localhost&apos; = PASSWORD(&apos;xxxxxxx&apos;);</div></pre></td></tr></table></figure></p>
+<p>重新登录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">#  mysql&gt; exit</div><div class="line">#  mysql -u root -p</div><div class="line">Enter password:</div></pre></td></tr></table></figure></p>
+<p>能够登录进去，则说明MySQL安装成功。over~</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/22/PHP中InstanceOf运算符/" rel="next" title="instanceof运算符的运用">
+                <i class="fa fa-chevron-left"></i> instanceof运算符的运用
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/25/nginx安装/" rel="prev" title="Nginx安装">
+                Nginx安装 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/25/MySQL安装编译/"
+           data-title="MySQL编译安装" data-url="https://weizhimiao.github.io/2016/09/25/MySQL安装编译/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/11239812?v=3&u=aede3c90c7e5cbc2d029e3f0988d9e1503b59943&s=140"
+               alt="zhimiao" />
+          <p class="site-author-name" itemprop="name">zhimiao</p>
+          <p class="site-description motion-element" itemprop="description">像“草根”一样，紧贴着地面，低调的存在，冬去春来枯荣无恙。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">80</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/weizhimiao/home" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weizhimiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译环境准备"><span class="nav-number">2.</span> <span class="nav-text">编译环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ncurses"><span class="nav-number">2.1.</span> <span class="nav-text">ncurses</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装cmake和bison"><span class="nav-number">2.2.</span> <span class="nav-text">安装cmake和bison</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编译"><span class="nav-number">3.</span> <span class="nav-text">编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-number">4.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建MySQL运行用户和用户组"><span class="nav-number">4.1.</span> <span class="nav-text">创建MySQL运行用户和用户组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化数据库并生成初始密码"><span class="nav-number">4.2.</span> <span class="nav-text">初始化数据库并生成初始密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置环境变量（使得mysql服务可以全局访问）"><span class="nav-number">4.3.</span> <span class="nav-text">设置环境变量（使得mysql服务可以全局访问）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管理"><span class="nav-number">5.</span> <span class="nav-text">管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动mysql"><span class="nav-number">5.1.</span> <span class="nav-text">启动mysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置开机自启动"><span class="nav-number">5.2.</span> <span class="nav-text">设置开机自启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改密码"><span class="nav-number">5.3.</span> <span class="nav-text">修改密码</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhimiao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<!--
+<div class="theme-info">
+    | 京ICP备 
+    <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+          16031041号
+    </a>
+</div>
+-->
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">本站访客数<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv">本站总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"weizhimiao"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+
+
+</body>
+</html>

@@ -1,0 +1,799 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Xdebug," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="行云流水" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Xdebug内置分析器允许您在脚本中找到瓶颈，并使用外部工具（如KCacheGrind或WinCacheGrind）可视化这些瓶颈。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xdebug之PHP脚本剖析">
+<meta property="og:url" content="https://weizhimiao.github.io/2016/10/22/Xdebug之PHP脚本剖析/index.html">
+<meta property="og:site_name" content="行云流水">
+<meta property="og:description" content="Xdebug内置分析器允许您在脚本中找到瓶颈，并使用外部工具（如KCacheGrind或WinCacheGrind）可视化这些瓶颈。">
+<meta property="og:image" content="https://xdebug.org/images/docs/kc-open.png">
+<meta property="og:image" content="https://xdebug.org/images/docs/kc-profile.png">
+<meta property="og:image" content="https://xdebug.org/images/docs/kc-right-call.png">
+<meta property="og:image" content="https://xdebug.org/images/docs/kc-right-callers.png">
+<meta property="og:updated_time" content="2016-10-22T16:06:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Xdebug之PHP脚本剖析">
+<meta name="twitter:description" content="Xdebug内置分析器允许您在脚本中找到瓶颈，并使用外部工具（如KCacheGrind或WinCacheGrind）可视化这些瓶颈。">
+<meta name="twitter:image" content="https://xdebug.org/images/docs/kc-open.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://weizhimiao.github.io/2016/10/22/Xdebug之PHP脚本剖析/"/>
+
+  <title> Xdebug之PHP脚本剖析 | 行云流水 </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e4b7d6d381ddeae9bb9afe7349625074";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行云流水</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">却也碎碎念念</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-atom">
+          <a href="/atom.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-rss"></i> <br />
+            
+            订阅
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5esyb9coehH1NCtAqKqX','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Xdebug之PHP脚本剖析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-22T20:30:00+08:00" content="2016-10-22">
+              2016-10-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/22/Xdebug之PHP脚本剖析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/22/Xdebug之PHP脚本剖析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv">本文总阅读量
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Xdebug内置分析器允许您在脚本中找到瓶颈，并使用外部工具（如KCacheGrind或WinCacheGrind）可视化这些瓶颈。</p>
+<a id="more"></a>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Xdebug的Profiler是一个强大的工具，使您能够分析您的PHP代码并确定瓶颈，或者通常查看代码的哪些部分很慢，并可以使用速度提升。<br>Xdebug 2中的分析器以高速缓存磨削兼容文件的形式输出分析信息。这允许您使用优秀的KCacheGrind工具（Linux，KDE）来分析概要分析数据。</p>
+<ul>
+<li><p>如果你在Linux上，你可以安装KCacheGrind通过你最喜欢的包管理器。</p>
+</li>
+<li><p>如果你在Windows上，有预编译的QCacheGrind二进制文件可用。 （QCacheGrind是没有KDE绑定的KCacheGrind）。</p>
+</li>
+<li><p>如果你在Mac OSX上，还有如何构建QCacheGrind的说明。</p>
+</li>
+</ul>
+<p>Windows的用户可以选择使用WinCacheGrind。该功能不同于KCacheGrind，因此在此页面上记录使用KCacheGrind的部分不适用于此程序。 WinCacheGrind目前不支持Xdebug 2.3引入的cachegrind文件的文件和函数压缩。</p>
+<p>还有一个替代的配置文件信息呈现工具xdebugtoolkit，一个称为Webgrind的基于Web的前端，以及一个名为XCallGraph的基于Java的工具。</p>
+<p>如果您不能使用KDE（或不想使用KDE），kcachegrind软件包也会附带一个perl脚本“ct_annotate”，该脚本从profiler跟踪文件生成ASCII输出。</p>
+<h2 id="启动Profiler"><a href="#启动Profiler" class="headerlink" title="启动Profiler"></a>启动Profiler</h2><p>通过在php.ini中将xdebug.profiler_enable设置为1来启用分析。<br>这将指示Xdebug开始将分析信息写入使用xdebug.profiler_output_dir指令配置的转储目录。<br>生成的文件的名称始终以“cachegrind.out”开头。并以PHP（或Apache）进程的PID（进程ID）或包含最初调试的脚本的目录的crc32哈希结束。<br>请确保您的xdebug.profiler_output_dir中有足够的空间，因为分析器生成的信息量对于复杂脚本非常大，例如对于像eZ Publish这样的复杂应用程序，最多可以有500MB的空间。</p>
+<p>您还可以选择性地启用分析器，将xdebug.profiler_enable_trigger设置为1.<br>如果设置为1，那么可以使用名为XDEBUG_PROFILE的GET / POST或COOKIE变量启用分析器。<br>可以用于启用调试器（请参阅HTTP调试会话）的FireFox 2扩展也可以与此设置一起使用。为了使触发器正常工作，xdebug.profiler_enable需要设置为0。</p>
+<h2 id="分析Profiler"><a href="#分析Profiler" class="headerlink" title="分析Profiler"></a>分析Profiler</h2><p>生成配置文件信息文件后，可以使用 <a href="https://kcachegrind.github.io/" target="_blank" rel="external">KCacheGrind</a> 打开它：</p>
+<p><img src="https://xdebug.org/images/docs/kc-open.png" alt="img"></p>
+<p>一旦打开文件，您就可以在KCacheGrind的不同窗格中获得大量信息。在左侧，找到“Flat Profile”窗格，其中显示了脚本中按照此函数中的时间花费及其所有子项排序的所​​有函数。第二列“Self”显示此函数（没有其子项）的时间花费，第三列“Called”显示特定函数的调用频率，最后一列“Function”显示函数的名称。 Xdebug通过用“php ::”作为前缀来更改内部PHP函数名称，并且包含文件也以特殊方式处理。调用include（和include_one，require和require_once）后跟“::”和包含文件的文件名。在左边的截图中你可以看到“include :: / home / httpd / ez_34 / v …”，内部PHP函数的例子是“php :: mysql_query”。前两列中的数字可以是脚本的完整运行时间的百分比（如在示例中）或绝对时间（1单位是1 / 1,000,000秒）。您可以使用右侧显示的按钮在两种模式之间切换。</p>
+<p><img src="https://xdebug.org/images/docs/kc-profile.png" alt="img"></p>
+<p>右侧的窗格包含上窗格和下窗格。 上面的图显示了有关称为当前所选函数的函数的信息（“eztemplatedesignresource-&gt; executecompiledtemplate”）。下面的窗格显示当前所选函数调用的函数的信息。</p>
+<p><img src="https://xdebug.org/images/docs/kc-right-call.png" alt="img"></p>
+<p>上方窗格中的“成本”列显示从列表中的函数调用时当前所选函数的时间花费。 添加的“费用”列中的数字将始终为100％。 下方窗格中的“成本”列显示从列表中调用函数所花费的时间。 在添加此列表中的数字时，您很可能永远不会达到100％，因为所选的函数本身也需要时间来执行。</p>
+<p><img src="https://xdebug.org/images/docs/kc-right-callers.png" alt="img"></p>
+<p>“所有呼叫者”和“所有呼叫”选项卡不仅显示从其调用该函数的直接调用，而且还显示所有直接调用的函数调用，还显示函数调用更多级别上下调用。 左侧屏幕截图中的上部窗格显示了所有调用当前所选函数的函数，直接和间接地使用堆栈上它们之间的其他函数。 “距离”列显示列出的和当前选择的函数调用之间有多少个函数调用（-1）。 如果两个函数之间有不同的距离，则显示为一个范围（例如“5-24”）。 括号中的数字是中值距离。 下面的窗格是类似的，除了它显示从当前选择的函数调用的函数的信息，再次是直接或间接。</p>
+<h2 id="相关的设置"><a href="#相关的设置" class="headerlink" title="相关的设置"></a>相关的设置</h2><h3 id="xdebug-profiler-append"><a href="#xdebug-profiler-append" class="headerlink" title="xdebug.profiler_append"></a>xdebug.profiler_append</h3><p>类型：整数，默认值：0</p>
+<p>当此设置设置为1时，当新请求映射到同一文件时（不在xdebug.profiler_output_name设置上），将不会覆盖分析器文件，而是使用新配置文件附加文件。</p>
+<h3 id="xdebug-profiler-enable"><a href="#xdebug-profiler-enable" class="headerlink" title="xdebug.profiler_enable"></a>xdebug.profiler_enable</h3><p>类型：整数，默认值：0</p>
+<p>启用Xdebug的概要分析器，它在概要文件输出目录中创建文件。这些文件可以由KCacheGrind读取以可视化您的数据。<br>无法使用ini_set（）在脚本中设置此设置。如果要选择性地启用分析器，请将xdebug.profiler_enable_trigger设置为1，而不使用此设置。</p>
+<h3 id="xdebug-profiler-enable-trigger"><a href="#xdebug-profiler-enable-trigger" class="headerlink" title="xdebug.profiler_enable_trigger"></a>xdebug.profiler_enable_trigger</h3><p>类型：整数，默认值：0</p>
+<p>当此设置设置为1时，可以使用XDEBUG_PROFILE GET / POST参数触发剖析器文件的生成，或者设置名为XDEBUG_PROFILE的cookie。<br>这将然后将分析器数据写入定义的目录。为了防止profiler为每个请求生成概要文件文件，您需要将xdebug.profiler_enable设置为0.对触发器本身的访问可以通过xdebug.profiler_enable_trigger_value配置。</p>
+<h3 id="xdebug-profiler-enable-trigger-value"><a href="#xdebug-profiler-enable-trigger-value" class="headerlink" title="xdebug.profiler_enable_trigger_value"></a>xdebug.profiler_enable_trigger_value</h3><p>类型：字符串，默认值：“”，在Xdebug&gt; 2.3中引入</p>
+<p>此设置可用于限制谁可以使用xdebug.profiler_enable_trigger中概述的XDEBUG_PROFILE功能。当从空字符串的默认值更改时，cookie，GET或POST参数的值需要使用此设置匹配共享机密集，<br>以便分析器启动。</p>
+<h3 id="xdebug-profiler-output-dir"><a href="#xdebug-profiler-output-dir" class="headerlink" title="xdebug.profiler_output_dir"></a>xdebug.profiler_output_dir</h3><p>类型：字符串，默认值：/ tmp</p>
+<p>将写入分析器输出的目录，确保PHP将运行的用户具有对该目录的写入权限。无法使用ini_set（）在脚本中设置此设置。</p>
+<h3 id="xdebug-profiler-output-name"><a href="#xdebug-profiler-output-name" class="headerlink" title="xdebug.profiler_output_name"></a>xdebug.profiler_output_name</h3><p>类型：字符串，默认值：cachegrind.out。％p</p>
+<p>此设置确定用于将跟踪转储到的文件的名称。设置使用格式说明符指定格式，非常类似于sprintf（）和strftime（）。有几个格式说明符可以用于格式化文件名。</p>
+<p>有关受支持的说明符，请参见 <a href="https://xdebug.org/docs/all_settings#trace_output_name" target="_blank" rel="external">xdebug.trace_output_name</a> 文档。</p>
+<h2 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h2><h3 id="string-xdebug-get-profiler-filename（）"><a href="#string-xdebug-get-profiler-filename（）" class="headerlink" title="string xdebug get profiler filename（）"></a>string xdebug get profiler filename（）</h3><p>返回配置文件信息文件名</p>
+<p>返回用于将配置文件信息保存到的文件的名称。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Xdebug/" rel="tag">#Xdebug</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/22/Xdebug之变量显示功能/" rel="next" title="Xdebug之变量显示功能">
+                <i class="fa fa-chevron-left"></i> Xdebug之变量显示功能
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/22/Xdebug之函数轨迹跟踪/" rel="prev" title="Xdebug之函数轨迹跟踪">
+                Xdebug之函数轨迹跟踪 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/22/Xdebug之PHP脚本剖析/"
+           data-title="Xdebug之PHP脚本剖析" data-url="https://weizhimiao.github.io/2016/10/22/Xdebug之PHP脚本剖析/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/11239812?v=3&u=aede3c90c7e5cbc2d029e3f0988d9e1503b59943&s=140"
+               alt="zhimiao" />
+          <p class="site-author-name" itemprop="name">zhimiao</p>
+          <p class="site-description motion-element" itemprop="description">像“草根”一样，紧贴着地面，低调的存在，冬去春来枯荣无恙。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">80</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/weizhimiao/home" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weizhimiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动Profiler"><span class="nav-number">2.</span> <span class="nav-text">启动Profiler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析Profiler"><span class="nav-number">3.</span> <span class="nav-text">分析Profiler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关的设置"><span class="nav-number">4.</span> <span class="nav-text">相关的设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#xdebug-profiler-append"><span class="nav-number">4.1.</span> <span class="nav-text">xdebug.profiler_append</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xdebug-profiler-enable"><span class="nav-number">4.2.</span> <span class="nav-text">xdebug.profiler_enable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xdebug-profiler-enable-trigger"><span class="nav-number">4.3.</span> <span class="nav-text">xdebug.profiler_enable_trigger</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xdebug-profiler-enable-trigger-value"><span class="nav-number">4.4.</span> <span class="nav-text">xdebug.profiler_enable_trigger_value</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xdebug-profiler-output-dir"><span class="nav-number">4.5.</span> <span class="nav-text">xdebug.profiler_output_dir</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xdebug-profiler-output-name"><span class="nav-number">4.6.</span> <span class="nav-text">xdebug.profiler_output_name</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关函数"><span class="nav-number">5.</span> <span class="nav-text">相关函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#string-xdebug-get-profiler-filename（）"><span class="nav-number">5.1.</span> <span class="nav-text">string xdebug get profiler filename（）</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhimiao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<!--
+<div class="theme-info">
+    | 京ICP备 
+    <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+          16031041号
+    </a>
+</div>
+-->
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">本站访客数<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv">本站总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"weizhimiao"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+
+
+</body>
+</html>

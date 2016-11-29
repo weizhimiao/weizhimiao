@@ -1,0 +1,847 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Xdebug," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="行云流水" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Xdebug替换了PHP的var_dump（）函数来显示变量。 Xdebug的版本包括不同类型的不同颜色，并且限制了数组元素/对象属性的数量，最大深度和字符串长度。 还有一些其他函数处理可变显示。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xdebug之变量显示功能">
+<meta property="og:url" content="https://weizhimiao.github.io/2016/10/22/Xdebug之变量显示功能/index.html">
+<meta property="og:site_name" content="行云流水">
+<meta property="og:description" content="Xdebug替换了PHP的var_dump（）函数来显示变量。 Xdebug的版本包括不同类型的不同颜色，并且限制了数组元素/对象属性的数量，最大深度和字符串长度。 还有一些其他函数处理可变显示。">
+<meta property="og:image" content="http://n.sinaimg.cn/games/3ece443e/20161022/8F0658D7-C951-4B12-BC74-92E15E31C44C.png">
+<meta property="og:updated_time" content="2016-10-22T16:07:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Xdebug之变量显示功能">
+<meta name="twitter:description" content="Xdebug替换了PHP的var_dump（）函数来显示变量。 Xdebug的版本包括不同类型的不同颜色，并且限制了数组元素/对象属性的数量，最大深度和字符串长度。 还有一些其他函数处理可变显示。">
+<meta name="twitter:image" content="http://n.sinaimg.cn/games/3ece443e/20161022/8F0658D7-C951-4B12-BC74-92E15E31C44C.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://weizhimiao.github.io/2016/10/22/Xdebug之变量显示功能/"/>
+
+  <title> Xdebug之变量显示功能 | 行云流水 </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e4b7d6d381ddeae9bb9afe7349625074";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行云流水</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">却也碎碎念念</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-atom">
+          <a href="/atom.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-rss"></i> <br />
+            
+            订阅
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5esyb9coehH1NCtAqKqX','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Xdebug之变量显示功能
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-22T20:30:00+08:00" content="2016-10-22">
+              2016-10-22
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PHP/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/22/Xdebug之变量显示功能/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/22/Xdebug之变量显示功能/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv">本文总阅读量
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Xdebug替换了PHP的var_dump（）函数来显示变量。 Xdebug的版本包括不同类型的不同颜色，并且限制了数组元素/对象属性的数量，最大深度和字符串长度。 还有一些其他函数处理可变显示。</p>
+<a id="more"></a>
+<p>有一些设置控制Xdebug修改的var_dump（）函数的输出：</p>
+<ul>
+<li>xdebug.var_display_max_children，</li>
+<li>xdebug.var_display_max_data</li>
+<li><p>xdebug.var_display_max_depth</p>
+<p>这三个设置的效果最好用一个例子。 下面的脚本运行四次，每次使用不同的设置。 您可以使用选项卡查看差异。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">test</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> $pub = <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">private</span> $priv = <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">protected</span> $prot = <span class="number">42</span>;</div><div class="line">&#125;</div><div class="line">$t = <span class="keyword">new</span> test;</div><div class="line">$t-&gt;pub = $t;</div><div class="line">$data = <span class="keyword">array</span>(</div><div class="line">    <span class="string">'one'</span> =&gt; <span class="string">'a somewhat long string!'</span>,</div><div class="line">    <span class="string">'two'</span> =&gt; <span class="keyword">array</span>(</div><div class="line">        <span class="string">'two.one'</span> =&gt; <span class="keyword">array</span>(</div><div class="line">            <span class="string">'two.one.zero'</span> =&gt; <span class="number">210</span>,</div><div class="line">            <span class="string">'two.one.one'</span> =&gt; <span class="keyword">array</span>(</div><div class="line">                <span class="string">'two.one.one.zero'</span> =&gt; <span class="number">3.141592564</span>,</div><div class="line">                <span class="string">'two.one.one.one'</span>  =&gt; <span class="number">2.7</span>,</div><div class="line">            ),</div><div class="line">        ),</div><div class="line">    ),</div><div class="line">    <span class="string">'three'</span> =&gt; $t,</div><div class="line">    <span class="string">'four'</span> =&gt; range(<span class="number">0</span>, <span class="number">5</span>),</div><div class="line">);</div><div class="line">var_dump( $data );</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>默认</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  &apos;one&apos; =&gt; string &apos;a somewhat long string!&apos; (length=23)</div><div class="line">  &apos;two&apos; =&gt;</div><div class="line">    array</div><div class="line">      &apos;two.one&apos; =&gt;</div><div class="line">        array</div><div class="line">          &apos;two.one.zero&apos; =&gt; int 210</div><div class="line">          &apos;two.one.one&apos; =&gt;</div><div class="line">            array</div><div class="line">              ...</div><div class="line">  &apos;three&apos; =&gt;</div><div class="line">    object(test)[1]</div><div class="line">      public &apos;pub&apos; =&gt;</div><div class="line">        &amp;object(test)[1]</div><div class="line">      private &apos;priv&apos; =&gt; boolean true</div><div class="line">      protected &apos;prot&apos; =&gt; int 42</div><div class="line">  &apos;four&apos; =&gt;</div><div class="line">    array</div><div class="line">      0 =&gt; int 0</div><div class="line">      1 =&gt; int 1</div><div class="line">      2 =&gt; int 2</div><div class="line">      3 =&gt; int 3</div><div class="line">      4 =&gt; int 4</div><div class="line">      5 =&gt; int 5</div></pre></td></tr></table></figure>
+</li>
+<li><p>children=2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  &apos;one&apos; =&gt; string &apos;a somewhat long string!&apos; (length=23)</div><div class="line">  &apos;two&apos; =&gt;</div><div class="line">    array</div><div class="line">      &apos;two.one&apos; =&gt;</div><div class="line">        array</div><div class="line">          &apos;two.one.zero&apos; =&gt; int 210</div><div class="line">          &apos;two.one.one&apos; =&gt;</div><div class="line">            array</div><div class="line">              ...</div><div class="line">  more elements...</div></pre></td></tr></table></figure>
+</li>
+<li><p>data=16</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  &apos;one&apos; =&gt; string &apos;a somewhat long &apos;... (length=23)</div><div class="line">  &apos;two&apos; =&gt;</div><div class="line">    array</div><div class="line">      &apos;two.one&apos; =&gt;</div><div class="line">        array</div><div class="line">          &apos;two.one.zero&apos; =&gt; int 210</div><div class="line">          &apos;two.one.one&apos; =&gt;</div><div class="line">            array</div><div class="line">              ...</div><div class="line">  &apos;three&apos; =&gt;</div><div class="line">    object(test)[1]</div><div class="line">      public &apos;pub&apos; =&gt;</div><div class="line">        &amp;object(test)[1]</div><div class="line">      private &apos;priv&apos; =&gt; boolean true</div><div class="line">      protected &apos;prot&apos; =&gt; int 42</div><div class="line">  &apos;four&apos; =&gt;</div><div class="line">    array</div><div class="line">      0 =&gt; int 0</div><div class="line">      1 =&gt; int 1</div><div class="line">      2 =&gt; int 2</div><div class="line">      3 =&gt; int 3</div><div class="line">      4 =&gt; int 4</div><div class="line">      5 =&gt; int 5</div></pre></td></tr></table></figure>
+</li>
+<li><p>depth=2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  &apos;one&apos; =&gt; string &apos;a somewhat long string!&apos; (length=23)</div><div class="line">  &apos;two&apos; =&gt;</div><div class="line">    array</div><div class="line">      &apos;two.one&apos; =&gt;</div><div class="line">        array</div><div class="line">          ...</div><div class="line">  &apos;three&apos; =&gt;</div><div class="line">    object(test)[1]</div><div class="line">      public &apos;pub&apos; =&gt;</div><div class="line">        &amp;object(test)[1]</div><div class="line">      private &apos;priv&apos; =&gt; boolean true</div><div class="line">      protected &apos;prot&apos; =&gt; int 42</div><div class="line">  &apos;four&apos; =&gt;</div><div class="line">    array</div><div class="line">      0 =&gt; int 0</div><div class="line">      1 =&gt; int 1</div><div class="line">      2 =&gt; int 2</div><div class="line">      3 =&gt; int 3</div><div class="line">      4 =&gt; int 4</div><div class="line">      5 =&gt; int 5</div></pre></td></tr></table></figure>
+</li>
+<li><p>children=3, data=8, depth=1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  &apos;one&apos; =&gt; string &apos;a somewh&apos;... (length=23)</div><div class="line">  &apos;two&apos; =&gt;</div><div class="line">    array</div><div class="line">      ...</div><div class="line">  &apos;three&apos; =&gt;</div><div class="line">    object(test)[1]</div><div class="line">      ...</div><div class="line">  more elements...</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="相关设置"><a href="#相关设置" class="headerlink" title="相关设置"></a>相关设置</h2><h3 id="xdebug-cli-color"><a href="#xdebug-cli-color" class="headerlink" title="xdebug.cli_color"></a><strong>xdebug.cli_color</strong></h3><p>类型：整数，默认值：0，在Xdebug&gt; 2.2中引入</p>
+<ul>
+<li><p>如果此设置为1，则Xdebug将在CLI模式下和输出为tty时对var_dumps和堆栈跟踪输出进行颜色。在Windows上，需要安装ANSICON工具。</p>
+</li>
+<li><p>如果设置为2，那么无论Xdebug是否连接到tty或是否安装了ANSICON，Xdebug都将始终对var_dumps和堆栈跟踪进行着色。在这种情况下，您可能会看到转义码。</p>
+</li>
+</ul>
+<p>有关更多信息，请参阅此<a href="http://drck.me/clicolor-9cr" target="_blank" rel="external">文章</a>。</p>
+<h3 id="xdebug-overload-var-dump"><a href="#xdebug-overload-var-dump" class="headerlink" title="xdebug.overload_var_dump"></a><strong>xdebug.overload_var_dump</strong></h3><p>类型：boolean，默认值：2，在Xdebug&gt; 2.1中引入</p>
+<ul>
+<li><p>默认情况下，当html_errors php.ini设置为1或2时，Xdebug会自动重载var_dump（）并显示变量。</p>
+</li>
+<li><p>如果您不想要，可以将此设置设置为0，但首先检查它是否不是更聪明的关闭html_errors。</p>
+</li>
+<li><p>您也可以使用2作为此设置的值。除了格式化var_dump（）输出很好，它还将添加文件名和行号到输出。还尊重xdebug.file_link_format设置。 （Xdebug 2.3中的新功能）</p>
+</li>
+</ul>
+<p>在Xdebug 2.4之前，此设置的默认值为1。</p>
+<h3 id="xdebug-var-display-max-children"><a href="#xdebug-var-display-max-children" class="headerlink" title="xdebug.var_display_max_children"></a><strong>xdebug.var_display_max_children</strong></h3><p>类型：整数，默认值：128</p>
+<p>控制使用xdebug_var_dump（），xdebug.show_local_vars或通过函数跟踪显示变量时显示的数组子元素和对象的属性的数量。</p>
+<ul>
+<li>要禁用任何限制，请使用-1作为值。</li>
+</ul>
+<p>此设置对通过远程调试功能发送到客户端的子项数没有任何影响。</p>
+<h3 id="xdebug-var-display-max-data"><a href="#xdebug-var-display-max-data" class="headerlink" title="xdebug.var_display_max_data"></a><strong>xdebug.var_display_max_data</strong></h3><p>类型：整数，默认值：512</p>
+<p>控制使用xdebug_var_dump（），xdebug.show_local_vars或通过函数跟踪显示变量时显示的最大字符串长度。</p>
+<ul>
+<li>要禁用任何限制，请使用-1作为值。</li>
+</ul>
+<p>此设置对通过远程调试功能发送到客户端的子项数没有任何影响。</p>
+<h3 id="xdebug-var-display-max-depth"><a href="#xdebug-var-display-max-depth" class="headerlink" title="xdebug.var_display_max_depth"></a><strong>xdebug.var_display_max_depth</strong></h3><p>类型：整数，默认值：3</p>
+<p>当使用xdebug_var_dump（），xdebug.show_local_vars或通过函数跟踪显示变量时，控制数组元素和对象属性的嵌套级别数。</p>
+<ul>
+<li>您可以选择的最大值为1023.您还可以使用-1作为值来选择此最大数。</li>
+</ul>
+<p>此设置对通过远程调试功能发送到客户端的子项数没有任何影响。</p>
+<h2 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h2><h3 id="void-var-dump（-mixture-var-，…-）"><a href="#void-var-dump（-mixture-var-，…-）" class="headerlink" title="void var_dump（[mixture var [，…]]）"></a><strong>void var_dump（[mixture var [，…]]）</strong></h3><blockquote>
+<p>显示有关变量的详细信息</p>
+</blockquote>
+<p>此函数由Xdebug重载，请参阅xdebug_var_dump（）的说明。</p>
+<h3 id="void-xdebug-debug-zval（-string-varname-，…-）"><a href="#void-xdebug-debug-zval（-string-varname-，…-）" class="headerlink" title="void xdebug_debug_zval（[string varname [，…]]）"></a><strong>void xdebug_debug_zval（[string varname [，…]]）</strong></h3><blockquote>
+<p>显示有关变量的信息</p>
+</blockquote>
+<p>此函数显示有关一个或多个变量的结构化信息，包括其类型，值和引用计数信息。使用值递归地探索数组。这个函数的实现不同于PHP的debug_zval_dump（）函数，以解决该函数的问题，因为变量本身实际上传递给函数。 Xdebug的版本是更好的，因为它使用变量名称来查找内部符号表中的变量，并直接访问所有的属性，而不必处理实际传递一个变量到一个函数。结果是，该函数返回的信息比PHP自己的用于显示zval信息的函数准确得多。</p>
+<p>从Xdebug 2.3开始支持除了简单变量名（例如下面的“a [2]”）之外的任何东西。</p>
+<p>Example:<br><figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    $a = <span class="keyword">array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">    $b =&amp; $a;</div><div class="line">    $c =&amp; $a[<span class="number">2</span>];</div><div class="line"></div><div class="line">    xdebug_debug_zval(<span class="string">'a'</span>);</div><div class="line">    xdebug_debug_zval(<span class="string">"a[2]"</span>);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure></p>
+<p>结果：(refcount:引用次数，)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">a: (refcount=2, is_ref=1)=array (</div><div class="line">	0 =&gt; (refcount=1, is_ref=0)=1,</div><div class="line">	1 =&gt; (refcount=1, is_ref=0)=2,</div><div class="line">	2 =&gt; (refcount=2, is_ref=1)=3)</div><div class="line">a[2]: (refcount=2, is_ref=1)=3</div></pre></td></tr></table></figure></p>
+<h3 id="void-xdebug-debug-zval-stdout（-string-varname-，…-）"><a href="#void-xdebug-debug-zval-stdout（-string-varname-，…-）" class="headerlink" title="void xdebug_debug_zval_stdout（[string varname [，…]]）"></a><strong>void xdebug_debug_zval_stdout（[string varname [，…]]）</strong></h3><blockquote>
+<p>将有关变量的信息返回到stdout。</p>
+</blockquote>
+<p>此函数显示有关一个或多个变量的结构化信息，包括其类型，值和引用计数信息。 使用值递归地探索数组。 与xdebug_debug_zval（）的区别在于，该信息不通过Web服务器API层显示，而是直接显示在stdout上（因此，在Apache以单进程模式运行时，它会在控制台上运行）。</p>
+<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">    $a = array(1, 2, 3);</div><div class="line">    $b =&amp; $a;</div><div class="line">    $c =&amp; $a[2];</div><div class="line"></div><div class="line">    xdebug_debug_zval_stdout(&apos;a&apos;);</div></pre></td></tr></table></figure></p>
+<p>返回：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">a: (refcount=2, is_ref=1)=array (</div><div class="line">	0 =&gt; (refcount=1, is_ref=0)=1,</div><div class="line">	1 =&gt; (refcount=1, is_ref=0)=2,</div><div class="line">	2 =&gt; (refcount=2, is_ref=1)=3)</div></pre></td></tr></table></figure></p>
+<h3 id="void-xdebug-dump-superglobals（）"><a href="#void-xdebug-dump-superglobals（）" class="headerlink" title="void xdebug_dump_superglobals（）"></a><strong>void xdebug_dump_superglobals（）</strong></h3><blockquote>
+<p>显示有关超级全局的信息</p>
+</blockquote>
+<p>此函数转储指定的超级全局元素的值通过php.ini中的xdebug.dump.*选项。 对于下面的示例，php.ini中的设置是：</p>
+<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">xdebug.dump.GET=*</div><div class="line">xdebug.dump.SERVER=REMOTE_ADDR</div><div class="line"></div><div class="line">Query string:</div><div class="line">?var=fourty%20two&amp;array[a]=a&amp;array[9]=b</div></pre></td></tr></table></figure></p>
+<p>结果：<br><img src="http://n.sinaimg.cn/games/3ece443e/20161022/8F0658D7-C951-4B12-BC74-92E15E31C44C.png" alt="img"></p>
+<h3 id="void-xdebug-var-dump（-mixed-var-，…-）"><a href="#void-xdebug-var-dump（-mixed-var-，…-）" class="headerlink" title="void xdebug_var_dump（[mixed var [，…]]）"></a><strong>void xdebug_var_dump（[mixed var [，…]]）</strong></h3><blockquote>
+<p>显示有关变量的详细信息</p>
+</blockquote>
+<p>此函数显示有关包含其类型和值的一个或多个表达式的结构化信息。 使用值递归地探索数组。 请参阅变量显示功能的介绍，其中php.ini设置影响此功能。</p>
+<p>Example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;?php</div><div class="line">ini_set(&apos;xdebug.var_display_max_children&apos;, 3 );</div><div class="line">$c = new stdClass;</div><div class="line">$c-&gt;foo = &apos;bar&apos;;</div><div class="line">$c-&gt;file = fopen( &apos;/etc/passwd&apos;, &apos;r&apos; );</div><div class="line">var_dump(</div><div class="line">    array(</div><div class="line">        array(TRUE, 2, 3.14, &apos;foo&apos;),</div><div class="line">        &apos;object&apos; =&gt; $c</div><div class="line">    )</div><div class="line">);</div><div class="line">?&gt;</div></pre></td></tr></table></figure></p>
+<p>结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">array</div><div class="line">  0 =&gt;</div><div class="line">    array</div><div class="line">      0 =&gt; boolean true</div><div class="line">      1 =&gt; int 2</div><div class="line">      2 =&gt; float 3.14</div><div class="line">      more elements...</div><div class="line">  &apos;object&apos; =&gt;</div><div class="line">    object(stdClass)[1]</div><div class="line">      public &apos;foo&apos; =&gt; string &apos;bar&apos; (length=3)</div><div class="line">      public &apos;file&apos; =&gt; resource(3, stream)</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Xdebug/" rel="tag">#Xdebug</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/22/Xdebug之代码覆盖率分析/" rel="next" title="Xdebug之代码覆盖率分析">
+                <i class="fa fa-chevron-left"></i> Xdebug之代码覆盖率分析
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/22/Xdebug之PHP脚本剖析/" rel="prev" title="Xdebug之PHP脚本剖析">
+                Xdebug之PHP脚本剖析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/22/Xdebug之变量显示功能/"
+           data-title="Xdebug之变量显示功能" data-url="https://weizhimiao.github.io/2016/10/22/Xdebug之变量显示功能/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/11239812?v=3&u=aede3c90c7e5cbc2d029e3f0988d9e1503b59943&s=140"
+               alt="zhimiao" />
+          <p class="site-author-name" itemprop="name">zhimiao</p>
+          <p class="site-description motion-element" itemprop="description">像“草根”一样，紧贴着地面，低调的存在，冬去春来枯荣无恙。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">80</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/weizhimiao/home" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weizhimiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#相关设置"><span class="nav-number">1.</span> <span class="nav-text">相关设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#xdebug-cli-color"><span class="nav-number">1.1.</span> <span class="nav-text">xdebug.cli_color</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xdebug-overload-var-dump"><span class="nav-number">1.2.</span> <span class="nav-text">xdebug.overload_var_dump</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xdebug-var-display-max-children"><span class="nav-number">1.3.</span> <span class="nav-text">xdebug.var_display_max_children</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xdebug-var-display-max-data"><span class="nav-number">1.4.</span> <span class="nav-text">xdebug.var_display_max_data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xdebug-var-display-max-depth"><span class="nav-number">1.5.</span> <span class="nav-text">xdebug.var_display_max_depth</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关函数"><span class="nav-number">2.</span> <span class="nav-text">相关函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#void-var-dump（-mixture-var-，…-）"><span class="nav-number">2.1.</span> <span class="nav-text">void var_dump（[mixture var [，…]]）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#void-xdebug-debug-zval（-string-varname-，…-）"><span class="nav-number">2.2.</span> <span class="nav-text">void xdebug_debug_zval（[string varname [，…]]）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#void-xdebug-debug-zval-stdout（-string-varname-，…-）"><span class="nav-number">2.3.</span> <span class="nav-text">void xdebug_debug_zval_stdout（[string varname [，…]]）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#void-xdebug-dump-superglobals（）"><span class="nav-number">2.4.</span> <span class="nav-text">void xdebug_dump_superglobals（）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#void-xdebug-var-dump（-mixed-var-，…-）"><span class="nav-number">2.5.</span> <span class="nav-text">void xdebug_var_dump（[mixed var [，…]]）</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhimiao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<!--
+<div class="theme-info">
+    | 京ICP备 
+    <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+          16031041号
+    </a>
+</div>
+-->
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">本站访客数<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv">本站总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"weizhimiao"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+
+
+</body>
+</html>

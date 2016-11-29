@@ -1,0 +1,877 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="行云流水" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="在Linux中我们经常需要修改各种配置文件，例如，启动引导程序配置文件、系统启动文件核脚本、网络配置文件、文件系统配置文件、文件服务程序配置文件等等。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux常见的配置文件">
+<meta property="og:url" content="https://weizhimiao.github.io/2016/10/06/Linux常见的配置文件/index.html">
+<meta property="og:site_name" content="行云流水">
+<meta property="og:description" content="在Linux中我们经常需要修改各种配置文件，例如，启动引导程序配置文件、系统启动文件核脚本、网络配置文件、文件系统配置文件、文件服务程序配置文件等等。">
+<meta property="og:updated_time" content="2016-10-07T14:43:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux常见的配置文件">
+<meta name="twitter:description" content="在Linux中我们经常需要修改各种配置文件，例如，启动引导程序配置文件、系统启动文件核脚本、网络配置文件、文件系统配置文件、文件服务程序配置文件等等。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://weizhimiao.github.io/2016/10/06/Linux常见的配置文件/"/>
+
+  <title> Linux常见的配置文件 | 行云流水 </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e4b7d6d381ddeae9bb9afe7349625074";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行云流水</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">却也碎碎念念</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-atom">
+          <a href="/atom.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-rss"></i> <br />
+            
+            订阅
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5esyb9coehH1NCtAqKqX','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Linux常见的配置文件
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-06T20:00:00+08:00" content="2016-10-06">
+              2016-10-06
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/06/Linux常见的配置文件/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/06/Linux常见的配置文件/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv">本文总阅读量
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在Linux中我们经常需要修改各种配置文件，例如，启动引导程序配置文件、系统启动文件核脚本、网络配置文件、文件系统配置文件、文件服务程序配置文件等等。</p>
+<a id="more"></a>
+<h2 id="etc-passwd-用户信息配置文件"><a href="#etc-passwd-用户信息配置文件" class="headerlink" title="/etc/passwd    用户信息配置文件"></a>/etc/passwd    用户信息配置文件</h2><ul>
+<li>文件作用：保存Linux用户信息</li>
+<li>文件内容：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root:x:0:0:root:/root:/bin/bash</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li>第一位：用户名</li>
+<li>第二位：密码位（只是一个密码标志，真实密码并不是存在这）</li>
+<li><p>第三位：UID    用户ID</p>
+<blockquote>
+<p>   0    超级管理员<br>   1-499    系统用户（伪用户）<br>   >500    普通用户</p>
+</blockquote>
+</li>
+<li><p>第四位：GID    初始组ID</p>
+</li>
+<li>第五位：用户说明</li>
+<li>第六位：家目录</li>
+<li>第七位：用户登录之后的权限<blockquote>
+<p>常见的两种权限：</p>
+<p>   /bin/bash</p>
+<p>   /sbin/nologin伪用户，不能进行登陆</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="etc-shadow-影子文件"><a href="#etc-shadow-影子文件" class="headerlink" title="/etc/shadow    影子文件"></a>/etc/shadow    影子文件</h2><ul>
+<li>文件作用：保存用户密码，及密码的有效期</li>
+<li>文件内容：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">root:$6$w5RBeFe7Y1bixrQR$tp0zHL1bMmAVv0SAS56LsCOyZ4KUj3V0GI0dRZ4KSlf.ggisV7dwiQ8s5xebcZghVDxwlYTjN6qKGU9zRc.En1:16247:0:99999:7:::</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li><p>第一字段：用户名（也被称为登录名），在/etc/shadow中，用户名和/etc/passwd 是相同的，这样就把passwd 和shadow中用的用户记录联系在一起；这个字段是非空的</p>
+</li>
+<li><p>第二字段：密码（已被加密），如果是有些用户在这段是x，表示这个用户不能登录到系统；这个字段是非空的</p>
+</li>
+<li><p>第三字段：上次修改口令的时间；这个时间是从1970年01月01日算起到最近一次修改口令的时间间隔（天数），您可以通过passwd 来修改用户的密码，然后查看/etc/shadow中此字段的变化</p>
+</li>
+<li><p>第四字段：两次修改口令间隔最少的天数；如果设置为0,则禁用此功能；也就是说用户必须经过多少天才能修改其口令；此项功能用处不是太大；默认值是通过/etc/login.defs文件定义中获取，PASS_MIN_DAYS 中有定义</p>
+</li>
+<li><p>第五字段：两次修改口令间隔最多的天数；这个能增强管理员管理用户口令的时效性，应该说在增强了系统的安全性；如果是系统默认值，是在添加用户时由/etc/login.defs文件定义中获取，在PASS_MAX_DAYS 中定义</p>
+</li>
+<li><p>第六字段：提前多少天警告用户口令将过期；当用户登录系统后，系统登录程序提醒用户口令将要作废；如果是系统默认值，是在添加用户时由/etc/login.defs文件定义中获取，在PASS_WARN_AGE 中定义</p>
+</li>
+<li><p>第七字段：在口令过期之后多少天禁用此用户；此字段表示用户口令作废多少天后，系统会禁用此用户，也就是说系统会不能再让此用户登录，也不会提示用户过期，是完全禁用</p>
+</li>
+<li><p>第八字段：用户过期日期；此字段指定了用户作废的天数（从1970年的1月1日开始的天数），如果这个字段的值为空，帐号永久可用</p>
+</li>
+<li><p>第九字段：保留字段，目前为空，以备将来Linux发展之用</p>
+</li>
+</ul>
+<h2 id="etc-group-用户组配置文件"><a href="#etc-group-用户组配置文件" class="headerlink" title="/etc/group    用户组配置文件"></a>/etc/group    用户组配置文件</h2><ul>
+<li>文件作用：用户组配置</li>
+<li>文件内容：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">root:x:0:</div><div class="line">bin:x:1:bin,daemon</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li><p>组名：组密码位：组ID：组中的附加用户</p>
+</li>
+<li><p>初始组：每个用户初始组只能有一个，初始组只能有一个，一般都是和用户名相同的组作为初始组</p>
+</li>
+<li><p>附加组：每个用户可以属于多个附加组。要把用户加入组，都是加入附加组</p>
+</li>
+</ul>
+<h2 id="etc-sysconfig-network-scripts-ifcfg-eth0-网卡信息文件"><a href="#etc-sysconfig-network-scripts-ifcfg-eth0-网卡信息文件" class="headerlink" title="/etc/sysconfig/network-scripts/ifcfg-eth0    网卡信息文件"></a>/etc/sysconfig/network-scripts/ifcfg-eth0    网卡信息文件</h2><ul>
+<li>文件作用：保存网卡配置</li>
+<li>文件内容：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">DEVICE=eth0					网卡设备名</div><div class="line">BOOTPROTO=none				是否自动获取IP。none：不生效					static：手动		dhcp：动态获取IP</div><div class="line">BROADCAST=192.168.140.255			广播地址</div><div class="line">HWADDR=00:0c:29:21:80:48			mac地址</div><div class="line">IPADDR=192.168.140.253			IP地址</div><div class="line">IPV6INIT=yes					IPv6开启</div><div class="line">IPV6_AUTOCONF=yes				IPv6获取</div><div class="line">NETMASK=255.255.255.0				掩码</div><div class="line">NETWORK=192.168.140.0				网段</div><div class="line">ONBOOT=yes					网卡开机启动</div><div class="line">TYPE=Ethernet					以太网</div><div class="line">GATEWAY=192.168.140.1				网关</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li><p>如果是采用DHCP方式获取IP信息，则可以只填写上述用橙色标记的配置项即可。</p>
+</li>
+<li><p>修改配置文件后，需要重启服务（如service  network  restart）。</p>
+</li>
+</ul>
+<h2 id="etc-udev-rules-d-70-persistent-net-rules-网卡和MAC地址绑定文件"><a href="#etc-udev-rules-d-70-persistent-net-rules-网卡和MAC地址绑定文件" class="headerlink" title="/etc/udev/rules.d/70-persistent-net.rules    网卡和MAC地址绑定文件"></a>/etc/udev/rules.d/70-persistent-net.rules    网卡和MAC地址绑定文件</h2><ul>
+<li>文件作用：绑定网卡和MAC地址</li>
+<li>文件内容：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SUBSYSTEM==&quot;net&quot;, ACTION==&quot;add&quot;, DRIVERS==&quot;?*&quot;, ATTR&#123;address&#125;==&quot;00:0c:29:41:c7:1f&quot;, ATTR&#123;type&#125;==&quot;1&quot;, KERNEL==&quot;eth*&quot;, NAME=&quot;eth0&quot;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li>当虚拟机网卡不通是，有时需要删除<code>/etc/sysconfig/network-scripts/ifcfg-eth0</code> 中的MAC地址行，并且要删掉此文件。</li>
+</ul>
+<h2 id="etc-inittab-系统默认运行级别配置文件"><a href="#etc-inittab-系统默认运行级别配置文件" class="headerlink" title="/etc/inittab    系统默认运行级别配置文件"></a>/etc/inittab    系统默认运行级别配置文件</h2><ul>
+<li>文件作用：设置默认系统运行级别。</li>
+<li>文件内容：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id:3:initdefault:</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">运行级别可分为：</div><div class="line"># Default runlevel. The runlevels used are:</div><div class="line">#   0 - halt (Do NOT set initdefault to this)</div><div class="line">#   1 - Single user mode</div><div class="line">#   2 - Multiuser, without NFS (The same as 3, if you do not have networking)</div><div class="line">#   3 - Full multiuser mode	命令行</div><div class="line">#   4 - unused</div><div class="line">#   5 - X11			图形界面</div><div class="line">#   6 - reboot (Do NOT set initdefault to this)</div></pre></td></tr></table></figure></p>
+<h2 id="etc-rc-local—-gt-etc-rc-d-rc-local-自启动程序配置文件"><a href="#etc-rc-local—-gt-etc-rc-d-rc-local-自启动程序配置文件" class="headerlink" title="/etc/rc.local—-&gt;/etc/rc.d/rc.local    自启动程序配置文件"></a>/etc/rc.local—-&gt;/etc/rc.d/rc.local    自启动程序配置文件</h2><ul>
+<li>文件作用：设置自启动程序，系统启动时会一次执行该文件中的命令</li>
+<li>文件内容<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># This script will be executed *after* all the other init scripts.</div><div class="line"># You can put your own initialization stuff in here if you don&apos;t</div><div class="line"># want to do the full Sys V style init stuff.</div><div class="line">touch /var/lock/subsys/local</div><div class="line">ulimit -SHn 65535</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="etc-services-所有系统常见端口"><a href="#etc-services-所有系统常见端口" class="headerlink" title="/etc/services    所有系统常见端口"></a>/etc/services    所有系统常见端口</h2><ul>
+<li>文件作用：显示系统常见的端口及绑定的协议</li>
+</ul>
+<h2 id="etc-sysconfig-network-主机名配置文件"><a href="#etc-sysconfig-network-主机名配置文件" class="headerlink" title="/etc/sysconfig/network        主机名配置文件"></a>/etc/sysconfig/network        主机名配置文件</h2><ul>
+<li>文件作用：配置主机名，永久保存</li>
+<li>文件内容：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NETWORKING=yes</div><div class="line">HOSTNAME=localhost.localdomain</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li>建议不要更改。</li>
+</ul>
+<h2 id="etc-resolv-conf-DNS配置文件"><a href="#etc-resolv-conf-DNS配置文件" class="headerlink" title="/etc/resolv.conf        DNS配置文件"></a>/etc/resolv.conf        DNS配置文件</h2><ul>
+<li>文件作用：设置ＤＮＳ服务器</li>
+<li>文件内容：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nameserver  202.106.0.20</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li>如有多个DNS服务器地址，可在IP地址后面直接加，并以“，”分割，或者再起下一行写入“nameserver  xx.xx.xx.xx”</li>
+</ul>
+<h2 id="etc-vimrc-vim配置文件"><a href="#etc-vimrc-vim配置文件" class="headerlink" title="/etc/vimrc vim配置文件"></a>/etc/vimrc vim配置文件</h2><p>别名配置文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">~.bashrc</div></pre></td></tr></table></figure></p>
+<h2 id="etc-selinux-config-seLinux的配置文件"><a href="#etc-selinux-config-seLinux的配置文件" class="headerlink" title="/etc/selinux/config seLinux的配置文件"></a>/etc/selinux/config seLinux的配置文件</h2><ul>
+<li>文件内容<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># This file controls the state of SELinux on the system.</div><div class="line"># SELINUX= can take one of these three values:</div><div class="line">#     enforcing - SELinux security policy is enforced.</div><div class="line">#     permissive - SELinux prints warnings instead of enforcing.</div><div class="line">#     disabled - No SELinux policy is loaded.</div><div class="line">SELINUX=disabled</div><div class="line"># SELINUXTYPE= can take one of these two values:</div><div class="line">#     targeted - Targeted processes are protected,</div><div class="line">#     mls - Multi Level Security protection.</div><div class="line">SELINUXTYPE=targeted</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>关闭seLinux</p>
+<ul>
+<li>将配置文件中seLinux项改为SELINUX=disabled，然后重启Linux。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/05/ElasticSearch整理/" rel="next" title="ElasticSearch整理">
+                <i class="fa fa-chevron-left"></i> ElasticSearch整理
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/06/Linux简介/" rel="prev" title="Linux系统的简介和安装">
+                Linux系统的简介和安装 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/06/Linux常见的配置文件/"
+           data-title="Linux常见的配置文件" data-url="https://weizhimiao.github.io/2016/10/06/Linux常见的配置文件/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/11239812?v=3&u=aede3c90c7e5cbc2d029e3f0988d9e1503b59943&s=140"
+               alt="zhimiao" />
+          <p class="site-author-name" itemprop="name">zhimiao</p>
+          <p class="site-description motion-element" itemprop="description">像“草根”一样，紧贴着地面，低调的存在，冬去春来枯荣无恙。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">80</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/weizhimiao/home" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weizhimiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-passwd-用户信息配置文件"><span class="nav-number">1.</span> <span class="nav-text">/etc/passwd    用户信息配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-shadow-影子文件"><span class="nav-number">2.</span> <span class="nav-text">/etc/shadow    影子文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-group-用户组配置文件"><span class="nav-number">3.</span> <span class="nav-text">/etc/group    用户组配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-sysconfig-network-scripts-ifcfg-eth0-网卡信息文件"><span class="nav-number">4.</span> <span class="nav-text">/etc/sysconfig/network-scripts/ifcfg-eth0    网卡信息文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-udev-rules-d-70-persistent-net-rules-网卡和MAC地址绑定文件"><span class="nav-number">5.</span> <span class="nav-text">/etc/udev/rules.d/70-persistent-net.rules    网卡和MAC地址绑定文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-inittab-系统默认运行级别配置文件"><span class="nav-number">6.</span> <span class="nav-text">/etc/inittab    系统默认运行级别配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-rc-local—-gt-etc-rc-d-rc-local-自启动程序配置文件"><span class="nav-number">7.</span> <span class="nav-text">/etc/rc.local—->/etc/rc.d/rc.local    自启动程序配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-services-所有系统常见端口"><span class="nav-number">8.</span> <span class="nav-text">/etc/services    所有系统常见端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-sysconfig-network-主机名配置文件"><span class="nav-number">9.</span> <span class="nav-text">/etc/sysconfig/network        主机名配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-resolv-conf-DNS配置文件"><span class="nav-number">10.</span> <span class="nav-text">/etc/resolv.conf        DNS配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-vimrc-vim配置文件"><span class="nav-number">11.</span> <span class="nav-text">/etc/vimrc vim配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etc-selinux-config-seLinux的配置文件"><span class="nav-number">12.</span> <span class="nav-text">/etc/selinux/config seLinux的配置文件</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhimiao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<!--
+<div class="theme-info">
+    | 京ICP备 
+    <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+          16031041号
+    </a>
+</div>
+-->
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">本站访客数<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv">本站总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"weizhimiao"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+
+
+</body>
+</html>

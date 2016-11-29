@@ -1,0 +1,780 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="shell," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="行云流水" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux中常用的shell脚本">
+<meta property="og:url" content="https://weizhimiao.github.io/2016/10/30/Linux中常用的shell脚本/index.html">
+<meta property="og:site_name" content="行云流水">
+<meta property="og:image" content="http://n.sinaimg.cn/games/3ece443e/20161030/bash.png">
+<meta property="og:updated_time" content="2016-10-30T12:05:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux中常用的shell脚本">
+<meta name="twitter:image" content="http://n.sinaimg.cn/games/3ece443e/20161030/bash.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="https://weizhimiao.github.io/2016/10/30/Linux中常用的shell脚本/"/>
+
+  <title> Linux中常用的shell脚本 | 行云流水 </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?e4b7d6d381ddeae9bb9afe7349625074";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">行云流水</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">却也碎碎念念</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-atom">
+          <a href="/atom.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-rss"></i> <br />
+            
+            订阅
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="st-search-show-outputs">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', '5esyb9coehH1NCtAqKqX','2.0.0');
+</script>
+
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Linux中常用的shell脚本
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-30T20:30:00+08:00" content="2016-10-30">
+              2016-10-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/30/Linux中常用的shell脚本/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/30/Linux中常用的shell脚本/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+              &nbsp; | &nbsp;
+              <span class="page-pv">本文总阅读量
+              <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://n.sinaimg.cn/games/3ece443e/20161030/bash.png" alt="Linux中常用的shell脚本"></p>
+<a id="more"></a>
+<p>1、对于进程来说，查看其运行时的环境变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /proc/$PID/environ</div></pre></td></tr></table></figure></p>
+<p>示例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">#首先需要我们运行一个程序</div><div class="line"># pgrep inotifywait</div><div class="line">8977</div><div class="line"># cat /proc/8977/environ</div><div class="line">HOSTNAME=localhost.localdomainSELINUX_ROLE_REQUESTED=TERM=xterm-256colorSHELL=/bin/bashHISTSIZE=1000SSH_CLIENT=192.168.1.100 63684 22SELINUX_USE_CURRENT_RANGE=SSH_TTY=/dev/pts/0USER=rootLS_COLORS=rs=0:di=38;... %sG_BROKEN_FILENAMES=1_=/usr/local/bin/inotifywaitOLDPWD=/data</div><div class="line">#一般返回的环境变量会有很多，我们采用换行方式查看会更直观</div><div class="line"></div><div class="line"># cat /proc/8977/environ | tr &apos;\0&apos; &apos;\n&apos;</div><div class="line">HOSTNAME=localhost.localdomain</div><div class="line">SELINUX_ROLE_REQUESTED=</div><div class="line">TERM=xterm-256color</div><div class="line">SHELL=/bin/bash</div><div class="line">HISTSIZE=1000</div><div class="line">SSH_CLIENT=192.168.1.100 63684 22</div><div class="line">SELINUX_USE_CURRENT_RANGE=</div><div class="line">SSH_TTY=/dev/pts/0</div><div class="line">USER=root</div><div class="line">....</div></pre></td></tr></table></figure></p>
+<p>2、获得字符串长度<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># var=wahaha</div><div class="line"># echo $&#123;var&#125;</div><div class="line">wahaha</div><div class="line"># echo $&#123;#var&#125;</div><div class="line">6</div></pre></td></tr></table></figure></p>
+<p>3、识别当前使用的是哪种shell<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">echo $SHELL</div><div class="line">/bin/bash</div></pre></td></tr></table></figure></p>
+<p>4、shell脚本检查是执行当前脚本的是否为root用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># cat check_root.sh</div><div class="line">#!/bin/bash</div><div class="line">if [ $UID -ne 0 ]; then</div><div class="line">	echo &quot;Non root user. Please run as root.&quot;</div><div class="line">else</div><div class="line">	echo Root User</div><div class="line">fi</div></pre></td></tr></table></figure></p>
+<p>5、修改bash提示字符串（username@hastname:~$）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#利用PS1环境变量来定制</div><div class="line"># cat ~/.bashrc | grep PS1</div><div class="line">PS1=&apos;$&#123;debian_chroot:+$($debian_chroot)&#125;\u@\h:\w\$ &apos;</div><div class="line"># \u 用户名</div><div class="line"># \h 主机名</div><div class="line"># \w 当前工作目录</div></pre></td></tr></table></figure></p>
+<p>6、如何判断一个命令是否执行成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">当一个命令发生错误并退回时，他会返回一个非0的退出状态；</div><div class="line">而当命令成功完成后，它会返回数字0.</div><div class="line">退出状态可以从特殊变量 $? 中获得（在命令执行之后立刻运行 $? ,就可以打印出退出状态）</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">CMD=&quot;commod&quot;  #commod代表需要检测退出状态的命令</div><div class="line">$CMD</div><div class="line">if [ $? -eq 0 ];</div><div class="line">then</div><div class="line">  echo &quot;$CMD executed succ&quot;</div><div class="line">else</div><div class="line">  echo &quot;$CMD excuted unsucc&quot;</div><div class="line">fi</div></pre></td></tr></table></figure>
+<p>7、shell中数组的定义与操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">#定义1</div><div class="line">array_var=(1 2 3 4 5)</div><div class="line">#定义2</div><div class="line">array_var[0]=&quot;test&quot;</div><div class="line">array_var[1]=&quot;test1&quot;</div><div class="line">array_var[2]=&quot;test2&quot;</div><div class="line">array_var[3]=&quot;test3&quot;</div><div class="line">#打印特定索引数组元素</div><div class="line">echo $&#123;array_var[0]&#125;</div><div class="line">#以清单形式打印出数组中的所有值</div><div class="line">echo $&#123;array_var[*]&#125;</div><div class="line">test test1 test2 test3</div><div class="line">#也可以</div><div class="line">echo $&#123;array_var[@]&#125;</div><div class="line">test test1 test2 test3</div><div class="line">#输出数组元素个数</div><div class="line">echo $&#123;#array_var[*]&#125;</div><div class="line">4</div></pre></td></tr></table></figure></p>
+<p>8、按照指定格式打印系统当前时间<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># date &quot;+%Y%m%d&quot;</div><div class="line">20161029</div><div class="line"># %a  星期  例，Sat</div><div class="line"># %A  星期  例，Saturday</div><div class="line"># %b  月    例，Nov</div><div class="line"># %B  月    例，November</div><div class="line"># %d  日   例，31</div><div class="line"># %D  固定格式(mm/dd/yy)  例，10/18/10</div><div class="line"># %y  年   例，16</div><div class="line"># %Y  年   例，2016</div><div class="line"># %I或%H 小时  例，08</div><div class="line"># %M  分钟  例，30</div><div class="line"># %S  秒   例，10</div><div class="line"># %N  纳秒  例，694394444</div></pre></td></tr></table></figure></p>
+<p>9、shell函数参数传递<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">func()&#123;</div><div class="line">  echo $1,$2  #访问参数1和参数2</div><div class="line">  echo &quot;$@&quot;   #以列表方式一次性打印所有参数</div><div class="line">  echo &quot;$*&quot;   #类似于$@,但是参数被作为单个实体</div><div class="line">  return 0;   #返回值</div><div class="line">&#125;</div><div class="line"></div><div class="line"># $1,  第一个参数</div><div class="line"># $2,  第二个参数</div><div class="line"># $n,  第n个参数</div><div class="line"># &quot;$@&quot;,   被扩展成&quot;$1&quot; &quot;$2&quot; &quot;$3&quot;等</div><div class="line"># &quot;$*&quot;,   被扩展成&quot;$1c$2c$3&quot; ，其中c是IFS的第一个字符</div><div class="line"># &quot;$@&quot;要比&quot;$*&quot;用的多。由于&quot;$*&quot;将所有参数当做单个字符串，因此它很少被使用</div></pre></td></tr></table></figure></p>
+<p>10、利用子shell生成独立进程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># cat sub_shell.sh</div><div class="line">#!/bin/bash</div><div class="line">pwd;</div><div class="line">(cd /bin; pwd);</div><div class="line">pwd;</div><div class="line"># ./sub_shell.sh</div><div class="line">/root/shell</div><div class="line">/bin</div><div class="line">/root/shell</div><div class="line"></div><div class="line"># 我们可以发现（）中的子shell对于当前shell没有影响，它所有的改变仅限于（）内部</div></pre></td></tr></table></figure></p>
+<p>11、运行命令直至成功<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">repeat()&#123;</div><div class="line">  while true</div><div class="line">  do</div><div class="line">    $@  &amp;&amp; return</div><div class="line">  done</div><div class="line">&#125;</div><div class="line"># 原理：该函数通过$@接收传参。如果命令执行成功，则返回并退出循环，否则一直循环</div><div class="line"></div><div class="line"># Tips：将该函数加入的shell的rc文件中，方便我们使用</div><div class="line"></div><div class="line"># 示例：使用repeat（）从网上下载一个文件，直至成功</div><div class="line">repeat wget -c http://xxxx.com/example.tar.gz</div></pre></td></tr></table></figure></p>
+<p>12、删除多余的空行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"># cat -s file &gt;&gt; newfile</div></pre></td></tr></table></figure></p>
+<p>13、文件查找<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># find /home -name &quot;*.txt&quot;</div><div class="line"># find . \( -name &quot;*.txt&quot; -o -name &quot;*.pdf&quot; \)</div><div class="line">...</div></pre></td></tr></table></figure></p>
+<p>14、排序、去重<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 排序  sort</div><div class="line"># 去重  uniq</div><div class="line">sort file.txt | uniq</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"># cat check_sorted.sh</div><div class="line">#!/bin/bash</div><div class="line"># 功能：检查文件是否已经排序过</div><div class="line">sort -C filename;</div><div class="line">if [ $? -eq 0 ]</div><div class="line">then</div><div class="line">  echo Sorted</div><div class="line">else</div><div class="line">  echo Unsorted</div><div class="line">fi</div></pre></td></tr></table></figure>
+<p>15、交互输出自动化实现<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line"># 文件名：enter.sh</div><div class="line">read -p &quot;Enter number:&quot; no ;</div><div class="line">read -p &quot;Enter name&quot; name ;</div><div class="line">echo You have entered $no $name;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#利用echo -e来生成输入序列</div><div class="line">echo -e &quot;1\nhello\n&quot; | ./enter.sh</div></pre></td></tr></table></figure>
+<p>16、利用并行进程加速命令执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">PIDARRAY=()</div><div class="line">for file in File1.ios File2.ios</div><div class="line">do</div><div class="line">  md5sum $file &amp;</div><div class="line">  PIDARRAY+=(&quot;$!&quot;)</div><div class="line">done</div><div class="line">wait $&#123;PIDARRAY[@]&#125;</div><div class="line"># 原理：利用bash的操作符&amp;，它使得shell将命令置于后台并继续执行脚本。使用 $! 来获得进程的PID（在bash中 $! 保存最近一个后台进程的PID）。将这些进程PID放入PIDARRAY数组中。使用wait命令等待这些进程执行完成。</div></pre></td></tr></table></figure></p>
+<p>17、查找并删除内容重复的文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">#创建测试文件testfile，testfile1，testfile2，newfile ;其中testfile1和testfile2都是testfile的副本</div><div class="line"></div><div class="line"># echo &quot;hello&quot; &gt;&gt; testfile</div><div class="line"># cp testfile testfile1</div><div class="line"># cp testfile testfile2</div><div class="line"># echo hello world &gt;&gt; newfile</div><div class="line"></div><div class="line"># cat remove_duplicates.sh</div><div class="line">#!/bin/bash</div><div class="line"></div><div class="line">ls -lS --time-style=long-iso | awk &apos;BEGIN &#123;</div><div class="line">	getline; getline;</div><div class="line">	name1=$8; size=$5;</div><div class="line">&#125;&#123;</div><div class="line">	name2=$8</div><div class="line">	if(size==$5)&#123;</div><div class="line">		&quot;md5sum &quot;name1 | getline; csum1=$1;</div><div class="line">		&quot;md5sum &quot;name2 | getline; csum2=$1;</div><div class="line">		if(csum1==csum2)&#123;</div><div class="line">			print name1;</div><div class="line">			print name2;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	size=$5;</div><div class="line">	name1=name2;</div><div class="line">&#125;&apos; | sort -u &gt; duplicate_files</div><div class="line"></div><div class="line">cat duplicate_files | xargs -I &#123;&#125; md5sum &#123;&#125; | sort | uniq -w 32 | awk &apos;&#123;print &quot;^&quot;$2&quot;$&quot; &#125;&apos; | sort -u &gt; duplicate_sample</div><div class="line"></div><div class="line">echo Removing...</div><div class="line">comm duplicate_files duplicate_sample -2 -3 | tee /dev/stderr | xargs rm</div><div class="line">rm -f duplicate_files duplicate_sample</div><div class="line">echo Removed duplicates files successfully</div><div class="line"></div><div class="line"># 执行脚本</div><div class="line"># ./remove_duplicates.sh</div><div class="line">Removing...</div><div class="line">testfile</div><div class="line">testfile1</div><div class="line">Removed duplicates files successfully</div><div class="line"></div><div class="line"># 如上testfile、testfile1、testfile2这三个相同内容的文件，只保留了testfile2.</div><div class="line"></div><div class="line"># 脚本原理说明：</div><div class="line"># ls -lS 将当前目录下的所有文件按照文件大小进行排序，并列出文件的详细信息</div><div class="line"># awk命令的执行步骤：awk首先会执行BEGIN&#123;&#125;语句块，处理完&#123;&#125;中所有的命令后，在执行END&#123;&#125;语句块</div><div class="line"># 在awk中，外部的命令的输出可以用这样的方式来读取，&quot;cmd&quot; | getline ，随后我们就可以用 $0 来获取命令的输出 ，在$1,$2,$3...$n 获取命令输出中的每一列</div><div class="line"># BEGIN&#123;&#125;语句块中有两个getline;是因为 ls -lS --time-style=long-iso 命令的输出的第一行是文件的数量，所以我们直接跳过，来获取下一行数据</div><div class="line"># comm 通常只接受排过序的文件。所以在之前需要使用 sort -u 进行排序</div><div class="line"># tee 命令在这有一个妙用：它将文件名在传递给rm命令的同时，也起到了print的效果。tee将来自stdin的行写入文件，同事将其发送到stdout</div></pre></td></tr></table></figure></p>
+<p>18、解析文本中的电子邮件地址和URL<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"># 正则表达式</div><div class="line">#   mail：[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]&#123;2,4&#125;</div><div class="line">#   URL： (http|https)://[a-zA-Z0-9.]+\.[a-zA-Z]&#123;2,3&#125;</div><div class="line"></div><div class="line"># wget www.sina.com.cn/index.html</div><div class="line"></div><div class="line"># 解析index.html中的email</div><div class="line"># egrep -o &quot;[a-zA-Z0-9.]+@[a-zA-Z0-9.]+\.[a-zA-Z]&#123;2,4&#125;&quot; index.html</div><div class="line">jubao@vip.sina.com</div><div class="line">jubao@vip.sina.com</div><div class="line"></div><div class="line"># 解析index.html中的URL</div><div class="line"># egrep -o &quot;(http|https)://[a-zA-Z0-9.]+\.[a-zA-Z]&#123;2,3&#125;&quot; index.html</div><div class="line">http://www.sina.com.cn</div><div class="line">http://www.sina.com.cn</div><div class="line">http://auto.sina.com.cn</div><div class="line">http://www.sina.com.cn</div><div class="line">...</div><div class="line">http://hq.sinajs.cn</div><div class="line">http://rm.sina.com.cn</div><div class="line">http://d4.sina.com.cn</div><div class="line">http://d1.sina.com.cn</div><div class="line">http://i1.sinaimg.cn</div><div class="line">http://news.sina.com.cn</div><div class="line">http://login.sina.com.cn</div><div class="line">http://login.sina.com.cn</div></pre></td></tr></table></figure></p>
+<p>19、以纯文本形式下载网页<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">lynx:是一款基于命令行的web浏览器。我们可以利用它获取纯文本形式的网页</div><div class="line"></div><div class="line">命令：</div><div class="line"># lynx -dump http://www.sina.com.cn</div><div class="line">-dump 选项表示将网页内容以ASCII编码形式打印</div><div class="line"></div><div class="line">另，lynx会将页面中所有的超链接（&lt;a href=&quot;link&quot;&gt;）作为文本的页脚，单独放置在标题为 References 的文本区域。如果我们需要匹配除某个页面中所有的超链接也可以使用该方法，也省的我们用正则匹配</div></pre></td></tr></table></figure></p>
+<p>20、列出网络上所有的活动主机<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"># cat ping.sh</div><div class="line">#!/bin/bash</div><div class="line">for ip in 192.168.1.&#123;1..255&#125;;</div><div class="line">do</div><div class="line">	ping $ip -c 2 &amp;&gt; /dev/null;</div><div class="line"></div><div class="line">	if [ $? -eq 0 ]</div><div class="line">	then</div><div class="line">		echo $ip is alive</div><div class="line">	fi</div><div class="line">done</div><div class="line"></div><div class="line"># 并行ping</div><div class="line"># cat ping_1.sh</div><div class="line">#!/bin/bash</div><div class="line">for ip in 192.168.1.&#123;1..255&#125;;</div><div class="line">do</div><div class="line">	(</div><div class="line">	ping $ip -c 2 &amp;&gt; /dev/null;</div><div class="line"></div><div class="line">	if [ $? -eq 0 ]</div><div class="line">	then</div><div class="line">		echo $ip is alive</div><div class="line">	fi</div><div class="line">	)&amp;</div><div class="line">done</div><div class="line">wait</div><div class="line"></div><div class="line"># 将wait放在脚本最后，它就会一直等到所有的子脚本进程全部结束</div></pre></td></tr></table></figure></p>
+<p>21、网络上利用套接字进行快速文件复制<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"># 设置侦听套接字</div><div class="line">nc -l 1234</div><div class="line"></div><div class="line"># 在另一终端或主机中连接到该套接字</div><div class="line">nc 127.0.0.1 1234</div><div class="line">message_test</div><div class="line"></div><div class="line"># 连接到套接字后就可以在终端中输入信息回车就会发送</div><div class="line"></div><div class="line"># 文件复制</div><div class="line">在接收端执行以下命令：</div><div class="line">nc -l 1234 &gt; destination_filename</div><div class="line">在发送端执行下列命令：</div><div class="line">nc 127.0.0.1 1234 &lt; source_filename</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/shell/" rel="tag">#shell</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/29/Linux中通过inotify-tools实现监控文件变化/" rel="next" title="Linux中通过inotify-tools实现监控文件变化">
+                <i class="fa fa-chevron-left"></i> Linux中通过inotify-tools实现监控文件变化
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/01/Linux中常用的shell脚本（二）/" rel="prev" title="Linux中常用的shell脚本（二）">
+                Linux中常用的shell脚本（二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/30/Linux中常用的shell脚本/"
+           data-title="Linux中常用的shell脚本" data-url="https://weizhimiao.github.io/2016/10/30/Linux中常用的shell脚本/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/11239812?v=3&u=aede3c90c7e5cbc2d029e3f0988d9e1503b59943&s=140"
+               alt="zhimiao" />
+          <p class="site-author-name" itemprop="name">zhimiao</p>
+          <p class="site-description motion-element" itemprop="description">像“草根”一样，紧贴着地面，低调的存在，冬去春来枯荣无恙。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">80</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">64</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/weizhimiao/home" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/weizhimiao" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhimiao</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+<!--
+<div class="theme-info">
+    | 京ICP备 
+    <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+          16031041号
+    </a>
+</div>
+-->
+
+
+        
+
+<div class="busuanzi-count">
+
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">本站访客数<span class="busuanzi-value" id="busuanzi_value_site_uv"></span>人次</span>
+  
+
+  
+    <span class="site-pv">本站总访问量<span class="busuanzi-value" id="busuanzi_value_site_pv"></span>次</span>
+  
+  
+</div>
+
+
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"weizhimiao"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+
+
+</body>
+</html>
