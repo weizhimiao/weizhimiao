@@ -273,8 +273,8 @@
             
               
                 
-                <a class="post-title-link" href="/2017/01/03/如何创建NGINX重写规则/" itemprop="url">
-                  如何创建NGINX重写规则
+                <a class="post-title-link" href="/2017/01/22/深入了解Redis之客户端C-服务器S设计与实现/" itemprop="url">
+                  深入了解Redis之客户端C-服务器S设计与实现
                 </a>
               
             
@@ -287,8 +287,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-03T22:30:00+08:00" content="2017-01-03">
-              2017-01-03
+            <time itemprop="dateCreated" datetime="2017-01-22T20:30:00+08:00" content="2017-01-22">
+              2017-01-22
             </time>
           </span>
 
@@ -301,8 +301,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Nginx/" itemprop="url" rel="index">
-                    <span itemprop="name">Nginx</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -317,8 +317,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/01/03/如何创建NGINX重写规则/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/如何创建NGINX重写规则/" itemprop="commentsCount"></span>
+                <a href="/2017/01/22/深入了解Redis之客户端C-服务器S设计与实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/22/深入了解Redis之客户端C-服务器S设计与实现/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -344,17 +344,412 @@
 
       
         
-          <p>在这篇博文中，我们讨论如何创建NGINX重写规则（同样的方法适用于NGINX Plus和开源NGINX软件）。重写规则会更改客户请求中的部分或全部网址，通常用于以下两个目的之一：</p>
+          <p>我们知道<code>Redis</code>是一个典型的<code>C/S</code>设计程序，一个服务器可以与多个客户端建立连接。通过<code>I/O</code>多路复用技术实现的文件事件处理器，<code>Redis</code>服务器使用单线程单进程的方式来处理命令请求，并与多个客户端进行网络通信。</p>
+<p>所以，对于<code>Redis</code>我们分为这两部分来了解，</p>
 <ul>
-<li><p>通知客户端他们请求的资源现在位于不同的位置。示例用例是我们的网站的域名发生更改时，我们希望客户端使用规范网址格式（带或不带www前缀），以及当我们想要捕获和更正我们的域名的常见拼写错误时。返回和重写指令适合于这些目的。</p>
+<li><code>Redis</code>服务器维护和管理客户端状态的方法</li>
+<li><code>Redis</code>服务器的运行机制</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/01/22/深入了解Redis之客户端C-服务器S设计与实现/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/13/深入了解Redis之事件原理和实现/" itemprop="url">
+                  深入了解Redis之事件原理和实现
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-13T20:30:00+08:00" content="2017-01-13">
+              2017-01-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/13/深入了解Redis之事件原理和实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/13/深入了解Redis之事件原理和实现/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Redis服务器是一个事件驱动程序，其主要处理的事件主要可分为以下两类：</p>
+<ul>
+<li><p>文件事件(file event)</p>
+<blockquote>
+<p>Redis服务器通过套接字与客户端（或者其他Redis服务器）进行连接，而文件事件就是服务器对套接字操作的抽象。服务器与客户端（或者其他服务器）的通信会产生相应的文件事件，而服务器则通过监听并处理这些事件来完成一系列网络通信。</p>
+</blockquote>
 </li>
-<li><p>控制NGINX和NGINX Plus中的处理流程，例如，在需要动态生成内容时，将请求转发到应用程序服务器。 try_files指令通常用于此目的。</p>
+<li><p>时间事件(time event)</p>
+<blockquote>
+<p>Redis服务器中的一些操作（如，serverCron函数）需要在指定的时间点执行，而时间事件就是对这类定时操作的抽象。</p>
+</blockquote>
 </li>
 </ul>
-<p><strong>注意：</strong> 要了解如何将Apache HTTP服务器重写规则转换为NGINX重写规则，请参阅我们的随附博客文章“<a href="https://www.nginx.com/blog/converting-apache-to-nginx-rewrite-rules/?utm_source=creating-nginx-rewrite-rules&amp;utm_medium=blog&amp;utm_campaign=Core+Product">将Apache重写规则转换为NGINX重写规则</a>”。</p>
-<p>我们假设你熟悉<a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP响应代码</a>和正则表达式（NGINX和NGINX Plus使用Perl语法）。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2017/01/03/如何创建NGINX重写规则/#more" rel="contents">
+            <a class="btn" href="/2017/01/13/深入了解Redis之事件原理和实现/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/12/深入了解Redis之Redis的持久化方式/" itemprop="url">
+                  深入了解Redis之Redis的持久化方式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-12T21:30:00+08:00" content="2017-01-12">
+              2017-01-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/12/深入了解Redis之Redis的持久化方式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/深入了解Redis之Redis的持久化方式/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>我们知道Redis是一个内存数据库，它所有的数据库状态都存储在内存中，所以如果想要在服务器故障、重启之后数据还在，就需要一个将这些数据持久化的一个功能。</p>
+<p><img src="http://n.sinaimg.cn/games/3ece443e/20170112/redisChiJiuHuaYuanLi.png" alt="redis持久化原理"></p>
+<p>Redis提供了两种持久化的方式，</p>
+<ul>
+<li><p>RDB 持久化方式</p>
+<blockquote>
+<p>将数据库中的键值对及状态保存在持久化文件中</p>
+</blockquote>
+</li>
+<li><p>AOF 持久化方式</p>
+<blockquote>
+<p>而AOF保存的是服务器所执行过的所有写命令</p>
+</blockquote>
+</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/01/12/深入了解Redis之Redis的持久化方式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/01/12/深入了解Redis之Redis数据库的实现/" itemprop="url">
+                  深入了解Redis之Redis数据库的实现
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-12T20:30:00+08:00" content="2017-01-12">
+              2017-01-12
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/12/深入了解Redis之Redis数据库的实现/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/12/深入了解Redis之Redis数据库的实现/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+            
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>Redis这个<code>key-value</code>的存储系统，由于其高性能，支持主从复制和丰富的数据结构等特性，目前已经广泛应用于我们的各个场景之中。所以了解整理其相关的一些内容，用以加深我们对其的了解，方便之后更好的使用它实现我们的各种功能。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/01/12/深入了解Redis之Redis数据库的实现/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -912,142 +1307,6 @@
             
               
                 
-                <a class="post-title-link" href="/2016/11/16/sudo使用场景分析/" itemprop="url">
-                  sudo使用场景分析[转]
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-11-16T20:30:00+08:00" content="2016-11-16">
-              2016-11-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/11/16/sudo使用场景分析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/16/sudo使用场景分析/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-            
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Linux 下使用 sudo 命令，可以让普通用户也能执行一些或者全部的 root 命令。本文就对我们常用到 sudo 操作情景进行简单分析，通过一些例子来了解 sudo 命令相关的技巧。</p>
-<ul>
-<li><p>情景一：用户无权限执行 root 命令</p>
-</li>
-<li><p>情景二：vim 编辑后发现忘记使用 sudo</p>
-</li>
-<li><p>情景三：执行 root 命令忘记加 sudo</p>
-</li>
-<li><p>情景四：shell 内置命令如何使用 sudo</p>
-</li>
-<li><p>情景五：sudo 操作记录日志</p>
-</li>
-</ul>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/11/16/sudo使用场景分析/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
                 <a class="post-title-link" href="/2016/11/16/Bash脚本15分钟进阶教程/" itemprop="url">
                   Bash脚本15分钟进阶教程[转]
                 </a>
@@ -1185,8 +1444,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/11/07/常见的排序算法与实现（PHP）汇总/" itemprop="url">
-                  常见的排序算法与实现（PHP）汇总
+                <a class="post-title-link" href="/2016/11/16/sudo使用场景分析/" itemprop="url">
+                  sudo使用场景分析[转]
                 </a>
               
             
@@ -1199,8 +1458,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-11-07T20:30:00+08:00" content="2016-11-07">
-              2016-11-07
+            <time itemprop="dateCreated" datetime="2016-11-16T20:30:00+08:00" content="2016-11-16">
+              2016-11-16
             </time>
           </span>
 
@@ -1213,8 +1472,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PHP/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP</span>
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
                   </a>
                 </span>
 
@@ -1229,8 +1488,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/11/07/常见的排序算法与实现（PHP）汇总/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/07/常见的排序算法与实现（PHP）汇总/" itemprop="commentsCount"></span>
+                <a href="/2016/11/16/sudo使用场景分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/16/sudo使用场景分析/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1256,267 +1515,21 @@
 
       
         
-          <ul>
-<li>冒泡排序</li>
-<li>选择排序</li>
-<li>插入排序</li>
-<li>快速排序</li>
-<li>归并排序</li>
-<li>堆排序</li>
-<li>桶排序</li>
-<li>基数排序</li>
-<li>希尔排序</li>
+          <p>Linux 下使用 sudo 命令，可以让普通用户也能执行一些或者全部的 root 命令。本文就对我们常用到 sudo 操作情景进行简单分析，通过一些例子来了解 sudo 命令相关的技巧。</p>
+<ul>
+<li><p>情景一：用户无权限执行 root 命令</p>
+</li>
+<li><p>情景二：vim 编辑后发现忘记使用 sudo</p>
+</li>
+<li><p>情景三：执行 root 命令忘记加 sudo</p>
+</li>
+<li><p>情景四：shell 内置命令如何使用 sudo</p>
+</li>
+<li><p>情景五：sudo 操作记录日志</p>
+</li>
 </ul>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/11/07/常见的排序算法与实现（PHP）汇总/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/11/01/Linux中常用的shell脚本（二）/" itemprop="url">
-                  Linux中常用的shell脚本（二）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-11-01T20:30:00+08:00" content="2016-11-01">
-              2016-11-01
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/11/01/Linux中常用的shell脚本（二）/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/01/Linux中常用的shell脚本（二）/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-            
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="http://n.sinaimg.cn/games/3ece443e/20161030/bash.png" alt="Linux中常用的shell脚本"></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/11/01/Linux中常用的shell脚本（二）/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/10/30/Linux中常用的shell脚本/" itemprop="url">
-                  Linux中常用的shell脚本
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-30T20:30:00+08:00" content="2016-10-30">
-              2016-10-30
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/10/30/Linux中常用的shell脚本/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/30/Linux中常用的shell脚本/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-            
-
-          
-          
-
-          
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><img src="http://n.sinaimg.cn/games/3ece443e/20161030/bash.png" alt="Linux中常用的shell脚本"></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/10/30/Linux中常用的shell脚本/#more" rel="contents">
+            <a class="btn" href="/2016/11/16/sudo使用场景分析/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1591,7 +1604,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">83</span>
+              <span class="site-state-item-count">86</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1608,7 +1621,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">68</span>
+                <span class="site-state-item-count">67</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
