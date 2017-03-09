@@ -26,6 +26,11 @@
       <div class="header-inner"> {%- include '_partials/header.swig' %} </div>
     </header>
 
+
+    {% if (theme.suprise.ball_enable and is_home()) %}
+      {% include '_partials/suprise/ball.swig' %}
+    {% endif %}
+    
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">

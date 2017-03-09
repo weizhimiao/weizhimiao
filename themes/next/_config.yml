@@ -390,6 +390,9 @@ vendors:
   # http://fontawesome.io/
   fontawesome:
 
+# 小球动画开关
+suprise:
+  ball_enable: false
 
 # Assets
 css: css

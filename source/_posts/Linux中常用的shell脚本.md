@@ -10,7 +10,6 @@ categories:
 ![Linux中常用的shell脚本](http://n.sinaimg.cn/games/3ece443e/20161030/bash.png)
 
 <!-- more -->
-
 1、对于进程来说，查看其运行时的环境变量
 ```
 cat /proc/$PID/environ
@@ -170,7 +169,7 @@ repeat(){
 # 示例：使用repeat（）从网上下载一个文件，直至成功
 repeat wget -c http://xxxx.com/example.tar.gz
 ```
-12、删除多余的空行
+12、删除多余的空行
 ```
 # cat -s file >> newfile
 ```

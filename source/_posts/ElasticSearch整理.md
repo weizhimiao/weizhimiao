@@ -511,7 +511,7 @@ logging.yml
 ```
 > -d 表示将进程放入后台运行
 
-或者通过nohup命令
+或者通过nohup命令
 ```
 # nohup /usr/local/elasticsearch/bin/elasticsearch > nohup
 ```
