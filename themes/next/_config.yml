@@ -394,6 +394,11 @@ vendors:
 suprise:
   ball_enable: false
 
+
+# Local search
+local_search:
+  enable: true
+
 # Assets
 css: css
 js: js

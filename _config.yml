@@ -95,7 +95,13 @@ leancloud_visitors:
   app_key: 25PBfJEywRHzhdNyIqVj0VDc
 
 #站内搜索 Swiftype Search Key
-swiftype_key: 5esyb9coehH1NCtAqKqX
+#swiftype_key: 5esyb9coehH1NCtAqKqX
+
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 10000
 
 # JiaThis 分享服务
 jiathis: true
