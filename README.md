@@ -1,5 +1,4 @@
 # weizhimiao
-my blog
+blog
 
-[行云流水][myblog]
-[myblog]:https://weizhimiao.github.io/
+[行云流水]:https://weizhimiao.github.io/
