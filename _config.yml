@@ -5,7 +5,7 @@
 # Site
 title: 行云流水
 subtitle: 却也碎碎念念
-description: 像“草根”一样，紧贴着地面，低调的存在，冬去春来枯荣无恙。
+description: 为己备忘，为他参考。
 author: zhimiao
 language: zh-Hans
 timezone: Asia/Shanghai
@@ -100,7 +100,7 @@ leancloud_visitors:
 search:
   path: search.xml
   field: post
-  format: html
+  format: raw
   limit: 10000
 
 # JiaThis 分享服务
