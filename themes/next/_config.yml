@@ -123,7 +123,7 @@ font:
 social:
   #LinkLabel: Link
   微博: http://weibo.com/weizhimiao/home
-  GitHub: https://github.com/weizhimiao
+  #GitHub: https://github.com/weizhimiao
 
 
 # Social Links Icons
@@ -251,8 +251,8 @@ mathjax:
 # Baidu Share
 # Available value:
 #    button | slide
-#baidushare:
-##  type: button
+baidushare:
+  type: button
 
 # Share
 #jiathis:
